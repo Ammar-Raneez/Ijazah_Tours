@@ -1,16 +1,24 @@
 import ButtonAtom from './atoms/ButtonAtom';
-import GlobalStyle from './globalStyle';;
+import IconAtom from './atoms/IconAtom';
+import GlobalStyle from './globalStyle';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 function App() {
   return (
     <div className="App">
       <GlobalStyle />
       <ButtonAtom
-        backgroundColor='#000'
+        backgroundcolor='#000'
         text='test'
-        textColor='#fff'
+        textcolor='#fff'
         onClick={() => console.log('he')}
-        borderRadius='10px'
+        borderradius='10px'
+        size='large'
+      />
+      <IconAtom
+        onClick={() => console.log('he')}
+        size="medium"
+        children={<DeleteIcon />}
       />
     </div>
   );
