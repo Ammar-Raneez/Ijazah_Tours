@@ -3,6 +3,7 @@ import GlobalStyle from "./globalStyle";
 import Sidebar from "./organisms/Sidebar";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import styled from "styled-components";
+import Navbar from "./organisms/Navbar";
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
         <Sidebar />
         <Switch>
           <Route path="/">
-            <p>Test</p>
+            <Navbar type="dashboard" />
           </Route>
         </Switch>
       </Container>

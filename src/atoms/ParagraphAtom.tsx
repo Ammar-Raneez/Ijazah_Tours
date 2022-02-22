@@ -6,7 +6,7 @@ interface ParaAtomProps {
 
 function ParagraphAtom({ text, color, size }: ParaAtomProps) {
   return (
-    <p style={{ color: color, fontSize: size }}>{text}</p>
+    <p style={{ color, fontSize: size }}>{text}</p>
   )
 }
 

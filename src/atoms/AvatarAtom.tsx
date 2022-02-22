@@ -11,7 +11,7 @@ interface AvatarAtomProps {
 function AvatarAtom({ image, alt, variant, size, margin }: AvatarAtomProps) {
   return (
     <Avatar
-      style={{ width: size, height: size, margin: margin }}
+      style={{ width: size, height: size, margin }}
       variant={variant}
       src={image}
       alt={alt}

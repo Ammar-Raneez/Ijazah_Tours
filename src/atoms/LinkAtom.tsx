@@ -5,11 +5,18 @@ import { v4 as uuid } from "uuid";
 interface LinkAtomProps {
   to: string;
   children: any;
+  margin?: string;
+  padding?: string;
 }
 
-function LinkAtom({ to, ...props }: LinkAtomProps) {
+function LinkAtom({ to, margin, padding, ...props }: LinkAtomProps) {
   return (
-    <StyledNavLink activeClassName="active" key={uuid()} to={to}>
+    <StyledNavLink
+      style={{ margin, padding }}
+      activeClassName="active"
+      key={uuid()}
+      to={to}
+    >
       {props.children}
     </StyledNavLink>
   );
@@ -22,6 +29,7 @@ const StyledNavLink = styled(NavLink)`
   align-items: center;
   color: black;
   text-decoration: none;
+  border-radius: 1rem;
 
   &.active {
     background-color: #7ba8ec;
