@@ -1,11 +1,17 @@
-import styled from "styled-components";
 import AvatarAtom from "../atoms/AvatarAtom";
+import DivAtom from "../atoms/DivAtom";
 import SpanAtom from "../atoms/SpanAtom";
 
 function Header() {
   return (
-    <Wrapper>
-      <Container>
+    <DivAtom
+      backgroundcolor="#C1BFBF"
+      height="80px"
+      display="flex"
+      align="center"
+      padding="0 0 0 1rem"
+    >
+      <DivAtom display="flex" align="center">
         <AvatarAtom
           margin="0px 20px 0px 0px"
           alt="Logo"
@@ -26,22 +32,9 @@ function Header() {
           text="Tours"
           color="#41E93E"
         />
-      </Container>
-    </Wrapper>
+      </DivAtom>
+    </DivAtom>
   );
 }
 
 export default Header;
-
-const Wrapper = styled.div`
-  background-color: #C1BFBF;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  padding-left: 1rem;
-`
-
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-`;

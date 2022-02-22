@@ -1,15 +1,10 @@
 import { useState } from "react";
 import styled from "styled-components";
 import clsx from "clsx";
-import {
-  Divider,
-  Drawer,
-  List,
-  ListItem,
-  makeStyles,
-} from "@material-ui/core";
+import { Divider, Drawer, List, ListItem, makeStyles } from "@material-ui/core";
 import LinkAtom from "../atoms/LinkAtom";
 import LinkTextAtom from "../atoms/LinkTextAtom";
+import DivAtom from "../atoms/DivAtom";
 
 const drawerWidth = 240;
 
@@ -72,7 +67,12 @@ function Sidebar() {
             </ListItem>
           </LinkAtom>
         ))}
-        <BottomContainer>
+        <DivAtom
+          flex={1}
+          display="flex"
+          flexdirection="column"
+          justify="flex-end"
+        >
           <ListItem button key="Profile">
             <LinkTextAtom text="Profile" />
           </ListItem>
@@ -82,7 +82,7 @@ function Sidebar() {
           <ListItem button key="Sign Out">
             <LinkTextAtom text="Sign Out" />
           </ListItem>
-        </BottomContainer>
+        </DivAtom>
       </StyledList>
     </StyledDrawer>
   );
@@ -108,11 +108,4 @@ const StyledList = styled(List)`
   display: flex;
   flex-direction: column;
   height: 100%;
-`;
-
-const BottomContainer = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
 `;
