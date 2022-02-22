@@ -1,10 +1,14 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
+  * {
+    font-family: 'Lato', sans-serif;
+    font-family: 'Poppins', sans-serif;
+  }
+
   body {
     margin: 0;
     padding: 0;
-    font-family: 'Roboto', sans-serif;
   }
 
   div#root {
