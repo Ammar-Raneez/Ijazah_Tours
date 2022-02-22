@@ -1,10 +1,10 @@
-import { IconButton } from '@mui/material';
+import IconButton from '@material-ui/core/IconButton';
 import { MouseEventHandler } from 'react';
 import styled from 'styled-components';
 
 interface IconAtomProps {
   onclick: MouseEventHandler<HTMLButtonElement>;
-  size: 'small' | 'medium' | 'large';
+  size: 'small' | 'medium';
   children: any;
 }
 

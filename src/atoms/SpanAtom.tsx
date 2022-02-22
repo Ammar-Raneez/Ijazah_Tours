@@ -1,5 +1,7 @@
+import styled from "styled-components";
+
 interface SpanAtomProps {
-  text: string;
+  text?: string;
   color: string;
   size: string;
   margin: string;
@@ -8,17 +10,22 @@ interface SpanAtomProps {
 
 function SpanAtom({ text, color, size, margin, weight }: SpanAtomProps) {
   return (
-    <span
-      style={{
-        color: color,
-        fontSize: size,
-        fontWeight: weight,
-        margin: margin,
-      }}
+    <StyledSpan
+      color={color}
+      size={size}
+      weight={weight}
+      margin={margin}
     >
       {text}
-    </span>
+    </StyledSpan>
   );
 }
 
 export default SpanAtom;
+
+const StyledSpan = styled.span<SpanAtomProps>`
+  color: ${({ color }) => color} !important;
+  font-size: ${({ size }) => size} !important;
+  margin: ${({ margin }) => margin} !important;
+  font-weight: ${({ weight }) => weight} !important;
+`

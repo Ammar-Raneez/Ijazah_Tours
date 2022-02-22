@@ -1,4 +1,4 @@
-import { Avatar } from "@mui/material";
+import Avatar from "@material-ui/core/Avatar";
 
 interface AvatarAtomProps {
   image: string;
@@ -11,7 +11,7 @@ interface AvatarAtomProps {
 function AvatarAtom({ image, alt, variant, size, margin }: AvatarAtomProps) {
   return (
     <Avatar
-      sx={{ width: size, height: size, margin: margin }}
+      style={{ width: size, height: size, margin: margin }}
       variant={variant}
       src={image}
       alt={alt}

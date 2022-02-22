@@ -1,4 +1,4 @@
-import { InputAdornment, MenuItem, TextField } from '@mui/material';
+import { InputAdornment, MenuItem, TextField } from "@material-ui/core";
 
 interface DropdownOption {
   label: string;
@@ -6,9 +6,9 @@ interface DropdownOption {
 }
 
 interface TextFieldAtomProps {
-  variant: 'outlined' | 'filled' | 'standard';
-  size: 'small' | 'medium';
-  adornmentposition: 'start' | 'end';
+  variant: "outlined" | "filled" | "standard";
+  size: "small" | "medium";
+  adornmentposition: "start" | "end";
   label: string;
   required?: boolean;
   disabled?: boolean;
@@ -40,40 +40,39 @@ function TextFieldAtom({
   options,
   ...props
 }: TextFieldAtomProps) {
-  return (
-    !select ? (
-      <TextField
-        value={value}
-        onChange={onChange}
-        variant={variant}
-        size={size}
-        label={label}
-        required={required}
-        disabled={disabled}
-        focused={focused}
-        error={error}
-        helperText={helpertext}
-        placeholder={placeholder}
-        InputProps={adornmentposition === 'start' ? {
-          startAdornment: (
-            <InputAdornment
-              position={adornmentposition}
-            >
-              {props.children}
-            </InputAdornment>
-          )
-        }: {
-          endAdornment: (
-            <InputAdornment
-              position={adornmentposition}
-            >
-              {props.children}
-            </InputAdornment>
-          )
-        }}
-      />
-    ) : (
-      <TextField
+  return !select ? (
+    <TextField
+      value={value}
+      onChange={onChange}
+      variant={variant}
+      size={size}
+      label={label}
+      required={required}
+      disabled={disabled}
+      focused={focused}
+      error={error}
+      helperText={helpertext}
+      placeholder={placeholder}
+      InputProps={
+        adornmentposition === "start"
+          ? {
+              startAdornment: (
+                <InputAdornment position={adornmentposition}>
+                  {props.children}
+                </InputAdornment>
+              ),
+            }
+          : {
+              endAdornment: (
+                <InputAdornment position={adornmentposition}>
+                  {props.children}
+                </InputAdornment>
+              ),
+            }
+      }
+    />
+  ) : (
+    <TextField
       select
       value={value}
       onChange={onChange}
@@ -87,7 +86,6 @@ function TextFieldAtom({
         </MenuItem>
       ))}
     </TextField>
-    )
   );
 }
 
