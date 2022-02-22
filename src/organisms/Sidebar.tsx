@@ -1,16 +1,15 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import { v4 as uuid } from "uuid";
 import clsx from "clsx";
 import {
   Divider,
   Drawer,
   List,
   ListItem,
-  ListItemText,
   makeStyles,
 } from "@material-ui/core";
+import LinkAtom from "../atoms/LinkAtom";
+import LinkTextAtom from "../atoms/LinkTextAtom";
 
 const drawerWidth = 240;
 
@@ -66,31 +65,24 @@ function Sidebar() {
     >
       <Divider />
       <StyledList>
-        {links.map((link) => {
-          return (
-            <NavLink
-              activeClassName="navigation-link--active"
-              key={uuid()}
-              className="navigation-link"
-              to={link.link}
-            >
-              <ListItem button key={link.key}>
-                <StyledListItemText primary={link.text} />
-              </ListItem>
-            </NavLink>
-          );
-        })}
-        <LogContainer>
+        {links.map((link) => (
+          <LinkAtom to={link.link}>
+            <ListItem button key={link.key}>
+              <LinkTextAtom text={link.text} />
+            </ListItem>
+          </LinkAtom>
+        ))}
+        <BottomContainer>
           <ListItem button key="Profile">
-            <StyledListItemText primary="Profile" />
+            <LinkTextAtom text="Profile" />
           </ListItem>
           <ListItem button key="Collapse" onClick={() => setOpen(!open)}>
-            <StyledListItemText primary={open ? "Collapse" : "Expand"} />
+            <LinkTextAtom text={open ? "Collapse" : "Expand"} />
           </ListItem>
           <ListItem button key="Sign Out">
-            <StyledListItemText primary="Sign Out" />
+            <LinkTextAtom text="Sign Out" />
           </ListItem>
-        </LogContainer>
+        </BottomContainer>
       </StyledList>
     </StyledDrawer>
   );
@@ -110,16 +102,6 @@ const StyledDrawer = styled(Drawer)`
       display: none;
     }
   }
-
-  .navigation-link {
-    display: flex;
-    align-items: center;
-    color: black;
-    text-decoration: none;
-    &--active {
-      background-color: #7ba8ec;
-    }
-  }
 `;
 
 const StyledList = styled(List)`
@@ -128,19 +110,9 @@ const StyledList = styled(List)`
   height: 100%;
 `;
 
-const StyledListItemText = styled(ListItemText)`
-  color: white;
-
-  .MuiListItemText-primary {
-    font-weight: 600;
-    font-size: 1.4rem;
-  }
-`;
-
-const LogContainer = styled.div`
+const BottomContainer = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
 `;
-
