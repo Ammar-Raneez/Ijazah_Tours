@@ -29,7 +29,7 @@ const StyledNavLink = styled(NavLink)`
   align-items: center;
   color: black;
   text-decoration: none;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
 
   &.active {
     background-color: #7ba8ec;

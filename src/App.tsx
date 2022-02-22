@@ -7,20 +7,24 @@ import Navbar from "./organisms/Navbar";
 import Quotations from "./organisms/quote/Quotations";
 import Voucher from "./organisms/quote/Voucher";
 import Summary from "./organisms/quote/Summary";
+import DivAtom from "./atoms/DivAtom";
 
 function App() {
   return (
     <Router>
       <GlobalStyle />
       <Header />
-      <Container>
+      <DivAtom
+        display="flex"
+        flex={1}
+      >
         <Sidebar />
         <Switch>
           <Route path="/dashboard">
             <Navbar type="dashboard" />
           </Route>
           <Route path="/quote">
-            <MainContent>
+            <StyledDivAtom>
               <Navbar type="quote" />
               <Route path="/quote/quotations">
                 <Quotations />
@@ -31,25 +35,20 @@ function App() {
               <Route path="/quote/summary">
                 <Summary />
               </Route>
-            </MainContent>
+            </StyledDivAtom>
           </Route>
           <Route path="/library">
             <Navbar type="library" />
           </Route>
         </Switch>
-      </Container>
+      </DivAtom>
     </Router>
   );
 }
 
 export default App;
 
-const Container = styled.div`
-  display: flex;
-  height: 91.5vh;
-`;
-
-const MainContent = styled.div`
+const StyledDivAtom = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;

@@ -18,6 +18,6 @@ const StyledListItemText = styled(ListItemText)`
 
   .MuiListItemText-primary {
     font-weight: 600;
-    font-size: 1.4rem;
+    font-size: 1rem;
   }
 `;

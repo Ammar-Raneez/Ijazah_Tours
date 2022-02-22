@@ -6,7 +6,6 @@ function Header() {
   return (
     <DivAtom
       backgroundcolor="#C1BFBF"
-      height="80px"
       display="flex"
       align="center"
       padding="0 0 0 1rem"

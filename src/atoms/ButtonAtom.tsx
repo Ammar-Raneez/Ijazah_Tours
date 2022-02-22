@@ -11,6 +11,7 @@ interface ButtonAtomProps {
   textcolor: string;
   backgroundcolor: string;
   borderradius: string;
+  width: string;
   size: 'small' | 'medium' | 'large';
 }
 
@@ -23,6 +24,7 @@ function ButtonAtom({
   textcolor,
   backgroundcolor,
   borderradius,
+  width,
   size,
 }: ButtonAtomProps) {
   return (
@@ -35,6 +37,7 @@ function ButtonAtom({
       shadow={shadow}
       disabled={disabled}
       size={size}
+      width={width}
     >
       {text}
     </StyledButton>
@@ -46,6 +49,7 @@ const StyledButton = styled(Button)<ButtonAtomProps>`
   background-color: ${({ backgroundcolor }) => backgroundcolor} !important;
   border-radius: ${({ borderradius }) => borderradius} !important;
   box-shadow: ${({ shadow })=> shadow} !important;
+  width: ${({ width }) => width} !important;
 `;
 
 export default ButtonAtom;

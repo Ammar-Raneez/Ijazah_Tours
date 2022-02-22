@@ -61,8 +61,8 @@ function Sidebar() {
       <Divider />
       <StyledList>
         {links.map((link) => (
-          <LinkAtom to={link.link}>
-            <ListItem button key={link.key}>
+          <LinkAtom key={link.key} to={link.link}>
+            <ListItem button>
               <LinkTextAtom text={link.text} />
             </ListItem>
           </LinkAtom>
@@ -93,7 +93,6 @@ export default Sidebar;
 const StyledDrawer = styled(Drawer)`
   .MuiDrawer-paper {
     top: auto;
-    height: 92%;
     background-color: #4283e4;
   }
 
