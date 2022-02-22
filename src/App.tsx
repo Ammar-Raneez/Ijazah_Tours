@@ -27,14 +27,14 @@ function App() {
         size='large'
       />
       <IconAtom
-        onClick={() => console.log('he')}
+        onclick={() => console.log('he')}
         size="medium"
         children={<DeleteIcon />}
       />
       <TextFieldAtom
         variant="standard"
         size="small"
-        adornmentPosition="start"
+        adornmentposition="start"
         label=""
         required={false}
         disabled={false}
@@ -43,18 +43,18 @@ function App() {
         onChange={(e: any) => setField(e.target.value)}
         value={field}
         error={false}
-        helperText=""
+        helpertext=""
         children={<SearchIcon />}
         placeholder="Search"
       />
       <TextFieldAtom
         variant="standard"
         size="small"
-        adornmentPosition="end"
+        adornmentposition="end"
         label=""
         select
         onChange={(e: any) => setSort(e.target.value)}
-        dropdownOptions={options}
+        options={options}
         value={sort}
         children={<DeleteIcon />}
       />

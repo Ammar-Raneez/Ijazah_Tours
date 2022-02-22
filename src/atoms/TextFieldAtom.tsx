@@ -8,36 +8,36 @@ interface DropdownOption {
 interface TextFieldAtomProps {
   variant: 'outlined' | 'filled' | 'standard';
   size: 'small' | 'medium';
-  adornmentPosition: 'start' | 'end';
+  adornmentposition: 'start' | 'end';
   label: string;
   required?: boolean;
   disabled?: boolean;
   focused?: boolean;
   error?: boolean;
   select: boolean;
-  helperText?: string;
+  helpertext?: string;
   placeholder?: string;
   value: any;
   onChange: any;
-  dropdownOptions?: DropdownOption[];
+  options?: DropdownOption[];
   children?: any;
 }
 
 function TextFieldAtom({
   variant,
   size,
-  adornmentPosition,
+  adornmentposition,
   label,
   required,
   disabled,
   focused,
   select,
   error,
-  helperText,
+  helpertext,
   placeholder,
   value,
   onChange,
-  dropdownOptions,
+  options,
   ...props
 }: TextFieldAtomProps) {
   return (
@@ -52,12 +52,12 @@ function TextFieldAtom({
         disabled={disabled}
         focused={focused}
         error={error}
-        helperText={helperText}
+        helperText={helpertext}
         placeholder={placeholder}
-        InputProps={adornmentPosition === 'start' ? {
+        InputProps={adornmentposition === 'start' ? {
           startAdornment: (
             <InputAdornment
-              position={adornmentPosition}
+              position={adornmentposition}
             >
               {props.children}
             </InputAdornment>
@@ -65,7 +65,7 @@ function TextFieldAtom({
         }: {
           endAdornment: (
             <InputAdornment
-              position={adornmentPosition}
+              position={adornmentposition}
             >
               {props.children}
             </InputAdornment>
@@ -81,7 +81,7 @@ function TextFieldAtom({
       size={size}
       label={label}
     >
-      {dropdownOptions!.map((option: DropdownOption) => (
+      {options!.map((option: DropdownOption) => (
         <MenuItem value={option.value} key={option.value}>
           {option.label}
         </MenuItem>

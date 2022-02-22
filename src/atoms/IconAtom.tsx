@@ -3,14 +3,14 @@ import { MouseEventHandler } from 'react';
 import styled from 'styled-components';
 
 interface IconAtomProps {
-  onClick: MouseEventHandler<HTMLButtonElement>;
+  onclick: MouseEventHandler<HTMLButtonElement>;
   size: 'small' | 'medium' | 'large';
   children: any;
 }
 
-function IconAtom({ onClick, size, ...props }: IconAtomProps) {
+function IconAtom({ onclick, size, ...props }: IconAtomProps) {
   return (
-    <StyledIcon size={size} onClick={onClick}>
+    <StyledIcon size={size} onClick={onclick}>
       {props.children}
     </StyledIcon>
   );
