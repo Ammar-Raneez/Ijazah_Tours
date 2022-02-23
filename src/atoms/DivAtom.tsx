@@ -17,6 +17,8 @@ interface DivAtomProps {
   height?: string;
   width?: string;
   borderradius?: string;
+  overflowx?: string;
+  overflowy?: string;
   children?: any;
 }
 
@@ -31,6 +33,8 @@ function DivAtom({
   height,
   width,
   borderradius,
+  overflowx,
+  overflowy,
   ...props
 }: DivAtomProps) {
   return (
@@ -45,6 +49,8 @@ function DivAtom({
       height={height}
       width={width}
       borderradius={borderradius}
+      overflowx={overflowx}
+      overflowy={overflowy}
     >
       {props.children}
     </StyledDivAtom>
@@ -64,4 +70,6 @@ const StyledDivAtom = styled.div<DivAtomProps>`
   height: ${({ height }) => height};
   width: ${({ width }) => width};
   border-radius: ${({ borderradius }) => borderradius};
+  overflow-x: ${({ overflowx }) => overflowx};
+  overflow-y: ${({ overflowy }) => overflowy};
 `;

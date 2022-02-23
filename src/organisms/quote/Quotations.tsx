@@ -1,5 +1,6 @@
 import DivAtom from "../../atoms/DivAtom";
 import QuotationsTable from "./QuotationsTable";
+import { QUOTATIONS_DUMMY_DATA } from "../../data";
 
 function Quotations() {
   return (
@@ -9,75 +10,16 @@ function Quotations() {
         borderradius="0.5rem"
         padding="1rem"
         flex={1}
+        overflowx="hidden"
+        overflowy="hidden"
       >
-        {/* <QuotationsTable
+        <QuotationsTable
           columns={["QUOTES", "EARNINGS", "COMMISION", "", ""]}
-          flexcontainer="false"
-          rowdata={DUMMY_DATA}
-        /> */}
+          rowdata={QUOTATIONS_DUMMY_DATA}
+        />
       </DivAtom>
     </DivAtom>
   );
 }
 
 export default Quotations;
-
-const DUMMY_DATA = [
-  [
-    {
-      image: require("../../assets/logo.png"),
-      title: "Brad Simmons",
-      subtitle: "HTML CSS ReactJS",
-    },
-    {
-      title: "$2500",
-      subtitle: "In Process",
-    },
-    {
-      title: "$520",
-      subtitle: "Paid",
-    },
-    {
-      quote: '',
-      status: 'Approved'
-    }
-  ],
-  [
-    {
-      image: require("../../assets/logo.png"),
-      title: "Brad Simmons",
-      subtitle: "HTML CSS ReactJS",
-    },
-    {
-      title: "$2500",
-      subtitle: "In Process",
-    },
-    {
-      title: "$520",
-      subtitle: "Paid",
-    },
-    {
-      quote: '',
-      status: 'Approved'
-    }
-  ],
-  [
-    {
-      image: require("../../assets/logo.png"),
-      title: "Brad Simmons",
-      subtitle: "HTML CSS ReactJS",
-    },
-    {
-      title: "$2500",
-      subtitle: "In Process",
-    },
-    {
-      title: "$520",
-      subtitle: "Paid",
-    },
-    {
-      quote: '',
-      status: 'In Progress'
-    }
-  ],
-];

@@ -1,4 +1,5 @@
 import {
+  makeStyles,
   Paper,
   Table,
   TableBody,
@@ -6,37 +7,39 @@ import {
   TableContainer,
   TableFooter,
   TableHead,
-  TablePagination,
   TableRow,
 } from "@material-ui/core";
 import React from "react";
-import styled from "styled-components";
 import { v4 as uuid } from "uuid";
 import ButtonAtom from "../../atoms/ButtonAtom";
-import ParagraphAtom from "../../atoms/ParagraphAtom";
 import CustomerProfile from "../../molecules/CustomerProfile";
+import TableBottomPagination from "../../molecules/TableBottomPagination";
+import TableColumnCell from "../../molecules/TableColumnCell";
+import TableRowTextCell from "../../molecules/TableRowTextCell";
 
 interface QuotationsTableProps {
   columns?: string[];
-  flexcontainer?: string;
   rowdata?: any[];
   component?: any;
 }
 
-function QuotationsTable({
-  columns,
-  flexcontainer,
-  rowdata,
-}: QuotationsTableProps) {
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650,
+    overflow: "scroll",
+  },
+});
+
+function QuotationsTable({ columns, rowdata }: QuotationsTableProps) {
+  const classes = useStyles();
+
   return (
-    <StyledTableContainer flexcontainer={flexcontainer} component={Paper}>
-      <Table>
+    <TableContainer component={Paper}>
+      <Table className={classes.table} aria-label="quotations table">
         <TableHead>
           <TableRow>
             {columns!.map((column) => (
-              <StyledTableColumnCell key={uuid()} align="left">
-                <strong key={uuid()}>{column}</strong>
-              </StyledTableColumnCell>
+              <TableColumnCell align="left" color="b5b5c3" column={column} />
             ))}
           </TableRow>
         </TableHead>
@@ -55,23 +58,14 @@ function QuotationsTable({
                         key={uuid()}
                       />
                     ) : (
-                      <>
-                        <ParagraphAtom
-                          text={cell.title}
-                          margin="0px"
-                          color="#464E5F"
-                          size="0.875rem"
-                          weight={600}
-                          key={uuid()}
-                        />
-                        <ParagraphAtom
-                          text={cell.subtitle}
-                          margin="0px"
-                          color="#B5B5C3"
-                          size="0.875rem"
-                          key={uuid()}
-                        />
-                      </>
+                      <TableRowTextCell
+                        cell={{
+                          title: cell.title,
+                          subtitle: cell.subtitle,
+                          colors: ["#464E5F", "#B5B5C3"],
+                          weight: 600
+                        }}
+                      />
                     )}
                   </TableCell>
                 ) : (
@@ -113,16 +107,11 @@ function QuotationsTable({
         </TableBody>
         <TableFooter>
           <TableRow>
-            <StyledTablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-              colSpan={5}
-              count={rowdata!.length}
-              rowsPerPage={5}
-              page={0}
-              SelectProps={{
-                inputProps: { "aria-label": "rows per page" },
-                native: true,
-              }}
+            <TableBottomPagination
+              rowdata={rowdata}
+              rows={[5, 10, 25]}
+              rowsperpage={5}
+              colspan={5}
               onPageChange={() => null}
               onRowsPerPageChange={() => null}
               ActionsComponent={() => null}
@@ -130,30 +119,8 @@ function QuotationsTable({
           </TableRow>
         </TableFooter>
       </Table>
-    </StyledTableContainer>
+    </TableContainer>
   );
 }
 
 export default QuotationsTable;
-
-const StyledTableContainer = styled(TableContainer)<QuotationsTableProps>`
-  ${({ flexcontainer }) =>
-    flexcontainer === "true" &&
-    `
-			flex: 0.7;
-			marginRight: 3rem;
-			height: 100%;
-		`}
-`;
-
-const StyledTableColumnCell = styled(TableCell)`
-  strong {
-    color: #b5b5c3;
-  }
-`;
-
-const StyledTablePagination = styled(TablePagination)`
-  .MuiTablePagination-toolbar {
-    padding-right: 24px;
-  }
-`;
