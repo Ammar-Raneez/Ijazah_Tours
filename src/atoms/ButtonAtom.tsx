@@ -5,7 +5,7 @@ import styled from "styled-components";
 interface ButtonAtomProps {
   text?: string;
   starticon?: any;
-  shadow?: string;
+  filter?: string;
   disabled?: boolean;
   weight?: number;
   margin?: string;
@@ -20,7 +20,7 @@ interface ButtonAtomProps {
 function ButtonAtom({
   text,
   starticon,
-  shadow,
+  filter,
   disabled,
   weight,
   margin,
@@ -38,7 +38,7 @@ function ButtonAtom({
       backgroundcolor={backgroundcolor}
       borderradius={borderradius}
       starticon={starticon}
-      shadow={shadow}
+      filter={filter}
       disabled={disabled}
       size={size}
       width={width}
@@ -54,10 +54,11 @@ const StyledButton = styled(Button)<ButtonAtomProps>`
   color: ${({ textcolor }) => textcolor} !important;
   background-color: ${({ backgroundcolor }) => backgroundcolor} !important;
   border-radius: ${({ borderradius }) => borderradius} !important;
-  box-shadow: ${({ shadow }) => shadow} !important;
   width: ${({ width }) => width} !important;
   font-weight: ${({ weight }) => weight} !important;
   margin: ${({ margin }) => margin} !important;
+  filter: ${({ filter }) =>
+    `drop-shadow(${filter} rgba(0, 0, 0, 0.25))`} !important;
   text-transform: none;
 `;
 

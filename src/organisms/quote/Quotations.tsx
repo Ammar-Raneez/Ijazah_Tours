@@ -40,6 +40,7 @@ function Quotations() {
             width="11rem"
             weight={600}
             margin="0 16px 0 0"
+            filter="5px 5px 4px"
           />
           <ButtonAtom
             text="Compare Rates"
@@ -50,6 +51,7 @@ function Quotations() {
             borderradius="0.5rem"
             width="11rem"
             weight={600}
+            filter="5px 5px 4px"
           />
         </DivAtom>
         <DivAtom
@@ -74,6 +76,7 @@ function Quotations() {
               width="11rem"
               weight={600}
               margin="0 16px 0 0"
+              filter="5px 5px 4px"
             />
             <ButtonAtom
               text="On Progress"
@@ -84,6 +87,7 @@ function Quotations() {
               borderradius="0.5rem"
               width="11rem"
               weight={600}
+              filter="5px 5px 4px"
             />
           </DivAtom>
           <DivAtom
