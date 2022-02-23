@@ -10,7 +10,7 @@ interface TableColumnCellProps {
 
 function TableColumnCell({ column, align, color }: TableColumnCellProps) {
   return (
-    <StyledTableColumnCell color={color} align={align}>
+    <StyledTableColumnCell key={uuid()} color={color} align={align}>
       <strong key={uuid()}>{column}</strong>
     </StyledTableColumnCell>
   );

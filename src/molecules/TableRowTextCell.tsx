@@ -1,3 +1,4 @@
+import React from "react";
 import { v4 as uuid } from "uuid";
 import ParagraphAtom from "../atoms/ParagraphAtom";
 
@@ -12,7 +13,7 @@ interface TableRowTextCellProps {
 
 function TableRowTextCell({ cell }: TableRowTextCellProps) {
   return cell.subtitle ? (
-    <>
+    <React.Fragment key={uuid()}>
       <ParagraphAtom
         text={cell.title}
         margin="0px"
@@ -28,7 +29,7 @@ function TableRowTextCell({ cell }: TableRowTextCellProps) {
         size="0.875rem"
         key={uuid()}
       />
-    </>
+    </React.Fragment>
   ) : (
     <ParagraphAtom
       text={cell.title}

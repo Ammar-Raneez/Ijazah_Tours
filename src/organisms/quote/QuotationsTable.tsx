@@ -39,7 +39,7 @@ function QuotationsTable({ columns, rowdata }: QuotationsTableProps) {
         <TableHead>
           <TableRow>
             {columns!.map((column) => (
-              <TableColumnCell align="left" color="b5b5c3" column={column} />
+              <TableColumnCell key={uuid()} align="left" color="b5b5c3" column={column} />
             ))}
           </TableRow>
         </TableHead>

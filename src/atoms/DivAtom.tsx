@@ -13,6 +13,7 @@ interface DivAtomProps {
   align?: "center" | "space-between" | "flex-start" | "flex-end" | "stretch";
   flex?: number;
   padding?: string;
+  margin?: string;
   backgroundcolor?: string;
   height?: string;
   width?: string;
@@ -29,6 +30,7 @@ function DivAtom({
   align,
   flex,
   padding,
+  margin,
   backgroundcolor,
   height,
   width,
@@ -45,6 +47,7 @@ function DivAtom({
       justify={justify}
       flex={flex}
       padding={padding}
+      margin={margin}
       backgroundcolor={backgroundcolor}
       height={height}
       width={width}
@@ -66,6 +69,7 @@ const StyledDivAtom = styled.div<DivAtomProps>`
   align-items: ${({ align }) => align};
   flex: ${({ flex }) => flex};
   padding: ${({ padding }) => padding};
+  margin: ${({ margin }) => margin};
   background-color: ${({ backgroundcolor }) => backgroundcolor};
   height: ${({ height }) => height};
   width: ${({ width }) => width};
