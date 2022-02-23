@@ -48,8 +48,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const links = [
   { key: "1", text: "Dashboard", link: "/dashboard" },
-  { key: "2", text: "Quote", link: "/quote/quotations" },
-  { key: "3", text: "Library", link: "/library/accomodation" },
+  { key: "2", text: "Quote", link: "/quote" },
+  { key: "3", text: "Library", link: "/library" },
 ];
 
 interface SidebarProps {
@@ -69,7 +69,7 @@ function Sidebar({ window, handleDrawerToggle, mobileOpen }: SidebarProps) {
       <Divider />
       <StyledList>
         {links.map((link) => (
-          <LinkAtom key={link.key} to={link.link}>
+          <LinkAtom key={link.key} to={`${link.link}`}>
             <ListItem button>
               <LinkTextAtom text={link.text} />
             </ListItem>

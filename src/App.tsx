@@ -1,7 +1,7 @@
 import Header from "./organisms/Header";
 import GlobalStyle from "./globalStyle";
 import Sidebar from "./organisms/Sidebar";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "./organisms/Navbar";
 import Quotations from "./organisms/quote/Quotations";
@@ -30,10 +30,10 @@ function App() {
       >
         <Sidebar mobileOpen={mobileOpen} handleDrawerToggle={handleDrawerToggle} />
         <Switch>
-          <Route path="/dashboard/*">
+          <Route path="/dashboard">
             <Navbar type="dashboard" />
           </Route>
-          <Route path="/quote/*">
+          <Route path="/quote">
             <StyledDivAtom>
               <Navbar type="quote" />
               <Route path="/quote/quotations">
@@ -45,9 +45,12 @@ function App() {
               <Route path="/quote/summary">
                 <Summary />
               </Route>
+              <Route exact path="/quote">
+                <Redirect to="/quote/quotations" />
+              </Route>
             </StyledDivAtom>
           </Route>
-          <Route path="/library/*">
+          <Route path="/library">
             <StyledDivAtom>
               <Navbar type="library" />
               <Route path="/library/accomodation">
@@ -58,6 +61,9 @@ function App() {
               </Route>
               <Route path="/library/customer">
                 <Customer />
+              </Route>
+              <Route exact path="/library">
+                <Redirect to="/library/accomodation" />
               </Route>
             </StyledDivAtom>
           </Route>
