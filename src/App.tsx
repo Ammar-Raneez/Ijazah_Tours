@@ -9,6 +9,9 @@ import Voucher from "./organisms/quote/Voucher";
 import Summary from "./organisms/quote/Summary";
 import DivAtom from "./atoms/DivAtom";
 import { useState } from "react";
+import Accomodation from "./organisms/library/Accomodation";
+import Driver from "./organisms/library/Driver";
+import Customer from "./organisms/library/Customer";
 
 function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -27,10 +30,10 @@ function App() {
       >
         <Sidebar mobileOpen={mobileOpen} handleDrawerToggle={handleDrawerToggle} />
         <Switch>
-          <Route path="/dashboard">
+          <Route path="/dashboard/*">
             <Navbar type="dashboard" />
           </Route>
-          <Route path="/quote">
+          <Route path="/quote/*">
             <StyledDivAtom>
               <Navbar type="quote" />
               <Route path="/quote/quotations">
@@ -44,8 +47,19 @@ function App() {
               </Route>
             </StyledDivAtom>
           </Route>
-          <Route path="/library">
-            <Navbar type="library" />
+          <Route path="/library/*">
+            <StyledDivAtom>
+              <Navbar type="library" />
+              <Route path="/library/accomodation">
+                <Accomodation />
+              </Route>
+              <Route path="/library/driver">
+                <Driver />
+              </Route>
+              <Route path="/library/customer">
+                <Customer />
+              </Route>
+            </StyledDivAtom>
           </Route>
         </Switch>
       </DivAtom>
