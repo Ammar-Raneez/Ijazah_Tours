@@ -9,6 +9,7 @@ import {
   TablePagination,
   TableRow,
 } from "@material-ui/core";
+import React from "react";
 import styled from "styled-components";
 import { v4 as uuid } from "uuid";
 import ButtonAtom from "../../atoms/ButtonAtom";
@@ -74,7 +75,7 @@ function QuotationsTable({
                     )}
                   </TableCell>
                 ) : (
-                  <>
+                  <React.Fragment key={uuid()}>
                     <TableCell key={uuid()} align="right">
                       <ButtonAtom
                         width="8rem"
@@ -104,7 +105,7 @@ function QuotationsTable({
                         key={uuid()}
                       />
                     </TableCell>
-                  </>
+                  </React.Fragment>
                 )
               )}
             </TableRow>
@@ -113,13 +114,13 @@ function QuotationsTable({
         <TableFooter>
           <TableRow>
             <StyledTablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+              rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
               colSpan={5}
               count={rowdata!.length}
               rowsPerPage={5}
               page={0}
               SelectProps={{
-                inputProps: { 'aria-label': 'rows per page' },
+                inputProps: { "aria-label": "rows per page" },
                 native: true,
               }}
               onPageChange={() => null}
@@ -128,7 +129,6 @@ function QuotationsTable({
             />
           </TableRow>
         </TableFooter>
-
       </Table>
     </StyledTableContainer>
   );
@@ -156,4 +156,4 @@ const StyledTablePagination = styled(TablePagination)`
   .MuiTablePagination-toolbar {
     padding-right: 24px;
   }
-`
+`;

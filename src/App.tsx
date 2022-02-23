@@ -8,17 +8,24 @@ import Quotations from "./organisms/quote/Quotations";
 import Voucher from "./organisms/quote/Voucher";
 import Summary from "./organisms/quote/Summary";
 import DivAtom from "./atoms/DivAtom";
+import { useState } from "react";
 
 function App() {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
   return (
     <Router>
       <GlobalStyle />
-      <Header />
+      <Header handleDrawerToggle={handleDrawerToggle} />
       <DivAtom
         display="flex"
         flex={1}
       >
-        <Sidebar />
+        <Sidebar mobileOpen={mobileOpen} handleDrawerToggle={handleDrawerToggle} />
         <Switch>
           <Route path="/dashboard">
             <Navbar type="dashboard" />

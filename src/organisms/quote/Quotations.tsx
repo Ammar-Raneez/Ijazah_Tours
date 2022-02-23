@@ -10,11 +10,11 @@ function Quotations() {
         padding="1rem"
         flex={1}
       >
-        <QuotationsTable
+        {/* <QuotationsTable
           columns={["QUOTES", "EARNINGS", "COMMISION", "", ""]}
           flexcontainer="false"
           rowdata={DUMMY_DATA}
-        />
+        /> */}
       </DivAtom>
     </DivAtom>
   );

@@ -1,18 +1,27 @@
 import { useState } from "react";
 import styled from "styled-components";
 import clsx from "clsx";
-import { Divider, Drawer, List, ListItem, makeStyles } from "@material-ui/core";
+import {
+  Divider,
+  Drawer,
+  Hidden,
+  List,
+  ListItem,
+  makeStyles,
+  Theme,
+} from "@material-ui/core";
 import LinkAtom from "../atoms/LinkAtom";
 import LinkTextAtom from "../atoms/LinkTextAtom";
 import DivAtom from "../atoms/DivAtom";
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles((theme: any) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: "nowrap",
+    [theme.breakpoints.up("md")]: {
+      width: drawerWidth,
+      flexShrink: 0,
+    },
   },
   drawerOpen: {
     width: drawerWidth,
@@ -20,6 +29,9 @@ const useStyles = makeStyles((theme: any) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
+  },
+  drawerPaper: {
+    width: drawerWidth,
   },
   drawerClose: {
     transition: theme.transitions.create("width", {
@@ -40,24 +52,20 @@ const links = [
   { key: "3", text: "Library", link: "/library" },
 ];
 
-function Sidebar() {
-  const classes = useStyles();
-  const [open, setOpen] = useState(true);
+interface SidebarProps {
+  window?: () => Window;
+  handleDrawerToggle: () => void;
+  mobileOpen: boolean;
+}
 
-  return (
-    <StyledDrawer
-      variant="permanent"
-      className={clsx(classes.drawer, {
-        [classes.drawerOpen]: open,
-        [classes.drawerClose]: !open,
-      })}
-      classes={{
-        paper: clsx({
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open,
-        }),
-      }}
-    >
+function Sidebar({ window, handleDrawerToggle, mobileOpen }: SidebarProps) {
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
+  const classes = useStyles();
+  const [open] = useState(true);
+
+  const drawer = (
+    <>
       <Divider />
       <StyledList>
         {links.map((link) => (
@@ -68,7 +76,7 @@ function Sidebar() {
           </LinkAtom>
         ))}
         <DivAtom
-          flex={1}
+          flex={0.93}
           display="flex"
           flexdirection="column"
           justify="flex-end"
@@ -76,15 +84,51 @@ function Sidebar() {
           <ListItem button key="Profile">
             <LinkTextAtom text="Profile" />
           </ListItem>
-          <ListItem button key="Collapse" onClick={() => setOpen(!open)}>
-            <LinkTextAtom text={open ? "Collapse" : "Expand"} />
-          </ListItem>
           <ListItem button key="Sign Out">
             <LinkTextAtom text="Sign Out" />
           </ListItem>
         </DivAtom>
       </StyledList>
-    </StyledDrawer>
+    </>
+  );
+
+  return (
+    <nav className={classes.drawer} aria-label="mailbox folders">
+      <Hidden only="lg" implementation="css">
+        <StyledDrawer
+          container={container}
+          variant="temporary"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          className={clsx(classes.drawer, {
+            [classes.drawerOpen]: open,
+            [classes.drawerClose]: !open,
+          })}
+          classes={{
+            paper: clsx({
+              [classes.drawerOpen]: open,
+              [classes.drawerClose]: !open,
+            }),
+          }}
+          ModalProps={{
+            keepMounted: true,
+          }}
+        >
+          {drawer}
+        </StyledDrawer>
+      </Hidden>
+      <Hidden smDown implementation="css">
+        <StyledDrawer
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+          variant="permanent"
+          open
+        >
+          {drawer}
+        </StyledDrawer>
+      </Hidden>
+    </nav>
   );
 }
 
