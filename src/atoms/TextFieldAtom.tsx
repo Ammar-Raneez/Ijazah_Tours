@@ -1,4 +1,5 @@
 import { InputAdornment, MenuItem, TextField } from "@material-ui/core";
+import styled from "styled-components";
 
 interface DropdownOption {
   label: string;
@@ -6,9 +7,10 @@ interface DropdownOption {
 }
 
 interface TextFieldAtomProps {
-  variant: "outlined" | "filled" | "standard";
+  variant: "filled" | "standard";
   size: "small" | "medium";
   adornmentposition: "start" | "end";
+  width: string;
   label: string;
   required?: boolean;
   disabled?: boolean;
@@ -27,6 +29,7 @@ function TextFieldAtom({
   variant,
   size,
   adornmentposition,
+  width,
   label,
   required,
   disabled,
@@ -41,8 +44,9 @@ function TextFieldAtom({
   ...props
 }: TextFieldAtomProps) {
   return !select ? (
-    <TextField
+    <StyledTextFieldAtom
       value={value}
+      style={{ width }}
       onChange={onChange}
       variant={variant}
       size={size}
@@ -61,6 +65,7 @@ function TextFieldAtom({
                   {props.children}
                 </InputAdornment>
               ),
+              disableUnderline: true
             }
           : {
               endAdornment: (
@@ -68,25 +73,46 @@ function TextFieldAtom({
                   {props.children}
                 </InputAdornment>
               ),
+              disableUnderline: true
             }
       }
     />
   ) : (
-    <TextField
+    <StyledTextFieldAtom
       select
+      style={{ width }}
       value={value}
       onChange={onChange}
       variant={variant}
       size={size}
       label={label}
+      InputProps={{ disableUnderline: true }}
     >
       {options!.map((option: DropdownOption) => (
         <MenuItem value={option.value} key={option.value}>
           {option.label}
         </MenuItem>
       ))}
-    </TextField>
+    </StyledTextFieldAtom>
   );
 }
 
 export default TextFieldAtom;
+
+const StyledTextFieldAtom = styled(TextField)`
+  .MuiInputBase-root {
+    border-radius: 0.5rem;
+    border-bottom: 0px;
+    background-color: #dae1ec;
+  }
+
+  .MuiInput-underline::before,
+  .MuiInput-underline::after,
+  .MuiInput-underline:hover {
+    border-bottom: 0px;
+  }
+
+  .MuiSelect-root {
+    padding: 11px;
+  }
+`;

@@ -4,14 +4,32 @@ import { v4 as uuid } from "uuid";
 
 interface TableColumnCellProps {
   column?: string;
-  align?: "left" | "center" | "right" | "justify" | "inherit"
+  align?: "left" | "center" | "right" | "justify" | "inherit";
   color: string;
+  sortDirection?: any;
+  children?: any;
 }
 
-function TableColumnCell({ column, align, color }: TableColumnCellProps) {
+function TableColumnCell({
+  column,
+  align,
+  color,
+  sortDirection,
+  ...props
+}: TableColumnCellProps) {
   return (
-    <StyledTableColumnCell key={uuid()} color={color} align={align}>
-      <strong key={uuid()}>{column}</strong>
+    <StyledTableColumnCell
+      sortDirection={sortDirection}
+      key={uuid()}
+      color={color}
+      align={align}
+      style={props.children ? { color, fontWeight: "bold" } : {}}
+    >
+      {!props.children ? (
+        <strong key={uuid()}>{column}</strong>
+      ) : (
+        props.children
+      )}
     </StyledTableColumnCell>
   );
 }

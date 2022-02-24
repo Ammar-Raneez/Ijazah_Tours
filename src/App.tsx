@@ -79,6 +79,7 @@ const StyledDivAtom = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
+  overflow-y: scroll;
 
   > div:nth-child(2) {
     flex: 1;

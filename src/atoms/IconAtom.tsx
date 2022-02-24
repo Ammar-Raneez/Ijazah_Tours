@@ -1,23 +1,26 @@
-import IconButton from '@material-ui/core/IconButton';
-import { MouseEventHandler } from 'react';
-import styled from 'styled-components';
+import IconButton from "@material-ui/core/IconButton";
+import { MouseEventHandler } from "react";
+import styled from "styled-components";
 
 interface IconAtomProps {
-  onclick: MouseEventHandler<HTMLButtonElement>;
-  size: 'small' | 'medium';
+  onClick: MouseEventHandler<HTMLButtonElement> | any;
+  size: "small" | "medium";
+  textcolor: string;
+  padding: string;
   children: any;
 }
 
-function IconAtom({ onclick, size, ...props }: IconAtomProps) {
+function IconAtom({ onClick, size, textcolor, padding, ...props }: IconAtomProps) {
   return (
-    <StyledIcon size={size} onClick={onclick}>
+    <StyledIcon size={size} textcolor={textcolor} padding={padding} onClick={onclick}>
       {props.children}
     </StyledIcon>
   );
 }
 
-const StyledIcon = styled(IconButton)`
+const StyledIcon = styled(IconButton)<IconAtomProps>`
   color: ${({ color }) => color} !important;
-`
+  padding: ${({ padding }) => padding} !important;
+`;
 
 export default IconAtom;

@@ -8,16 +8,26 @@ import InputAtom from "../../atoms/InputAtom";
 
 function Quotations() {
   const [search, setSearch] = useState("");
-	const [width, setWidth] = useState(0);
+  const [width, setWidth] = useState(0);
+  const [containerHeight, setContainerHeight] = useState(0);
 
-	useEffect(() => {
-		setWidth(window.innerWidth);
-		const listener = window.addEventListener('resize', () => {
-			setWidth(window.innerWidth);
-		});
+  useEffect(() => {
+    setWidth(window.innerWidth);
+    setContainerHeight(window.innerHeight - 180);
+    const widthListener = window.addEventListener("resize", () => {
+      setWidth(window.innerWidth);
+    });
+    const heightListener = window.addEventListener("resize", () => {
+      setContainerHeight(window.innerHeight - 180);
+    });
 
-		return window.removeEventListener('resize', listener as any);
-	}, [width])
+    const removeEventListeners = () => {
+      window.removeEventListener("resize", widthListener as any);
+      window.removeEventListener("resize", heightListener as any);
+    }
+
+    return removeEventListeners();
+  }, [width, containerHeight]);
 
   return (
     <DivAtom backgroundcolor="#E5E5E5" padding="1rem" display="flex">
@@ -27,7 +37,8 @@ function Quotations() {
         padding="1rem"
         flex={1}
         overflowx="hidden"
-        overflowy="hidden"
+        overflowy="scroll"
+        height={containerHeight + "px"}
       >
         <DivAtom display="flex" justify="flex-start" margin="0 0 4rem 0">
           <ButtonAtom

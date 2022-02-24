@@ -6,6 +6,7 @@ interface InputAtomProps {
   fullWidth: boolean;
   required?: boolean;
   disabled?: boolean;
+  padding?: string;
   error?: boolean;
   placeholder?: string;
   value: any;
@@ -17,6 +18,7 @@ function InputAtom({
   adornmentposition,
   required,
   disabled,
+  padding,
   error,
   placeholder,
   fullWidth,
@@ -26,6 +28,7 @@ function InputAtom({
 }: InputAtomProps) {
   return (
     <StyledInput
+      style={padding ? { padding } : {}}
       value={value}
       onChange={onChange}
       required={required}
@@ -49,11 +52,11 @@ const StyledInput = styled(Input)`
   &.MuiInputBase-root {
     border-bottom: 0px;
     border-radius: 0.5rem;
-    background-color: #DAE1EC;
+    background-color: #dae1ec;
   }
 
   .MuiInputAdornment-root {
-    color: #6F809E !important;
+    color: #6f809e !important;
     margin-left: 8px;
   }
-`
+`;

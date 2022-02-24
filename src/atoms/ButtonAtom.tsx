@@ -37,7 +37,7 @@ function ButtonAtom({
       textcolor={textcolor}
       backgroundcolor={backgroundcolor}
       borderradius={borderradius}
-      starticon={starticon}
+      startIcon={starticon}
       filter={filter}
       disabled={disabled}
       size={size}
