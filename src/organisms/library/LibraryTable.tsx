@@ -37,6 +37,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   table: {
     minWidth: 750,
   },
+  container: {
+    // maxHeight: 300
+  },
   visuallyHidden: {
     border: 0,
     clip: "rect(0 0 0 0)",
@@ -117,9 +120,10 @@ export default function LibraryTable({ data }: LibraryTableProps) {
           setSearch={setSearch}
           numSelected={selected.length}
         />
-        <TableContainer>
+        <TableContainer className={classes.container}>
           <Table
             className={classes.table}
+            stickyHeader
             aria-labelledby="tableTitle"
             size="medium"
             aria-label="Library table"
