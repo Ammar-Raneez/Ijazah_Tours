@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 import ButtonAtom from "../atoms/ButtonAtom";
 import DivAtom from "../atoms/DivAtom";
 import InputAtom from "../atoms/InputAtom";
+import { Link } from "react-router-dom";
 
 const useToolbarStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -121,6 +122,7 @@ const LibraryTableToolbar = ({
               adornmentposition="start"
               fullWidth={width < 540}
               value={search}
+              plain="false"
               onChange={(e: any) => setSearch(e.target.value)}
               children={<SearchIcon />}
             />
@@ -131,17 +133,18 @@ const LibraryTableToolbar = ({
             margin={width < 540 ? "16px 0 0 0" : "0px"}
             width={width < 540 ? "100%" : "auto"}
           >
-            <ButtonAtom
-              starticon={<AddCircleOutlineOutlinedIcon />}
-              text={addbtntext}
-              textcolor="white"
-              backgroundcolor="#0A65FF"
-              onClick={() => null}
-              size="large"
-              borderradius="0.5rem"
-              width={width < 540 ? "100%" : "11rem"}
-              margin="0"
-            />
+            <Link to={`/library/${addbtntext.split(" ")[1].toLowerCase()}/create`}>
+              <ButtonAtom
+                starticon={<AddCircleOutlineOutlinedIcon />}
+                text={addbtntext}
+                textcolor="white"
+                backgroundcolor="#0A65FF"
+                size="large"
+                borderradius="0.5rem"
+                width={width < 540 ? "100%" : "11rem"}
+                margin="0"
+              />
+            </Link>
           </DivAtom>
         )}
       </DivAtom>

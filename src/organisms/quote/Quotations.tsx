@@ -111,6 +111,7 @@ function Quotations() {
               adornmentposition="start"
               fullWidth={width < 768}
               value={search}
+              plain="false"
               onChange={(e: any) => setSearch(e.target.value)}
               children={<SearchIcon />}
             />

@@ -2,10 +2,13 @@ import { Input, InputAdornment } from "@material-ui/core";
 import styled from "styled-components";
 
 interface InputAtomProps {
-  adornmentposition: "start" | "end";
   fullWidth: boolean;
+  adornmentposition?: "start" | "end";
+  plain?: string;
   required?: boolean;
   disabled?: boolean;
+  multiline?: boolean;
+  rows?: number;
   padding?: string;
   error?: boolean;
   placeholder?: string;
@@ -16,8 +19,11 @@ interface InputAtomProps {
 
 function InputAtom({
   adornmentposition,
+  plain,
   required,
   disabled,
+  multiline,
+  rows,
   padding,
   error,
   placeholder,
@@ -28,6 +34,9 @@ function InputAtom({
 }: InputAtomProps) {
   return (
     <StyledInput
+      multiline={multiline}
+      rows={rows}
+      plain={plain}
       style={padding ? { padding } : {}}
       value={value}
       onChange={onChange}
@@ -36,11 +45,13 @@ function InputAtom({
       error={error}
       placeholder={placeholder}
       fullWidth={fullWidth}
-      disableUnderline
+      disableUnderline={plain === "false"}
       startAdornment={
-        <InputAdornment position={adornmentposition}>
-          {props.children}
-        </InputAdornment>
+        adornmentposition && (
+          <InputAdornment position={adornmentposition}>
+            {props.children}
+          </InputAdornment>
+        )
       }
     />
   );
@@ -48,15 +59,19 @@ function InputAtom({
 
 export default InputAtom;
 
-const StyledInput = styled(Input)`
-  &.MuiInputBase-root {
-    border-bottom: 0px;
-    border-radius: 0.5rem;
-    background-color: #dae1ec;
-  }
+const StyledInput = styled(Input)<InputAtomProps>`
+  ${({ plain }) => (
+    plain === 'false' && `
+      &.MuiInputBase-root {
+        border-bottom: 0px;
+        border-radius: 0.5rem;
+        background-color: #dae1ec;
+      }
 
-  .MuiInputAdornment-root {
-    color: #6f809e !important;
-    margin-left: 8px;
-  }
+      .MuiInputAdornment-root {
+        color: #6f809e !important;
+        margin-left: 8px;
+      }
+    `
+  )}
 `;
