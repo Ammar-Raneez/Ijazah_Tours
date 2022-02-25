@@ -40,12 +40,14 @@ const useToolbarStyles = makeStyles((theme: Theme) => ({
 interface LibraryTableToolbarProps {
   numSelected: number;
   search: string;
+  addbtntext: string;
   setSearch: any;
 }
 
 const LibraryTableToolbar = ({
   numSelected,
   search,
+  addbtntext,
   setSearch,
 }: LibraryTableToolbarProps) => {
   const classes = useToolbarStyles();
@@ -131,7 +133,7 @@ const LibraryTableToolbar = ({
           >
             <ButtonAtom
               starticon={<AddCircleOutlineOutlinedIcon />}
-              text="Add Hotel"
+              text={addbtntext}
               textcolor="white"
               backgroundcolor="#0A65FF"
               onClick={() => null}

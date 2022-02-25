@@ -53,11 +53,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-interface LibraryTableProps {
+interface AccomodationTableProps {
   data: any;
 }
 
-export default function LibraryTable({ data }: LibraryTableProps) {
+export default function AccomodationTable({ data }: AccomodationTableProps) {
   const classes = useStyles();
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("calories");
@@ -119,6 +119,7 @@ export default function LibraryTable({ data }: LibraryTableProps) {
           search={search}
           setSearch={setSearch}
           numSelected={selected.length}
+          addbtntext="Add Hotel"
         />
         <TableContainer className={classes.container}>
           <Table

@@ -2,7 +2,7 @@ import ButtonAtom from "../../atoms/ButtonAtom";
 import TextFieldAtom from "../../atoms/TextFieldAtom";
 import DivAtom from "../../atoms/DivAtom";
 import { useEffect, useState } from "react";
-import LibraryTable from "./LibraryTable";
+import LibraryTable from "./AccomodationTable";
 import { LIBRARY_HOTEL_DATA } from "../../data";
 
 const options = [
