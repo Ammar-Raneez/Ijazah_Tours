@@ -4,8 +4,8 @@ interface SpanAtomProps {
   text?: string;
   color: string;
   size: string;
-  margin: string;
-  weight: number;
+  margin?: string;
+  weight?: number;
 }
 
 function SpanAtom({ text, color, size, margin, weight }: SpanAtomProps) {
