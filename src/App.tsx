@@ -1,7 +1,12 @@
 import Header from "./organisms/Header";
 import GlobalStyle from "./globalStyle";
 import Sidebar from "./organisms/Sidebar";
-import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "./organisms/Navbar";
 import Quotations from "./organisms/quote/Quotations";
@@ -9,9 +14,9 @@ import Voucher from "./organisms/quote/Voucher";
 import Summary from "./organisms/quote/Summary";
 import DivAtom from "./atoms/DivAtom";
 import { useState } from "react";
-import Accomodation from "./organisms/library/Accomodation";
-import Driver from "./organisms/library/Driver";
-import Customer from "./organisms/library/Customer";
+import Accomodation from "./organisms/library/accomodation/Accomodation";
+import Driver from "./organisms/library/driver/Driver";
+import Customer from "./organisms/library/customers/Customer";
 
 function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -24,11 +29,11 @@ function App() {
     <Router>
       <GlobalStyle />
       <Header handleDrawerToggle={handleDrawerToggle} />
-      <DivAtom
-        display="flex"
-        flex={1}
-      >
-        <Sidebar mobileOpen={mobileOpen} handleDrawerToggle={handleDrawerToggle} />
+      <DivAtom display="flex" flex={1}>
+        <Sidebar
+          mobileOpen={mobileOpen}
+          handleDrawerToggle={handleDrawerToggle}
+        />
         <Switch>
           <Route path="/dashboard">
             <Navbar type="dashboard" />
@@ -83,4 +88,4 @@ const StyledDivAtom = styled.div`
   > div:nth-child(2) {
     flex: 1;
   }
-`
+`;

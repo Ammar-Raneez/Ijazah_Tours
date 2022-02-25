@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import DivAtom from "../../atoms/DivAtom";
-import { LIBRARY_CUSTOMER_DATA } from "../../data";
-import CustomerTable from "./CustomerTable";
+import { Route } from "react-router-dom";
+import DivAtom from "../../../atoms/DivAtom";
+import { LIBRARY_DRIVER_DATA } from "../../../data";
+import CreateDriver from "./CreateDriver";
+import DriverTable from "./DriverTable";
 
-function Customer() {
+function Driver() {
   const [containerHeight, setContainerHeight] = useState(0);
 
   useEffect(() => {
@@ -31,11 +33,16 @@ function Customer() {
         height={containerHeight + "px"}
       >
         <DivAtom>
-          <CustomerTable data={LIBRARY_CUSTOMER_DATA} />
+          <Route path="/library/driver/create">
+            <CreateDriver />
+          </Route>
+          <Route exact path="/library/driver">
+            <DriverTable data={LIBRARY_DRIVER_DATA} />
+          </Route>
         </DivAtom>
       </DivAtom>
     </DivAtom>
   );
 }
 
-export default Customer;
+export default Driver;
