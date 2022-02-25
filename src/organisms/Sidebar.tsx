@@ -18,7 +18,7 @@ const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) => ({
   drawer: {
-    [theme.breakpoints.up("md")]: {
+    [theme.breakpoints.up("lg")]: {
       width: drawerWidth,
       flexShrink: 0,
     },
@@ -76,7 +76,7 @@ function Sidebar({ window, handleDrawerToggle, mobileOpen }: SidebarProps) {
           </LinkAtom>
         ))}
         <DivAtom
-          flex={0.93}
+          flex={0.9}
           display="flex"
           flexdirection="column"
           justify="flex-end"
@@ -94,7 +94,7 @@ function Sidebar({ window, handleDrawerToggle, mobileOpen }: SidebarProps) {
 
   return (
     <nav className={classes.drawer} aria-label="mailbox folders">
-      <Hidden only="lg" implementation="css">
+      <Hidden only={["lg"]} implementation="css">
         <StyledDrawer
           container={container}
           variant="temporary"
@@ -117,7 +117,7 @@ function Sidebar({ window, handleDrawerToggle, mobileOpen }: SidebarProps) {
           {drawer}
         </StyledDrawer>
       </Hidden>
-      <Hidden smDown implementation="css">
+      <Hidden mdDown implementation="css">
         <StyledDrawer
           classes={{
             paper: classes.drawerPaper,
