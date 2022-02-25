@@ -11,10 +11,10 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import { v4 as uuid } from "uuid";
-import ButtonAtom from "../../atoms/ButtonAtom";
 import CustomerProfile from "../../molecules/CustomerProfile";
 import TableBottomPagination from "../../molecules/TableBottomPagination";
 import TableColumnCell from "../../molecules/TableColumnCell";
+import TableRowButtonCell from "../../molecules/TableRowButtonCell";
 import TableRowTextCell from "../../molecules/TableRowTextCell";
 
 interface QuotationsTableProps {
@@ -39,7 +39,12 @@ function QuotationsTable({ columns, rowdata }: QuotationsTableProps) {
         <TableHead>
           <TableRow>
             {columns!.map((column) => (
-              <TableColumnCell key={uuid()} align="left" color="b5b5c3" column={column} />
+              <TableColumnCell
+                key={uuid()}
+                align="left"
+                color="b5b5c3"
+                column={column}
+              />
             ))}
           </TableRow>
         </TableHead>
@@ -48,8 +53,8 @@ function QuotationsTable({ columns, rowdata }: QuotationsTableProps) {
             <TableRow key={uuid()}>
               {row.map((cell: any) =>
                 !cell.status ? (
-                  <TableCell key={uuid()} align="left">
-                    {cell.image ? (
+                  cell.image ? (
+                    <TableCell key={uuid()} align="left">
                       <CustomerProfile
                         image={cell.image}
                         title={cell.title}
@@ -57,48 +62,41 @@ function QuotationsTable({ columns, rowdata }: QuotationsTableProps) {
                         titleweight={600}
                         key={uuid()}
                       />
-                    ) : (
-                      <TableRowTextCell
-                        cell={{
-                          title: cell.title,
-                          subtitle: cell.subtitle,
-                          colors: ["#464E5F", "#B5B5C3"],
-                          weight: 600
-                        }}
-                      />
-                    )}
-                  </TableCell>
+                    </TableCell>
+                  ) : (
+                    <TableRowTextCell
+                      key={uuid()}
+                      cell={{
+                        align: "left",
+                        title: cell.title,
+                        subtitle: cell.subtitle,
+                        colors: ["#464E5F", "#B5B5C3"],
+                        weight: 600,
+                      }}
+                    />
+                  )
                 ) : (
                   <React.Fragment key={uuid()}>
-                    <TableCell key={uuid()} align="right">
-                      <ButtonAtom
-                        width="8rem"
-                        size="medium"
-                        backgroundcolor={
-                          cell.status === "Approved" ? "#41E93E" : "#C1BFBF"
-                        }
-                        key={uuid()}
-                        onClick={() => null}
-                        textcolor={
-                          cell.status === "Approved" ? "#146521" : "#464E5F"
-                        }
-                        borderradius="0.5rem"
-                        text={cell.status}
-                        disabled
-                      />
-                    </TableCell>
-                    <TableCell key={uuid()} align="right">
-                      <ButtonAtom
-                        width="8rem"
-                        size="medium"
-                        backgroundcolor="#C9F7F5"
-                        onClick={() => null}
-                        textcolor="#1BC5BD"
-                        borderradius="0.5rem"
-                        text="View Quote"
-                        key={uuid()}
-                      />
-                    </TableCell>
+                    <TableRowButtonCell
+                      key={uuid()}
+                      onClick={() => null}
+                      align="right"
+                      btnwidth="8rem"
+                      btnsize="medium"
+                      btnborderradius="0.5rem"
+                      cell={cell}
+                      btndisabled
+                    />
+                    <TableRowButtonCell
+                      key={uuid()}
+                      onClick={() => null}
+                      align="right"
+                      btnwidth="8rem"
+                      btnsize="medium"
+                      btnborderradius="0.5rem"
+                      btntext="View Quote"
+                      btncolors={["#C9F7F5", "#1BC5BD"]}
+                    />
                   </React.Fragment>
                 )
               )}

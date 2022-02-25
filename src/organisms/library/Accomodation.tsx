@@ -3,6 +3,7 @@ import TextFieldAtom from "../../atoms/TextFieldAtom";
 import DivAtom from "../../atoms/DivAtom";
 import { useEffect, useState } from "react";
 import LibraryTable from "./LibraryTable";
+import { LIBRARY_HOTEL_DATA } from "../../data";
 
 const options = [
   { label: "Hotel", value: "Hotel" },
@@ -75,7 +76,7 @@ function Accomodation() {
           />
         </DivAtom>
         <DivAtom>
-          <LibraryTable />
+          <LibraryTable data={LIBRARY_HOTEL_DATA} />
         </DivAtom>
       </DivAtom>
     </DivAtom>
