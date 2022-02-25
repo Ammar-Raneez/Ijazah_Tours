@@ -9,7 +9,7 @@ interface ButtonAtomProps {
   disabled?: boolean;
   weight?: number;
   margin?: string;
-  onClick: MouseEventHandler<HTMLButtonElement>;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
   textcolor: string;
   backgroundcolor: string;
   borderradius: string;

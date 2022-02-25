@@ -12,7 +12,7 @@ interface IconAtomProps {
 
 function IconAtom({ onClick, size, textcolor, padding, ...props }: IconAtomProps) {
   return (
-    <StyledIcon size={size} textcolor={textcolor} padding={padding} onClick={onclick}>
+    <StyledIcon size={size} textcolor={textcolor} padding={padding} onClick={onClick}>
       {props.children}
     </StyledIcon>
   );

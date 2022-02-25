@@ -22,6 +22,10 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
+  a {
+    text-decoration: none;
+  }
+
   body {
     margin: 0;
     padding: 0;
