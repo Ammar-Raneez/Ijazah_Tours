@@ -1,14 +1,12 @@
+import { CSSProperties } from "react";
+
 interface H2AtomProps {
   text: string;
-  color: string;
-  margin: string;
-  size: string;
+  style?: CSSProperties,
 }
 
-function H2Atom({ text, color, margin, size }: H2AtomProps) {
-  return (
-    <h2 style={{ color, margin, fontSize: size }}>{text}</h2>
-  )
+function H2Atom({ text, style }: H2AtomProps) {
+  return <h2 style={style}>{text}</h2>;
 }
 
 export default H2Atom;

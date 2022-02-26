@@ -22,15 +22,19 @@ function Driver() {
   }, [containerHeight]);
 
   return (
-    <DivAtom backgroundcolor="#E5E5E5" padding="1rem" display="flex">
+    <DivAtom
+      style={{ backgroundColor: "#E5E5E5", padding: "1rem", display: "flex" }}
+    >
       <DivAtom
-        backgroundcolor="white"
-        borderradius="0.5rem"
-        padding="1rem"
-        flex={1}
-        overflowx="hidden"
-        overflowy="scroll"
-        height={containerHeight + "px"}
+        style={{
+          backgroundColor: "white",
+          borderRadius: "0.5rem",
+          padding: "1rem",
+          flex: 1,
+          overflowX: "hidden",
+          overflowY: "scroll",
+          height: containerHeight + "px",
+        }}
       >
         <DivAtom>
           <Route path="/library/driver/create">

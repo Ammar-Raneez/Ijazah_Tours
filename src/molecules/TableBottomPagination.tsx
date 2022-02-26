@@ -2,13 +2,13 @@ import { TablePagination } from "@material-ui/core";
 import styled from "styled-components";
 
 interface TableBottomPaginationProps {
-  rowdata?: any[];
-  rows?: number[];
   rowsperpage: number;
-  colspan?: number;
+  ActionsComponent: any;
   onPageChange: () => void;
   onRowsPerPageChange: () => void;
-  ActionsComponent: any;
+  rowdata?: any[];
+  rows?: number[];
+  colspan?: number;
 }
 
 function TableBottomPagination({

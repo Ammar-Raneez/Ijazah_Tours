@@ -38,15 +38,19 @@ function Navbar({ type }: NavbarProps) {
 
   return (
     <DivAtom
-      backgroundcolor="#4283e4"
-      display="flex"
-      width="100%"
-      height="3rem"
+      style={{
+        display: "flex",
+        width: "100%",
+        height: "3rem",
+        backgroundColor: "#4283e4"
+      }}
     >
       {navbarType?.links.map((link) => (
         <LinkAtom
-          padding="0px 10px 0px 10px"
-          margin="0px 10px 0px 10px"
+          style={{
+            padding: "0px 10px",
+            margin: "0px 10px"
+          }}
           key={link.key}
           to={link.link}
         >

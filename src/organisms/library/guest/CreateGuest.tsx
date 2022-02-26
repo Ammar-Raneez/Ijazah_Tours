@@ -35,23 +35,23 @@ function CreateGuest() {
 
   return (
     <DivAtom>
-      <DivAtom display="flex" align="center">
+      <DivAtom style={{ display: "flex", alignItems: "center" }}>
         <IconAtom
           size="small"
           children={<ChevronLeftRoundedIcon />}
-          textcolor="#0A65FF"
-          padding="1rem"
+          style={{ color: "#0A65FF", padding: "1rem" }}
           onClick={() => history.replace("/library/guest")}
         />
         <H2Atom
-          margin="0px"
+          style={{ margin: "0px", color: "0A65FF", fontSize: "1.5rem" }}
           text="Create Guest"
-          color="#0A65FF"
-          size="1.5rem"
         />
       </DivAtom>
 
-      <DivAtom padding="1rem" display="flex" flexdirection="column">
+      <DivAtom
+        style={{ padding: "1rem", display: "flex", flexDirection: "column" }}
+      >
+        {" "}
         <FormControlInput
           margin="0 0 1rem 0"
           label="Reference Number"
@@ -63,9 +63,11 @@ function CreateGuest() {
           placeholder="Enter Reference Number"
         />
         <DivAtom
-          display="flex"
-          justify="space-between"
-          flexdirection={width < 600 ? "column" : "row"}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            flexDirection: width < 600 ? "column" : "row",
+          }}
         >
           <FormControlInput
             margin="0 1rem 1rem 0"
@@ -110,35 +112,40 @@ function CreateGuest() {
           setValue={setContactNumber}
           placeholder="Enter Contact Number"
         />
-
       </DivAtom>
 
       <DivAtom
-        margin="2rem 1rem 0 0"
-        flexdirection={width < 768 ? "column" : "row"}
-        display="flex"
-        justify="space-between"
+        style={{
+          margin: "2rem 1rem 0 0",
+          justifyContent: "space-between",
+          display: "flex",
+          flexDirection: width < 768 ? "column" : "row",
+        }}
       >
         <ButtonAtom
           size="large"
           onClick={onAddGuest}
-          width={width < 768 ? "100%" : "18%"}
-          margin={width < 768 ? "0 0 1rem 0": "0px" }
-          textcolor="white"
-          backgroundcolor="#6296E4"
-          borderradius="0.5rem"
+          style={{
+            width: width < 768 ? "100%" : "18%",
+            marginLeft: width < 768 ? "1rem" : "0px",
+            color: "white",
+            backgroundColor: "#6296E4",
+            borderRadius: "0.5rem",
+            filter: "drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.25))",
+          }}
           text="Create"
-          filter="5px 5px 4px"
         />
         <ButtonAtom
           size="large"
           onClick={onAddReminder}
-          width={width < 768 ? "100%" : "18%"}
-          textcolor="white"
-          backgroundcolor="#6296E4"
-          borderradius="0.5rem"
+          style={{
+            width: width < 768 ? "100%" : "18%",
+            color: "white",
+            backgroundColor: "#6296E4",
+            borderRadius: "0.5rem",
+            filter: "drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.25))",
+          }}
           text="Add Reminder"
-          filter="5px 5px 4px"
         />
       </DivAtom>
     </DivAtom>

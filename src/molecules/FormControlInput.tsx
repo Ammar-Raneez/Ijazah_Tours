@@ -1,14 +1,15 @@
 import { FormControl, InputLabel } from "@material-ui/core";
+import { ChangeEvent } from "react";
 import InputAtom from "../atoms/InputAtom";
 
 interface FormControlInputProps {
   label: string;
-  fullWidth: boolean;
-  multiline: boolean;
-  rows: number;
   value: string;
   placeholder: string;
   margin: string;
+  fullWidth: boolean;
+  multiline: boolean;
+  rows: number;
   setValue: any;
   flex?: number;
 }
@@ -22,7 +23,7 @@ function FormControlInput({
   placeholder,
   margin,
   setValue,
-  flex
+  flex,
 }: FormControlInputProps) {
   return (
     <FormControl style={{ margin, flex }}>
@@ -33,7 +34,9 @@ function FormControlInput({
         multiline={multiline}
         rows={rows}
         value={value}
-        onChange={(e: any) => setValue(e.target.value)}
+        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+          setValue(e.target.value)
+        }
         placeholder={placeholder}
       />
     </FormControl>

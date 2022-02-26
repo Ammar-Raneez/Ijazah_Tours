@@ -31,21 +31,31 @@ function Accomodation() {
   }, [containerHeight]);
 
   return (
-    <DivAtom backgroundcolor="#E5E5E5" padding="1rem" display="flex">
+    <DivAtom
+      style={{ backgroundColor: "#E5E5E5", padding: "1rem", display: "flex" }}
+    >
       <DivAtom
-        backgroundcolor="white"
-        borderradius="0.5rem"
-        padding="1rem"
-        flex={1}
-        overflowx="hidden"
-        overflowy="scroll"
-        height={containerHeight + "px"}
+        style={{
+          backgroundColor: "white",
+          borderRadius: "0.5rem",
+          padding: "1rem",
+          flex: 1,
+          overflowX: "hidden",
+          overflowY: "scroll",
+          height: containerHeight + "px",
+        }}
       >
         <Route path="/library/accomodation/create">
           <CreateAccomodation />
         </Route>
         <Route exact path="/library/accomodation">
-          <DivAtom display="flex" justify="flex-start" margin="0 0 4rem 0">
+          <DivAtom
+            style={{
+              justifyContent: "flex-start",
+              marginBottom: "4rem",
+              display: "flex",
+            }}
+          >
             <TextFieldAtom
               variant="standard"
               size="medium"
@@ -54,31 +64,35 @@ function Accomodation() {
               onChange={(e: any) => setAccomodationType(e.target.value)}
               options={options}
               adornmentposition="end"
-              width="11rem"
+              style={{ width: "11rem" }}
               select
             />
             <ButtonAtom
               text="Specification"
-              textcolor="white"
-              backgroundcolor="#6296E4"
+              style={{
+                color: "white",
+                backgroundColor: "#6296E4",
+                borderRadius: "0.5rem",
+                width: "11rem",
+                fontWeight: 600,
+                margin: "0 16px",
+                filter: "drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.25))",
+              }}
               onClick={() => null}
               size="large"
-              borderradius="0.5rem"
-              width="11rem"
-              weight={600}
-              margin="0 16px 0 16px"
-              filter="5px 5px 4px"
             />
             <ButtonAtom
               text="Location"
-              textcolor="white"
-              backgroundcolor="#6296E4"
+              style={{
+                color: "white",
+                backgroundColor: "#6296E4",
+                borderRadius: "0.5rem",
+                width: "11rem",
+                fontWeight: 600,
+                filter: "drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.25))",
+              }}
               onClick={() => null}
               size="large"
-              borderradius="0.5rem"
-              width="11rem"
-              weight={600}
-              filter="5px 5px 4px"
             />
           </DivAtom>
           <DivAtom>

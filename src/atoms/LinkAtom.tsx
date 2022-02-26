@@ -1,18 +1,18 @@
+import { ReactNode, CSSProperties } from 'react';
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { v4 as uuid } from "uuid";
 
 interface LinkAtomProps {
   to: string;
-  children: any;
-  margin?: string;
-  padding?: string;
+  children: ReactNode;
+  style?: CSSProperties;
 }
 
-function LinkAtom({ to, margin, padding, ...props }: LinkAtomProps) {
+function LinkAtom({ to, style, ...props }: LinkAtomProps) {
   return (
     <StyledNavLink
-      style={{ margin, padding }}
+      style={style}
       activeClassName="active"
       key={uuid()}
       to={to}

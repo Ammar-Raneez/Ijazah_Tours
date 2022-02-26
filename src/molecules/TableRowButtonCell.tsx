@@ -3,15 +3,15 @@ import { MouseEventHandler } from "react";
 import ButtonAtom from "../atoms/ButtonAtom";
 
 interface TableRowButtonCellProps {
-  onClick: MouseEventHandler<HTMLButtonElement> | any;
-  align: "left" | "center" | "right";
-  btnsize: "small" | "medium";
   btnwidth: string;
   btnborderradius: string;
+  align: "left" | "center" | "right";
+  btnsize: "small" | "medium";
+  onClick: MouseEventHandler<HTMLButtonElement>;
   btndisabled?: boolean;
-  cell?: any;
   btntext?: string;
   btncolors?: string[];
+  cell?: any;
 }
 
 function TableRowButtonCell({
@@ -23,17 +23,27 @@ function TableRowButtonCell({
   btndisabled,
   cell,
   btntext,
-  btncolors
+  btncolors,
 }: TableRowButtonCellProps) {
   return (
     <TableCell align={align}>
       <ButtonAtom
-        width={btnwidth}
+        style={{
+          width: btnwidth,
+          backgroundColor: btncolors
+            ? btncolors[0]
+            : cell.status === "Approved"
+            ? "#41E93E"
+            : "#C1BFBF",
+          color: btncolors
+            ? btncolors[0]
+            : cell.status === "Approved"
+            ? "#41E93E"
+            : "#C1BFBF",
+          borderRadius: btnborderradius,
+        }}
         size={btnsize}
-        backgroundcolor={btncolors ? btncolors[0] : cell.status === "Approved" ? "#41E93E" : "#C1BFBF"}
         onClick={onClick}
-        textcolor={btncolors ? btncolors[1] : cell.status === "Approved" ? "#146521" : "#464E5F"}
-        borderradius={btnborderradius}
         text={btntext || cell.status}
         disabled={btndisabled}
       />

@@ -30,33 +30,38 @@ function Header({ handleDrawerToggle }: HeaderProps) {
 
   return (
     <DivAtom
-      backgroundcolor="#C1BFBF"
-      display="flex"
-      justify="space-between"
-      align="center"
-      padding="0 0 0 1rem"
+      style={{
+        backgroundColor: "#C1BFBF",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        paddingLeft: "1rem",
+      }}
     >
-      <DivAtom display="flex" align="center">
+      <DivAtom style={{ display: "flex", alignItems: "center" }}>
         <AvatarAtom
-          margin="0px 20px 0px 0px"
+          style={{ marginRight: "20px", height: "30px", width: "30px" }}
           alt="Logo"
           image={require("../assets/logo.png")}
-          size={60}
         />
         <Hidden xsDown>
           <SpanAtom
-            margin="0px 12px 0px 0px"
-            weight={500}
-            size="40px"
+            style={{
+              marginRight: "12px",
+              fontWeight: 500,
+              color: "#1C5BBA",
+              fontSize: "40px",
+            }}
             text="Ijazah"
-            color="#1C5BBA"
           />
           <SpanAtom
-            margin="0px 0px 0px 0px"
-            weight={500}
-            size="40px"
+            style={{
+              margin: "0px",
+              fontWeight: 500,
+              color: "#41E93E",
+              fontSize: "40px",
+            }}
             text="Tours"
-            color="#41E93E"
           />
         </Hidden>
       </DivAtom>

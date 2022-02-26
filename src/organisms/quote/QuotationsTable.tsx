@@ -20,7 +20,6 @@ import TableRowTextCell from "../../molecules/TableRowTextCell";
 interface QuotationsTableProps {
   columns?: string[];
   rowdata?: any[];
-  component?: any;
 }
 
 const useStyles = makeStyles({

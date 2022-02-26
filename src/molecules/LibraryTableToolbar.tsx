@@ -39,9 +39,9 @@ const useToolbarStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface LibraryTableToolbarProps {
-  numSelected: number;
   search: string;
   addbtntext: string;
+  numSelected: number;
   setSearch: any;
 }
 
@@ -74,16 +74,20 @@ const LibraryTableToolbar = ({
       })}
     >
       <DivAtom
-        width="100%"
-        display="flex"
-        flexdirection={width < 540 ? "column" : "row"}
-        align="center"
-        justify="space-between"
+        style={{
+          width: "100%",
+          display: "flex",
+          flexDirection: width < 540 ? "column" : "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
       >
         <DivAtom
-          align="center"
-          display="flex"
-          width={width < 540 ? "100%" : "auto"}
+          style={{
+            width: width < 540 ? "100%" : "auto",
+            display: "flex",
+            alignItems: "center",
+          }}
         >
           {numSelected > 0 ? (
             <Tooltip title="Delete">
@@ -117,7 +121,7 @@ const LibraryTableToolbar = ({
             </Typography>
           ) : (
             <InputAtom
-              padding="4px"
+              style={{ padding: "4px" }}
               placeholder="Search"
               adornmentposition="start"
               fullWidth={width < 540}
@@ -130,19 +134,30 @@ const LibraryTableToolbar = ({
         </DivAtom>
         {!(numSelected > 0) && (
           <DivAtom
-            margin={width < 540 ? "16px 0 0 0" : "0px"}
-            width={width < 540 ? "100%" : "auto"}
+            style={{
+              margin: width < 540 ? "16px 0 0 0" : "0px",
+              width: width < 540 ? "100%" : "auto",
+            }}
           >
-            <Link to={`/library/${addbtntext.split(" ")[1].toLowerCase()}/create`}>
+            <Link
+              to={`/library/${addbtntext.split(" ")[1].toLowerCase()}/create`}
+            >
               <ButtonAtom
                 starticon={<AddCircleOutlineOutlinedIcon />}
                 text={addbtntext}
-                textcolor="white"
-                backgroundcolor="#0A65FF"
+                style={{
+                  color: "white",
+                  backgroundColor: "#0A65FF",
+                  borderRadius: "0.5rem",
+                  width:
+                    width < 540
+                      ? "100%"
+                      : addbtntext.includes("Accomodation")
+                      ? "14rem"
+                      : "11rem",
+                  margin: "0px",
+                }}
                 size="large"
-                borderradius="0.5rem"
-                width={width < 540 ? "100%" :  addbtntext.includes("Accomodation") ? "14rem" : "11rem"}
-                margin="0"
               />
             </Link>
           </DivAtom>

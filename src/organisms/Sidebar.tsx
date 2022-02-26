@@ -76,10 +76,12 @@ function Sidebar({ window, handleDrawerToggle, mobileOpen }: SidebarProps) {
           </LinkAtom>
         ))}
         <DivAtom
-          flex={0.9}
-          display="flex"
-          flexdirection="column"
-          justify="flex-end"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-end",
+            flex: 0.9
+          }}
         >
           <ListItem button key="Profile">
             <LinkTextAtom text="Profile" />

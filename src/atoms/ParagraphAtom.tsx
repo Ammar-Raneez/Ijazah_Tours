@@ -1,28 +1,24 @@
+import { CSSProperties } from "react";
+
 interface ParaAtomProps {
   text: string | number;
-  color: string;
-  size: string;
-  margin?: string;
-  weight?: number;
   mark?: boolean;
-  markstyle?: any;
+  style?: CSSProperties;
+  markstyle?: CSSProperties;
 }
 
 function ParagraphAtom({
   text,
-  color,
-  size,
-  margin,
-  weight,
+  style,
   mark,
-  markstyle
+  markstyle,
 }: ParaAtomProps) {
   return mark ? (
-    <p style={{ color, fontSize: size, margin, fontWeight: weight }}>
+    <p style={style}>
       <mark style={markstyle}>{text}</mark>
     </p>
   ) : (
-    <p style={{ color, fontSize: size, margin, fontWeight: weight }}>{text}</p>
+    <p style={style}>{text}</p>
   );
 }
 

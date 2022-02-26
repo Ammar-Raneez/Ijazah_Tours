@@ -18,29 +18,35 @@ function TableRowTextCell({ cell }: TableRowTextCellProps) {
     <TableCell align={cell.align}>
       <ParagraphAtom
         text={cell.title}
-        margin="0px"
-        color={cell.colors[0]}
-        size="0.875rem"
-        weight={cell.weight}
         key={uuid()}
+        style={{
+          fontWeight: cell.weight,
+          margin: "0px",
+          color: cell.colors[0],
+          fontSize: "0.875rem",
+        }}
       />
       <ParagraphAtom
         text={cell.subtitle}
-        margin="0px"
-        color={cell.colors[1]}
-        size="0.875rem"
         key={uuid()}
+        style={{
+          margin: "0px",
+          color: cell.colors[0],
+          fontSize: "0.875rem",
+        }}
       />
     </TableCell>
   ) : cell.marktitle ? (
     <TableCell align={cell.align}>
       <ParagraphAtom
         text={cell.title}
-        margin="0px"
-        color={cell.colors[0]}
-        size="0.875rem"
-        weight={cell.weight}
         key={uuid()}
+        style={{
+          fontWeight: cell.weight,
+          margin: "0px",
+          color: cell.colors[0],
+          fontSize: "0.875rem",
+        }}
         markstyle={{
           border:
             cell.title === "ACTIVE" ? "1px solid #0A65FF" : "1px solid #B5B5C3",
@@ -56,11 +62,13 @@ function TableRowTextCell({ cell }: TableRowTextCellProps) {
     <TableCell align={cell.align}>
       <ParagraphAtom
         text={cell.title}
-        margin="0px"
-        color={cell.colors[0]}
-        size="0.875rem"
-        weight={cell.weight}
         key={uuid()}
+        style={{
+          fontWeight: cell.weight,
+          margin: "0px",
+          color: cell.colors[0],
+          fontSize: "0.875rem",
+        }}
       />
     </TableCell>
   );

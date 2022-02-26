@@ -5,7 +5,7 @@ import {
   TableRow,
   TableSortLabel,
 } from "@material-ui/core";
-import { MouseEvent } from "react";
+import { ChangeEvent, MouseEvent } from "react";
 import { Order } from "../utils/helpers";
 import TableColumnCell from "./TableColumnCell";
 
@@ -22,13 +22,16 @@ const headCells = [
 ];
 
 interface LibraryTableHeadProps {
-  classes: any;
-  numSelected: number;
-  onRequestSort: any;
-  onSelectAllClick: any;
-  order: Order;
   orderBy: string;
+  numSelected: number;
   rowCount: number;
+  classes: any;
+  onRequestSort: any;
+  onSelectAllClick: (
+    event: ChangeEvent<HTMLInputElement>,
+    checked: boolean
+  ) => void;
+  order: Order;
 }
 
 function LibraryTableHead({

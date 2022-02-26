@@ -29,7 +29,7 @@ function App() {
     <Router>
       <GlobalStyle />
       <Header handleDrawerToggle={handleDrawerToggle} />
-      <DivAtom display="flex" flex={1}>
+      <DivAtom style={{ display: "flex", flex: 1 }}>
         <Sidebar
           mobileOpen={mobileOpen}
           handleDrawerToggle={handleDrawerToggle}

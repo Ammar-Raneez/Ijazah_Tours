@@ -1,14 +1,14 @@
 import { TableCell } from "@material-ui/core";
-import { MouseEventHandler } from "react";
+import { MouseEventHandler, ReactNode } from "react";
 import IconAtom from "../atoms/IconAtom";
 
 interface TableRowIconCellProps {
-  onClick: MouseEventHandler<HTMLButtonElement> | any;
+  padding: string;
   textcolor: string;
   align: "left" | "center" | "right";
   size: "small" | "medium";
-  padding: string;
-  children: any;
+  onClick: MouseEventHandler<HTMLButtonElement>;
+  children: ReactNode;
 }
 
 function TableRowIconCell({
@@ -23,9 +23,8 @@ function TableRowIconCell({
     <TableCell align={align}>
       <IconAtom
         onClick={onClick}
-        textcolor={textcolor}
+        style={{ color: textcolor, padding }}
         size={size}
-        padding={padding}
         children={props.children}
       />
     </TableCell>

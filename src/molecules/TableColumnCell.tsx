@@ -1,13 +1,14 @@
 import { TableCell } from "@material-ui/core";
+import { ReactNode } from "react";
 import styled from "styled-components";
 import { v4 as uuid } from "uuid";
 
 interface TableColumnCellProps {
+  color: string;
   column?: string;
   align?: "left" | "center" | "right" | "justify" | "inherit";
-  color: string;
   sortDirection?: any;
-  children?: any;
+  children?: ReactNode;
 }
 
 function TableColumnCell({

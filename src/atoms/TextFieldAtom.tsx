@@ -1,3 +1,4 @@
+import { ReactNode, CSSProperties, ChangeEvent } from 'react';
 import { InputAdornment, MenuItem, TextField } from "@material-ui/core";
 import styled from "styled-components";
 
@@ -7,29 +8,28 @@ interface DropdownOption {
 }
 
 interface TextFieldAtomProps {
+  value: string;
+  label: string;
+  select: boolean;
   variant: "filled" | "standard";
   size: "small" | "medium";
   adornmentposition: "start" | "end";
-  width: string;
-  label: string;
+  onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  helpertext?: string;
+  placeholder?: string;
   required?: boolean;
   disabled?: boolean;
   focused?: boolean;
   error?: boolean;
-  select: boolean;
-  helpertext?: string;
-  placeholder?: string;
-  value: any;
-  onChange: any;
   options?: DropdownOption[];
-  children?: any;
+  children?: ReactNode;
+  style?: CSSProperties;
 }
 
 function TextFieldAtom({
   variant,
   size,
   adornmentposition,
-  width,
   label,
   required,
   disabled,
@@ -41,12 +41,13 @@ function TextFieldAtom({
   value,
   onChange,
   options,
+  style,
   ...props
 }: TextFieldAtomProps) {
   return !select ? (
     <StyledTextFieldAtom
       value={value}
-      style={{ width }}
+      style={style}
       onChange={onChange}
       variant={variant}
       size={size}
@@ -65,7 +66,7 @@ function TextFieldAtom({
                   {props.children}
                 </InputAdornment>
               ),
-              disableUnderline: true
+              disableUnderline: true,
             }
           : {
               endAdornment: (
@@ -73,14 +74,14 @@ function TextFieldAtom({
                   {props.children}
                 </InputAdornment>
               ),
-              disableUnderline: true
+              disableUnderline: true,
             }
       }
     />
   ) : (
     <StyledTextFieldAtom
       select
-      style={{ width }}
+      style={style}
       value={value}
       onChange={onChange}
       variant={variant}

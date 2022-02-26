@@ -33,23 +33,22 @@ function CreateAccomodation() {
 
   return (
     <DivAtom>
-      <DivAtom display="flex" align="center">
+      <DivAtom style={{ display: "flex", alignItems: "center" }}>
         <IconAtom
           size="small"
           children={<ChevronLeftRoundedIcon />}
-          textcolor="#0A65FF"
-          padding="1rem"
+          style={{ color: "#0A65FF", padding: "1rem" }}
           onClick={() => history.replace("/library/accomodation")}
         />
         <H2Atom
-          margin="0px"
+          style={{ margin: "0px", color: "0A65FF", fontSize: "1.5rem" }}
           text="Create Accomodation"
-          color="#0A65FF"
-          size="1.5rem"
         />
       </DivAtom>
 
-      <DivAtom padding="1rem" display="flex" flexdirection="column">
+      <DivAtom
+        style={{ padding: "1rem", display: "flex", flexDirection: "column" }}
+      >
         <FormControlInput
           margin="0 0 1rem 0"
           label="Reference Number"
@@ -61,9 +60,11 @@ function CreateAccomodation() {
           placeholder="Enter Reference Number"
         />
         <DivAtom
-          display="flex"
-          justify="space-between"
-          flexdirection={width < 600 ? "column" : "row"}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            flexDirection: width < 600 ? "column" : "row",
+          }}
         >
           <FormControlInput
             margin="0 1rem 1rem 0"
@@ -110,17 +111,19 @@ function CreateAccomodation() {
         />
       </DivAtom>
 
-      <DivAtom margin="2rem 1rem 0 0" display="flex" justify="flex-end">
+      <DivAtom style={{ margin: "2rem 1rem 0 0", display: "flex", justifyContent: "flex-end" }}>
         <ButtonAtom
           size="large"
           onClick={onAddAccomodation}
-          width={width < 768 ? "100%" : "18%"}
-          margin={width < 768 ? "0 0 1rem 0" : "0px"}
-          textcolor="white"
-          backgroundcolor="#6296E4"
-          borderradius="0.5rem"
-          text="Create"
-          filter="5px 5px 4px"
+          style={{
+            color: "white",
+            backgroundColor: "#6296E4",
+            borderRadius: "0.5rem",
+            width: width < 768 ? "100%" : "18%",
+            fontWeight: 600,
+            margin: width < 768 ? "0 0 1rem 0" : "0px",
+            filter: "drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.25))",
+          }}
         />
       </DivAtom>
     </DivAtom>
