@@ -18,17 +18,10 @@ function Summary() {
   }, [containerHeight]);
 
   return (
-    <DivAtom
-      style={{ display: "flex", padding: "1rem", backgroundColor: "#E5E5E5" }}
-    >
+    <DivAtom style={styles.container}>
       <DivAtom
         style={{
-          backgroundColor: "white",
-          borderRadius: "0.5rem",
-          padding: "1rem",
-          flex: 1,
-          overflowX: "hidden",
-          overflowY: "scroll",
+          ...styles.innerContainer,
           height: containerHeight + "px",
         }}
       >
@@ -39,3 +32,19 @@ function Summary() {
 }
 
 export default Summary;
+
+const styles = {
+  container: {
+    display: "flex",
+    padding: "1rem",
+    backgroundColor: "#E5E5E5",
+  },
+  innerContainer: {
+    backgroundColor: "white",
+    borderRadius: "0.5rem",
+    padding: "1rem",
+    flex: 1,
+    overflowX: "hidden" as const,
+    overflowY: "scroll" as const,
+  },
+};

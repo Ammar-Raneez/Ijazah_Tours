@@ -12,7 +12,6 @@ import Navbar from "./organisms/Navbar";
 import Quotations from "./organisms/quote/Quotations";
 import Voucher from "./organisms/quote/Voucher";
 import Summary from "./organisms/quote/Summary";
-import DivAtom from "./atoms/DivAtom";
 import { useState } from "react";
 import Accomodation from "./organisms/library/accomodation/Accomodation";
 import Driver from "./organisms/library/driver/Driver";
@@ -29,7 +28,7 @@ function App() {
     <Router>
       <GlobalStyle />
       <Header handleDrawerToggle={handleDrawerToggle} />
-      <DivAtom style={{ display: "flex", flex: 1 }}>
+      <Root>
         <Sidebar
           mobileOpen={mobileOpen}
           handleDrawerToggle={handleDrawerToggle}
@@ -73,12 +72,17 @@ function App() {
             </StyledDivAtom>
           </Route>
         </Switch>
-      </DivAtom>
+      </Root>
     </Router>
   );
 }
 
 export default App;
+
+const Root = styled.div`
+  display: flex;
+  flex: 1;
+`
 
 const StyledDivAtom = styled.div`
   display: flex;

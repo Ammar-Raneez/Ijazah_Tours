@@ -374,21 +374,24 @@ function TablePaginationActions({
           style={width < 700 ? { display: "none" } : {}}
           className={classes.activeUsers}
         >
-          <SpanAtom
-            text="ACTIVE CUSTOMERS: "
-            style={{ fontSize: "0.7rem", color: "#606F89" }}
-          />
+          <SpanAtom text="ACTIVE CUSTOMERS: " style={styles.totalUsers} />
           <Fragment>&nbsp;</Fragment>
-          <SpanAtom
-            text="479"
-            style={{ fontSize: "1rem", color: "#606F89", fontWeight: 600 }}
-          />
-          <SpanAtom
-            text="/706"
-            style={{ fontSize: "0.7rem", color: "#606F89" }}
-          />
+          <SpanAtom text="479" style={styles.activeUsers} />
+          <SpanAtom text="/706" style={styles.totalUsers} />
         </div>
       </div>
     </>
   );
 }
+
+const styles = {
+  activeUsers: {
+    fontSize: "1rem",
+    color: "#606F89",
+    fontWeight: 600,
+  },
+  totalUsers: {
+    fontSize: "0.7rem",
+    color: "#606F89",
+  },
+};

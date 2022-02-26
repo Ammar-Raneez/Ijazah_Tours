@@ -37,23 +37,9 @@ function Navbar({ type }: NavbarProps) {
   const navbarType = LINKS.find((obj) => obj.type === type);
 
   return (
-    <DivAtom
-      style={{
-        display: "flex",
-        width: "100%",
-        height: "3rem",
-        backgroundColor: "#4283e4"
-      }}
-    >
+    <DivAtom style={styles.container}>
       {navbarType?.links.map((link) => (
-        <LinkAtom
-          style={{
-            padding: "0px 10px",
-            margin: "0px 10px"
-          }}
-          key={link.key}
-          to={link.link}
-        >
+        <LinkAtom style={styles.link} key={link.key} to={link.link}>
           <LinkTextAtom text={link.text} />
         </LinkAtom>
       ))}
@@ -62,3 +48,16 @@ function Navbar({ type }: NavbarProps) {
 }
 
 export default Navbar;
+
+const styles = {
+  container: {
+    display: "flex",
+    width: "100%",
+    height: "3rem",
+    backgroundColor: "#4283e4",
+  },
+  link: {
+    padding: "0px 10px",
+    margin: "0px 10px",
+  },
+};

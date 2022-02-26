@@ -29,40 +29,16 @@ function Header({ handleDrawerToggle }: HeaderProps) {
   const classes = useStyles();
 
   return (
-    <DivAtom
-      style={{
-        backgroundColor: "#C1BFBF",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        paddingLeft: "1rem",
-      }}
-    >
-      <DivAtom style={{ display: "flex", alignItems: "center" }}>
+    <DivAtom style={styles.container}>
+      <DivAtom style={styles.logoContainer}>
         <AvatarAtom
-          style={{ marginRight: "20px", height: "30px", width: "30px" }}
+          style={styles.avatar}
           alt="Logo"
           image={require("../assets/logo.png")}
         />
         <Hidden xsDown>
-          <SpanAtom
-            style={{
-              marginRight: "12px",
-              fontWeight: 500,
-              color: "#1C5BBA",
-              fontSize: "40px",
-            }}
-            text="Ijazah"
-          />
-          <SpanAtom
-            style={{
-              margin: "0px",
-              fontWeight: 500,
-              color: "#41E93E",
-              fontSize: "40px",
-            }}
-            text="Tours"
-          />
+          <SpanAtom style={styles.spanI} text="Ijazah" />
+          <SpanAtom style={styles.spanT} text="Tours" />
         </Hidden>
       </DivAtom>
       <DivAtom>
@@ -81,3 +57,34 @@ function Header({ handleDrawerToggle }: HeaderProps) {
 }
 
 export default Header;
+
+const styles = {
+  container: {
+    backgroundColor: "#C1BFBF",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingLeft: "1rem",
+  },
+  logoContainer: {
+    display: "flex",
+    alignItems: "center",
+  },
+  avatar: {
+    marginRight: "20px",
+    height: "30px",
+    width: "30px",
+  },
+  spanI: {
+    marginRight: "12px",
+    fontWeight: 500,
+    color: "#1C5BBA",
+    fontSize: "40px",
+  },
+  spanT: {
+    margin: "0px",
+    fontWeight: 500,
+    color: "#41E93E",
+    fontSize: "40px",
+  },
+};

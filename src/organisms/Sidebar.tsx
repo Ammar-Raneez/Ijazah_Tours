@@ -12,7 +12,6 @@ import {
 } from "@material-ui/core";
 import LinkAtom from "../atoms/LinkAtom";
 import LinkTextAtom from "../atoms/LinkTextAtom";
-import DivAtom from "../atoms/DivAtom";
 
 const drawerWidth = 240;
 
@@ -75,21 +74,14 @@ function Sidebar({ window, handleDrawerToggle, mobileOpen }: SidebarProps) {
             </ListItem>
           </LinkAtom>
         ))}
-        <DivAtom
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-end",
-            flex: 0.9
-          }}
-        >
+        <BottomContainer>
           <ListItem button key="Profile">
             <LinkTextAtom text="Profile" />
           </ListItem>
           <ListItem button key="Sign Out">
             <LinkTextAtom text="Sign Out" />
           </ListItem>
-        </DivAtom>
+        </BottomContainer>
       </StyledList>
     </>
   );
@@ -147,6 +139,13 @@ const StyledDrawer = styled(Drawer)`
       display: none;
     }
   }
+`;
+
+const BottomContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  flex: 0.9;
 `;
 
 const StyledList = styled(List)`

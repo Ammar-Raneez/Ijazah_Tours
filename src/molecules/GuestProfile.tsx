@@ -16,34 +16,46 @@ function GuestProfile({
   titleweight,
 }: GuestProfileProps) {
   return (
-    <DivAtom style={{ display: "flex", alignItems: "center" }}>
+    <DivAtom style={styles.container}>
       <AvatarAtom
         image={image}
         alt="guest"
         variant="rounded"
-        style={{ margin: "8px", height: "30px", width: "30px" }}
+        style={styles.avatar}
       />
-      <DivAtom style={{ display: "flex", flexDirection: "column" }}>
+      <DivAtom style={styles.innerContainer}>
         <ParagraphAtom
-          style={{
-            fontWeight: titleweight,
-            margin: "0px",
-            color: "#464E5F",
-            fontSize: "0.875rem",
-          }}
+          style={{ ...styles.paragraph, fontWeight: titleweight }}
           text={title}
         />
         <ParagraphAtom
-          style={{
-            margin: "0px",
-            color: "#B5B5C3",
-            fontSize: "0.875rem",
-          }}
+          style={styles.paragraph}
           text={subtitle}
         />
       </DivAtom>
     </DivAtom>
   );
 }
+
+const styles = {
+  container: {
+    display: "flex",
+    alignItems: "center",
+  },
+  avatar: {
+    margin: "8px",
+    height: "30px",
+    width: "30px",
+  },
+  innerContainer: {
+    display: "flex",
+    flexDirection: "column" as const,
+  },
+  paragraph: {
+    margin: "0px",
+    color: "#464E5F",
+    fontSize: "0.875rem",
+  },
+};
 
 export default GuestProfile;

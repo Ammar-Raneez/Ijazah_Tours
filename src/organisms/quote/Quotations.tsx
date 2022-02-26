@@ -30,104 +30,62 @@ function Quotations() {
   }, [width, containerHeight]);
 
   return (
-    <DivAtom
-      style={{ display: "flex", padding: "1rem", backgroundColor: "#E5E5E5" }}
-    >
+    <DivAtom style={styles.container}>
       <DivAtom
         style={{
-          backgroundColor: "white",
-          borderRadius: "0.5rem",
-          padding: "1rem",
-          flex: 1,
-          overflowX: "hidden",
-          overflowY: "scroll",
+          ...styles.innerContainer,
           height: containerHeight + "px",
         }}
       >
-        <DivAtom
-          style={{
-            display: "flex",
-            justifyContent: "flex-start",
-            marginBottom: "4rem",
-          }}
-        >
+        <DivAtom style={styles.btnMainContainer}>
           <ButtonAtom
             text="New Quote +"
             style={{
-              color: "white",
-              backgroundColor: "#6296E4",
-              borderRadius: "0.5rem",
-              width: "11rem",
-              fontWeight: 600,
+              ...styles.btn,
               marginRight: "16px",
-              filter: "drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.25))",
             }}
             onClick={() => null}
             size="large"
           />
           <ButtonAtom
             text="Compare Rates"
-            style={{
-              color: "white",
-              backgroundColor: "#6296E4",
-              borderRadius: "0.5rem",
-              width: "11rem",
-              fontWeight: 600,
-              filter: "drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.25))",
-            }}
+            style={styles.btn}
             onClick={() => null}
             size="large"
           />
         </DivAtom>
         <DivAtom
           style={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginBottom: "1rem",
+            ...styles.btnSubContainer,
             flexDirection: width < 768 ? "column" : "row",
           }}
         >
           <DivAtom
             style={{
-              display: "flex",
-              justifyContent: "flex-start",
-              flex: 1,
+              ...styles.btnSubInnerContainer,
               margin: width < 768 ? "0 0 16px 0" : "0",
             }}
           >
             <ButtonAtom
               text="Approved Quotes"
               style={{
-                color: "white",
-                backgroundColor: "#6296E4",
-                borderRadius: "0.5rem",
-                width: "11rem",
-                fontWeight: 600,
+                ...styles.btn,
                 marginRight: "16px",
-                filter: "drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.25))",
               }}
               onClick={() => null}
               size="large"
             />
             <ButtonAtom
               text="On Progress"
-              style={{
-                color: "white",
-                backgroundColor: "#6296E4",
-                borderRadius: "0.5rem",
-                width: "11rem",
-                fontWeight: 600,
-                filter: "drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.25))",
-              }}
+              style={styles.btn}
               onClick={() => null}
               size="large"
             />
           </DivAtom>
           <DivAtom
             style={{
-              display: "flex",
+              ...styles.btnSubInnerContainer,
               justifyContent: width < 768 ? "flex-start" : "flex-end",
-              flex: 1,
             }}
           >
             <InputAtom
@@ -136,19 +94,16 @@ function Quotations() {
               fullWidth={width < 768}
               value={search}
               plain="false"
-              onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setSearch(e.target.value)
+              }
               children={<SearchIcon />}
             />
             <ButtonAtom
               text="Search"
               style={{
-                color: "white",
-                backgroundColor: "#6296E4",
-                borderRadius: "0.5rem",
-                width: "11rem",
-                fontWeight: 600,
+                ...styles.btn,
                 marginLeft: "16px",
-                filter: "drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.25))",
               }}
               onClick={() => null}
               size="large"
@@ -165,3 +120,42 @@ function Quotations() {
 }
 
 export default Quotations;
+
+const styles = {
+  container: {
+    display: "flex",
+    padding: "1rem",
+    backgroundColor: "#E5E5E5",
+  },
+  innerContainer: {
+    backgroundColor: "white",
+    borderRadius: "0.5rem",
+    padding: "1rem",
+    flex: 1,
+    overflowX: "hidden" as const,
+    overflowY: "scroll" as const,
+  },
+  btnMainContainer: {
+    display: "flex",
+    justifyContent: "flex-start",
+    marginBottom: "4rem",
+  },
+  btnSubContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    marginBottom: "1rem",
+  },
+  btnSubInnerContainer: {
+    display: "flex",
+    justifyContent: "flex-start",
+    flex: 1,
+  },
+  btn: {
+    color: "white",
+    backgroundColor: "#6296E4",
+    borderRadius: "0.5rem",
+    width: "11rem",
+    fontWeight: 600,
+    filter: "drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.25))",
+  },
+};

@@ -40,22 +40,17 @@ function CreateDriver() {
 
   return (
     <DivAtom>
-      <DivAtom style={{ display: "flex", alignItems: "center" }}>
+      <DivAtom style={styles.header}>
         <IconAtom
           size="small"
           children={<ChevronLeftRoundedIcon />}
-          style={{ color: "#0A65FF", padding: "1rem" }}
+          style={styles.backBtn}
           onClick={() => history.replace("/library/driver")}
         />
-        <H2Atom
-          style={{ margin: "0px", color: "#0A65FF", fontSize: "1.5rem" }}
-          text="Create Driver"
-        />
+        <H2Atom style={styles.title} text="Create Driver" />
       </DivAtom>
 
-      <DivAtom
-        style={{ padding: "1rem", display: "flex", flexDirection: "column" }}
-      >
+      <DivAtom style={styles.formContainer}>
         <FormControlInput
           margin="0 0 1rem 0"
           label="Reference Number"
@@ -68,8 +63,7 @@ function CreateDriver() {
         />
         <DivAtom
           style={{
-            display: "flex",
-            justifyContent: "space-between",
+            ...styles.addressNameContainer,
             flexDirection: width < 600 ? "column" : "row",
           }}
         >
@@ -118,8 +112,7 @@ function CreateDriver() {
         />
         <DivAtom
           style={{
-            display: "flex",
-            justifyContent: "space-between",
+            ...styles.addressNameContainer,
             flexDirection: width < 600 ? "column" : "row",
           }}
         >
@@ -169,16 +162,13 @@ function CreateDriver() {
         />
       </DivAtom>
 
-      <DivAtom style={{ margin: "2rem 1rem 0 0", display: "flex", justifyContent: "flex-end" }}>
+      <DivAtom style={styles.addBtnContainer}>
         <ButtonAtom
           size="large"
           onClick={onAddDriver}
           style={{
+            ...styles.addBtn,
             width: width < 768 ? "100%" : "18%",
-            color: "white",
-            backgroundColor: "#6296E4",
-            borderRadius: "0.5rem",
-            filter: "drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.25))",
           }}
           text="Create"
         />
@@ -188,3 +178,40 @@ function CreateDriver() {
 }
 
 export default CreateDriver;
+
+const styles = {
+  header: {
+    display: "flex",
+    alignItems: "center",
+  },
+  title: {
+    margin: "0px",
+    color: "#0A65FF",
+    fontSize: "1.5rem",
+  },
+  formContainer: {
+    padding: "1rem",
+    display: "flex",
+    flexDirection: "column" as const,
+  },
+  addressNameContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  addBtnContainer: {
+    margin: "2rem 1rem 0 0",
+    display: "flex",
+    justifyContent: "flex-end",
+  },
+  backBtn: {
+    color: "#0A65FF",
+    padding: "1rem",
+  },
+  addBtn: {
+    color: "white",
+    backgroundColor: "#6296E4",
+    borderRadius: "0.5rem",
+    fontWeight: 600,
+    filter: "drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.25))",
+  },
+};

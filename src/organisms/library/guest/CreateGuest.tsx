@@ -35,23 +35,17 @@ function CreateGuest() {
 
   return (
     <DivAtom>
-      <DivAtom style={{ display: "flex", alignItems: "center" }}>
+      <DivAtom style={styles.header}>
         <IconAtom
           size="small"
           children={<ChevronLeftRoundedIcon />}
-          style={{ color: "#0A65FF", padding: "1rem" }}
+          style={styles.backBtn}
           onClick={() => history.replace("/library/guest")}
         />
-        <H2Atom
-          style={{ margin: "0px", color: "#0A65FF", fontSize: "1.5rem" }}
-          text="Create Guest"
-        />
+        <H2Atom style={styles.title} text="Create Guest" />
       </DivAtom>
 
-      <DivAtom
-        style={{ padding: "1rem", display: "flex", flexDirection: "column" }}
-      >
-        {" "}
+      <DivAtom style={styles.formContainer}>
         <FormControlInput
           margin="0 0 1rem 0"
           label="Reference Number"
@@ -64,8 +58,7 @@ function CreateGuest() {
         />
         <DivAtom
           style={{
-            display: "flex",
-            justifyContent: "space-between",
+            ...styles.addressNameContainer,
             flexDirection: width < 600 ? "column" : "row",
           }}
         >
@@ -116,9 +109,7 @@ function CreateGuest() {
 
       <DivAtom
         style={{
-          margin: "2rem 1rem 0 0",
-          justifyContent: "space-between",
-          display: "flex",
+          ...styles.addBtnContainer,
           flexDirection: width < 768 ? "column" : "row",
         }}
       >
@@ -126,12 +117,9 @@ function CreateGuest() {
           size="large"
           onClick={onAddGuest}
           style={{
+            ...styles.addBtn,
             width: width < 768 ? "100%" : "18%",
             marginLeft: width < 768 ? "1rem" : "0px",
-            color: "white",
-            backgroundColor: "#6296E4",
-            borderRadius: "0.5rem",
-            filter: "drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.25))",
           }}
           text="Create"
         />
@@ -139,11 +127,8 @@ function CreateGuest() {
           size="large"
           onClick={onAddReminder}
           style={{
+            ...styles.addBtn,
             width: width < 768 ? "100%" : "18%",
-            color: "white",
-            backgroundColor: "#6296E4",
-            borderRadius: "0.5rem",
-            filter: "drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.25))",
           }}
           text="Add Reminder"
         />
@@ -153,3 +138,40 @@ function CreateGuest() {
 }
 
 export default CreateGuest;
+
+const styles = {
+  header: {
+    display: "flex",
+    alignItems: "center",
+  },
+  title: {
+    margin: "0px",
+    color: "#0A65FF",
+    fontSize: "1.5rem",
+  },
+  formContainer: {
+    padding: "1rem",
+    display: "flex",
+    flexDirection: "column" as const,
+  },
+  addressNameContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  addBtnContainer: {
+    margin: "2rem 1rem 0 0",
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  backBtn: {
+    color: "#0A65FF",
+    padding: "1rem",
+  },
+  addBtn: {
+    color: "white",
+    backgroundColor: "#6296E4",
+    borderRadius: "0.5rem",
+    fontWeight: 600,
+    filter: "drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.25))",
+  },
+};

@@ -75,25 +75,21 @@ const LibraryTableToolbar = ({
     >
       <DivAtom
         style={{
-          width: "100%",
-          display: "flex",
+          ...styles.container,
           flexDirection: width < 540 ? "column" : "row",
-          alignItems: "center",
-          justifyContent: "space-between",
         }}
       >
         <DivAtom
           style={{
+            ...styles.toolbarContainer,
             width: width < 540 ? "100%" : "auto",
-            display: "flex",
-            alignItems: "center",
           }}
         >
           {numSelected > 0 ? (
             <Tooltip title="Delete">
               <IconButton
                 size="medium"
-                style={{ padding: "0px 8px 0px 0px", color: "red" }}
+                style={styles.deleteIcon}
                 onClick={() => null}
               >
                 <DeleteOutlinedIcon />
@@ -103,7 +99,7 @@ const LibraryTableToolbar = ({
             <Tooltip title="Filter list">
               <IconButton
                 size="medium"
-                style={{ padding: "0px 8px 0px 0px", color: "#0A65FF" }}
+                style={styles.filterIcon}
                 onClick={() => null}
               >
                 <FilterListIcon />
@@ -121,13 +117,15 @@ const LibraryTableToolbar = ({
             </Typography>
           ) : (
             <InputAtom
-              style={{ padding: "4px" }}
+              style={styles.search}
               placeholder="Search"
               adornmentposition="start"
               fullWidth={width < 540}
               value={search}
               plain="false"
-              onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setSearch(e.target.value)
+              }
               children={<SearchIcon />}
             />
           )}
@@ -146,16 +144,13 @@ const LibraryTableToolbar = ({
                 starticon={<AddCircleOutlineOutlinedIcon />}
                 text={addbtntext}
                 style={{
-                  color: "white",
-                  backgroundColor: "#0A65FF",
-                  borderRadius: "0.5rem",
+                  ...styles.addBtn,
                   width:
                     width < 540
                       ? "100%"
                       : addbtntext.includes("Accomodation")
                       ? "14rem"
                       : "11rem",
-                  margin: "0px",
                 }}
                 size="large"
               />
@@ -168,3 +163,33 @@ const LibraryTableToolbar = ({
 };
 
 export default LibraryTableToolbar;
+
+const styles = {
+  container: {
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  toolbarContainer: {
+    display: "flex",
+    alignItems: "center",
+  },
+  search: {
+    padding: "4px",
+  },
+  deleteIcon: {
+    padding: "0px 8px 0px 0px",
+    color: "red",
+  },
+  filterIcon: {
+    padding: "0px 8px 0px 0px",
+    color: "#0A65FF",
+  },
+  addBtn: {
+    color: "white",
+    backgroundColor: "#0A65FF",
+    borderRadius: "0.5rem",
+    margin: "0px",
+  },
+};

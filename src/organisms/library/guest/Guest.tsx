@@ -22,17 +22,10 @@ function Guest() {
   }, [containerHeight]);
 
   return (
-    <DivAtom
-      style={{ backgroundColor: "#E5E5E5", padding: "1rem", display: "flex" }}
-    >
+    <DivAtom style={styles.container}>
       <DivAtom
         style={{
-          backgroundColor: "white",
-          borderRadius: "0.5rem",
-          padding: "1rem",
-          flex: 1,
-          overflowX: "hidden",
-          overflowY: "scroll",
+          ...styles.innerContainer,
           height: containerHeight + "px",
         }}
       >
@@ -50,3 +43,19 @@ function Guest() {
 }
 
 export default Guest;
+
+const styles = {
+  container: {
+    backgroundColor: "#E5E5E5",
+    padding: "1rem",
+    display: "flex",
+  },
+  innerContainer: {
+    backgroundColor: "white",
+    borderRadius: "0.5rem",
+    padding: "1rem",
+    flex: 1,
+    overflowX: "hidden" as const,
+    overflowY: "scroll" as const,
+  },
+};

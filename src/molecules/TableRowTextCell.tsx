@@ -20,19 +20,17 @@ function TableRowTextCell({ cell }: TableRowTextCellProps) {
         text={cell.title}
         key={uuid()}
         style={{
+          ...styles.paragraph,
           fontWeight: cell.weight,
-          margin: "0px",
           color: cell.colors[0],
-          fontSize: "0.875rem",
         }}
       />
       <ParagraphAtom
         text={cell.subtitle}
         key={uuid()}
         style={{
-          margin: "0px",
+          ...styles.paragraph,
           color: cell.colors[0],
-          fontSize: "0.875rem",
         }}
       />
     </TableCell>
@@ -42,10 +40,9 @@ function TableRowTextCell({ cell }: TableRowTextCellProps) {
         text={cell.title}
         key={uuid()}
         style={{
+          ...styles.paragraph,
           fontWeight: cell.weight,
-          margin: "0px",
           color: cell.colors[0],
-          fontSize: "0.875rem",
         }}
         markstyle={{
           border:
@@ -64,10 +61,9 @@ function TableRowTextCell({ cell }: TableRowTextCellProps) {
         text={cell.title}
         key={uuid()}
         style={{
+          ...styles.paragraph,
           fontWeight: cell.weight,
-          margin: "0px",
           color: cell.colors[0],
-          fontSize: "0.875rem",
         }}
       />
     </TableCell>
@@ -75,3 +71,10 @@ function TableRowTextCell({ cell }: TableRowTextCellProps) {
 }
 
 export default TableRowTextCell;
+
+const styles = {
+  paragraph: {
+    margin: "0px",
+    fontSize: "0.875rem",
+  }
+}

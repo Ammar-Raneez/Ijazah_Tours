@@ -31,17 +31,10 @@ function Accomodation() {
   }, [containerHeight]);
 
   return (
-    <DivAtom
-      style={{ backgroundColor: "#E5E5E5", padding: "1rem", display: "flex" }}
-    >
+    <DivAtom style={styles.container}>
       <DivAtom
         style={{
-          backgroundColor: "white",
-          borderRadius: "0.5rem",
-          padding: "1rem",
-          flex: 1,
-          overflowX: "hidden",
-          overflowY: "scroll",
+          ...styles.innerContainer,
           height: containerHeight + "px",
         }}
       >
@@ -49,48 +42,32 @@ function Accomodation() {
           <CreateAccomodation />
         </Route>
         <Route exact path="/library/accomodation">
-          <DivAtom
-            style={{
-              justifyContent: "flex-start",
-              marginBottom: "4rem",
-              display: "flex",
-            }}
-          >
+          <DivAtom style={styles.btnContainer}>
             <TextFieldAtom
               variant="standard"
               size="medium"
               label=""
               value={accomodationType}
-              onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setAccomodationType(e.target.value)}
+              onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                setAccomodationType(e.target.value)
+              }
               options={options}
               adornmentposition="end"
-              style={{ width: "11rem" }}
+              style={styles.textField}
               select
             />
             <ButtonAtom
               text="Specification"
               style={{
-                color: "white",
-                backgroundColor: "#6296E4",
-                borderRadius: "0.5rem",
-                width: "11rem",
-                fontWeight: 600,
+                ...styles.btn,
                 margin: "0 16px",
-                filter: "drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.25))",
               }}
               onClick={() => null}
               size="large"
             />
             <ButtonAtom
               text="Location"
-              style={{
-                color: "white",
-                backgroundColor: "#6296E4",
-                borderRadius: "0.5rem",
-                width: "11rem",
-                fontWeight: 600,
-                filter: "drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.25))",
-              }}
+              style={styles.btn}
               onClick={() => null}
               size="large"
             />
@@ -105,3 +82,35 @@ function Accomodation() {
 }
 
 export default Accomodation;
+
+const styles = {
+  container: {
+    backgroundColor: "#E5E5E5",
+    padding: "1rem",
+    display: "flex",
+  },
+  innerContainer: {
+    backgroundColor: "white",
+    borderRadius: "0.5rem",
+    padding: "1rem",
+    flex: 1,
+    overflowX: "hidden" as const,
+    overflowY: "scroll" as const,
+  },
+  btn: {
+    color: "white",
+    backgroundColor: "#6296E4",
+    borderRadius: "0.5rem",
+    width: "11rem",
+    fontWeight: 600,
+    filter: "drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.25))",
+  },
+  textField: {
+    width: "11rem",
+  },
+  btnContainer: {
+    justifyContent: "flex-start",
+    marginBottom: "4rem",
+    display: "flex",
+  },
+};
