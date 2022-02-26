@@ -2,8 +2,10 @@ import ButtonAtom from "../../../atoms/ButtonAtom";
 import TextFieldAtom from "../../../atoms/TextFieldAtom";
 import DivAtom from "../../../atoms/DivAtom";
 import { useEffect, useState } from "react";
-import LibraryTable from "./AccomodationTable";
-import { LIBRARY_HOTEL_DATA } from "../../../data";
+import AccomodationTable from "./AccomodationTable";
+import { LIBRARY_ACCOMODATION_DATA } from "../../../data";
+import { Route } from "react-router-dom";
+import CreateAccomodation from "./CreateAccomodation";
 
 const options = [
   { label: "Hotel", value: "Hotel" },
@@ -39,45 +41,50 @@ function Accomodation() {
         overflowy="scroll"
         height={containerHeight + "px"}
       >
-        <DivAtom display="flex" justify="flex-start" margin="0 0 4rem 0">
-          <TextFieldAtom
-            variant="standard"
-            size="medium"
-            label=""
-            value={accomodationType}
-            onChange={(e: any) => setAccomodationType(e.target.value)}
-            options={options}
-            adornmentposition="end"
-            width="11rem"
-            select
-          />
-          <ButtonAtom
-            text="Specification"
-            textcolor="white"
-            backgroundcolor="#6296E4"
-            onClick={() => null}
-            size="large"
-            borderradius="0.5rem"
-            width="11rem"
-            weight={600}
-            margin="0 16px 0 16px"
-            filter="5px 5px 4px"
-          />
-          <ButtonAtom
-            text="Location"
-            textcolor="white"
-            backgroundcolor="#6296E4"
-            onClick={() => null}
-            size="large"
-            borderradius="0.5rem"
-            width="11rem"
-            weight={600}
-            filter="5px 5px 4px"
-          />
-        </DivAtom>
-        <DivAtom>
-          <LibraryTable data={LIBRARY_HOTEL_DATA} />
-        </DivAtom>
+        <Route path="/library/accomodation/create">
+          <CreateAccomodation />
+        </Route>
+        <Route exact path="/library/accomodation">
+          <DivAtom display="flex" justify="flex-start" margin="0 0 4rem 0">
+            <TextFieldAtom
+              variant="standard"
+              size="medium"
+              label=""
+              value={accomodationType}
+              onChange={(e: any) => setAccomodationType(e.target.value)}
+              options={options}
+              adornmentposition="end"
+              width="11rem"
+              select
+            />
+            <ButtonAtom
+              text="Specification"
+              textcolor="white"
+              backgroundcolor="#6296E4"
+              onClick={() => null}
+              size="large"
+              borderradius="0.5rem"
+              width="11rem"
+              weight={600}
+              margin="0 16px 0 16px"
+              filter="5px 5px 4px"
+            />
+            <ButtonAtom
+              text="Location"
+              textcolor="white"
+              backgroundcolor="#6296E4"
+              onClick={() => null}
+              size="large"
+              borderradius="0.5rem"
+              width="11rem"
+              weight={600}
+              filter="5px 5px 4px"
+            />
+          </DivAtom>
+          <DivAtom>
+            <AccomodationTable data={LIBRARY_ACCOMODATION_DATA} />
+          </DivAtom>
+        </Route>
       </DivAtom>
     </DivAtom>
   );

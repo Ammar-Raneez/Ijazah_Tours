@@ -141,7 +141,7 @@ const LibraryTableToolbar = ({
                 backgroundcolor="#0A65FF"
                 size="large"
                 borderradius="0.5rem"
-                width={width < 540 ? "100%" : "11rem"}
+                width={width < 540 ? "100%" :  addbtntext.includes("Accomodation") ? "14rem" : "11rem"}
                 margin="0"
               />
             </Link>

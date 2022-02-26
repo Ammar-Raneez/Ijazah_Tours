@@ -58,7 +58,7 @@ export const QUOTATIONS_DUMMY_DATA = [
   ],
 ];
 
-export const LIBRARY_HOTEL_DATA = [
+export const LIBRARY_ACCOMODATION_DATA = [
   {
     id: "1",
     name: "galadari",

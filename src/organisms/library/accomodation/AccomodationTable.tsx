@@ -119,7 +119,7 @@ export default function AccomodationTable({ data }: AccomodationTableProps) {
           search={search}
           setSearch={setSearch}
           numSelected={selected.length}
-          addbtntext="Add Hotel"
+          addbtntext="Add Accomodation"
         />
         <TableContainer className={classes.container}>
           <Table
