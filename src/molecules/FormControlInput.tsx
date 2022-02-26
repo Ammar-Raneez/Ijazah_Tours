@@ -10,7 +10,7 @@ interface FormControlInputProps {
   fullWidth: boolean;
   multiline: boolean;
   rows: number;
-  setValue: any;
+  setValue: (value: string) => void;
   flex?: number;
 }
 

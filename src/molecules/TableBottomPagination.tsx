@@ -1,9 +1,11 @@
 import { TablePagination } from "@material-ui/core";
+import { TablePaginationActionsProps } from "@material-ui/core/TablePagination/TablePaginationActions";
+import { ElementType } from "react";
 import styled from "styled-components";
 
 interface TableBottomPaginationProps {
   rowsperpage: number;
-  ActionsComponent: any;
+  ActionsComponent: ElementType<TablePaginationActionsProps>;
   onPageChange: () => void;
   onRowsPerPageChange: () => void;
   rowdata?: any[];

@@ -42,7 +42,7 @@ interface LibraryTableToolbarProps {
   search: string;
   addbtntext: string;
   numSelected: number;
-  setSearch: any;
+  setSearch: (value: string) => void;
 }
 
 const LibraryTableToolbar = ({

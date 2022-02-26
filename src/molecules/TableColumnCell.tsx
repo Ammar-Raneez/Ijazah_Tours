@@ -2,12 +2,13 @@ import { TableCell } from "@material-ui/core";
 import { ReactNode } from "react";
 import styled from "styled-components";
 import { v4 as uuid } from "uuid";
+import { Order } from "../utils/helpers";
 
 interface TableColumnCellProps {
   color: string;
   column?: string;
   align?: "left" | "center" | "right" | "justify" | "inherit";
-  sortDirection?: any;
+  sortDirection?: Order | false;
   children?: ReactNode;
 }
 
@@ -19,7 +20,7 @@ function TableColumnCell({
   ...props
 }: TableColumnCellProps) {
   return (
-    <StyledTableColumnCell
+    <TableCell
       sortDirection={sortDirection}
       key={uuid()}
       color={color}
@@ -27,18 +28,12 @@ function TableColumnCell({
       style={props.children ? { color, fontWeight: "bold" } : {}}
     >
       {!props.children ? (
-        <strong key={uuid()}>{column}</strong>
+        <strong style={{ color }} key={uuid()}>{column}</strong>
       ) : (
         props.children
       )}
-    </StyledTableColumnCell>
+    </TableCell>
   );
 }
 
 export default TableColumnCell;
-
-const StyledTableColumnCell = styled(TableCell)<TableColumnCellProps>`
-  strong {
-    color: ${({ color }) => color};
-  }
-`;
