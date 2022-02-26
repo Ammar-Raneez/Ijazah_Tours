@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import { Route } from "react-router-dom";
 import DivAtom from "../../../atoms/DivAtom";
+import CreateCustomer from "./CreateCustomer";
 import { LIBRARY_CUSTOMER_DATA } from "../../../data";
 import CustomerTable from "./CustomerTable";
 
@@ -31,7 +33,12 @@ function Customer() {
         height={containerHeight + "px"}
       >
         <DivAtom>
-          <CustomerTable data={LIBRARY_CUSTOMER_DATA} />
+          <Route path="/library/customer/create">
+            <CreateCustomer />
+          </Route>
+          <Route exact path="/library/customer">
+            <CustomerTable data={LIBRARY_CUSTOMER_DATA} />
+          </Route>
         </DivAtom>
       </DivAtom>
     </DivAtom>
