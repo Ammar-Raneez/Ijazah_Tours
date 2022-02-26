@@ -1,4 +1,4 @@
-import { ChangeEvent, Fragment, useEffect, useState } from "react";
+import { ChangeEvent, Fragment, MouseEvent, useEffect, useState } from "react";
 import {
   Theme,
   makeStyles,
@@ -66,7 +66,10 @@ export default function GuestTable({ data }: GuestTableProps) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const handleRequestSort = (_: any, property: any) => {
+  const handleRequestSort = (
+    _: MouseEvent<HTMLSpanElement>,
+    property: string
+  ) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
@@ -81,7 +84,10 @@ export default function GuestTable({ data }: GuestTableProps) {
     setSelected([]);
   };
 
-  const handleClick = (_: any, name: string) => {
+  const handleClick = (
+    _: MouseEvent<HTMLTableRowElement, globalThis.MouseEvent>,
+    name: string
+  ) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected: string[] = [];
 
@@ -101,8 +107,8 @@ export default function GuestTable({ data }: GuestTableProps) {
     setSelected(newSelected);
   };
 
-  const handleChangePage = (_: any, newPage: number) => {
-    setPage(newPage);
+  const handleChangePage = (_: unknown, page: number) => {
+    setPage(page);
   };
 
   const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {

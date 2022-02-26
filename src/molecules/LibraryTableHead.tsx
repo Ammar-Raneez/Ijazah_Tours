@@ -26,7 +26,7 @@ interface LibraryTableHeadProps {
   numSelected: number;
   rowCount: number;
   classes: any;
-  onRequestSort: any;
+  onRequestSort: (event: MouseEvent<HTMLSpanElement>, property: string) => void;
   onSelectAllClick: (
     event: ChangeEvent<HTMLInputElement>,
     checked: boolean
@@ -43,7 +43,7 @@ function LibraryTableHead({
   rowCount,
   onRequestSort,
 }: LibraryTableHeadProps) {
-  const createSortHandler = (property: any) => (event: MouseEvent<unknown>) => {
+  const createSortHandler = (property: string) => (event: MouseEvent<HTMLSpanElement>) => {
     onRequestSort(event, property);
   };
 

@@ -2,7 +2,7 @@ import DivAtom from "../../atoms/DivAtom";
 import QuotationsTable from "./QuotationsTable";
 import { QUOTATIONS_DUMMY_DATA } from "../../data";
 import ButtonAtom from "../../atoms/ButtonAtom";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import SearchIcon from "@material-ui/icons/Search";
 import InputAtom from "../../atoms/InputAtom";
 
@@ -136,7 +136,7 @@ function Quotations() {
               fullWidth={width < 768}
               value={search}
               plain="false"
-              onChange={(e: any) => setSearch(e.target.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
               children={<SearchIcon />}
             />
             <ButtonAtom

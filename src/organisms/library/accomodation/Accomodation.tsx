@@ -1,7 +1,7 @@
 import ButtonAtom from "../../../atoms/ButtonAtom";
 import TextFieldAtom from "../../../atoms/TextFieldAtom";
 import DivAtom from "../../../atoms/DivAtom";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import AccomodationTable from "./AccomodationTable";
 import { LIBRARY_ACCOMODATION_DATA } from "../../../data";
 import { Route } from "react-router-dom";
@@ -61,7 +61,7 @@ function Accomodation() {
               size="medium"
               label=""
               value={accomodationType}
-              onChange={(e: any) => setAccomodationType(e.target.value)}
+              onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setAccomodationType(e.target.value)}
               options={options}
               adornmentposition="end"
               style={{ width: "11rem" }}

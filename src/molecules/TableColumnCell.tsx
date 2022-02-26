@@ -1,6 +1,5 @@
 import { TableCell } from "@material-ui/core";
 import { ReactNode } from "react";
-import styled from "styled-components";
 import { v4 as uuid } from "uuid";
 import { Order } from "../utils/helpers";
 
