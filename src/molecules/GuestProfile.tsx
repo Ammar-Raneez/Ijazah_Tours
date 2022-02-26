@@ -2,24 +2,24 @@ import AvatarAtom from "../atoms/AvatarAtom";
 import DivAtom from "../atoms/DivAtom";
 import ParagraphAtom from "../atoms/ParagraphAtom";
 
-interface CustomerProfileProps {
+interface GuestProfileProps {
   image: string;
   title: string;
   subtitle: string;
   titleweight?: number;
 }
 
-function CustomerProfile({
+function GuestProfile({
   image,
   title,
   subtitle,
   titleweight,
-}: CustomerProfileProps) {
+}: GuestProfileProps) {
   return (
     <DivAtom display="flex" align="center">
       <AvatarAtom
         image={image}
-        alt="customer"
+        alt="guest"
         variant="rounded"
         size={30}
         margin="8px"
@@ -43,4 +43,4 @@ function CustomerProfile({
   );
 }
 
-export default CustomerProfile;
+export default GuestProfile;

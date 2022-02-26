@@ -16,7 +16,7 @@ import DivAtom from "./atoms/DivAtom";
 import { useState } from "react";
 import Accomodation from "./organisms/library/accomodation/Accomodation";
 import Driver from "./organisms/library/driver/Driver";
-import Customer from "./organisms/library/customers/Customer";
+import Guest from "./organisms/library/guest/Guest";
 
 function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -64,8 +64,8 @@ function App() {
               <Route path="/library/driver">
                 <Driver />
               </Route>
-              <Route path="/library/customer">
-                <Customer />
+              <Route path="/library/guest">
+                <Guest />
               </Route>
               <Route exact path="/library">
                 <Redirect to="/library/accomodation" />

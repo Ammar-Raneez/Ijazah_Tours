@@ -53,11 +53,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-interface CustomerTableProps {
+interface GuestTableProps {
   data: any;
 }
 
-export default function CustomerTable({ data }: CustomerTableProps) {
+export default function GuestTable({ data }: GuestTableProps) {
   const classes = useStyles();
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("calories");
@@ -119,7 +119,7 @@ export default function CustomerTable({ data }: CustomerTableProps) {
           search={search}
           setSearch={setSearch}
           numSelected={selected.length}
-          addbtntext="Add Customer"
+          addbtntext="Add Guest"
         />
         <TableContainer className={classes.container}>
           <Table

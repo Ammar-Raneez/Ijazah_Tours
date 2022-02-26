@@ -7,7 +7,7 @@ import ButtonAtom from "../../../atoms/ButtonAtom";
 import IconAtom from "../../../atoms/IconAtom";
 import FormControlInput from "../../../molecules/FormControlInput";
 
-function CreateDriver() {
+function CreateGuest() {
   const [refNum, setRefNum] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -29,7 +29,7 @@ function CreateDriver() {
     return removeEventListeners();
   }, [width]);
 
-  const onAddCustomer = async () => {};
+  const onAddGuest = async () => {};
 
   const onAddReminder = async () => {};
 
@@ -41,11 +41,11 @@ function CreateDriver() {
           children={<ChevronLeftRoundedIcon />}
           textcolor="#0A65FF"
           padding="1rem"
-          onClick={() => history.replace("/library/customer")}
+          onClick={() => history.replace("/library/guest")}
         />
         <H2Atom
           margin="0px"
-          text="Create Customer"
+          text="Create Guest"
           color="#0A65FF"
           size="1.5rem"
         />
@@ -121,7 +121,7 @@ function CreateDriver() {
       >
         <ButtonAtom
           size="large"
-          onClick={onAddCustomer}
+          onClick={onAddGuest}
           width={width < 768 ? "100%" : "18%"}
           margin={width < 768 ? "0 0 1rem 0": "0px" }
           textcolor="white"
@@ -145,4 +145,4 @@ function CreateDriver() {
   );
 }
 
-export default CreateDriver;
+export default CreateGuest;

@@ -7,7 +7,7 @@ const LINKS = [
     type: "dashboard",
     links: [
       { key: "1", text: "Quotations", link: "/dashboard/quotations" },
-      { key: "2", text: "Customer", link: "/dashboard/customer" },
+      { key: "2", text: "Guest", link: "/dashboard/guest" },
       { key: "3", text: "Voucher", link: "/dashboard/voucher" },
     ],
   },
@@ -24,7 +24,7 @@ const LINKS = [
     links: [
       { key: "1", text: "Accomodation", link: "/library/accomodation" },
       { key: "2", text: "Driver", link: "/library/driver" },
-      { key: "3", text: "Customer", link: "/library/customer" },
+      { key: "3", text: "Guest", link: "/library/guest" },
     ],
   },
 ];

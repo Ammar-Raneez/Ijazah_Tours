@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import { v4 as uuid } from "uuid";
-import CustomerProfile from "../../molecules/CustomerProfile";
+import GuestProfile from "../../molecules/GuestProfile";
 import TableBottomPagination from "../../molecules/TableBottomPagination";
 import TableColumnCell from "../../molecules/TableColumnCell";
 import TableRowButtonCell from "../../molecules/TableRowButtonCell";
@@ -55,7 +55,7 @@ function QuotationsTable({ columns, rowdata }: QuotationsTableProps) {
                 !cell.status ? (
                   cell.image ? (
                     <TableCell key={uuid()} align="left">
-                      <CustomerProfile
+                      <GuestProfile
                         image={cell.image}
                         title={cell.title}
                         subtitle={cell.subtitle}

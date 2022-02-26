@@ -264,7 +264,7 @@ export const LIBRARY_DRIVER_DATA = [
   },
 ];
 
-export const LIBRARY_CUSTOMER_DATA = [
+export const LIBRARY_GUEST_DATA = [
   {
     id: "1",
     name: "kadin herwitz",

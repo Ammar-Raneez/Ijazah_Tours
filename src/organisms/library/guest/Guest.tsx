@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Route } from "react-router-dom";
 import DivAtom from "../../../atoms/DivAtom";
-import CreateCustomer from "./CreateCustomer";
-import { LIBRARY_CUSTOMER_DATA } from "../../../data";
-import CustomerTable from "./CustomerTable";
+import CreateGuest from "./CreateGuest";
+import { LIBRARY_GUEST_DATA } from "../../../data";
+import GuestTable from "./GuestTable";
 
-function Customer() {
+function Guest() {
   const [containerHeight, setContainerHeight] = useState(0);
 
   useEffect(() => {
@@ -33,11 +33,11 @@ function Customer() {
         height={containerHeight + "px"}
       >
         <DivAtom>
-          <Route path="/library/customer/create">
-            <CreateCustomer />
+          <Route path="/library/guest/create">
+            <CreateGuest />
           </Route>
-          <Route exact path="/library/customer">
-            <CustomerTable data={LIBRARY_CUSTOMER_DATA} />
+          <Route exact path="/library/guest">
+            <GuestTable data={LIBRARY_GUEST_DATA} />
           </Route>
         </DivAtom>
       </DivAtom>
@@ -45,4 +45,4 @@ function Customer() {
   );
 }
 
-export default Customer;
+export default Guest;
