@@ -48,7 +48,7 @@ function CreateDriver() {
           onClick={() => history.replace("/library/driver")}
         />
         <H2Atom
-          style={{ margin: "0px", color: "0A65FF", fontSize: "1.5rem" }}
+          style={{ margin: "0px", color: "#0A65FF", fontSize: "1.5rem" }}
           text="Create Driver"
         />
       </DivAtom>

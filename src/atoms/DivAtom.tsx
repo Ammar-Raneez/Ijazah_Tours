@@ -6,7 +6,7 @@ interface DivAtomProps {
 }
 
 function DivAtom({ style, ...props }: DivAtomProps) {
-  return <DivAtom style={style}>{props.children}</DivAtom>;
+  return <div style={style}>{props.children}</div>;
 }
 
 export default DivAtom;

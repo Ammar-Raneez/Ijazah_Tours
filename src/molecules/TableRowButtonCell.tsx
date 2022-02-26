@@ -36,10 +36,10 @@ function TableRowButtonCell({
             ? "#41E93E"
             : "#C1BFBF",
           color: btncolors
-            ? btncolors[0]
+            ? btncolors[1]
             : cell.status === "Approved"
-            ? "#41E93E"
-            : "#C1BFBF",
+            ? "#146521"
+            : "#464E5F",
           borderRadius: btnborderradius,
         }}
         size={btnsize}

@@ -41,7 +41,7 @@ function CreateAccomodation() {
           onClick={() => history.replace("/library/accomodation")}
         />
         <H2Atom
-          style={{ margin: "0px", color: "0A65FF", fontSize: "1.5rem" }}
+          style={{ margin: "0px", color: "#0A65FF", fontSize: "1.5rem" }}
           text="Create Accomodation"
         />
       </DivAtom>
@@ -114,6 +114,7 @@ function CreateAccomodation() {
       <DivAtom style={{ margin: "2rem 1rem 0 0", display: "flex", justifyContent: "flex-end" }}>
         <ButtonAtom
           size="large"
+          text="Create"
           onClick={onAddAccomodation}
           style={{
             color: "white",
