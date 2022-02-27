@@ -6,6 +6,7 @@ import H2Atom from "../../../atoms/H2Atom";
 import ButtonAtom from "../../../atoms/ButtonAtom";
 import IconAtom from "../../../atoms/IconAtom";
 import FormControlInput from "../../../molecules/FormControlInput";
+import { libraryCreateMemberStyles } from "../../../styles";
 
 function CreateAccomodation() {
   const [refNum, setRefNum] = useState("");
@@ -33,17 +34,17 @@ function CreateAccomodation() {
 
   return (
     <DivAtom>
-      <DivAtom style={styles.header}>
+      <DivAtom style={libraryCreateMemberStyles.header}>
         <IconAtom
           size="small"
           children={<ChevronLeftRoundedIcon />}
-          style={styles.backBtn}
+          style={libraryCreateMemberStyles.backBtn}
           onClick={() => history.replace("/library/accomodation")}
         />
-        <H2Atom style={styles.title} text="Create Accomodation" />
+        <H2Atom style={libraryCreateMemberStyles.title} text="Create Accomodation" />
       </DivAtom>
 
-      <DivAtom style={styles.formContainer}>
+      <DivAtom style={libraryCreateMemberStyles.formContainer}>
         <FormControlInput
           margin="0 0 1rem 0"
           label="Reference Number"
@@ -56,7 +57,7 @@ function CreateAccomodation() {
         />
         <DivAtom
           style={{
-            ...styles.addressNameContainer,
+            ...libraryCreateMemberStyles.addressNameContainer,
             flexDirection: width < 600 ? "column" : "row",
           }}
         >
@@ -105,13 +106,13 @@ function CreateAccomodation() {
         />
       </DivAtom>
 
-      <DivAtom style={styles.addBtnContainer}>
+      <DivAtom style={libraryCreateMemberStyles.addBtnContainer}>
         <ButtonAtom
           size="large"
           text="Create"
           onClick={onAddAccomodation}
           style={{
-            ...styles.addBtn,
+            ...libraryCreateMemberStyles.addBtn,
             width: width < 768 ? "100%" : "18%",
             margin: width < 768 ? "0 0 1rem 0" : "0px",
           }}
@@ -123,39 +124,3 @@ function CreateAccomodation() {
 
 export default CreateAccomodation;
 
-const styles = {
-  header: {
-    display: "flex",
-    alignItems: "center",
-  },
-  title: {
-    margin: "0px",
-    color: "#0A65FF",
-    fontSize: "1.5rem",
-  },
-  formContainer: {
-    padding: "1rem",
-    display: "flex",
-    flexDirection: "column" as const,
-  },
-  addressNameContainer: {
-    display: "flex",
-    justifyContent: "space-between",
-  },
-  addBtnContainer: {
-    margin: "2rem 1rem 0 0",
-    display: "flex",
-    justifyContent: "flex-end",
-  },
-  backBtn: {
-    color: "#0A65FF",
-    padding: "1rem",
-  },
-  addBtn: {
-    color: "white",
-    backgroundColor: "#6296E4",
-    borderRadius: "0.5rem",
-    fontWeight: 600,
-    filter: "drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.25))",
-  },
-};

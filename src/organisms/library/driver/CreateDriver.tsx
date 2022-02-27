@@ -7,6 +7,7 @@ import ButtonAtom from "../../../atoms/ButtonAtom";
 import ImageUploader from "./ImageUpload";
 import IconAtom from "../../../atoms/IconAtom";
 import FormControlInput from "../../../molecules/FormControlInput";
+import { libraryCreateMemberStyles } from "../../../styles";
 
 function CreateDriver() {
   const [refNum, setRefNum] = useState("");
@@ -36,21 +37,21 @@ function CreateDriver() {
     return removeEventListeners();
   }, [width]);
 
-  const onAddDriver = async () => {};
+  const onAddDriver = async () => { };
 
   return (
     <DivAtom>
-      <DivAtom style={styles.header}>
+      <DivAtom style={libraryCreateMemberStyles.header}>
         <IconAtom
           size="small"
           children={<ChevronLeftRoundedIcon />}
-          style={styles.backBtn}
+          style={libraryCreateMemberStyles.backBtn}
           onClick={() => history.replace("/library/driver")}
         />
-        <H2Atom style={styles.title} text="Create Driver" />
+        <H2Atom style={libraryCreateMemberStyles.title} text="Create Driver" />
       </DivAtom>
 
-      <DivAtom style={styles.formContainer}>
+      <DivAtom style={libraryCreateMemberStyles.formContainer}>
         <FormControlInput
           margin="0 0 1rem 0"
           label="Reference Number"
@@ -63,7 +64,7 @@ function CreateDriver() {
         />
         <DivAtom
           style={{
-            ...styles.addressNameContainer,
+            ...libraryCreateMemberStyles.addressNameContainer,
             flexDirection: width < 600 ? "column" : "row",
           }}
         >
@@ -112,7 +113,7 @@ function CreateDriver() {
         />
         <DivAtom
           style={{
-            ...styles.addressNameContainer,
+            ...libraryCreateMemberStyles.addressNameContainer,
             flexDirection: width < 600 ? "column" : "row",
           }}
         >
@@ -162,12 +163,12 @@ function CreateDriver() {
         />
       </DivAtom>
 
-      <DivAtom style={styles.addBtnContainer}>
+      <DivAtom style={libraryCreateMemberStyles.addBtnContainer}>
         <ButtonAtom
           size="large"
           onClick={onAddDriver}
           style={{
-            ...styles.addBtn,
+            ...libraryCreateMemberStyles.addBtn,
             width: width < 768 ? "100%" : "18%",
           }}
           text="Create"
@@ -178,40 +179,3 @@ function CreateDriver() {
 }
 
 export default CreateDriver;
-
-const styles = {
-  header: {
-    display: "flex",
-    alignItems: "center",
-  },
-  title: {
-    margin: "0px",
-    color: "#0A65FF",
-    fontSize: "1.5rem",
-  },
-  formContainer: {
-    padding: "1rem",
-    display: "flex",
-    flexDirection: "column" as const,
-  },
-  addressNameContainer: {
-    display: "flex",
-    justifyContent: "space-between",
-  },
-  addBtnContainer: {
-    margin: "2rem 1rem 0 0",
-    display: "flex",
-    justifyContent: "flex-end",
-  },
-  backBtn: {
-    color: "#0A65FF",
-    padding: "1rem",
-  },
-  addBtn: {
-    color: "white",
-    backgroundColor: "#6296E4",
-    borderRadius: "0.5rem",
-    fontWeight: 600,
-    filter: "drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.25))",
-  },
-};

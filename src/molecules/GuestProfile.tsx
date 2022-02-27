@@ -1,6 +1,7 @@
 import AvatarAtom from "../atoms/AvatarAtom";
 import DivAtom from "../atoms/DivAtom";
 import ParagraphAtom from "../atoms/ParagraphAtom";
+import { guestProfileStyles } from "../styles";
 
 interface GuestProfileProps {
   image: string;
@@ -16,20 +17,20 @@ function GuestProfile({
   titleweight,
 }: GuestProfileProps) {
   return (
-    <DivAtom style={styles.container}>
+    <DivAtom style={guestProfileStyles.container}>
       <AvatarAtom
         image={image}
         alt="guest"
         variant="rounded"
-        style={styles.avatar}
+        style={guestProfileStyles.avatar}
       />
-      <DivAtom style={styles.innerContainer}>
+      <DivAtom style={guestProfileStyles.innerContainer}>
         <ParagraphAtom
-          style={{ ...styles.paragraph, fontWeight: titleweight }}
+          style={{ ...guestProfileStyles.paragraph, fontWeight: titleweight }}
           text={title}
         />
         <ParagraphAtom
-          style={styles.paragraph}
+          style={guestProfileStyles.paragraph}
           text={subtitle}
         />
       </DivAtom>
@@ -37,25 +38,5 @@ function GuestProfile({
   );
 }
 
-const styles = {
-  container: {
-    display: "flex",
-    alignItems: "center",
-  },
-  avatar: {
-    margin: "8px",
-    height: "30px",
-    width: "30px",
-  },
-  innerContainer: {
-    display: "flex",
-    flexDirection: "column" as const,
-  },
-  paragraph: {
-    margin: "0px",
-    color: "#464E5F",
-    fontSize: "0.875rem",
-  },
-};
 
 export default GuestProfile;

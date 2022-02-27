@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Route } from "react-router-dom";
 import DivAtom from "../../../atoms/DivAtom";
 import { LIBRARY_DRIVER_DATA } from "../../../data";
+import { libraryStyles } from "../../../styles";
 import CreateDriver from "./CreateDriver";
 import DriverTable from "./DriverTable";
 
@@ -22,10 +23,10 @@ function Driver() {
   }, [containerHeight]);
 
   return (
-    <DivAtom style={styles.container}>
+    <DivAtom style={libraryStyles.container}>
       <DivAtom
         style={{
-          ...styles.innerContainer,
+          ...libraryStyles.innerContainer,
           height: containerHeight + "px",
         }}
       >
@@ -44,18 +45,3 @@ function Driver() {
 
 export default Driver;
 
-const styles = {
-  container: {
-    backgroundColor: "#E5E5E5",
-    padding: "1rem",
-    display: "flex",
-  },
-  innerContainer: {
-    backgroundColor: "white",
-    borderRadius: "0.5rem",
-    padding: "1rem",
-    flex: 1,
-    overflowX: "hidden" as const,
-    overflowY: "scroll" as const,
-  },
-};

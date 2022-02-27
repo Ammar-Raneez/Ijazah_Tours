@@ -5,6 +5,7 @@ import ButtonAtom from "../../atoms/ButtonAtom";
 import { ChangeEvent, useEffect, useState } from "react";
 import SearchIcon from "@material-ui/icons/Search";
 import InputAtom from "../../atoms/InputAtom";
+import { quotationsStyles } from "../../styles";
 
 function Quotations() {
   const [search, setSearch] = useState("");
@@ -30,18 +31,18 @@ function Quotations() {
   }, [width, containerHeight]);
 
   return (
-    <DivAtom style={styles.container}>
+    <DivAtom style={quotationsStyles.container}>
       <DivAtom
         style={{
-          ...styles.innerContainer,
+          ...quotationsStyles.innerContainer,
           height: containerHeight + "px",
         }}
       >
-        <DivAtom style={styles.btnMainContainer}>
+        <DivAtom style={quotationsStyles.btnMainContainer}>
           <ButtonAtom
             text="New Quote +"
             style={{
-              ...styles.btn,
+              ...quotationsStyles.btn,
               marginRight: "16px",
             }}
             onClick={() => null}
@@ -49,27 +50,27 @@ function Quotations() {
           />
           <ButtonAtom
             text="Compare Rates"
-            style={styles.btn}
+            style={quotationsStyles.btn}
             onClick={() => null}
             size="large"
           />
         </DivAtom>
         <DivAtom
           style={{
-            ...styles.btnSubContainer,
+            ...quotationsStyles.btnSubContainer,
             flexDirection: width < 768 ? "column" : "row",
           }}
         >
           <DivAtom
             style={{
-              ...styles.btnSubInnerContainer,
+              ...quotationsStyles.btnSubInnerContainer,
               margin: width < 768 ? "0 0 16px 0" : "0",
             }}
           >
             <ButtonAtom
               text="Approved Quotes"
               style={{
-                ...styles.btn,
+                ...quotationsStyles.btn,
                 marginRight: "16px",
               }}
               onClick={() => null}
@@ -77,14 +78,14 @@ function Quotations() {
             />
             <ButtonAtom
               text="On Progress"
-              style={styles.btn}
+              style={quotationsStyles.btn}
               onClick={() => null}
               size="large"
             />
           </DivAtom>
           <DivAtom
             style={{
-              ...styles.btnSubInnerContainer,
+              ...quotationsStyles.btnSubInnerContainer,
               justifyContent: width < 768 ? "flex-start" : "flex-end",
             }}
           >
@@ -102,7 +103,7 @@ function Quotations() {
             <ButtonAtom
               text="Search"
               style={{
-                ...styles.btn,
+                ...quotationsStyles.btn,
                 marginLeft: "16px",
               }}
               onClick={() => null}
@@ -121,41 +122,3 @@ function Quotations() {
 
 export default Quotations;
 
-const styles = {
-  container: {
-    display: "flex",
-    padding: "1rem",
-    backgroundColor: "#E5E5E5",
-  },
-  innerContainer: {
-    backgroundColor: "white",
-    borderRadius: "0.5rem",
-    padding: "1rem",
-    flex: 1,
-    overflowX: "hidden" as const,
-    overflowY: "scroll" as const,
-  },
-  btnMainContainer: {
-    display: "flex",
-    justifyContent: "flex-start",
-    marginBottom: "4rem",
-  },
-  btnSubContainer: {
-    display: "flex",
-    justifyContent: "space-between",
-    marginBottom: "1rem",
-  },
-  btnSubInnerContainer: {
-    display: "flex",
-    justifyContent: "flex-start",
-    flex: 1,
-  },
-  btn: {
-    color: "white",
-    backgroundColor: "#6296E4",
-    borderRadius: "0.5rem",
-    width: "11rem",
-    fontWeight: 600,
-    filter: "drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.25))",
-  },
-};

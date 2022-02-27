@@ -1,6 +1,7 @@
 import { TableCell } from "@material-ui/core";
 import { v4 as uuid } from "uuid";
 import ParagraphAtom from "../atoms/ParagraphAtom";
+import { tableRowTextCellStyles } from "../styles";
 
 interface TableRowTextCellProps {
   cell: {
@@ -20,7 +21,7 @@ function TableRowTextCell({ cell }: TableRowTextCellProps) {
         text={cell.title}
         key={uuid()}
         style={{
-          ...styles.paragraph,
+          ...tableRowTextCellStyles.paragraph,
           fontWeight: cell.weight,
           color: cell.colors[0],
         }}
@@ -29,7 +30,7 @@ function TableRowTextCell({ cell }: TableRowTextCellProps) {
         text={cell.subtitle}
         key={uuid()}
         style={{
-          ...styles.paragraph,
+          ...tableRowTextCellStyles.paragraph,
           color: cell.colors[0],
         }}
       />
@@ -40,7 +41,7 @@ function TableRowTextCell({ cell }: TableRowTextCellProps) {
         text={cell.title}
         key={uuid()}
         style={{
-          ...styles.paragraph,
+          ...tableRowTextCellStyles.paragraph,
           fontWeight: cell.weight,
           color: cell.colors[0],
         }}
@@ -61,7 +62,7 @@ function TableRowTextCell({ cell }: TableRowTextCellProps) {
         text={cell.title}
         key={uuid()}
         style={{
-          ...styles.paragraph,
+          ...tableRowTextCellStyles.paragraph,
           fontWeight: cell.weight,
           color: cell.colors[0],
         }}
@@ -71,10 +72,3 @@ function TableRowTextCell({ cell }: TableRowTextCellProps) {
 }
 
 export default TableRowTextCell;
-
-const styles = {
-  paragraph: {
-    margin: "0px",
-    fontSize: "0.875rem",
-  }
-}

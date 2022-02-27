@@ -17,6 +17,7 @@ import ButtonAtom from "../atoms/ButtonAtom";
 import DivAtom from "../atoms/DivAtom";
 import InputAtom from "../atoms/InputAtom";
 import { Link } from "react-router-dom";
+import { libraryTableToolbarStyles } from "../styles";
 
 const useToolbarStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -75,13 +76,13 @@ const LibraryTableToolbar = ({
     >
       <DivAtom
         style={{
-          ...styles.container,
+          ...libraryTableToolbarStyles.container,
           flexDirection: width < 540 ? "column" : "row",
         }}
       >
         <DivAtom
           style={{
-            ...styles.toolbarContainer,
+            ...libraryTableToolbarStyles.toolbarContainer,
             width: width < 540 ? "100%" : "auto",
           }}
         >
@@ -89,7 +90,7 @@ const LibraryTableToolbar = ({
             <Tooltip title="Delete">
               <IconButton
                 size="medium"
-                style={styles.deleteIcon}
+                style={libraryTableToolbarStyles.deleteIcon}
                 onClick={() => null}
               >
                 <DeleteOutlinedIcon />
@@ -99,7 +100,7 @@ const LibraryTableToolbar = ({
             <Tooltip title="Filter list">
               <IconButton
                 size="medium"
-                style={styles.filterIcon}
+                style={libraryTableToolbarStyles.filterIcon}
                 onClick={() => null}
               >
                 <FilterListIcon />
@@ -117,7 +118,7 @@ const LibraryTableToolbar = ({
             </Typography>
           ) : (
             <InputAtom
-              style={styles.search}
+              style={libraryTableToolbarStyles.search}
               placeholder="Search"
               adornmentposition="start"
               fullWidth={width < 540}
@@ -144,7 +145,7 @@ const LibraryTableToolbar = ({
                 starticon={<AddCircleOutlineOutlinedIcon />}
                 text={addbtntext}
                 style={{
-                  ...styles.addBtn,
+                  ...libraryTableToolbarStyles.addBtn,
                   width:
                     width < 540
                       ? "100%"
@@ -164,32 +165,3 @@ const LibraryTableToolbar = ({
 
 export default LibraryTableToolbar;
 
-const styles = {
-  container: {
-    width: "100%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  toolbarContainer: {
-    display: "flex",
-    alignItems: "center",
-  },
-  search: {
-    padding: "4px",
-  },
-  deleteIcon: {
-    padding: "0px 8px 0px 0px",
-    color: "red",
-  },
-  filterIcon: {
-    padding: "0px 8px 0px 0px",
-    color: "#0A65FF",
-  },
-  addBtn: {
-    color: "white",
-    backgroundColor: "#0A65FF",
-    borderRadius: "0.5rem",
-    margin: "0px",
-  },
-};

@@ -6,6 +6,7 @@ import AccomodationTable from "./AccomodationTable";
 import { LIBRARY_ACCOMODATION_DATA } from "../../../data";
 import { Route } from "react-router-dom";
 import CreateAccomodation from "./CreateAccomodation";
+import { libraryStyles } from "../../../styles";
 
 const options = [
   { label: "Hotel", value: "Hotel" },
@@ -31,10 +32,10 @@ function Accomodation() {
   }, [containerHeight]);
 
   return (
-    <DivAtom style={styles.container}>
+    <DivAtom style={libraryStyles.container}>
       <DivAtom
         style={{
-          ...styles.innerContainer,
+          ...libraryStyles.innerContainer,
           height: containerHeight + "px",
         }}
       >
@@ -42,7 +43,7 @@ function Accomodation() {
           <CreateAccomodation />
         </Route>
         <Route exact path="/library/accomodation">
-          <DivAtom style={styles.btnContainer}>
+          <DivAtom style={libraryStyles.btnContainer}>
             <TextFieldAtom
               variant="standard"
               size="medium"
@@ -53,13 +54,13 @@ function Accomodation() {
               }
               options={options}
               adornmentposition="end"
-              style={styles.textField}
+              style={libraryStyles.textField}
               select
             />
             <ButtonAtom
               text="Specification"
               style={{
-                ...styles.btn,
+                ...libraryStyles.btn,
                 margin: "0 16px",
               }}
               onClick={() => null}
@@ -67,7 +68,7 @@ function Accomodation() {
             />
             <ButtonAtom
               text="Location"
-              style={styles.btn}
+              style={libraryStyles.btn}
               onClick={() => null}
               size="large"
             />
@@ -82,35 +83,3 @@ function Accomodation() {
 }
 
 export default Accomodation;
-
-const styles = {
-  container: {
-    backgroundColor: "#E5E5E5",
-    padding: "1rem",
-    display: "flex",
-  },
-  innerContainer: {
-    backgroundColor: "white",
-    borderRadius: "0.5rem",
-    padding: "1rem",
-    flex: 1,
-    overflowX: "hidden" as const,
-    overflowY: "scroll" as const,
-  },
-  btn: {
-    color: "white",
-    backgroundColor: "#6296E4",
-    borderRadius: "0.5rem",
-    width: "11rem",
-    fontWeight: 600,
-    filter: "drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.25))",
-  },
-  textField: {
-    width: "11rem",
-  },
-  btnContainer: {
-    justifyContent: "flex-start",
-    marginBottom: "4rem",
-    display: "flex",
-  },
-};

@@ -25,6 +25,7 @@ import LibraryTableToolbar from "../../../molecules/LibraryTableToolbar";
 import LibraryTableHead from "../../../molecules/LibraryTableHead";
 import TableRowIconCell from "../../../molecules/TableRowIconCell";
 import SpanAtom from "../../../atoms/SpanAtom";
+import { libraryTableStyles } from "../../../styles";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -36,9 +37,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   table: {
     minWidth: 750,
-  },
-  container: {
-    // maxHeight: 300
   },
   visuallyHidden: {
     border: 0,
@@ -127,7 +125,7 @@ export default function GuestTable({ data }: GuestTableProps) {
           numSelected={selected.length}
           addbtntext="Add Guest"
         />
-        <TableContainer className={classes.container}>
+        <TableContainer>
           <Table
             className={classes.table}
             stickyHeader
@@ -374,24 +372,12 @@ function TablePaginationActions({
           style={width < 700 ? { display: "none" } : {}}
           className={classes.activeUsers}
         >
-          <SpanAtom text="ACTIVE CUSTOMERS: " style={styles.totalUsers} />
+          <SpanAtom text="ACTIVE CUSTOMERS: " style={libraryTableStyles.totalUsers} />
           <Fragment>&nbsp;</Fragment>
-          <SpanAtom text="479" style={styles.activeUsers} />
-          <SpanAtom text="/706" style={styles.totalUsers} />
+          <SpanAtom text="479" style={libraryTableStyles.activeUsers} />
+          <SpanAtom text="/706" style={libraryTableStyles.totalUsers} />
         </div>
       </div>
     </>
   );
 }
-
-const styles = {
-  activeUsers: {
-    fontSize: "1rem",
-    color: "#606F89",
-    fontWeight: 600,
-  },
-  totalUsers: {
-    fontSize: "0.7rem",
-    color: "#606F89",
-  },
-};

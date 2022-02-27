@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import DivAtom from "../../atoms/DivAtom";
+import { voucherStyles } from "../../styles";
 
 function Voucher() {
   const [containerHeight, setContainerHeight] = useState(0);
@@ -18,10 +19,10 @@ function Voucher() {
   }, [containerHeight]);
 
   return (
-    <DivAtom style={styles.container}>
+    <DivAtom style={voucherStyles.container}>
       <DivAtom
         style={{
-          ...styles.innerContainer,
+          ...voucherStyles.innerContainer,
           height: containerHeight + "px",
         }}
       >
@@ -32,19 +33,3 @@ function Voucher() {
 }
 
 export default Voucher;
-
-const styles = {
-  container: {
-    display: "flex",
-    padding: "1rem",
-    backgroundColor: "#E5E5E5",
-  },
-  innerContainer: {
-    backgroundColor: "white",
-    borderRadius: "0.5rem",
-    padding: "1rem",
-    flex: 1,
-    overflowX: "hidden" as const,
-    overflowY: "scroll" as const,
-  },
-};

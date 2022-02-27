@@ -1,6 +1,7 @@
 import DivAtom from "../atoms/DivAtom";
 import LinkAtom from "../atoms/LinkAtom";
 import LinkTextAtom from "../atoms/LinkTextAtom";
+import { navbarStyles } from "../styles";
 
 const LINKS = [
   {
@@ -37,9 +38,9 @@ function Navbar({ type }: NavbarProps) {
   const navbarType = LINKS.find((obj) => obj.type === type);
 
   return (
-    <DivAtom style={styles.container}>
+    <DivAtom style={navbarStyles.container}>
       {navbarType?.links.map((link) => (
-        <LinkAtom style={styles.link} key={link.key} to={link.link}>
+        <LinkAtom style={navbarStyles.link} key={link.key} to={link.link}>
           <LinkTextAtom text={link.text} />
         </LinkAtom>
       ))}
@@ -48,16 +49,3 @@ function Navbar({ type }: NavbarProps) {
 }
 
 export default Navbar;
-
-const styles = {
-  container: {
-    display: "flex",
-    width: "100%",
-    height: "3rem",
-    backgroundColor: "#4283e4",
-  },
-  link: {
-    padding: "0px 10px",
-    margin: "0px 10px",
-  },
-};

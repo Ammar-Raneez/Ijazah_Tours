@@ -4,6 +4,7 @@ import DivAtom from "../../../atoms/DivAtom";
 import CreateGuest from "./CreateGuest";
 import { LIBRARY_GUEST_DATA } from "../../../data";
 import GuestTable from "./GuestTable";
+import { libraryStyles } from "../../../styles";
 
 function Guest() {
   const [containerHeight, setContainerHeight] = useState(0);
@@ -22,10 +23,10 @@ function Guest() {
   }, [containerHeight]);
 
   return (
-    <DivAtom style={styles.container}>
+    <DivAtom style={libraryStyles.container}>
       <DivAtom
         style={{
-          ...styles.innerContainer,
+          ...libraryStyles.innerContainer,
           height: containerHeight + "px",
         }}
       >
@@ -43,19 +44,3 @@ function Guest() {
 }
 
 export default Guest;
-
-const styles = {
-  container: {
-    backgroundColor: "#E5E5E5",
-    padding: "1rem",
-    display: "flex",
-  },
-  innerContainer: {
-    backgroundColor: "white",
-    borderRadius: "0.5rem",
-    padding: "1rem",
-    flex: 1,
-    overflowX: "hidden" as const,
-    overflowY: "scroll" as const,
-  },
-};
