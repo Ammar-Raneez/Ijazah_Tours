@@ -121,7 +121,8 @@ function CreateGuest() {
           style={{
             ...libraryCreateGuestStyles.addBtn,
             width: width < 768 ? "100%" : "18%",
-            marginLeft: width < 768 ? "1rem" : "0",
+            // marginLeft: width < 768 ? "1rem" : "0",
+            marginBottom: width < 768 ? "1rem" : "0"
           }}
           text="Create"
         />

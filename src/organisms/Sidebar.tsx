@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import clsx from "clsx";
 import {
@@ -12,6 +12,8 @@ import {
 } from "@material-ui/core";
 import LinkAtom from "../atoms/LinkAtom";
 import LinkTextAtom from "../atoms/LinkTextAtom";
+import { sidebarStyles } from "../styles";
+import DivAtom from "../atoms/DivAtom";
 
 const drawerWidth = 240;
 
@@ -52,16 +54,29 @@ const links = [
 ];
 
 interface SidebarProps {
-  window?: () => Window;
+  wind?: () => Window;
   handleDrawerToggle: () => void;
   mobileOpen: boolean;
 }
 
-function Sidebar({ window, handleDrawerToggle, mobileOpen }: SidebarProps) {
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
+function Sidebar({ wind, handleDrawerToggle, mobileOpen }: SidebarProps) {
+  const container = wind !== undefined ? () => wind().document.body : undefined;
   const classes = useStyles();
   const [open] = useState(true);
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    setWidth(window.innerWidth);
+    const widthListener = window.addEventListener("resize", () => {
+      setWidth(window.innerWidth);
+    });
+
+    const removeEventListeners = () => {
+      window.removeEventListener("resize", widthListener as any);
+    };
+
+    return removeEventListeners();
+  }, [width]);
 
   const drawer = (
     <>
@@ -74,14 +89,19 @@ function Sidebar({ window, handleDrawerToggle, mobileOpen }: SidebarProps) {
             </ListItem>
           </LinkAtom>
         ))}
-        <BottomContainer>
+        <DivAtom
+          style={{
+            ...sidebarStyles.bottomContainer,
+            flex: width < 1280 ? 1 : 0.93,
+          }}
+        >
           <ListItem button key="Profile">
             <LinkTextAtom text="Profile" />
           </ListItem>
           <ListItem button key="Sign Out">
             <LinkTextAtom text="Sign Out" />
           </ListItem>
-        </BottomContainer>
+        </DivAtom>
       </StyledList>
     </>
   );
@@ -139,13 +159,6 @@ const StyledDrawer = styled(Drawer)`
       display: none;
     }
   }
-`;
-
-const BottomContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  flex: 0.9;
 `;
 
 const StyledList = styled(List)`

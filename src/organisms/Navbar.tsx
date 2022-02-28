@@ -31,7 +31,7 @@ const LINKS = [
 ];
 
 interface NavbarProps {
-  type: "dashboard" | "quote" | "library";
+  type: "quote" | "library";
 }
 
 function Navbar({ type }: NavbarProps) {

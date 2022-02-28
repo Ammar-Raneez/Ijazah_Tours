@@ -35,7 +35,6 @@ function App() {
         />
         <Switch>
           <Route path="/dashboard">
-            <Navbar type="dashboard" />
           </Route>
           <Route path="/quote">
             <StyledDivAtom>
