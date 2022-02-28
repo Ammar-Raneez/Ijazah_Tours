@@ -30,25 +30,31 @@ function Customer() {
   const [children, setChildren] = useState(0);
   const [age, setAge] = useState(0);
   const [width, setWidth] = useState(0);
+  const [containerHeight, setContainerHeight] = useState(0);
   const [numberOfDays, setNumberOfDays] = useState(0);
   const [holidayType, setHolidayType] = useState(options[0].value);
   const history = useHistory();
 
   useEffect(() => {
     setWidth(window.innerWidth);
+    setContainerHeight(window.innerHeight - 220);
     const widthListener = window.addEventListener("resize", () => {
       setWidth(window.innerWidth);
+    });
+    const heightListener = window.addEventListener("resize", () => {
+      setContainerHeight(window.innerHeight - 220);
     });
 
     const removeEventListeners = () => {
       window.removeEventListener("resize", widthListener as any);
+      window.removeEventListener("resize", heightListener as any);
     };
 
     return removeEventListeners();
-  }, [width]);
+  }, [width, containerHeight]);
 
   return (
-    <DivAtom>
+    <DivAtom style={{ height: containerHeight + "px" }}>
       <DivAtom style={formCreateMemberStyles.header}>
         <IconAtom
           size="small"
@@ -233,7 +239,7 @@ function Customer() {
           style={{
             ...formCreateMemberStyles.addBtn,
             width: width < 768 ? "100%" : "18%",
-            margin: width < 768 ? "0 0 1rem 0" : "0px",
+            margin: width < 768 ? "0 0 1rem 0" : "0 0 1rem 0",
           }}
         />
       </DivAtom>
