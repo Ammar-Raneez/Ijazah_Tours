@@ -6,6 +6,8 @@ import { ChangeEvent, useEffect, useState } from "react";
 import SearchIcon from "@material-ui/icons/Search";
 import InputAtom from "../../../atoms/InputAtom";
 import { quotationsStyles } from "../../../styles";
+import { Link, Route } from "react-router-dom";
+import CreateQuotation from "./create-quotation/CreateQuotation";
 
 function Quotations() {
   const [search, setSearch] = useState("");
@@ -31,94 +33,111 @@ function Quotations() {
   }, [width, containerHeight]);
 
   return (
-    <DivAtom style={quotationsStyles.container}>
-      <DivAtom
-        style={{
-          ...quotationsStyles.innerContainer,
-          height: containerHeight + "px",
-        }}
-      >
-        <DivAtom style={quotationsStyles.btnMainContainer}>
-          <ButtonAtom
-            text="New Quote +"
-            style={{
-              ...quotationsStyles.btn,
-              marginRight: "16px",
-            }}
-            onClick={() => null}
-            size="large"
-          />
-          <ButtonAtom
-            text="Compare Rates"
-            style={quotationsStyles.btn}
-            onClick={() => null}
-            size="large"
-          />
-        </DivAtom>
-        <DivAtom
-          style={{
-            ...quotationsStyles.btnSubContainer,
-            flexDirection: width < 768 ? "column" : "row",
-          }}
-        >
+    <>
+      <Route path="/quote/quotations/create">
+        <DivAtom style={{ ...quotationsStyles.container, flexDirection: 'column' }}>
+        <CreateQuotation />
           <DivAtom
             style={{
-              ...quotationsStyles.btnSubInnerContainer,
-              margin: width < 768 ? "0 0 16px 0" : "0",
+              ...quotationsStyles.innerContainer,
+              height: containerHeight + "px",
             }}
-          >
-            <ButtonAtom
-              text="Approved Quotes"
-              style={{
-                ...quotationsStyles.btn,
-                marginRight: "16px",
-              }}
-              onClick={() => null}
-              size="large"
-            />
-            <ButtonAtom
-              text="On Progress"
-              style={quotationsStyles.btn}
-              onClick={() => null}
-              size="large"
-            />
-          </DivAtom>
+          ></DivAtom>
+        </DivAtom>
+      </Route>
+
+      <Route exact path="/quote/quotations">
+        <DivAtom style={quotationsStyles.container}>
           <DivAtom
             style={{
-              ...quotationsStyles.btnSubInnerContainer,
-              justifyContent: width < 768 ? "flex-start" : "flex-end",
+              ...quotationsStyles.innerContainer,
+              height: containerHeight + "px",
             }}
           >
-            <InputAtom
-              placeholder="Search"
-              adornmentposition="start"
-              fullWidth={width < 768}
-              value={search}
-              plain="false"
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setSearch(e.target.value)
-              }
-              children={<SearchIcon />}
-            />
-            <ButtonAtom
-              text="Search"
+            <DivAtom style={quotationsStyles.btnMainContainer}>
+              <Link to="/quote/quotations/create/customer">
+                <ButtonAtom
+                  text="New Quote +"
+                  style={{
+                    ...quotationsStyles.btn,
+                    marginRight: "16px",
+                  }}
+                  onClick={() => null}
+                  size="large"
+                />
+              </Link>
+              <ButtonAtom
+                text="Compare Rates"
+                style={quotationsStyles.btn}
+                onClick={() => null}
+                size="large"
+              />
+            </DivAtom>
+            <DivAtom
               style={{
-                ...quotationsStyles.btn,
-                marginLeft: "16px",
+                ...quotationsStyles.btnSubContainer,
+                flexDirection: width < 768 ? "column" : "row",
               }}
-              onClick={() => null}
-              size="large"
+            >
+              <DivAtom
+                style={{
+                  ...quotationsStyles.btnSubInnerContainer,
+                  margin: width < 768 ? "0 0 16px 0" : "0",
+                }}
+              >
+                <ButtonAtom
+                  text="Approved Quotes"
+                  style={{
+                    ...quotationsStyles.btn,
+                    marginRight: "16px",
+                  }}
+                  onClick={() => null}
+                  size="large"
+                />
+                <ButtonAtom
+                  text="On Progress"
+                  style={quotationsStyles.btn}
+                  onClick={() => null}
+                  size="large"
+                />
+              </DivAtom>
+              <DivAtom
+                style={{
+                  ...quotationsStyles.btnSubInnerContainer,
+                  justifyContent: width < 768 ? "flex-start" : "flex-end",
+                }}
+              >
+                <InputAtom
+                  placeholder="Search"
+                  adornmentposition="start"
+                  fullWidth={width < 768}
+                  value={search}
+                  plain="false"
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setSearch(e.target.value)
+                  }
+                  children={<SearchIcon />}
+                />
+                <ButtonAtom
+                  text="Search"
+                  style={{
+                    ...quotationsStyles.btn,
+                    marginLeft: "16px",
+                  }}
+                  onClick={() => null}
+                  size="large"
+                />
+              </DivAtom>
+            </DivAtom>
+            <QuotationsTable
+              columns={["QUOTES", "EARNINGS", "COMMISION", "", ""]}
+              rowdata={QUOTATIONS_DUMMY_DATA}
             />
           </DivAtom>
         </DivAtom>
-        <QuotationsTable
-          columns={["QUOTES", "EARNINGS", "COMMISION", "", ""]}
-          rowdata={QUOTATIONS_DUMMY_DATA}
-        />
-      </DivAtom>
-    </DivAtom>
+      </Route>
+    </>
   );
 }
 
 export default Quotations;
-

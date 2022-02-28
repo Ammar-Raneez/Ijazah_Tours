@@ -155,6 +155,10 @@ export const libraryCreateGuestStyles = {
   }
 }
 
+export const quoteCreateQuoteStyles = {
+
+}
+
 
 // Utilities
 export const guestProfileStyles = {
