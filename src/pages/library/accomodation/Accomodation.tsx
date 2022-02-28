@@ -2,7 +2,7 @@ import ButtonAtom from "../../../atoms/ButtonAtom";
 import TextFieldAtom from "../../../atoms/TextFieldAtom";
 import DivAtom from "../../../atoms/DivAtom";
 import { ChangeEvent, useEffect, useState } from "react";
-import AccomodationTable from "./AccomodationTable";
+import AccomodationTable from "../../../organisms/library/accomodation/AccomodationTable";
 import { LIBRARY_ACCOMODATION_DATA } from "../../../data";
 import { Route } from "react-router-dom";
 import CreateAccomodation from "./CreateAccomodation";

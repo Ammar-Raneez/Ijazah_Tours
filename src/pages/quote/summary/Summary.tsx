@@ -1,12 +1,8 @@
 import { useEffect, useState } from "react";
-import { Route } from "react-router-dom";
 import DivAtom from "../../../atoms/DivAtom";
-import { LIBRARY_DRIVER_DATA } from "../../../data";
-import { libraryStyles } from "../../../styles";
-import CreateDriver from "./CreateDriver";
-import DriverTable from "./DriverTable";
+import { summaryStyles } from "../../../styles";
 
-function Driver() {
+function Summary() {
   const [containerHeight, setContainerHeight] = useState(0);
 
   useEffect(() => {
@@ -23,25 +19,18 @@ function Driver() {
   }, [containerHeight]);
 
   return (
-    <DivAtom style={libraryStyles.container}>
+    <DivAtom style={summaryStyles.container}>
       <DivAtom
         style={{
-          ...libraryStyles.innerContainer,
+          ...summaryStyles.innerContainer,
           height: containerHeight + "px",
         }}
       >
-        <DivAtom>
-          <Route path="/library/driver/create">
-            <CreateDriver />
-          </Route>
-          <Route exact path="/library/driver">
-            <DriverTable data={LIBRARY_DRIVER_DATA} />
-          </Route>
-        </DivAtom>
+        Summary
       </DivAtom>
     </DivAtom>
   );
 }
 
-export default Driver;
+export default Summary;
 

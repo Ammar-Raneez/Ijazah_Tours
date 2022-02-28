@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import DivAtom from "../../atoms/DivAtom";
-import { summaryStyles } from "../../styles";
+import DivAtom from "../../../atoms/DivAtom";
+import { voucherStyles } from "../../../styles";
 
-function Summary() {
+function Voucher() {
   const [containerHeight, setContainerHeight] = useState(0);
 
   useEffect(() => {
@@ -19,18 +19,17 @@ function Summary() {
   }, [containerHeight]);
 
   return (
-    <DivAtom style={summaryStyles.container}>
+    <DivAtom style={voucherStyles.container}>
       <DivAtom
         style={{
-          ...summaryStyles.innerContainer,
+          ...voucherStyles.innerContainer,
           height: containerHeight + "px",
         }}
       >
-        Summary
+        Voucher
       </DivAtom>
     </DivAtom>
   );
 }
 
-export default Summary;
-
+export default Voucher;

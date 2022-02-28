@@ -4,7 +4,7 @@ import ChevronLeftRoundedIcon from "@material-ui/icons/ChevronLeftRounded";
 import DivAtom from "../../../atoms/DivAtom";
 import H2Atom from "../../../atoms/H2Atom";
 import ButtonAtom from "../../../atoms/ButtonAtom";
-import ImageUploader from "./ImageUpload";
+import ImageUploader from "../../../organisms/library/driver/ImageUpload";
 import IconAtom from "../../../atoms/IconAtom";
 import FormControlInput from "../../../molecules/FormControlInput";
 import { libraryCreateMemberStyles } from "../../../styles";

@@ -11,11 +11,11 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import { v4 as uuid } from "uuid";
-import GuestProfile from "../../molecules/GuestProfile";
-import TableBottomPagination from "../../molecules/TableBottomPagination";
-import TableColumnCell from "../../molecules/TableColumnCell";
-import TableRowButtonCell from "../../molecules/TableRowButtonCell";
-import TableRowTextCell from "../../molecules/TableRowTextCell";
+import GuestProfile from "../../../molecules/GuestProfile";
+import TableBottomPagination from "../../../molecules/TableBottomPagination";
+import TableColumnCell from "../../../molecules/TableColumnCell";
+import TableRowButtonCell from "../../../molecules/TableRowButtonCell";
+import TableRowTextCell from "../../../molecules/TableRowTextCell";
 
 interface QuotationsTableProps {
   columns?: string[];

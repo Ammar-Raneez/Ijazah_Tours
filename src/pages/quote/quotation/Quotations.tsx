@@ -1,11 +1,11 @@
-import DivAtom from "../../atoms/DivAtom";
-import QuotationsTable from "./QuotationsTable";
-import { QUOTATIONS_DUMMY_DATA } from "../../data";
-import ButtonAtom from "../../atoms/ButtonAtom";
+import DivAtom from "../../../atoms/DivAtom";
+import QuotationsTable from "../../../organisms/quote/quotation/QuotationsTable";
+import { QUOTATIONS_DUMMY_DATA } from "../../../data";
+import ButtonAtom from "../../../atoms/ButtonAtom";
 import { ChangeEvent, useEffect, useState } from "react";
 import SearchIcon from "@material-ui/icons/Search";
-import InputAtom from "../../atoms/InputAtom";
-import { quotationsStyles } from "../../styles";
+import InputAtom from "../../../atoms/InputAtom";
+import { quotationsStyles } from "../../../styles";
 
 function Quotations() {
   const [search, setSearch] = useState("");

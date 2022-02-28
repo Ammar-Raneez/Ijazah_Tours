@@ -9,13 +9,13 @@ import {
 } from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "./organisms/Navbar";
-import Quotations from "./organisms/quote/Quotations";
-import Voucher from "./organisms/quote/Voucher";
-import Summary from "./organisms/quote/Summary";
+import Quotations from "./pages/quote/quotation/Quotations";
+import Voucher from "./pages/quote/voucher/Voucher";
+import Summary from "./pages/quote/summary/Summary";
 import { useState } from "react";
-import Accomodation from "./organisms/library/accomodation/Accomodation";
-import Driver from "./organisms/library/driver/Driver";
-import Guest from "./organisms/library/guest/Guest";
+import Accomodation from "./pages/library/accomodation/Accomodation";
+import Driver from "./pages/library/driver/Driver";
+import Guest from "./pages/library/guest/Guest";
 
 function App() {
   const [mobileOpen, setMobileOpen] = useState(false);

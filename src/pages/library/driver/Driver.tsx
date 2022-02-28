@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Route } from "react-router-dom";
 import DivAtom from "../../../atoms/DivAtom";
-import CreateGuest from "./CreateGuest";
-import { LIBRARY_GUEST_DATA } from "../../../data";
-import GuestTable from "./GuestTable";
+import { LIBRARY_DRIVER_DATA } from "../../../data";
 import { libraryStyles } from "../../../styles";
+import CreateDriver from "./CreateDriver";
+import DriverTable from "../../../organisms/library/driver/DriverTable";
 
-function Guest() {
+function Driver() {
   const [containerHeight, setContainerHeight] = useState(0);
 
   useEffect(() => {
@@ -31,11 +31,11 @@ function Guest() {
         }}
       >
         <DivAtom>
-          <Route path="/library/guest/create">
-            <CreateGuest />
+          <Route path="/library/driver/create">
+            <CreateDriver />
           </Route>
-          <Route exact path="/library/guest">
-            <GuestTable data={LIBRARY_GUEST_DATA} />
+          <Route exact path="/library/driver">
+            <DriverTable data={LIBRARY_DRIVER_DATA} />
           </Route>
         </DivAtom>
       </DivAtom>
@@ -43,4 +43,5 @@ function Guest() {
   );
 }
 
-export default Guest;
+export default Driver;
+
