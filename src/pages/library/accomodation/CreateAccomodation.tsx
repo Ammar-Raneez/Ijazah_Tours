@@ -6,7 +6,7 @@ import H2Atom from "../../../atoms/H2Atom";
 import ButtonAtom from "../../../atoms/ButtonAtom";
 import IconAtom from "../../../atoms/IconAtom";
 import FormControlInput from "../../../molecules/FormControlInput";
-import { libraryCreateMemberStyles } from "../../../styles";
+import { formCreateMemberStyles } from "../../../styles";
 
 function CreateAccomodation() {
   const [refNum, setRefNum] = useState("");
@@ -34,17 +34,20 @@ function CreateAccomodation() {
 
   return (
     <DivAtom>
-      <DivAtom style={libraryCreateMemberStyles.header}>
+      <DivAtom style={formCreateMemberStyles.header}>
         <IconAtom
           size="small"
           children={<ChevronLeftRoundedIcon />}
-          style={libraryCreateMemberStyles.backBtn}
+          style={formCreateMemberStyles.backBtn}
           onClick={() => history.replace("/library/accomodation")}
         />
-        <H2Atom style={libraryCreateMemberStyles.title} text="Create Accomodation" />
+        <H2Atom
+          style={formCreateMemberStyles.title}
+          text="Create Accomodation"
+        />
       </DivAtom>
 
-      <DivAtom style={libraryCreateMemberStyles.formContainer}>
+      <DivAtom style={formCreateMemberStyles.formContainer}>
         <FormControlInput
           margin="0 0 1rem 0"
           label="Reference Number"
@@ -57,7 +60,7 @@ function CreateAccomodation() {
         />
         <DivAtom
           style={{
-            ...libraryCreateMemberStyles.addressNameContainer,
+            ...formCreateMemberStyles.multiFieldContainer,
             flexDirection: width < 600 ? "column" : "row",
           }}
         >
@@ -106,13 +109,20 @@ function CreateAccomodation() {
         />
       </DivAtom>
 
-      <DivAtom style={libraryCreateMemberStyles.addBtnContainer}>
+      <DivAtom
+        style={{
+          ...formCreateMemberStyles.addBtnContainer,
+          padding: width < 768 ? "1rem" : "0px",
+          margin:
+            width < 768 ? "0px" : formCreateMemberStyles.addBtnContainer.margin,
+        }}
+      >
         <ButtonAtom
           size="large"
           text="Create"
           onClick={onAddAccomodation}
           style={{
-            ...libraryCreateMemberStyles.addBtn,
+            ...formCreateMemberStyles.addBtn,
             width: width < 768 ? "100%" : "18%",
             margin: width < 768 ? "0 0 1rem 0" : "0px",
           }}
@@ -123,4 +133,3 @@ function CreateAccomodation() {
 }
 
 export default CreateAccomodation;
-

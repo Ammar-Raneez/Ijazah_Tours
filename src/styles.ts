@@ -116,7 +116,7 @@ export const libraryTableStyles = {
   },
 }
 
-export const libraryCreateMemberStyles = {
+export const formCreateMemberStyles = {
   header: {
     display: "flex",
     alignItems: "center",
@@ -131,7 +131,7 @@ export const libraryCreateMemberStyles = {
     display: "flex",
     flexDirection: "column" as const,
   },
-  addressNameContainer: {
+  multiFieldContainer: {
     display: "flex",
     justifyContent: "space-between",
   },
@@ -148,15 +148,15 @@ export const libraryCreateMemberStyles = {
 }
 
 export const libraryCreateGuestStyles = {
-  ...libraryCreateMemberStyles,
+  ...formCreateMemberStyles,
   addBtnContainer: {
-    ...libraryCreateMemberStyles.addBtnContainer,
+    ...formCreateMemberStyles.addBtnContainer,
     justifyContent: "space-between",
   }
 }
 
 export const quoteCreateQuoteStyles = {
-
+  ...formCreateMemberStyles,
 }
 
 

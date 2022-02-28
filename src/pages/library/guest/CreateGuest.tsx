@@ -59,7 +59,7 @@ function CreateGuest() {
         />
         <DivAtom
           style={{
-            ...libraryCreateGuestStyles.addressNameContainer,
+            ...libraryCreateGuestStyles.multiFieldContainer,
             justifyContent: "space-between",
             flexDirection: width < 600 ? "column" : "row",
           }}
@@ -113,6 +113,11 @@ function CreateGuest() {
         style={{
           ...libraryCreateGuestStyles.addBtnContainer,
           flexDirection: width < 768 ? "column" : "row",
+          padding: width < 768 ? "1rem" : "0px",
+          margin:
+            width < 768
+              ? "0px"
+              : libraryCreateGuestStyles.addBtnContainer.margin,
         }}
       >
         <ButtonAtom
@@ -121,8 +126,7 @@ function CreateGuest() {
           style={{
             ...libraryCreateGuestStyles.addBtn,
             width: width < 768 ? "100%" : "18%",
-            // marginLeft: width < 768 ? "1rem" : "0",
-            marginBottom: width < 768 ? "1rem" : "0"
+            margin: width < 768 ? "0 0 1rem 0" : "0 0 0 1rem",
           }}
           text="Create"
         />
@@ -141,4 +145,3 @@ function CreateGuest() {
 }
 
 export default CreateGuest;
-

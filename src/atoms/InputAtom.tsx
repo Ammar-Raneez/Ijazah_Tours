@@ -3,10 +3,11 @@ import { Input, InputAdornment } from "@material-ui/core";
 import styled from "styled-components";
 
 interface InputAtomProps {
-  value: string;
+  value: string | number;
   fullWidth: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   plain?: string;
+  type?: string;
   placeholder?: string;
   required?: boolean;
   disabled?: boolean;
@@ -21,6 +22,7 @@ interface InputAtomProps {
 function InputAtom({
   adornmentposition,
   plain,
+  type,
   required,
   disabled,
   multiline,
@@ -38,6 +40,7 @@ function InputAtom({
       multiline={multiline}
       rows={rows}
       plain={plain}
+      type={type}
       style={style}
       value={value}
       onChange={onChange}
@@ -54,6 +57,9 @@ function InputAtom({
           </InputAdornment>
         )
       }
+      inputProps={{
+        min: 0
+      }}
     />
   );
 }

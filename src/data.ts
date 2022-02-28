@@ -1,4 +1,4 @@
-export const QUOTATIONS_DUMMY_DATA = [
+export const QUOTATIONS_DATA = [
   [
     {
       image: require("./assets/logo.png"),
@@ -57,6 +57,14 @@ export const QUOTATIONS_DUMMY_DATA = [
     },
   ],
 ];
+
+export const QUOTATIONS_REFERENCE_DATA = [
+  { label: "01", value: "01"},
+  { label: "02", value: "02"},
+  { label: "03", value: "03"},
+  { label: "04", value: "04"},
+  { label: "05", value: "05"}
+]
 
 export const LIBRARY_ACCOMODATION_DATA = [
   {
@@ -366,3 +374,4 @@ export const LIBRARY_GUEST_DATA = [
     group: "ACTIVE",
   },
 ];
+

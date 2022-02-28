@@ -1,6 +1,6 @@
 import DivAtom from "../../../atoms/DivAtom";
 import QuotationsTable from "../../../organisms/quote/quotation/QuotationsTable";
-import { QUOTATIONS_DUMMY_DATA } from "../../../data";
+import { QUOTATIONS_DATA } from "../../../data";
 import ButtonAtom from "../../../atoms/ButtonAtom";
 import { ChangeEvent, useEffect, useState } from "react";
 import SearchIcon from "@material-ui/icons/Search";
@@ -8,6 +8,10 @@ import InputAtom from "../../../atoms/InputAtom";
 import { quotationsStyles } from "../../../styles";
 import { Link, Route } from "react-router-dom";
 import CreateQuotation from "./create-quotation/CreateQuotation";
+import Customer from "./create-quotation/Customer";
+import Accomodation from "./create-quotation/Accomodation";
+import Costing from "./create-quotation/Costing";
+import Approval from "./create-quotation/Approval";
 
 function Quotations() {
   const [search, setSearch] = useState("");
@@ -35,14 +39,29 @@ function Quotations() {
   return (
     <>
       <Route path="/quote/quotations/create">
-        <DivAtom style={{ ...quotationsStyles.container, flexDirection: 'column' }}>
-        <CreateQuotation />
+        <DivAtom
+          style={{ ...quotationsStyles.container, flexDirection: "column" }}
+        >
+          <CreateQuotation />
           <DivAtom
             style={{
               ...quotationsStyles.innerContainer,
               height: containerHeight + "px",
             }}
-          ></DivAtom>
+          >
+            <Route path="/quote/quotations/create/customer">
+              <Customer />
+            </Route>
+            <Route path="/quote/quotations/create/accomodation">
+              <Accomodation />
+            </Route>
+            <Route path="/quote/quotations/create/costing">
+              <Costing />
+            </Route>
+            <Route path="/quote/quotations/create/approval">
+              <Approval />
+            </Route>
+          </DivAtom>
         </DivAtom>
       </Route>
 
@@ -131,7 +150,7 @@ function Quotations() {
             </DivAtom>
             <QuotationsTable
               columns={["QUOTES", "EARNINGS", "COMMISION", "", ""]}
-              rowdata={QUOTATIONS_DUMMY_DATA}
+              rowdata={QUOTATIONS_DATA}
             />
           </DivAtom>
         </DivAtom>

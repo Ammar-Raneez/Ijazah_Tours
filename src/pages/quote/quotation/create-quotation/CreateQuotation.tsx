@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import DivAtom from "../../../../atoms/DivAtom";
 import CreateQuotationNavbar from "../../../../organisms/quote/quotation/CreateQuotationNavbar";
-import { quoteCreateQuoteStyles } from "../../../../styles";
 
 function CreateQuotation() {
   const [containerHeight, setContainerHeight] = useState(0);
@@ -21,9 +20,9 @@ function CreateQuotation() {
 
   return (
     <DivAtom>
-        <CreateQuotationNavbar />
+      <CreateQuotationNavbar />
     </DivAtom>
   );
 }
 
-export default CreateQuotation
+export default CreateQuotation;
