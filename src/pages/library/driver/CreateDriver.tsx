@@ -163,13 +163,21 @@ function CreateDriver() {
         />
       </DivAtom>
 
-      <DivAtom style={formCreateMemberStyles.addBtnContainer}>
+      <DivAtom
+        style={{
+          ...formCreateMemberStyles.addBtnContainer,
+          padding: width < 768 ? "1rem" : "0px",
+          margin:
+            width < 768 ? "0px" : formCreateMemberStyles.addBtnContainer.margin,
+        }}
+      >
         <ButtonAtom
           size="large"
           onClick={onAddDriver}
           style={{
             ...formCreateMemberStyles.addBtn,
             width: width < 768 ? "100%" : "18%",
+            margin: width < 768 ? "0 0 1rem 0" : "0px",
           }}
           text="Create"
         />
