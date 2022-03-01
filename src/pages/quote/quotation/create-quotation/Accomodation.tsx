@@ -1,9 +1,7 @@
 import { ChangeEvent, MouseEvent, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import ChevronLeftRoundedIcon from "@material-ui/icons/ChevronLeftRounded";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 import DivAtom from "../../../../atoms/DivAtom";
-import IconAtom from "../../../../atoms/IconAtom";
 import {
   formCreateMemberStyles,
   libraryStyles,
@@ -17,7 +15,7 @@ import {
   QUOTATIONS_LOCATION_DATA,
 } from "../../../../data";
 import ButtonAtom from "../../../../atoms/ButtonAtom";
-import AddAccomodationTable from "../../../../organisms/quote/quotation/AddAccomodationTable";
+import CreateQuotationTable from "../../../../organisms/quote/quotation/CreateQuotationTable";
 
 function Accomodation() {
   const [noOfDays, setNoOfDays] = useState(0);
@@ -53,9 +51,19 @@ function Accomodation() {
     event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
   ) => {
     event.preventDefault();
+    localStorage.setItem(
+      "New Quote Accomodations",
+      JSON.stringify({
+        data: [
+          ...accomodationData,
+          [location, accomodation, noOfDays, specification, "$30", "$50"],
+        ],
+      })
+    );
+
     setAccomodationData([
       ...accomodationData,
-      [location, accomodation, noOfDays, specification],
+      [location, accomodation, noOfDays, specification, "$30", "$50"],
     ]);
 
     setNoOfDays(0);
@@ -66,13 +74,9 @@ function Accomodation() {
 
   return (
     <DivAtom style={{ height: containerHeight + "px" }}>
-      <DivAtom style={formCreateMemberStyles.header}>
-        <IconAtom
-          size="small"
-          children={<ChevronLeftRoundedIcon />}
-          style={formCreateMemberStyles.backBtn}
-          onClick={() => history.replace("/quote/quotations/create/customer")}
-        />
+      <DivAtom
+        style={{ ...formCreateMemberStyles.header, paddingLeft: "1rem" }}
+      >
         <H2Atom style={formCreateMemberStyles.title} text="Add Accomodation" />
       </DivAtom>
       <DivAtom
@@ -162,16 +166,16 @@ function Accomodation() {
         />
       </DivAtom>
 
-      <DivAtom style={{ padding: "0px 1rem" }}>
+      <DivAtom style={formCreateMemberStyles.tableContainer}>
         {accomodationData.length > 0 && (
-          <AddAccomodationTable
+          <CreateQuotationTable
             columns={[
               "LOCATION",
               "ACCOMODATION",
               "No OF DAYS",
               "SPECIFICATION",
             ]}
-            accomodationData={accomodationData}
+            data={accomodationData}
           />
         )}
       </DivAtom>
@@ -187,6 +191,7 @@ function Accomodation() {
         <ButtonAtom
           size="large"
           text="Continue"
+          disabled={accomodationData.length === 0}
           onClick={() => history.replace("/quote/quotations/create/costing")}
           style={{
             ...formCreateMemberStyles.addBtn,

@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState, MouseEvent } from "react";
 import { Link, useHistory } from "react-router-dom";
 import ChevronLeftRoundedIcon from "@material-ui/icons/ChevronLeftRounded";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
@@ -54,6 +54,31 @@ function Customer() {
 
     return removeEventListeners();
   }, [width, containerHeight]);
+
+  const onCreateCustomer = (
+    event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+  ) => {
+    event.preventDefault();
+    localStorage.setItem(
+      "New Quote Customer",
+      JSON.stringify({
+        data: [[
+          refNum,
+          firstName,
+          lastName,
+          checkin,
+          checkout,
+          contactNumber,
+          adults,
+          children,
+          age,
+          numberOfDays,
+        ]],
+      })
+    );
+
+    history.replace("/quote/quotations/create/accomodation");
+  };
 
   return (
     <DivAtom style={{ height: containerHeight + "px" }}>
@@ -245,7 +270,7 @@ function Customer() {
               ...libraryStyles.textField,
               flex: 1,
               width: width < 600 ? "100%" : "auto",
-              margin: width < 600 ? "0 0 1rem 0" : "0 1rem 0 0"
+              margin: width < 600 ? "0 0 1rem 0" : "0 1rem 0 0",
             }}
             disableUnderline={false}
             select={false}
@@ -284,9 +309,7 @@ function Customer() {
         <ButtonAtom
           size="large"
           text="Continue"
-          onClick={() =>
-            history.replace("/quote/quotations/create/accomodation")
-          }
+          onClick={(event) => onCreateCustomer(event)}
           style={{
             ...formCreateMemberStyles.addBtn,
             width: width < 768 ? "100%" : "18%",

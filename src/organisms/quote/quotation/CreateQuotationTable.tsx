@@ -18,15 +18,15 @@ const useStyles = makeStyles({
   },
 });
 
-interface AccomodationTableProps {
-  accomodationData: [string, string, number, string][];
+interface CreateQuotationTableProps {
+  data: [][];
   columns: string[];
 }
 
-function AddAccomodationTable({
-  accomodationData,
+function CreateQuotationTable({
+  data,
   columns,
-}: AccomodationTableProps) {
+}: CreateQuotationTableProps) {
   const classes = useStyles();
   return (
     <TableContainer component={Paper}>
@@ -36,7 +36,7 @@ function AddAccomodationTable({
             {columns!.map((column) => (
               <TableColumnCell
                 key={uuid()}
-                align="left"
+                align="center"
                 color="b5b5c3"
                 column={column}
               />
@@ -44,25 +44,30 @@ function AddAccomodationTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {accomodationData!.map((row: [string, string, number, string]) => (
-            <TableRow key={uuid()}>
-              {row.map((cell: string | number) => (
-                <TableRowTextCell
-                  key={uuid()}
-                  cell={{
-                    align: "left",
-                    title: cell,
-                    colors: ["#464E5F", "#B5B5C3"],
-                    weight: 400,
-                  }}
-                />
-              ))}
-            </TableRow>
-          ))}
+          {data!.map(
+            (row: []) => (
+              <TableRow key={uuid()}>
+                {row.map(
+                  (cell: string | number, index: number) =>
+                    index <= columns.length - 1 && (
+                      <TableRowTextCell
+                        key={uuid()}
+                        cell={{
+                          align: "center",
+                          title: cell,
+                          colors: ["#464E5F", "#B5B5C3"],
+                          weight: 400,
+                        }}
+                      />
+                    )
+                )}
+              </TableRow>
+            )
+          )}
         </TableBody>
       </Table>
     </TableContainer>
   );
 }
 
-export default AddAccomodationTable;
+export default CreateQuotationTable;

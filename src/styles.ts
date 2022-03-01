@@ -126,10 +126,18 @@ export const formCreateMemberStyles = {
     color: "#0A65FF",
     fontSize: "1.5rem",
   },
+  subtitle: {
+    margin: "0px",
+    color: "#C1BFBF",
+    fontSize: "1.1rem"
+  },
   formContainer: {
     padding: "1rem",
     display: "flex",
     flexDirection: "column" as const,
+  },
+  tableContainer: {
+    padding: "0 1rem",
   },
   multiFieldContainer: {
     display: "flex",
