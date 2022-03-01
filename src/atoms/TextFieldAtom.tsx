@@ -8,17 +8,19 @@ interface DropdownOption {
 }
 
 interface TextFieldAtomProps {
+  variant: "filled" | "standard";
   value: string;
   label: string;
   select: boolean;
-  variant: "filled" | "standard";
   size: "small" | "medium";
   adornmentposition: "start" | "end";
   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   helpertext?: string;
+  type?: string;
   placeholder?: string;
   required?: boolean;
   disabled?: boolean;
+  disableUnderline?: boolean;
   focused?: boolean;
   error?: boolean;
   options?: DropdownOption[];
@@ -33,10 +35,12 @@ function TextFieldAtom({
   label,
   required,
   disabled,
+  disableUnderline,
   focused,
   select,
   error,
   helpertext,
+  type,
   placeholder,
   value,
   onChange,
@@ -52,30 +56,32 @@ function TextFieldAtom({
       variant={variant}
       size={size}
       label={label}
+      type={type}
       required={required}
       disabled={disabled}
       focused={focused}
       error={error}
       helperText={helpertext}
       placeholder={placeholder}
+      removeBg={type === "date"}
       InputProps={
         adornmentposition === "start"
           ? {
-              startAdornment: (
-                <InputAdornment position={adornmentposition}>
-                  {props.children}
-                </InputAdornment>
-              ),
-              disableUnderline: true,
-            }
+            startAdornment: (
+              <InputAdornment position={adornmentposition}>
+                {props.children}
+              </InputAdornment>
+            ),
+            disableUnderline: !(type === "date"),
+          }
           : {
-              endAdornment: (
-                <InputAdornment position={adornmentposition}>
-                  {props.children}
-                </InputAdornment>
-              ),
-              disableUnderline: true,
-            }
+            endAdornment: (
+              <InputAdornment position={adornmentposition}>
+                {props.children}
+              </InputAdornment>
+            ),
+            disableUnderline: !(type === "date"),
+          }
       }
     />
   ) : (
@@ -87,7 +93,8 @@ function TextFieldAtom({
       variant={variant}
       size={size}
       label={label}
-      InputProps={{ disableUnderline: true }}
+      InputProps={{ disableUnderline: !(disableUnderline === false) }}
+      removeBg={disableUnderline === false}
     >
       {options!.map((option: DropdownOption) => (
         <MenuItem value={option.value} key={option.value}>
@@ -100,18 +107,25 @@ function TextFieldAtom({
 
 export default TextFieldAtom;
 
-const StyledTextFieldAtom = styled(TextField)`
+interface StyleProps {
+  removeBg?: boolean;
+}
+
+const StyledTextFieldAtom = styled(TextField) <StyleProps>`
   .MuiInputBase-root {
     border-radius: 0.5rem;
     border-bottom: 0px;
     background-color: #dae1ec;
   }
 
-  .MuiInput-underline::before,
-  .MuiInput-underline::after,
-  .MuiInput-underline:hover {
-    border-bottom: 0px;
-  }
+  ${({ removeBg }) => removeBg && `
+    .MuiInputBase-root {
+      background-color: transparent;
+    }
+    .MuiSelect-root {
+      padding: 6px 0px 7px !important;
+    }
+  `}
 
   .MuiSelect-root {
     padding: 11px;

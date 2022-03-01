@@ -87,6 +87,7 @@ function Customer() {
               flex: 1,
               width: width < 600 ? "100%" : "auto",
             }}
+            disableUnderline={false}
             select
           />
           <Link to={`/library/guest/create`}>
@@ -219,7 +220,56 @@ function Customer() {
               flex: 1,
               width: width < 600 ? "100%" : "auto",
             }}
+            disableUnderline={false}
             select
+          />
+        </DivAtom>
+        <DivAtom
+          style={{
+            ...formCreateMemberStyles.multiFieldContainer,
+            flexDirection: width < 600 ? "column" : "row",
+          }}
+        >
+          <TextFieldAtom
+            variant="standard"
+            size="medium"
+            label="Check-in"
+            value={holidayType}
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+              setHolidayType(e.target.value)
+            }
+            options={options}
+            adornmentposition="end"
+            style={{
+              ...libraryStyles.textField,
+              flex: 1,
+              width: width < 600 ? "100%" : "auto",
+              margin: width < 600 ? "0 0 1rem 0" : "0 1rem 0 0"
+            }}
+            disableUnderline={false}
+            select={false}
+            focused
+            type="date"
+          />
+          <TextFieldAtom
+            variant="standard"
+            size="medium"
+            label="Checkout"
+            value={holidayType}
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+              setHolidayType(e.target.value)
+            }
+            options={options}
+            adornmentposition="end"
+            style={{
+              ...libraryStyles.textField,
+              flex: 1,
+              width: width < 600 ? "100%" : "auto",
+            }}
+            disableUnderline={false}
+            select={false}
+            focused
+            type="date"
           />
         </DivAtom>
       </DivAtom>
@@ -227,7 +277,8 @@ function Customer() {
         style={{
           ...formCreateMemberStyles.addBtnContainer,
           padding: width < 768 ? "1rem" : "0px",
-          margin: width < 768 ? "0px" : formCreateMemberStyles.addBtnContainer.margin,
+          margin:
+            width < 768 ? "0px" : formCreateMemberStyles.addBtnContainer.margin,
         }}
       >
         <ButtonAtom
