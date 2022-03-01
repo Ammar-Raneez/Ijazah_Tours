@@ -63,7 +63,7 @@ function TextFieldAtom({
       error={error}
       helperText={helpertext}
       placeholder={placeholder}
-      removeBg={type === "date"}
+      removebg={type === "date" ? "true" : "false"}
       InputProps={
         adornmentposition === "start"
           ? {
@@ -94,7 +94,7 @@ function TextFieldAtom({
       size={size}
       label={label}
       InputProps={{ disableUnderline: !(disableUnderline === false) }}
-      removeBg={disableUnderline === false}
+      removebg={disableUnderline === false ? "true" : "false"}
     >
       {options!.map((option: DropdownOption) => (
         <MenuItem value={option.value} key={option.value}>
@@ -108,7 +108,7 @@ function TextFieldAtom({
 export default TextFieldAtom;
 
 interface StyleProps {
-  removeBg?: boolean;
+  removebg?: string;
 }
 
 const StyledTextFieldAtom = styled(TextField) <StyleProps>`
@@ -118,7 +118,7 @@ const StyledTextFieldAtom = styled(TextField) <StyleProps>`
     background-color: #dae1ec;
   }
 
-  ${({ removeBg }) => removeBg && `
+  ${({ removebg }) => removebg === "true" && `
     .MuiInputBase-root {
       background-color: transparent;
     }

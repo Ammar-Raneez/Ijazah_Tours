@@ -17,10 +17,11 @@ import {
   QUOTATIONS_LOCATION_DATA,
 } from "../../../../data";
 import ButtonAtom from "../../../../atoms/ButtonAtom";
+import AddAccomodationTable from "../../../../organisms/quote/quotation/AddAccomodationTable";
 
 type AccomodationType = {
   location: string;
-  hotel: string;
+  accomodation: string;
   noOfDays: number;
   specification: string;
 };
@@ -61,6 +62,12 @@ function Accomodation() {
     event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
   ) => {
     event.preventDefault();
+    setAccomodationData([...accomodationData, {
+      location,
+      accomodation,
+      noOfDays,
+      specification
+    }]);
 
     setNoOfDays(0);
     setSpecification("");
@@ -163,6 +170,10 @@ function Accomodation() {
           size="large"
         />
       </DivAtom>
+
+      {accomodationData.length > 0 && (
+        <AddAccomodationTable accomodationData={accomodationData} />
+      )}
     </DivAtom>
   );
 }

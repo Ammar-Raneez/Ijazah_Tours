@@ -26,6 +26,8 @@ function Customer() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [contactNumber, setContactNumber] = useState("");
+  const [checkin, setCheckin] = useState("");
+  const [checkout, setCheckout] = useState("");
   const [adults, setAdults] = useState(0);
   const [children, setChildren] = useState(0);
   const [age, setAge] = useState(0);
@@ -234,11 +236,10 @@ function Customer() {
             variant="standard"
             size="medium"
             label="Check-in"
-            value={holidayType}
+            value={checkin}
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-              setHolidayType(e.target.value)
+              setCheckin(e.target.value)
             }
-            options={options}
             adornmentposition="end"
             style={{
               ...libraryStyles.textField,
@@ -255,11 +256,10 @@ function Customer() {
             variant="standard"
             size="medium"
             label="Checkout"
-            value={holidayType}
+            value={checkout}
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-              setHolidayType(e.target.value)
+              setCheckout(e.target.value)
             }
-            options={options}
             adornmentposition="end"
             style={{
               ...libraryStyles.textField,
