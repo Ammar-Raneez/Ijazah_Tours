@@ -19,13 +19,6 @@ import {
 import ButtonAtom from "../../../../atoms/ButtonAtom";
 import AddAccomodationTable from "../../../../organisms/quote/quotation/AddAccomodationTable";
 
-type AccomodationType = {
-  location: string;
-  accomodation: string;
-  noOfDays: number;
-  specification: string;
-};
-
 function Accomodation() {
   const [noOfDays, setNoOfDays] = useState(0);
   const [specification, setSpecification] = useState("");
@@ -35,9 +28,7 @@ function Accomodation() {
   );
   const [width, setWidth] = useState(0);
   const [containerHeight, setContainerHeight] = useState(0);
-  const [accomodationData, setAccomodationData] = useState<AccomodationType[]>(
-    []
-  );
+  const [accomodationData, setAccomodationData] = useState<any>([]);
   const history = useHistory();
 
   useEffect(() => {
@@ -62,12 +53,10 @@ function Accomodation() {
     event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
   ) => {
     event.preventDefault();
-    setAccomodationData([...accomodationData, {
-      location,
-      accomodation,
-      noOfDays,
-      specification
-    }]);
+    setAccomodationData([
+      ...accomodationData,
+      [location, accomodation, noOfDays, specification],
+    ]);
 
     setNoOfDays(0);
     setSpecification("");
@@ -90,6 +79,7 @@ function Accomodation() {
         style={{
           ...formCreateMemberStyles.multiFieldContainer,
           flexDirection: width < 900 ? "column" : "row",
+          padding: "1rem",
         }}
       >
         <TextFieldAtom
@@ -166,14 +156,45 @@ function Accomodation() {
             width: width < 900 ? "100%" : "13rem",
             height: "3rem",
             marginLeft: width < 900 ? "0px" : "1rem",
+            marginBottom: width < 900 ? "1rem" : "0",
           }}
           size="large"
         />
       </DivAtom>
 
-      {accomodationData.length > 0 && (
-        <AddAccomodationTable accomodationData={accomodationData} />
-      )}
+      <DivAtom style={{ padding: "0px 1rem" }}>
+        {accomodationData.length > 0 && (
+          <AddAccomodationTable
+            columns={[
+              "LOCATION",
+              "ACCOMODATION",
+              "No OF DAYS",
+              "SPECIFICATION",
+            ]}
+            accomodationData={accomodationData}
+          />
+        )}
+      </DivAtom>
+
+      <DivAtom
+        style={{
+          ...formCreateMemberStyles.addBtnContainer,
+          padding: width < 768 ? "1rem" : "0px",
+          margin:
+            width < 768 ? "0px" : formCreateMemberStyles.addBtnContainer.margin,
+        }}
+      >
+        <ButtonAtom
+          size="large"
+          text="Continue"
+          onClick={() => history.replace("/quote/quotations/create/costing")}
+          style={{
+            ...formCreateMemberStyles.addBtn,
+            width: width < 768 ? "100%" : "18%",
+            margin: width < 768 ? "0 0 1rem 0" : "0 0 1rem 0",
+          }}
+        />
+      </DivAtom>
     </DivAtom>
   );
 }
