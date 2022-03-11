@@ -67,17 +67,18 @@ function InputAtom({
 export default InputAtom;
 
 const StyledInput = styled(Input)<InputAtomProps>`
-  ${({ plain }) => plain === 'false'
-    && `
-      &.MuiInputBase-root {
-        border-bottom: 0px;
-        border-radius: 0.5rem;
-        background-color: #dae1ec;
-      }
+  ${({ plain }) => plain === 'false' && inputBaseStyle}
+`;
 
-      .MuiInputAdornment-root {
-        color: #6f809e !important;
-        margin-left: 8px;
-      }
-    `}
+const inputBaseStyle = `
+  &.MuiInputBase-root {
+    border-bottom: 0px;
+    border-radius: 0.5rem;
+    background-color: #dae1ec;
+  }
+
+  .MuiInputAdornment-root {
+    color: #6f809e !important;
+    margin-left: 8px;
+  }
 `;

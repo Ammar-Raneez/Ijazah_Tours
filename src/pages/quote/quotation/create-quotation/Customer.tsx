@@ -311,7 +311,7 @@ function Customer() {
           style={{
             ...formCreateMemberStyles.addBtn,
             width: width < 768 ? '100%' : '18%',
-            margin: width < 768 ? '0 0 1rem 0' : '0 0 1rem 0',
+            margin: '0 0 1rem 0',
           }}
         />
       </DivAtom>

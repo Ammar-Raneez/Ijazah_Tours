@@ -4,7 +4,7 @@ import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
 import ButtonAtom from '../../../atoms/ButtonAtom';
-import ImageUploader from '../../../organisms/library/driver/ImageUpload';
+import ImageUploader from '../../../organisms/library/driver/ImageUploader';
 import IconAtom from '../../../atoms/IconAtom';
 import FormControlInput from '../../../molecules/FormControlInput';
 import { formCreateMemberStyles } from '../../../styles';
@@ -37,7 +37,10 @@ function CreateDriver() {
     return removeEventListeners();
   }, [width]);
 
-  const onAddDriver = async () => {};
+  const onAddDriver = () => {
+    // eslint-disable-next-line no-console
+    console.log('add driver');
+  };
 
   return (
     <DivAtom>

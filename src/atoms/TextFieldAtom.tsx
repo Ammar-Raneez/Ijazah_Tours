@@ -114,24 +114,25 @@ interface StyleProps {
   removebg?: string;
 }
 
-const StyledTextFieldAtom = styled(TextField)<StyleProps>`
+const StyledTextFieldAtom = styled(TextField) <StyleProps>`
   .MuiInputBase-root {
     border-radius: 0.5rem;
     border-bottom: 0px;
     background-color: #dae1ec;
   }
 
-  ${({ removebg }) => removebg === 'true'
-    && `
-    .MuiInputBase-root {
-      background-color: transparent;
-    }
-    .MuiSelect-root {
-      padding: 6px 0px 7px !important;
-    }
-  `}
+  ${({ removebg }) => removebg === 'true' && inputBaseStyle}
 
   .MuiSelect-root {
     padding: 11px;
+  }
+`;
+
+const inputBaseStyle = `
+  .MuiInputBase-root {
+    background-color: transparent;
+  }
+  .MuiSelect-root {
+    padding: 6px 0px 7px !important;
   }
 `;

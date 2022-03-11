@@ -47,7 +47,6 @@ module.exports = {
     '@typescript-eslint/no-shadow': ['error', { ignoreTypeValueShadow: true }],
     'no-unused-vars': 'off',
     'global-require': 'off',
-    'no-nested-ternary': 'off',
     '@typescript-eslint/no-unused-vars': 'error',
   },
 };

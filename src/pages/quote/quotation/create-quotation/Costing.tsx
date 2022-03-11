@@ -66,7 +66,7 @@ function Costing() {
           marginBottom: '1rem',
         }}
       >
-        {accomodationData.data.length > 0 && (
+        {accomodationData?.data.length > 0 && (
           <CreateQuotationTable
             columns={[
               'LOCATION',
@@ -76,7 +76,7 @@ function Costing() {
               'ROOM RATE',
               'TOTAL',
             ]}
-            data={accomodationData.data}
+            data={accomodationData?.data}
           />
         )}
       </DivAtom>
@@ -94,7 +94,7 @@ function Costing() {
       </DivAtom>
 
       <DivAtom style={formCreateMemberStyles.tableContainer}>
-        {accomodationData.data.length > 0 && (
+        {accomodationData?.data.length > 0 && (
           <CreateQuotationTable
             columns={[
               'TRANSPORTATION/DAY',
@@ -104,7 +104,7 @@ function Costing() {
               'DISCOUNT',
               'NET PRICE',
             ]}
-            data={accomodationData.data}
+            data={accomodationData?.data}
           />
         )}
       </DivAtom>
@@ -124,7 +124,7 @@ function Costing() {
           style={{
             ...formCreateMemberStyles.addBtn,
             width: width < 768 ? '100%' : '18%',
-            margin: width < 768 ? '0 0 1rem 0' : '0 0 1rem 0',
+            margin: '0 0 1rem 0',
           }}
         />
       </DivAtom>

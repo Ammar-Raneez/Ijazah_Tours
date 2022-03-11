@@ -29,7 +29,7 @@ interface LibraryTableHeadProps {
   onRequestSort: (event: MouseEvent<HTMLSpanElement>, property: string) => void;
   onSelectAllClick: (
     event: ChangeEvent<HTMLInputElement>,
-    checked: boolean
+    checked: boolean,
   ) => void;
   order: Order;
 }
@@ -47,6 +47,29 @@ function LibraryTableHead({
     onRequestSort(event, property);
   };
 
+  const spanOrderText = order === 'desc' ? 'sorted descending' : 'sorted ascending';
+
+  const getTableColumnCellAlignment = (headCell: {
+    id: string;
+    label: string;
+    numeric: undefined;
+  } | {
+    id: string;
+    numeric: boolean;
+    label: string;
+  }) => {
+    let alignment: 'center' | 'right' | 'left' | 'justified';
+    if (headCell.id === 'group') {
+      alignment = 'center';
+    } else if (headCell.numeric) {
+      alignment = 'right';
+    } else {
+      alignment = 'left';
+    }
+
+    return alignment;
+  };
+
   return (
     <TableHead>
       <TableRow>
@@ -58,33 +81,28 @@ function LibraryTableHead({
             inputProps={{ 'aria-label': 'select all desserts' }}
           />
         </TableCell>
-        {headCells.map((headCell) => (
-          <TableColumnCell
-            color="#B5B5C3"
-            key={headCell.id}
-            align={
-              headCell.id === 'group'
-                ? 'center'
-                : headCell.numeric
-                  ? 'right'
-                  : 'left'
-            }
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={createSortHandler(headCell.id)}
+        {headCells.map((headCell) => {
+          const align = getTableColumnCellAlignment(headCell);
+          return (
+            <TableColumnCell
+              color="#B5B5C3"
+              key={headCell.id}
+              align={align}
+              sortDirection={orderBy === headCell.id ? order : false}
             >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <span className={classes.visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </span>
-              ) : null}
-            </TableSortLabel>
-          </TableColumnCell>
-        ))}
+              <TableSortLabel
+                active={orderBy === headCell.id}
+                direction={orderBy === headCell.id ? order : 'asc'}
+                onClick={createSortHandler(headCell.id)}
+              >
+                {headCell.label}
+                {orderBy === headCell.id ? (
+                  <span className={classes.visuallyHidden}>{spanOrderText}</span>
+                ) : null}
+              </TableSortLabel>
+            </TableColumnCell>
+          );
+        })}
       </TableRow>
     </TableHead>
   );

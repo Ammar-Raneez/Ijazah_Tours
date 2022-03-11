@@ -33,7 +33,7 @@ function CreateQuotationTable({
       <Table className={classes.table} aria-label="quotations table">
         <TableHead>
           <TableRow>
-            {columns!.map((column) => (
+            {columns.map((column) => (
               <TableColumnCell
                 key={uuid()}
                 align="center"
@@ -44,7 +44,7 @@ function CreateQuotationTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {data!.map(
+          {data.map(
             (row: []) => (
               <TableRow key={uuid()}>
                 {row.map(

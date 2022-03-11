@@ -15,8 +15,9 @@ interface TableRowTextCellProps {
 }
 
 function TableRowTextCell({ cell }: TableRowTextCellProps) {
-  return cell.subtitle ? (
-    <TableCell align={cell.align}>
+  let cellData;
+  if (cell.subtitle) {
+    cellData = <TableCell align={cell.align}>
       <ParagraphAtom
         text={cell.title}
         key={uuid()}
@@ -34,9 +35,9 @@ function TableRowTextCell({ cell }: TableRowTextCellProps) {
           color: cell.colors[0],
         }}
       />
-    </TableCell>
-  ) : cell.marktitle ? (
-    <TableCell align={cell.align}>
+    </TableCell>;
+  } else if (cell.marktitle) {
+    cellData = <TableCell align={cell.align}>
       <ParagraphAtom
         text={cell.title}
         key={uuid()}
@@ -55,9 +56,9 @@ function TableRowTextCell({ cell }: TableRowTextCellProps) {
         }}
         mark
       />
-    </TableCell>
-  ) : (
-    <TableCell align={cell.align}>
+    </TableCell>;
+  } else {
+    cellData = <TableCell align={cell.align}>
       <ParagraphAtom
         text={cell.title}
         key={uuid()}
@@ -67,8 +68,10 @@ function TableRowTextCell({ cell }: TableRowTextCellProps) {
           color: cell.colors[0],
         }}
       />
-    </TableCell>
-  );
+    </TableCell>;
+  }
+
+  return cellData;
 }
 
 export default TableRowTextCell;

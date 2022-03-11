@@ -68,6 +68,15 @@ const LibraryTableToolbar = ({
     return removeEventListeners();
   }, [width]);
 
+  let addBtnTextWidth;
+  if (width < 540) {
+    addBtnTextWidth = '100%';
+  } else if (addbtntext.includes('Accomodation')) {
+    addBtnTextWidth = '14rem';
+  } else {
+    addBtnTextWidth = '11rem';
+  }
+
   return (
     <Toolbar
       className={clsx(classes.root, {
@@ -130,7 +139,7 @@ const LibraryTableToolbar = ({
             />
           )}
         </DivAtom>
-        {!(numSelected > 0) && (
+        {numSelected <= 0 && (
           <DivAtom
             style={{
               margin: width < 540 ? '16px 0 0 0' : '0px',
@@ -145,12 +154,7 @@ const LibraryTableToolbar = ({
                 text={addbtntext}
                 style={{
                   ...libraryTableToolbarStyles.addBtn,
-                  width:
-                    width < 540
-                      ? '100%'
-                      : addbtntext.includes('Accomodation')
-                        ? '14rem'
-                        : '11rem',
+                  width: addBtnTextWidth,
                 }}
                 size="large"
               />

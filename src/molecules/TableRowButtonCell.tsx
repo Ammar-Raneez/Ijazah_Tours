@@ -25,22 +25,23 @@ function TableRowButtonCell({
   btntext,
   btncolors,
 }: TableRowButtonCellProps) {
+  let backgroundColor;
+  let color;
+  if (btncolors) {
+    [backgroundColor, color] = btncolors;
+  } else {
+    backgroundColor = cell.status === 'Approved' ? '#41E93E' : '#C1BFBF';
+    color = cell.status === 'Approved' ? '#146521' : '#464E5F';
+  }
+
   return (
     <TableCell align={align}>
       <ButtonAtom
         style={{
           width: btnwidth,
-          backgroundColor: btncolors
-            ? btncolors[0]
-            : cell.status === 'Approved'
-              ? '#41E93E'
-              : '#C1BFBF',
-          color: btncolors
-            ? btncolors[1]
-            : cell.status === 'Approved'
-              ? '#146521'
-              : '#464E5F',
           borderRadius: btnborderradius,
+          backgroundColor,
+          color,
         }}
         size={btnsize}
         onClick={onClick}

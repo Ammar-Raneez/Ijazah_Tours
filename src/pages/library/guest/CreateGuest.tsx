@@ -30,9 +30,15 @@ function CreateGuest() {
     return removeEventListeners();
   }, [width]);
 
-  const onAddGuest = async () => {};
+  const onAddGuest = () => {
+    // eslint-disable-next-line no-console
+    console.log('add guest');
+  };
 
-  const onAddReminder = async () => {};
+  const onAddReminder = () => {
+    // eslint-disable-next-line no-console
+    console.log('add reminder');
+  };
 
   return (
     <DivAtom>

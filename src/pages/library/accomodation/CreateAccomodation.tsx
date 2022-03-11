@@ -30,7 +30,10 @@ function CreateAccomodation() {
     return removeEventListeners();
   }, [width]);
 
-  const onAddAccomodation = async () => {};
+  const onAddAccomodation = () => {
+    // eslint-disable-next-line no-console
+    console.log('add accomodation');
+  };
 
   return (
     <DivAtom>
