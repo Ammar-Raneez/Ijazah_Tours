@@ -16,6 +16,8 @@ import { useState } from "react";
 import Accomodation from "./pages/library/accomodation/Accomodation";
 import Driver from "./pages/library/driver/Driver";
 import Guest from "./pages/library/guest/Guest";
+import Tasks from "./pages/task/tasks/Tasks";
+import Customer from "./pages/task/customer/Customer";
 
 function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -67,6 +69,20 @@ function App() {
               </Route>
               <Route exact path="/library">
                 <Redirect to="/library/accomodation" />
+              </Route>
+            </StyledDivAtom>
+          </Route>
+          <Route path="/task">
+            <StyledDivAtom>
+              <Navbar type="task" />
+              <Route path="/task/tasks">
+                <Tasks />
+              </Route>
+              <Route path="/task/customer">
+                <Customer />
+              </Route>
+              <Route exact path="/task">
+                <Redirect to="/task/tasks" />
               </Route>
             </StyledDivAtom>
           </Route>

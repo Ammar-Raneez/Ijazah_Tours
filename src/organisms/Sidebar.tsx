@@ -51,6 +51,7 @@ const links = [
   { key: "1", text: "Dashboard", link: "/dashboard" },
   { key: "2", text: "Quote", link: "/quote" },
   { key: "3", text: "Library", link: "/library" },
+  { key: "4", text: "Task", link: "/task" },
 ];
 
 interface SidebarProps {

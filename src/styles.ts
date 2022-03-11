@@ -217,7 +217,7 @@ export const headerStyles = {
     margin: "0px",
     fontWeight: 500,
     color: "#41E93E",
-    fontSize: "40px",
+    fontSize: "32px",
   },
 }
 

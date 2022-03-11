@@ -28,10 +28,17 @@ const LINKS = [
       { key: "3", text: "Guest", link: "/library/guest" },
     ],
   },
+  {
+    type: "task",
+    links: [
+      { key: "1", text: "Tasks", link: "/task/tasks" },
+      { key: "2", text: "Customer", link: "/task/customer" },
+    ]
+  }
 ];
 
 interface NavbarProps {
-  type: "quote" | "library";
+  type: "quote" | "library" | "task";
 }
 
 function Navbar({ type }: NavbarProps) {
