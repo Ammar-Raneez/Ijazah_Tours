@@ -1,4 +1,4 @@
-import { ReactNode, CSSProperties } from "react";
+import { ReactNode, CSSProperties } from 'react';
 
 interface DivAtomProps {
   children?: ReactNode;

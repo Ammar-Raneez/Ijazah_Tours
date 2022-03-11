@@ -1,38 +1,40 @@
-import { ChangeEvent, Fragment, MouseEvent, useEffect, useState } from "react";
+import {
+  ChangeEvent, Fragment, MouseEvent, useEffect, useState,
+} from 'react';
 import {
   Theme,
   makeStyles,
   createStyles,
   useTheme,
   IconButton,
-} from "@material-ui/core";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TablePagination from "@material-ui/core/TablePagination";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
-import Checkbox from "@material-ui/core/Checkbox";
-import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
-import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
-import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
-import { getComparator, Order, stableSort } from "../../../utils/helpers";
-import TableRowTextCell from "../../../molecules/TableRowTextCell";
-import LibraryTableToolbar from "../../../molecules/LibraryTableToolbar";
-import LibraryTableHead from "../../../molecules/LibraryTableHead";
-import TableRowIconCell from "../../../molecules/TableRowIconCell";
-import SpanAtom from "../../../atoms/SpanAtom";
-import { libraryTableStyles } from "../../../styles";
+} from '@material-ui/core';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TablePagination from '@material-ui/core/TablePagination';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import Checkbox from '@material-ui/core/Checkbox';
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import { getComparator, Order, stableSort } from '../../../utils/helpers';
+import TableRowTextCell from '../../../molecules/TableRowTextCell';
+import LibraryTableToolbar from '../../../molecules/LibraryTableToolbar';
+import LibraryTableHead from '../../../molecules/LibraryTableHead';
+import TableRowIconCell from '../../../molecules/TableRowIconCell';
+import SpanAtom from '../../../atoms/SpanAtom';
+import { libraryTableStyles } from '../../../styles';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    width: "100%",
+    width: '100%',
   },
   paper: {
-    width: "100%",
+    width: '100%',
     marginBottom: theme.spacing(2),
   },
   table: {
@@ -43,12 +45,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   visuallyHidden: {
     border: 0,
-    clip: "rect(0 0 0 0)",
+    clip: 'rect(0 0 0 0)',
     height: 1,
     margin: -1,
-    overflow: "hidden",
+    overflow: 'hidden',
     padding: 0,
-    position: "absolute",
+    position: 'absolute',
     top: 20,
     width: 1,
   },
@@ -60,19 +62,19 @@ interface AccomodationTableProps {
 
 export default function AccomodationTable({ data }: AccomodationTableProps) {
   const classes = useStyles();
-  const [order, setOrder] = useState("asc");
-  const [orderBy, setOrderBy] = useState("calories");
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('calories');
   const [selected, setSelected] = useState<string[]>([]);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleRequestSort = (
     _: MouseEvent<HTMLSpanElement>,
-    property: string
+    property: string,
   ) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
 
@@ -87,7 +89,7 @@ export default function AccomodationTable({ data }: AccomodationTableProps) {
 
   const handleClick = (
     _: MouseEvent<HTMLTableRowElement, globalThis.MouseEvent>,
-    name: string
+    name: string,
   ) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected: string[] = [];
@@ -101,15 +103,15 @@ export default function AccomodationTable({ data }: AccomodationTableProps) {
     } else if (selectedIndex > 0) {
       newSelected = newSelected.concat(
         selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
+        selected.slice(selectedIndex + 1),
       );
     }
 
     setSelected(newSelected);
   };
 
-  const handleChangePage = (_: unknown, page: number) => {
-    setPage(page);
+  const handleChangePage = (_: unknown, pg: number) => {
+    setPage(pg);
   };
 
   const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
@@ -165,74 +167,74 @@ export default function AccomodationTable({ data }: AccomodationTableProps) {
                       <TableCell padding="checkbox">
                         <Checkbox
                           checked={isItemSelected}
-                          inputProps={{ "aria-labelledby": labelId }}
+                          inputProps={{ 'aria-labelledby': labelId }}
                         />
                       </TableCell>
                       <TableRowTextCell
                         cell={{
-                          align: "left",
+                          align: 'left',
                           title: row.name,
                           subtitle: row.tel,
-                          colors: ["#464E5F", "#B5B5C3"],
+                          colors: ['#464E5F', '#B5B5C3'],
                           weight: 600,
                         }}
                       />
                       <TableRowTextCell
                         cell={{
-                          align: "left",
+                          align: 'left',
                           title: row.description,
-                          colors: ["#B5B5C3"],
+                          colors: ['#B5B5C3'],
                           weight: 300,
                         }}
                       />
                       <TableRowTextCell
                         cell={{
-                          align: "right",
+                          align: 'right',
                           title: row.rate,
-                          subtitle: "INR",
+                          subtitle: 'INR',
                           colors: [
-                            row.rate.toString().includes("-") ? "red" : "green",
-                            "#B5B5C3",
+                            row.rate.toString().includes('-') ? 'red' : 'green',
+                            '#B5B5C3',
                           ],
                           weight: 600,
                         }}
                       />
                       <TableRowTextCell
                         cell={{
-                          align: "right",
+                          align: 'right',
                           title: row.location,
-                          subtitle: "INR",
+                          subtitle: 'INR',
                           colors: [
-                            row.location.toString().includes("-")
-                              ? "red"
-                              : "green",
-                            "#B5B5C3",
+                            row.location.toString().includes('-')
+                              ? 'red'
+                              : 'green',
+                            '#B5B5C3',
                           ],
                           weight: 600,
                         }}
                       />
                       <TableRowTextCell
                         cell={{
-                          align: "right",
+                          align: 'right',
                           title: row.ratings,
-                          subtitle: "INR",
+                          subtitle: 'INR',
                           colors: [
-                            row.ratings.toString().includes("-")
-                              ? "red"
-                              : "green",
-                            "#B5B5C3",
+                            row.ratings.toString().includes('-')
+                              ? 'red'
+                              : 'green',
+                            '#B5B5C3',
                           ],
                           weight: 600,
                         }}
                       />
                       <TableRowTextCell
                         cell={{
-                          align: "center",
+                          align: 'center',
                           title: row.group,
                           marktitle:
-                            row.group === "ACTIVE" || row.group === "INACTIVE",
+                            row.group === 'ACTIVE' || row.group === 'INACTIVE',
                           colors: [
-                            row.group === "ACTIVE" ? "#0A65FF" : "#B5B5C3",
+                            row.group === 'ACTIVE' ? '#0A65FF' : '#B5B5C3',
                           ],
                           weight: 300,
                         }}
@@ -282,30 +284,28 @@ export default function AccomodationTable({ data }: AccomodationTableProps) {
   );
 }
 
-const tablePaginationActionsStyle = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      flexShrink: 0,
-      marginLeft: theme.spacing(2.5),
-      marginRight: theme.spacing(0.5),
-      display: "flex",
-    },
-    activeUsers: {
-      display: "flex",
-      alignItems: "center",
-      position: "absolute",
-      top: theme.spacing(2),
-      left: theme.spacing(2.5),
-    },
-  })
-);
+const tablePaginationActionsStyle = makeStyles((theme: Theme) => createStyles({
+  root: {
+    flexShrink: 0,
+    marginLeft: theme.spacing(2.5),
+    marginRight: theme.spacing(0.5),
+    display: 'flex',
+  },
+  activeUsers: {
+    display: 'flex',
+    alignItems: 'center',
+    position: 'absolute',
+    top: theme.spacing(2),
+    left: theme.spacing(2.5),
+  },
+}));
 
 interface TablePaginationActionsProps {
   count: number;
   page: number;
   rowsPerPage: number;
   onPageChange: (
-    event: React.MouseEvent<HTMLButtonElement>,
+    event: MouseEvent<HTMLButtonElement>,
     newPage: number
   ) => void;
 }
@@ -322,25 +322,25 @@ function TablePaginationActions({
 
   useEffect(() => {
     setWidth(window.innerWidth);
-    const widthListener = window.addEventListener("resize", () => {
+    const widthListener = window.addEventListener('resize', () => {
       setWidth(window.innerWidth);
     });
 
     const removeEventListeners = () => {
-      window.removeEventListener("resize", widthListener as any);
+      window.removeEventListener('resize', widthListener as any);
     };
 
     return removeEventListeners();
   }, [width]);
 
   const handleBackButtonClick = (
-    event: React.MouseEvent<HTMLButtonElement>
+    event: MouseEvent<HTMLButtonElement>,
   ) => {
     onPageChange(event, page - 1);
   };
 
   const handleNextButtonClick = (
-    event: React.MouseEvent<HTMLButtonElement>
+    event: MouseEvent<HTMLButtonElement>,
   ) => {
     onPageChange(event, page + 1);
   };
@@ -353,7 +353,7 @@ function TablePaginationActions({
           disabled={page === 0}
           aria-label="previous page"
         >
-          {theme.direction === "rtl" ? (
+          {theme.direction === 'rtl' ? (
             <KeyboardArrowRight />
           ) : (
             <KeyboardArrowLeft />
@@ -364,7 +364,7 @@ function TablePaginationActions({
           disabled={page >= Math.ceil(count / rowsPerPage) - 1}
           aria-label="next page"
         >
-          {theme.direction === "rtl" ? (
+          {theme.direction === 'rtl' ? (
             <KeyboardArrowLeft />
           ) : (
             <KeyboardArrowRight />
@@ -372,7 +372,7 @@ function TablePaginationActions({
         </IconButton>
 
         <div
-          style={width < 700 ? { display: "none" } : {}}
+          style={width < 700 ? { display: 'none' } : {}}
           className={classes.activeUsers}
         >
           <SpanAtom text="ACTIVE CUSTOMERS: " style={libraryTableStyles.totalUsers} />
@@ -384,4 +384,3 @@ function TablePaginationActions({
     </>
   );
 }
-

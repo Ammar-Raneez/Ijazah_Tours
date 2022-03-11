@@ -6,15 +6,15 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-} from "@material-ui/core";
-import { v4 as uuid } from "uuid";
-import TableColumnCell from "../../../molecules/TableColumnCell";
-import TableRowTextCell from "../../../molecules/TableRowTextCell";
+} from '@material-ui/core';
+import { v4 as uuid } from 'uuid';
+import TableColumnCell from '../../../molecules/TableColumnCell';
+import TableRowTextCell from '../../../molecules/TableRowTextCell';
 
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
-    overflow: "scroll",
+    overflow: 'scroll',
   },
 });
 
@@ -48,21 +48,20 @@ function CreateQuotationTable({
             (row: []) => (
               <TableRow key={uuid()}>
                 {row.map(
-                  (cell: string | number, index: number) =>
-                    index <= columns.length - 1 && (
-                      <TableRowTextCell
-                        key={uuid()}
-                        cell={{
-                          align: "center",
-                          title: cell,
-                          colors: ["#464E5F", "#B5B5C3"],
-                          weight: 400,
-                        }}
-                      />
-                    )
+                  (cell: string | number, index: number) => index <= columns.length - 1 && (
+                    <TableRowTextCell
+                      key={uuid()}
+                      cell={{
+                        align: 'center',
+                        title: cell,
+                        colors: ['#464E5F', '#B5B5C3'],
+                        weight: 400,
+                      }}
+                    />
+                  ),
                 )}
               </TableRow>
-            )
+            ),
           )}
         </TableBody>
       </Table>

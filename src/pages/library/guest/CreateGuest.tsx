@@ -1,30 +1,30 @@
-import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import ChevronLeftRoundedIcon from "@material-ui/icons/ChevronLeftRounded";
-import DivAtom from "../../../atoms/DivAtom";
-import H2Atom from "../../../atoms/H2Atom";
-import ButtonAtom from "../../../atoms/ButtonAtom";
-import IconAtom from "../../../atoms/IconAtom";
-import FormControlInput from "../../../molecules/FormControlInput";
-import { libraryCreateGuestStyles } from "../../../styles";
+import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
+import DivAtom from '../../../atoms/DivAtom';
+import H2Atom from '../../../atoms/H2Atom';
+import ButtonAtom from '../../../atoms/ButtonAtom';
+import IconAtom from '../../../atoms/IconAtom';
+import FormControlInput from '../../../molecules/FormControlInput';
+import { libraryCreateGuestStyles } from '../../../styles';
 
 function CreateGuest() {
-  const [refNum, setRefNum] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [contactNumber, setContactNumber] = useState("");
-  const [occupation, setOccupation] = useState("");
+  const [refNum, setRefNum] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [contactNumber, setContactNumber] = useState('');
+  const [occupation, setOccupation] = useState('');
   const [width, setWidth] = useState(0);
   const history = useHistory();
 
   useEffect(() => {
     setWidth(window.innerWidth);
-    const widthListener = window.addEventListener("resize", () => {
+    const widthListener = window.addEventListener('resize', () => {
       setWidth(window.innerWidth);
     });
 
     const removeEventListeners = () => {
-      window.removeEventListener("resize", widthListener as any);
+      window.removeEventListener('resize', widthListener as any);
     };
 
     return removeEventListeners();
@@ -41,7 +41,7 @@ function CreateGuest() {
           size="small"
           children={<ChevronLeftRoundedIcon />}
           style={libraryCreateGuestStyles.backBtn}
-          onClick={() => history.replace("/library/guest")}
+          onClick={() => history.replace('/library/guest')}
         />
         <H2Atom style={libraryCreateGuestStyles.title} text="Create Guest" />
       </DivAtom>
@@ -60,8 +60,8 @@ function CreateGuest() {
         <DivAtom
           style={{
             ...libraryCreateGuestStyles.multiFieldContainer,
-            justifyContent: "space-between",
-            flexDirection: width < 600 ? "column" : "row",
+            justifyContent: 'space-between',
+            flexDirection: width < 600 ? 'column' : 'row',
           }}
         >
           <FormControlInput
@@ -112,11 +112,11 @@ function CreateGuest() {
       <DivAtom
         style={{
           ...libraryCreateGuestStyles.addBtnContainer,
-          flexDirection: width < 768 ? "column" : "row",
-          padding: width < 768 ? "1rem" : "0px",
+          flexDirection: width < 768 ? 'column' : 'row',
+          padding: width < 768 ? '1rem' : '0px',
           margin:
             width < 768
-              ? "0px"
+              ? '0px'
               : libraryCreateGuestStyles.addBtnContainer.margin,
         }}
       >
@@ -125,8 +125,8 @@ function CreateGuest() {
           onClick={onAddGuest}
           style={{
             ...libraryCreateGuestStyles.addBtn,
-            width: width < 768 ? "100%" : "18%",
-            margin: width < 768 ? "0 0 1rem 0" : "0 0 0 1rem",
+            width: width < 768 ? '100%' : '18%',
+            margin: width < 768 ? '0 0 1rem 0' : '0 0 0 1rem',
           }}
           text="Create"
         />
@@ -135,7 +135,7 @@ function CreateGuest() {
           onClick={onAddReminder}
           style={{
             ...libraryCreateGuestStyles.addBtn,
-            width: width < 768 ? "100%" : "18%",
+            width: width < 768 ? '100%' : '18%',
           }}
           text="Add Reminder"
         />

@@ -1,33 +1,35 @@
-import { ChangeEvent, useEffect, useState, MouseEvent } from "react";
-import { Link, useHistory } from "react-router-dom";
-import ChevronLeftRoundedIcon from "@material-ui/icons/ChevronLeftRounded";
-import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
-import DivAtom from "../../../../atoms/DivAtom";
-import H2Atom from "../../../../atoms/H2Atom";
-import ButtonAtom from "../../../../atoms/ButtonAtom";
-import IconAtom from "../../../../atoms/IconAtom";
-import FormControlInput from "../../../../molecules/FormControlInput";
+import {
+  ChangeEvent, useEffect, useState, MouseEvent,
+} from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
+import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
+import DivAtom from '../../../../atoms/DivAtom';
+import H2Atom from '../../../../atoms/H2Atom';
+import ButtonAtom from '../../../../atoms/ButtonAtom';
+import IconAtom from '../../../../atoms/IconAtom';
+import FormControlInput from '../../../../molecules/FormControlInput';
 import {
   formCreateMemberStyles,
   libraryStyles,
   libraryTableToolbarStyles,
-} from "../../../../styles";
-import TextFieldAtom from "../../../../atoms/TextFieldAtom";
-import { QUOTATIONS_REFERENCE_DATA } from "../../../../data";
+} from '../../../../styles';
+import TextFieldAtom from '../../../../atoms/TextFieldAtom';
+import { QUOTATIONS_REFERENCE_DATA } from '../../../../data';
 
 const options = [
-  { label: "Hotel", value: "Hotel" },
-  { label: "Villa", value: "Villa" },
-  { label: "Appartment", value: "Appartment" },
+  { label: 'Hotel', value: 'Hotel' },
+  { label: 'Villa', value: 'Villa' },
+  { label: 'Appartment', value: 'Appartment' },
 ];
 
 function Customer() {
   const [refNum, setRefNum] = useState(QUOTATIONS_REFERENCE_DATA[0].value);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [contactNumber, setContactNumber] = useState("");
-  const [checkin, setCheckin] = useState("");
-  const [checkout, setCheckout] = useState("");
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [contactNumber, setContactNumber] = useState('');
+  const [checkin, setCheckin] = useState('');
+  const [checkout, setCheckout] = useState('');
   const [adults, setAdults] = useState(0);
   const [children, setChildren] = useState(0);
   const [age, setAge] = useState(0);
@@ -40,27 +42,27 @@ function Customer() {
   useEffect(() => {
     setWidth(window.innerWidth);
     setContainerHeight(window.innerHeight - 220);
-    const widthListener = window.addEventListener("resize", () => {
+    const widthListener = window.addEventListener('resize', () => {
       setWidth(window.innerWidth);
     });
-    const heightListener = window.addEventListener("resize", () => {
+    const heightListener = window.addEventListener('resize', () => {
       setContainerHeight(window.innerHeight - 220);
     });
 
     const removeEventListeners = () => {
-      window.removeEventListener("resize", widthListener as any);
-      window.removeEventListener("resize", heightListener as any);
+      window.removeEventListener('resize', widthListener as any);
+      window.removeEventListener('resize', heightListener as any);
     };
 
     return removeEventListeners();
   }, [width, containerHeight]);
 
   const onCreateCustomer = (
-    event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+    event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
   ) => {
     event.preventDefault();
     localStorage.setItem(
-      "New Quote Customer",
+      'New Quote Customer',
       JSON.stringify({
         data: [[
           refNum,
@@ -74,20 +76,20 @@ function Customer() {
           age,
           numberOfDays,
         ]],
-      })
+      }),
     );
 
-    history.replace("/quote/quotations/create/accomodation");
+    history.replace('/quote/quotations/create/accomodation');
   };
 
   return (
-    <DivAtom style={{ height: containerHeight + "px" }}>
+    <DivAtom style={{ height: `${containerHeight}px` }}>
       <DivAtom style={formCreateMemberStyles.header}>
         <IconAtom
           size="small"
           children={<ChevronLeftRoundedIcon />}
           style={formCreateMemberStyles.backBtn}
-          onClick={() => history.replace("/quote/quotations")}
+          onClick={() => history.replace('/quote/quotations')}
         />
         <H2Atom style={formCreateMemberStyles.title} text="Create Quotation" />
       </DivAtom>
@@ -96,7 +98,7 @@ function Customer() {
         <DivAtom
           style={{
             ...formCreateMemberStyles.multiFieldContainer,
-            flexDirection: width < 600 ? "column" : "row",
+            flexDirection: width < 600 ? 'column' : 'row',
           }}
         >
           <TextFieldAtom
@@ -104,15 +106,14 @@ function Customer() {
             size="medium"
             label="Reference Number"
             value={refNum}
-            onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-              setRefNum(e.target.value)
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setRefNum(e.target.value)
             }
             options={QUOTATIONS_REFERENCE_DATA}
             adornmentposition="end"
             style={{
               ...libraryStyles.textField,
               flex: 1,
-              width: width < 600 ? "100%" : "auto",
+              width: width < 600 ? '100%' : 'auto',
             }}
             disableUnderline={false}
             select
@@ -123,9 +124,9 @@ function Customer() {
               text="Add New Guest"
               style={{
                 ...libraryTableToolbarStyles.addBtn,
-                width: width < 600 ? "100%" : "11rem",
-                marginTop: "1rem",
-                marginLeft: width < 600 ? "0px" : "1rem",
+                width: width < 600 ? '100%' : '11rem',
+                marginTop: '1rem',
+                marginLeft: width < 600 ? '0px' : '1rem',
               }}
               size="large"
             />
@@ -134,7 +135,7 @@ function Customer() {
         <DivAtom
           style={{
             ...formCreateMemberStyles.multiFieldContainer,
-            flexDirection: width < 600 ? "column" : "row",
+            flexDirection: width < 600 ? 'column' : 'row',
           }}
         >
           <FormControlInput
@@ -173,7 +174,7 @@ function Customer() {
         <DivAtom
           style={{
             ...formCreateMemberStyles.multiFieldContainer,
-            flexDirection: width < 600 ? "column" : "row",
+            flexDirection: width < 600 ? 'column' : 'row',
           }}
         >
           <FormControlInput
@@ -217,7 +218,7 @@ function Customer() {
         <DivAtom
           style={{
             ...formCreateMemberStyles.multiFieldContainer,
-            flexDirection: width < 600 ? "column" : "row",
+            flexDirection: width < 600 ? 'column' : 'row',
           }}
         >
           <FormControlInput
@@ -237,15 +238,14 @@ function Customer() {
             size="medium"
             label="Holiday Type"
             value={holidayType}
-            onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-              setHolidayType(e.target.value)
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setHolidayType(e.target.value)
             }
             options={options}
             adornmentposition="end"
             style={{
               ...libraryStyles.textField,
               flex: 1,
-              width: width < 600 ? "100%" : "auto",
+              width: width < 600 ? '100%' : 'auto',
             }}
             disableUnderline={false}
             select
@@ -254,7 +254,7 @@ function Customer() {
         <DivAtom
           style={{
             ...formCreateMemberStyles.multiFieldContainer,
-            flexDirection: width < 600 ? "column" : "row",
+            flexDirection: width < 600 ? 'column' : 'row',
           }}
         >
           <TextFieldAtom
@@ -262,15 +262,14 @@ function Customer() {
             size="medium"
             label="Check-in"
             value={checkin}
-            onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-              setCheckin(e.target.value)
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCheckin(e.target.value)
             }
             adornmentposition="end"
             style={{
               ...libraryStyles.textField,
               flex: 1,
-              width: width < 600 ? "100%" : "auto",
-              margin: width < 600 ? "0 0 1rem 0" : "0 1rem 0 0",
+              width: width < 600 ? '100%' : 'auto',
+              margin: width < 600 ? '0 0 1rem 0' : '0 1rem 0 0',
             }}
             disableUnderline={false}
             select={false}
@@ -282,14 +281,13 @@ function Customer() {
             size="medium"
             label="Checkout"
             value={checkout}
-            onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-              setCheckout(e.target.value)
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCheckout(e.target.value)
             }
             adornmentposition="end"
             style={{
               ...libraryStyles.textField,
               flex: 1,
-              width: width < 600 ? "100%" : "auto",
+              width: width < 600 ? '100%' : 'auto',
             }}
             disableUnderline={false}
             select={false}
@@ -301,9 +299,9 @@ function Customer() {
       <DivAtom
         style={{
           ...formCreateMemberStyles.addBtnContainer,
-          padding: width < 768 ? "1rem" : "0px",
+          padding: width < 768 ? '1rem' : '0px',
           margin:
-            width < 768 ? "0px" : formCreateMemberStyles.addBtnContainer.margin,
+            width < 768 ? '0px' : formCreateMemberStyles.addBtnContainer.margin,
         }}
       >
         <ButtonAtom
@@ -312,8 +310,8 @@ function Customer() {
           onClick={(event) => onCreateCustomer(event)}
           style={{
             ...formCreateMemberStyles.addBtn,
-            width: width < 768 ? "100%" : "18%",
-            margin: width < 768 ? "0 0 1rem 0" : "0 0 1rem 0",
+            width: width < 768 ? '100%' : '18%',
+            margin: width < 768 ? '0 0 1rem 0' : '0 0 1rem 0',
           }}
         />
       </DivAtom>

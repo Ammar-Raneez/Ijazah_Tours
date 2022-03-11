@@ -4,23 +4,21 @@ import {
   IconButton,
   makeStyles,
   Theme,
-} from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
-import AvatarAtom from "../atoms/AvatarAtom";
-import DivAtom from "../atoms/DivAtom";
-import SpanAtom from "../atoms/SpanAtom";
-import { headerStyles } from "../styles";
+} from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+import AvatarAtom from '../atoms/AvatarAtom';
+import DivAtom from '../atoms/DivAtom';
+import SpanAtom from '../atoms/SpanAtom';
+import { headerStyles } from '../styles';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    menuButton: {
-      marginRight: theme.spacing(2),
-      [theme.breakpoints.up("lg")]: {
-        display: "none",
-      },
+const useStyles = makeStyles((theme: Theme) => createStyles({
+  menuButton: {
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up('lg')]: {
+      display: 'none',
     },
-  })
-);
+  },
+}));
 
 interface HeaderProps {
   handleDrawerToggle: () => void;
@@ -35,7 +33,7 @@ function Header({ handleDrawerToggle }: HeaderProps) {
         <AvatarAtom
           style={headerStyles.avatar}
           alt="Logo"
-          image={require("../assets/logo.png")}
+          image={require('../assets/logo.png')}
         />
         <Hidden xsDown>
           <SpanAtom style={headerStyles.spanI} text="Ijazah" />
@@ -58,4 +56,3 @@ function Header({ handleDrawerToggle }: HeaderProps) {
 }
 
 export default Header;
-

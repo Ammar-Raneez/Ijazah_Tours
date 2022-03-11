@@ -1,17 +1,17 @@
-import ButtonAtom from "../../../atoms/ButtonAtom";
-import TextFieldAtom from "../../../atoms/TextFieldAtom";
-import DivAtom from "../../../atoms/DivAtom";
-import { ChangeEvent, useEffect, useState } from "react";
-import AccomodationTable from "../../../organisms/library/accomodation/AccomodationTable";
-import { LIBRARY_ACCOMODATION_DATA } from "../../../data";
-import { Route } from "react-router-dom";
-import CreateAccomodation from "./CreateAccomodation";
-import { libraryStyles } from "../../../styles";
+import { ChangeEvent, useEffect, useState } from 'react';
+import { Route } from 'react-router-dom';
+import ButtonAtom from '../../../atoms/ButtonAtom';
+import TextFieldAtom from '../../../atoms/TextFieldAtom';
+import DivAtom from '../../../atoms/DivAtom';
+import AccomodationTable from '../../../organisms/library/accomodation/AccomodationTable';
+import { LIBRARY_ACCOMODATION_DATA } from '../../../data';
+import CreateAccomodation from './CreateAccomodation';
+import { libraryStyles } from '../../../styles';
 
 const options = [
-  { label: "Hotel", value: "Hotel" },
-  { label: "Villa", value: "Villa" },
-  { label: "Appartment", value: "Appartment" },
+  { label: 'Hotel', value: 'Hotel' },
+  { label: 'Villa', value: 'Villa' },
+  { label: 'Appartment', value: 'Appartment' },
 ];
 
 function Accomodation() {
@@ -20,12 +20,12 @@ function Accomodation() {
 
   useEffect(() => {
     setContainerHeight(window.innerHeight - 180);
-    const heightListener = window.addEventListener("resize", () => {
+    const heightListener = window.addEventListener('resize', () => {
       setContainerHeight(window.innerHeight - 180);
     });
 
     const removeEventListeners = () => {
-      window.removeEventListener("resize", heightListener as any);
+      window.removeEventListener('resize', heightListener as any);
     };
 
     return removeEventListeners();
@@ -36,7 +36,7 @@ function Accomodation() {
       <DivAtom
         style={{
           ...libraryStyles.innerContainer,
-          height: containerHeight + "px",
+          height: `${containerHeight}px`,
         }}
       >
         <Route path="/library/accomodation/create">
@@ -49,8 +49,7 @@ function Accomodation() {
               size="medium"
               label=""
               value={accomodationType}
-              onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-                setAccomodationType(e.target.value)
+              onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setAccomodationType(e.target.value)
               }
               options={options}
               adornmentposition="end"
@@ -61,7 +60,7 @@ function Accomodation() {
               text="Specification"
               style={{
                 ...libraryStyles.btn,
-                margin: "0 16px",
+                margin: '0 16px',
               }}
               onClick={() => null}
               size="large"

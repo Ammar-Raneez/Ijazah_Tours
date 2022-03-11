@@ -1,7 +1,7 @@
 import { ReactNode, CSSProperties } from 'react';
-import { NavLink } from "react-router-dom";
-import styled from "styled-components";
-import { v4 as uuid } from "uuid";
+import { NavLink } from 'react-router-dom';
+import styled from 'styled-components';
+import { v4 as uuid } from 'uuid';
 
 interface LinkAtomProps {
   to: string;

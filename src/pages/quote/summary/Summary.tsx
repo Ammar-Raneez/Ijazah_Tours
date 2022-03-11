@@ -1,18 +1,18 @@
-import { useEffect, useState } from "react";
-import DivAtom from "../../../atoms/DivAtom";
-import { summaryStyles } from "../../../styles";
+import { useEffect, useState } from 'react';
+import DivAtom from '../../../atoms/DivAtom';
+import { summaryStyles } from '../../../styles';
 
 function Summary() {
   const [containerHeight, setContainerHeight] = useState(0);
 
   useEffect(() => {
     setContainerHeight(window.innerHeight - 180);
-    const heightListener = window.addEventListener("resize", () => {
+    const heightListener = window.addEventListener('resize', () => {
       setContainerHeight(window.innerHeight - 180);
     });
 
     const removeEventListeners = () => {
-      window.removeEventListener("resize", heightListener as any);
+      window.removeEventListener('resize', heightListener as any);
     };
 
     return removeEventListeners();
@@ -23,7 +23,7 @@ function Summary() {
       <DivAtom
         style={{
           ...summaryStyles.innerContainer,
-          height: containerHeight + "px",
+          height: `${containerHeight}px`,
         }}
       >
         Summary
@@ -33,4 +33,3 @@ function Summary() {
 }
 
 export default Summary;
-

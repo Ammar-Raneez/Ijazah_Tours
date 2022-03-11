@@ -1,6 +1,6 @@
-import { Button } from "@material-ui/core";
-import ImageUploading from "react-images-uploading";
-import { v4 as uuid } from "uuid";
+import { Button } from '@material-ui/core';
+import ImageUploading from 'react-images-uploading';
+import { v4 as uuid } from 'uuid';
 
 export default function Uploader({ images, setter, btnText }) {
   return (
@@ -10,14 +10,16 @@ export default function Uploader({ images, setter, btnText }) {
       maxNumber={1}
       dataURLKey="data_url"
     >
-      {({ imageList, onImageUpdate, onImageRemove, isDragging, dragProps }) => (
+      {({
+        imageList, onImageUpdate, onImageRemove, isDragging, dragProps,
+      }) => (
         <div className="upload-img-container">
           <Button
             className="upload-img-button"
             style={
               isDragging
-                ? { color: "white", backgroundColor: "#4C5A7B" }
-                : { color: "#4C5A7B", border: "1px solid #4C5A7B" }
+                ? { color: 'white', backgroundColor: '#4C5A7B' }
+                : { color: '#4C5A7B', border: '1px solid #4C5A7B' }
             }
             onClick={onImageUpdate}
             {...dragProps}
@@ -28,7 +30,7 @@ export default function Uploader({ images, setter, btnText }) {
           {imageList.map((image, index) => (
             <div key={uuid()}>
               <img
-                style={{ margin: "1rem 0" }}
+                style={{ margin: '1rem 0' }}
                 src={image.data_url}
                 alt=""
                 width="320"
@@ -36,7 +38,7 @@ export default function Uploader({ images, setter, btnText }) {
               <div>
                 <Button
                   className="remove-img-button"
-                  style={{ color: "red", border: "1px solid red" }}
+                  style={{ color: 'red', border: '1px solid red' }}
                   onClick={() => onImageRemove(index)}
                 >
                   Remove

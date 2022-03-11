@@ -1,7 +1,7 @@
-import AvatarAtom from "../atoms/AvatarAtom";
-import DivAtom from "../atoms/DivAtom";
-import ParagraphAtom from "../atoms/ParagraphAtom";
-import { guestProfileStyles } from "../styles";
+import AvatarAtom from '../atoms/AvatarAtom';
+import DivAtom from '../atoms/DivAtom';
+import ParagraphAtom from '../atoms/ParagraphAtom';
+import { guestProfileStyles } from '../styles';
 
 interface GuestProfileProps {
   image: string;
@@ -37,6 +37,5 @@ function GuestProfile({
     </DivAtom>
   );
 }
-
 
 export default GuestProfile;

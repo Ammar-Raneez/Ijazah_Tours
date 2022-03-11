@@ -1,44 +1,44 @@
-import DivAtom from "../atoms/DivAtom";
-import LinkAtom from "../atoms/LinkAtom";
-import LinkTextAtom from "../atoms/LinkTextAtom";
-import { navbarStyles } from "../styles";
+import DivAtom from '../atoms/DivAtom';
+import LinkAtom from '../atoms/LinkAtom';
+import LinkTextAtom from '../atoms/LinkTextAtom';
+import { navbarStyles } from '../styles';
 
 const LINKS = [
   {
-    type: "dashboard",
+    type: 'dashboard',
     links: [
-      { key: "1", text: "Quotations", link: "/dashboard/quotations" },
-      { key: "2", text: "Guest", link: "/dashboard/guest" },
-      { key: "3", text: "Voucher", link: "/dashboard/voucher" },
+      { key: '1', text: 'Quotations', link: '/dashboard/quotations' },
+      { key: '2', text: 'Guest', link: '/dashboard/guest' },
+      { key: '3', text: 'Voucher', link: '/dashboard/voucher' },
     ],
   },
   {
-    type: "quote",
+    type: 'quote',
     links: [
-      { key: "1", text: "Quotations", link: "/quote/quotations" },
-      { key: "2", text: "Voucher", link: "/quote/voucher" },
-      { key: "3", text: "Summary", link: "/quote/summary" },
+      { key: '1', text: 'Quotations', link: '/quote/quotations' },
+      { key: '2', text: 'Voucher', link: '/quote/voucher' },
+      { key: '3', text: 'Summary', link: '/quote/summary' },
     ],
   },
   {
-    type: "library",
+    type: 'library',
     links: [
-      { key: "1", text: "Accomodation", link: "/library/accomodation" },
-      { key: "2", text: "Driver", link: "/library/driver" },
-      { key: "3", text: "Guest", link: "/library/guest" },
+      { key: '1', text: 'Accomodation', link: '/library/accomodation' },
+      { key: '2', text: 'Driver', link: '/library/driver' },
+      { key: '3', text: 'Guest', link: '/library/guest' },
     ],
   },
   {
-    type: "task",
+    type: 'task',
     links: [
-      { key: "1", text: "Tasks", link: "/task/tasks" },
-      { key: "2", text: "Customer", link: "/task/customer" },
-    ]
-  }
+      { key: '1', text: 'Tasks', link: '/task/tasks' },
+      { key: '2', text: 'Customer', link: '/task/customer' },
+    ],
+  },
 ];
 
 interface NavbarProps {
-  type: "quote" | "library" | "task";
+  type: 'quote' | 'library' | 'task';
 }
 
 function Navbar({ type }: NavbarProps) {

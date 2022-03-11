@@ -1,6 +1,6 @@
 import { ReactNode, CSSProperties, ChangeEvent } from 'react';
-import { InputAdornment, MenuItem, TextField } from "@material-ui/core";
-import styled from "styled-components";
+import { InputAdornment, MenuItem, TextField } from '@material-ui/core';
+import styled from 'styled-components';
 
 interface DropdownOption {
   label: string;
@@ -8,12 +8,12 @@ interface DropdownOption {
 }
 
 interface TextFieldAtomProps {
-  variant: "filled" | "standard";
+  variant: 'filled' | 'standard';
   value: string;
   label: string;
   select: boolean;
-  size: "small" | "medium";
-  adornmentposition: "start" | "end";
+  size: 'small' | 'medium';
+  adornmentposition: 'start' | 'end';
   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   helpertext?: string;
   type?: string;
@@ -48,6 +48,27 @@ function TextFieldAtom({
   style,
   ...props
 }: TextFieldAtomProps) {
+  const removeBgSelect = disableUnderline === false ? 'true' : 'false';
+  const removeBgTextField = type === 'date' ? 'true' : 'false';
+
+  const inputProps = adornmentposition === 'start'
+    ? {
+      startAdornment: (
+        <InputAdornment position={adornmentposition}>
+          {props.children}
+        </InputAdornment>
+      ),
+      disableUnderline: type !== 'date',
+    }
+    : {
+      endAdornment: (
+        <InputAdornment position={adornmentposition}>
+          {props.children}
+        </InputAdornment>
+      ),
+      disableUnderline: type !== 'date',
+    };
+
   return !select ? (
     <StyledTextFieldAtom
       value={value}
@@ -63,26 +84,8 @@ function TextFieldAtom({
       error={error}
       helperText={helpertext}
       placeholder={placeholder}
-      removebg={type === "date" ? "true" : "false"}
-      InputProps={
-        adornmentposition === "start"
-          ? {
-            startAdornment: (
-              <InputAdornment position={adornmentposition}>
-                {props.children}
-              </InputAdornment>
-            ),
-            disableUnderline: !(type === "date"),
-          }
-          : {
-            endAdornment: (
-              <InputAdornment position={adornmentposition}>
-                {props.children}
-              </InputAdornment>
-            ),
-            disableUnderline: !(type === "date"),
-          }
-      }
+      removebg={removeBgTextField}
+      InputProps={inputProps}
     />
   ) : (
     <StyledTextFieldAtom
@@ -93,8 +96,8 @@ function TextFieldAtom({
       variant={variant}
       size={size}
       label={label}
-      InputProps={{ disableUnderline: !(disableUnderline === false) }}
-      removebg={disableUnderline === false ? "true" : "false"}
+      InputProps={{ disableUnderline: disableUnderline !== false }}
+      removebg={removeBgSelect}
     >
       {options!.map((option: DropdownOption) => (
         <MenuItem value={option.value} key={option.value}>
@@ -111,14 +114,15 @@ interface StyleProps {
   removebg?: string;
 }
 
-const StyledTextFieldAtom = styled(TextField) <StyleProps>`
+const StyledTextFieldAtom = styled(TextField)<StyleProps>`
   .MuiInputBase-root {
     border-radius: 0.5rem;
     border-bottom: 0px;
     background-color: #dae1ec;
   }
 
-  ${({ removebg }) => removebg === "true" && `
+  ${({ removebg }) => removebg === 'true'
+    && `
     .MuiInputBase-root {
       background-color: transparent;
     }

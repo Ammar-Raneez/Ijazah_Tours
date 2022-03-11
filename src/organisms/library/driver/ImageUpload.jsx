@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import Uploader from "../../../molecules/ImageUploader";
+import styled from 'styled-components';
+import Uploader from '../../../molecules/ImageUploader';
 
 function ImageUploader({
   license,

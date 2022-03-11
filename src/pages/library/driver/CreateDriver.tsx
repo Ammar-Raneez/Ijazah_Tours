@@ -1,23 +1,23 @@
-import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import ChevronLeftRoundedIcon from "@material-ui/icons/ChevronLeftRounded";
-import DivAtom from "../../../atoms/DivAtom";
-import H2Atom from "../../../atoms/H2Atom";
-import ButtonAtom from "../../../atoms/ButtonAtom";
-import ImageUploader from "../../../organisms/library/driver/ImageUpload";
-import IconAtom from "../../../atoms/IconAtom";
-import FormControlInput from "../../../molecules/FormControlInput";
-import { formCreateMemberStyles } from "../../../styles";
+import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
+import DivAtom from '../../../atoms/DivAtom';
+import H2Atom from '../../../atoms/H2Atom';
+import ButtonAtom from '../../../atoms/ButtonAtom';
+import ImageUploader from '../../../organisms/library/driver/ImageUpload';
+import IconAtom from '../../../atoms/IconAtom';
+import FormControlInput from '../../../molecules/FormControlInput';
+import { formCreateMemberStyles } from '../../../styles';
 
 function CreateDriver() {
-  const [refNum, setRefNum] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [contactNumber, setContactNumber] = useState("");
-  const [address, setAddress] = useState("");
-  const [address2, setAddress2] = useState("");
-  const [city, setCity] = useState("");
-  const [occupation, setOccupation] = useState("");
+  const [refNum, setRefNum] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [contactNumber, setContactNumber] = useState('');
+  const [address, setAddress] = useState('');
+  const [address2, setAddress2] = useState('');
+  const [city, setCity] = useState('');
+  const [occupation, setOccupation] = useState('');
   const [license, setLicense] = useState([]);
   const [profilePic, setProfilePic] = useState([]);
   const [vehiclePic, setVehiclePic] = useState([]);
@@ -26,12 +26,12 @@ function CreateDriver() {
 
   useEffect(() => {
     setWidth(window.innerWidth);
-    const widthListener = window.addEventListener("resize", () => {
+    const widthListener = window.addEventListener('resize', () => {
       setWidth(window.innerWidth);
     });
 
     const removeEventListeners = () => {
-      window.removeEventListener("resize", widthListener as any);
+      window.removeEventListener('resize', widthListener as any);
     };
 
     return removeEventListeners();
@@ -46,7 +46,7 @@ function CreateDriver() {
           size="small"
           children={<ChevronLeftRoundedIcon />}
           style={formCreateMemberStyles.backBtn}
-          onClick={() => history.replace("/library/driver")}
+          onClick={() => history.replace('/library/driver')}
         />
         <H2Atom style={formCreateMemberStyles.title} text="Create Driver" />
       </DivAtom>
@@ -65,7 +65,7 @@ function CreateDriver() {
         <DivAtom
           style={{
             ...formCreateMemberStyles.multiFieldContainer,
-            flexDirection: width < 600 ? "column" : "row",
+            flexDirection: width < 600 ? 'column' : 'row',
           }}
         >
           <FormControlInput
@@ -114,7 +114,7 @@ function CreateDriver() {
         <DivAtom
           style={{
             ...formCreateMemberStyles.multiFieldContainer,
-            flexDirection: width < 600 ? "column" : "row",
+            flexDirection: width < 600 ? 'column' : 'row',
           }}
         >
           <FormControlInput
@@ -166,9 +166,9 @@ function CreateDriver() {
       <DivAtom
         style={{
           ...formCreateMemberStyles.addBtnContainer,
-          padding: width < 768 ? "1rem" : "0px",
+          padding: width < 768 ? '1rem' : '0px',
           margin:
-            width < 768 ? "0px" : formCreateMemberStyles.addBtnContainer.margin,
+            width < 768 ? '0px' : formCreateMemberStyles.addBtnContainer.margin,
         }}
       >
         <ButtonAtom
@@ -176,8 +176,8 @@ function CreateDriver() {
           onClick={onAddDriver}
           style={{
             ...formCreateMemberStyles.addBtn,
-            width: width < 768 ? "100%" : "18%",
-            margin: width < 768 ? "0 0 1rem 0" : "0px",
+            width: width < 768 ? '100%' : '18%',
+            margin: width < 768 ? '0 0 1rem 0' : '0px',
           }}
           text="Create"
         />

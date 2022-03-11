@@ -1,7 +1,7 @@
-import { TablePagination } from "@material-ui/core";
-import { TablePaginationActionsProps } from "@material-ui/core/TablePagination/TablePaginationActions";
-import { ElementType } from "react";
-import styled from "styled-components";
+import { TablePagination } from '@material-ui/core';
+import { TablePaginationActionsProps } from '@material-ui/core/TablePagination/TablePaginationActions';
+import { ElementType } from 'react';
+import styled from 'styled-components';
 
 interface TableBottomPaginationProps {
   rowsperpage: number;
@@ -24,13 +24,13 @@ function TableBottomPagination({
 }: TableBottomPaginationProps) {
   return (
     <StyledTablePagination
-      rowsPerPageOptions={[...rows!, { label: "All", value: -1 }]}
+      rowsPerPageOptions={[...rows!, { label: 'All', value: -1 }]}
       colSpan={colspan}
       count={rowdata!.length}
       rowsPerPage={rowsperpage}
       page={0}
       SelectProps={{
-        inputProps: { "aria-label": "rows per page" },
+        inputProps: { 'aria-label': 'rows per page' },
         native: true,
       }}
       onPageChange={onPageChange}

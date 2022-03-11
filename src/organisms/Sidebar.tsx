@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import styled from "styled-components";
-import clsx from "clsx";
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import clsx from 'clsx';
 import {
   Divider,
   Drawer,
@@ -9,24 +9,24 @@ import {
   ListItem,
   makeStyles,
   Theme,
-} from "@material-ui/core";
-import LinkAtom from "../atoms/LinkAtom";
-import LinkTextAtom from "../atoms/LinkTextAtom";
-import { sidebarStyles } from "../styles";
-import DivAtom from "../atoms/DivAtom";
+} from '@material-ui/core';
+import LinkAtom from '../atoms/LinkAtom';
+import LinkTextAtom from '../atoms/LinkTextAtom';
+import { sidebarStyles } from '../styles';
+import DivAtom from '../atoms/DivAtom';
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) => ({
   drawer: {
-    [theme.breakpoints.up("lg")]: {
+    [theme.breakpoints.up('lg')]: {
       width: drawerWidth,
       flexShrink: 0,
     },
   },
   drawerOpen: {
     width: drawerWidth,
-    transition: theme.transitions.create("width", {
+    transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
@@ -35,23 +35,23 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: drawerWidth,
   },
   drawerClose: {
-    transition: theme.transitions.create("width", {
+    transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    overflowX: "hidden",
+    overflowX: 'hidden',
     width: theme.spacing(7) + 1,
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.up('sm')]: {
       width: theme.spacing(7) + 1,
     },
   },
 }));
 
 const links = [
-  { key: "1", text: "Dashboard", link: "/dashboard" },
-  { key: "2", text: "Quote", link: "/quote" },
-  { key: "3", text: "Library", link: "/library" },
-  { key: "4", text: "Task", link: "/task" },
+  { key: '1', text: 'Dashboard', link: '/dashboard' },
+  { key: '2', text: 'Quote', link: '/quote' },
+  { key: '3', text: 'Library', link: '/library' },
+  { key: '4', text: 'Task', link: '/task' },
 ];
 
 interface SidebarProps {
@@ -68,12 +68,12 @@ function Sidebar({ wind, handleDrawerToggle, mobileOpen }: SidebarProps) {
 
   useEffect(() => {
     setWidth(window.innerWidth);
-    const widthListener = window.addEventListener("resize", () => {
+    const widthListener = window.addEventListener('resize', () => {
       setWidth(window.innerWidth);
     });
 
     const removeEventListeners = () => {
-      window.removeEventListener("resize", widthListener as any);
+      window.removeEventListener('resize', widthListener as any);
     };
 
     return removeEventListeners();
@@ -109,7 +109,7 @@ function Sidebar({ wind, handleDrawerToggle, mobileOpen }: SidebarProps) {
 
   return (
     <nav className={classes.drawer} aria-label="mailbox folders">
-      <Hidden only={["lg"]} implementation="css">
+      <Hidden only={['lg']} implementation="css">
         <StyledDrawer
           container={container}
           variant="temporary"

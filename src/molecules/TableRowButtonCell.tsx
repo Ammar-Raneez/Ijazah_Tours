@@ -1,12 +1,12 @@
-import { TableCell } from "@material-ui/core";
-import { MouseEventHandler } from "react";
-import ButtonAtom from "../atoms/ButtonAtom";
+import { TableCell } from '@material-ui/core';
+import { MouseEventHandler } from 'react';
+import ButtonAtom from '../atoms/ButtonAtom';
 
 interface TableRowButtonCellProps {
   btnwidth: string;
   btnborderradius: string;
-  align: "left" | "center" | "right";
-  btnsize: "small" | "medium";
+  align: 'left' | 'center' | 'right';
+  btnsize: 'small' | 'medium';
   onClick: MouseEventHandler<HTMLButtonElement>;
   btndisabled?: boolean;
   btntext?: string;
@@ -32,14 +32,14 @@ function TableRowButtonCell({
           width: btnwidth,
           backgroundColor: btncolors
             ? btncolors[0]
-            : cell.status === "Approved"
-            ? "#41E93E"
-            : "#C1BFBF",
+            : cell.status === 'Approved'
+              ? '#41E93E'
+              : '#C1BFBF',
           color: btncolors
             ? btncolors[1]
-            : cell.status === "Approved"
-            ? "#146521"
-            : "#464E5F",
+            : cell.status === 'Approved'
+              ? '#146521'
+              : '#464E5F',
           borderRadius: btnborderradius,
         }}
         size={btnsize}

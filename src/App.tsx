@@ -1,23 +1,23 @@
-import Header from "./organisms/Header";
-import GlobalStyle from "./globalStyle";
-import Sidebar from "./organisms/Sidebar";
 import {
   BrowserRouter as Router,
   Redirect,
   Route,
   Switch,
-} from "react-router-dom";
-import styled from "styled-components";
-import Navbar from "./organisms/Navbar";
-import Quotations from "./pages/quote/quotation/Quotations";
-import Voucher from "./pages/quote/voucher/Voucher";
-import Summary from "./pages/quote/summary/Summary";
-import { useState } from "react";
-import Accomodation from "./pages/library/accomodation/Accomodation";
-import Driver from "./pages/library/driver/Driver";
-import Guest from "./pages/library/guest/Guest";
-import Tasks from "./pages/task/tasks/Tasks";
-import Customer from "./pages/task/customer/Customer";
+} from 'react-router-dom';
+import styled from 'styled-components';
+import { useState } from 'react';
+import Header from './organisms/Header';
+import GlobalStyle from './globalStyle';
+import Sidebar from './organisms/Sidebar';
+import Navbar from './organisms/Navbar';
+import Quotations from './pages/quote/quotation/Quotations';
+import Voucher from './pages/quote/voucher/Voucher';
+import Summary from './pages/quote/summary/Summary';
+import Accomodation from './pages/library/accomodation/Accomodation';
+import Driver from './pages/library/driver/Driver';
+import Guest from './pages/library/guest/Guest';
+import Tasks from './pages/task/tasks/Tasks';
+import Customer from './pages/task/customer/Customer';
 
 function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -97,7 +97,7 @@ export default App;
 const Root = styled.div`
   display: flex;
   flex: 1;
-`
+`;
 
 const StyledDivAtom = styled.div`
   display: flex;

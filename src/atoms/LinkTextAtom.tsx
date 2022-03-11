@@ -1,6 +1,6 @@
 import { CSSProperties } from 'react';
-import { ListItemText } from "@material-ui/core";
-import styled from "styled-components";
+import { ListItemText } from '@material-ui/core';
+import styled from 'styled-components';
 
 interface LinkTextAtomProps {
   text: string;

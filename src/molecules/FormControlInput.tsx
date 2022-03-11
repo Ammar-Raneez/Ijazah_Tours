@@ -1,6 +1,6 @@
-import { FormControl, InputLabel } from "@material-ui/core";
-import { ChangeEvent } from "react";
-import InputAtom from "../atoms/InputAtom";
+import { FormControl, InputLabel } from '@material-ui/core';
+import { ChangeEvent } from 'react';
+import InputAtom from '../atoms/InputAtom';
 
 interface FormControlInputProps {
   label: string;
@@ -40,9 +40,7 @@ function FormControlInput({
         rows={rows}
         value={value}
         type={type}
-        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          setValue(e.target.value)
-        }
+        onChange={(e: ChangeEvent<HTMLInputElement>) => setValue(e.target.value)}
         placeholder={placeholder}
       />
     </FormControl>

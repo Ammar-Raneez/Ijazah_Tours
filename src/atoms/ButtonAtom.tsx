@@ -1,9 +1,9 @@
-import Button from "@material-ui/core/Button";
-import { CSSProperties, MouseEventHandler, ReactNode } from "react";
+import Button from '@material-ui/core/Button';
+import { CSSProperties, MouseEventHandler, ReactNode } from 'react';
 
 interface ButtonAtomProps {
   text?: string;
-  size: "small" | "medium" | "large";
+  size: 'small' | 'medium' | 'large';
   onClick?: MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
   starticon?: ReactNode;
@@ -21,7 +21,7 @@ function ButtonAtom({
   return (
     <Button
       onClick={onClick}
-      style={{ ...style, textTransform: "none" }}
+      style={{ ...style, textTransform: 'none' }}
       startIcon={starticon}
       disabled={disabled}
       size={size}

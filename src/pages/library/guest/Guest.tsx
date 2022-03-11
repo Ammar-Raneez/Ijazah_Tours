@@ -1,22 +1,22 @@
-import { useEffect, useState } from "react";
-import { Route } from "react-router-dom";
-import DivAtom from "../../../atoms/DivAtom";
-import CreateGuest from "./CreateGuest";
-import { LIBRARY_GUEST_DATA } from "../../../data";
-import GuestTable from "../../../organisms/library/guest/GuestTable";
-import { libraryStyles } from "../../../styles";
+import { useEffect, useState } from 'react';
+import { Route } from 'react-router-dom';
+import DivAtom from '../../../atoms/DivAtom';
+import CreateGuest from './CreateGuest';
+import { LIBRARY_GUEST_DATA } from '../../../data';
+import GuestTable from '../../../organisms/library/guest/GuestTable';
+import { libraryStyles } from '../../../styles';
 
 function Guest() {
   const [containerHeight, setContainerHeight] = useState(0);
 
   useEffect(() => {
     setContainerHeight(window.innerHeight - 180);
-    const heightListener = window.addEventListener("resize", () => {
+    const heightListener = window.addEventListener('resize', () => {
       setContainerHeight(window.innerHeight - 180);
     });
 
     const removeEventListeners = () => {
-      window.removeEventListener("resize", heightListener as any);
+      window.removeEventListener('resize', heightListener as any);
     };
 
     return removeEventListeners();
@@ -27,7 +27,7 @@ function Guest() {
       <DivAtom
         style={{
           ...libraryStyles.innerContainer,
-          height: containerHeight + "px",
+          height: `${containerHeight}px`,
         }}
       >
         <DivAtom>

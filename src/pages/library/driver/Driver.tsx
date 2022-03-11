@@ -1,22 +1,22 @@
-import { useEffect, useState } from "react";
-import { Route } from "react-router-dom";
-import DivAtom from "../../../atoms/DivAtom";
-import { LIBRARY_DRIVER_DATA } from "../../../data";
-import { libraryStyles } from "../../../styles";
-import CreateDriver from "./CreateDriver";
-import DriverTable from "../../../organisms/library/driver/DriverTable";
+import { useEffect, useState } from 'react';
+import { Route } from 'react-router-dom';
+import DivAtom from '../../../atoms/DivAtom';
+import { LIBRARY_DRIVER_DATA } from '../../../data';
+import { libraryStyles } from '../../../styles';
+import CreateDriver from './CreateDriver';
+import DriverTable from '../../../organisms/library/driver/DriverTable';
 
 function Driver() {
   const [containerHeight, setContainerHeight] = useState(0);
 
   useEffect(() => {
     setContainerHeight(window.innerHeight - 180);
-    const heightListener = window.addEventListener("resize", () => {
+    const heightListener = window.addEventListener('resize', () => {
       setContainerHeight(window.innerHeight - 180);
     });
 
     const removeEventListeners = () => {
-      window.removeEventListener("resize", heightListener as any);
+      window.removeEventListener('resize', heightListener as any);
     };
 
     return removeEventListeners();
@@ -27,7 +27,7 @@ function Driver() {
       <DivAtom
         style={{
           ...libraryStyles.innerContainer,
-          height: containerHeight + "px",
+          height: `${containerHeight}px`,
         }}
       >
         <DivAtom>
@@ -44,4 +44,3 @@ function Driver() {
 }
 
 export default Driver;
-

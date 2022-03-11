@@ -6,18 +6,18 @@ import {
   Toolbar,
   Tooltip,
   Typography,
-} from "@material-ui/core";
-import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
-import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
-import SearchIcon from "@material-ui/icons/Search";
-import FilterListIcon from "@material-ui/icons/FilterList";
-import clsx from "clsx";
-import { ChangeEvent, useEffect, useState } from "react";
-import ButtonAtom from "../atoms/ButtonAtom";
-import DivAtom from "../atoms/DivAtom";
-import InputAtom from "../atoms/InputAtom";
-import { Link } from "react-router-dom";
-import { libraryTableToolbarStyles } from "../styles";
+} from '@material-ui/core';
+import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import SearchIcon from '@material-ui/icons/Search';
+import FilterListIcon from '@material-ui/icons/FilterList';
+import clsx from 'clsx';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import ButtonAtom from '../atoms/ButtonAtom';
+import DivAtom from '../atoms/DivAtom';
+import InputAtom from '../atoms/InputAtom';
+import { libraryTableToolbarStyles } from '../styles';
 
 const useToolbarStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -25,17 +25,17 @@ const useToolbarStyles = makeStyles((theme: Theme) => ({
     paddingRight: theme.spacing(1),
   },
   highlight:
-    theme.palette.type === "light"
+    theme.palette.type === 'light'
       ? {
-          color: theme.palette.secondary.main,
-          backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-        }
+        color: theme.palette.secondary.main,
+        backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+      }
       : {
-          color: theme.palette.text.primary,
-          backgroundColor: theme.palette.secondary.dark,
-        },
+        color: theme.palette.text.primary,
+        backgroundColor: theme.palette.secondary.dark,
+      },
   title: {
-    flex: "1 1 100%",
+    flex: '1 1 100%',
   },
 }));
 
@@ -57,12 +57,12 @@ const LibraryTableToolbar = ({
 
   useEffect(() => {
     setWidth(window.innerWidth);
-    const widthListener = window.addEventListener("resize", () => {
+    const widthListener = window.addEventListener('resize', () => {
       setWidth(window.innerWidth);
     });
 
     const removeEventListeners = () => {
-      window.removeEventListener("resize", widthListener as any);
+      window.removeEventListener('resize', widthListener as any);
     };
 
     return removeEventListeners();
@@ -77,13 +77,13 @@ const LibraryTableToolbar = ({
       <DivAtom
         style={{
           ...libraryTableToolbarStyles.container,
-          flexDirection: width < 540 ? "column" : "row",
+          flexDirection: width < 540 ? 'column' : 'row',
         }}
       >
         <DivAtom
           style={{
             ...libraryTableToolbarStyles.toolbarContainer,
-            width: width < 540 ? "100%" : "auto",
+            width: width < 540 ? '100%' : 'auto',
           }}
         >
           {numSelected > 0 ? (
@@ -124,8 +124,7 @@ const LibraryTableToolbar = ({
               fullWidth={width < 540}
               value={search}
               plain="false"
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setSearch(e.target.value)
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)
               }
               children={<SearchIcon />}
             />
@@ -134,12 +133,12 @@ const LibraryTableToolbar = ({
         {!(numSelected > 0) && (
           <DivAtom
             style={{
-              margin: width < 540 ? "16px 0 0 0" : "0px",
-              width: width < 540 ? "100%" : "auto",
+              margin: width < 540 ? '16px 0 0 0' : '0px',
+              width: width < 540 ? '100%' : 'auto',
             }}
           >
             <Link
-              to={`/library/${addbtntext.split(" ")[1].toLowerCase()}/create`}
+              to={`/library/${addbtntext.split(' ')[1].toLowerCase()}/create`}
             >
               <ButtonAtom
                 starticon={<AddCircleOutlineOutlinedIcon />}
@@ -148,10 +147,10 @@ const LibraryTableToolbar = ({
                   ...libraryTableToolbarStyles.addBtn,
                   width:
                     width < 540
-                      ? "100%"
-                      : addbtntext.includes("Accomodation")
-                      ? "14rem"
-                      : "11rem",
+                      ? '100%'
+                      : addbtntext.includes('Accomodation')
+                        ? '14rem'
+                        : '11rem',
                 }}
                 size="large"
               />
@@ -164,4 +163,3 @@ const LibraryTableToolbar = ({
 };
 
 export default LibraryTableToolbar;
-

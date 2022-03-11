@@ -1,36 +1,36 @@
-import DivAtom from "../../../atoms/DivAtom";
-import QuotationsTable from "../../../organisms/quote/quotation/QuotationsTable";
-import { QUOTATIONS_DATA } from "../../../data";
-import ButtonAtom from "../../../atoms/ButtonAtom";
-import { ChangeEvent, useEffect, useState } from "react";
-import SearchIcon from "@material-ui/icons/Search";
-import InputAtom from "../../../atoms/InputAtom";
-import { quotationsStyles } from "../../../styles";
-import { Link, Route } from "react-router-dom";
-import Customer from "./create-quotation/Customer";
-import Accomodation from "./create-quotation/Accomodation";
-import Costing from "./create-quotation/Costing";
-import Approval from "./create-quotation/Approval";
-import CreateQuotationNavbar from "../../../organisms/quote/quotation/CreateQuotationNavbar";
+import { ChangeEvent, useEffect, useState } from 'react';
+import SearchIcon from '@material-ui/icons/Search';
+import { Link, Route } from 'react-router-dom';
+import DivAtom from '../../../atoms/DivAtom';
+import QuotationsTable from '../../../organisms/quote/quotation/QuotationsTable';
+import { QUOTATIONS_DATA } from '../../../data';
+import ButtonAtom from '../../../atoms/ButtonAtom';
+import InputAtom from '../../../atoms/InputAtom';
+import { quotationsStyles } from '../../../styles';
+import Customer from './create-quotation/Customer';
+import Accomodation from './create-quotation/Accomodation';
+import Costing from './create-quotation/Costing';
+import Approval from './create-quotation/Approval';
+import CreateQuotationNavbar from '../../../organisms/quote/quotation/CreateQuotationNavbar';
 
 function Quotations() {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [width, setWidth] = useState(0);
   const [containerHeight, setContainerHeight] = useState(0);
 
   useEffect(() => {
     setWidth(window.innerWidth);
     setContainerHeight(window.innerHeight - 180);
-    const widthListener = window.addEventListener("resize", () => {
+    const widthListener = window.addEventListener('resize', () => {
       setWidth(window.innerWidth);
     });
-    const heightListener = window.addEventListener("resize", () => {
+    const heightListener = window.addEventListener('resize', () => {
       setContainerHeight(window.innerHeight - 180);
     });
 
     const removeEventListeners = () => {
-      window.removeEventListener("resize", widthListener as any);
-      window.removeEventListener("resize", heightListener as any);
+      window.removeEventListener('resize', widthListener as any);
+      window.removeEventListener('resize', heightListener as any);
     };
 
     return removeEventListeners();
@@ -40,7 +40,7 @@ function Quotations() {
     <>
       <Route path="/quote/quotations/create">
         <DivAtom
-          style={{ ...quotationsStyles.container, flexDirection: "column" }}
+          style={{ ...quotationsStyles.container, flexDirection: 'column' }}
         >
           <DivAtom>
             <CreateQuotationNavbar />
@@ -48,7 +48,7 @@ function Quotations() {
           <DivAtom
             style={{
               ...quotationsStyles.innerContainer,
-              height: containerHeight + "px",
+              height: `${containerHeight}px`,
             }}
           >
             <Route path="/quote/quotations/create/customer">
@@ -72,7 +72,7 @@ function Quotations() {
           <DivAtom
             style={{
               ...quotationsStyles.innerContainer,
-              height: containerHeight + "px",
+              height: `${containerHeight}px`,
             }}
           >
             <DivAtom style={quotationsStyles.btnMainContainer}>
@@ -81,7 +81,7 @@ function Quotations() {
                   text="New Quote +"
                   style={{
                     ...quotationsStyles.btn,
-                    marginRight: "16px",
+                    marginRight: '16px',
                   }}
                   onClick={() => null}
                   size="large"
@@ -97,20 +97,20 @@ function Quotations() {
             <DivAtom
               style={{
                 ...quotationsStyles.btnSubContainer,
-                flexDirection: width < 768 ? "column" : "row",
+                flexDirection: width < 768 ? 'column' : 'row',
               }}
             >
               <DivAtom
                 style={{
                   ...quotationsStyles.btnSubInnerContainer,
-                  margin: width < 768 ? "0 0 16px 0" : "0",
+                  margin: width < 768 ? '0 0 16px 0' : '0',
                 }}
               >
                 <ButtonAtom
                   text="Approved Quotes"
                   style={{
                     ...quotationsStyles.btn,
-                    marginRight: "16px",
+                    marginRight: '16px',
                   }}
                   onClick={() => null}
                   size="large"
@@ -125,7 +125,7 @@ function Quotations() {
               <DivAtom
                 style={{
                   ...quotationsStyles.btnSubInnerContainer,
-                  justifyContent: width < 768 ? "flex-start" : "flex-end",
+                  justifyContent: width < 768 ? 'flex-start' : 'flex-end',
                 }}
               >
                 <InputAtom
@@ -134,8 +134,7 @@ function Quotations() {
                   fullWidth={width < 768}
                   value={search}
                   plain="false"
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    setSearch(e.target.value)
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)
                   }
                   children={<SearchIcon />}
                 />
@@ -143,7 +142,7 @@ function Quotations() {
                   text="Search"
                   style={{
                     ...quotationsStyles.btn,
-                    marginLeft: "16px",
+                    marginLeft: '16px',
                   }}
                   onClick={() => null}
                   size="large"
@@ -151,7 +150,7 @@ function Quotations() {
               </DivAtom>
             </DivAtom>
             <QuotationsTable
-              columns={["QUOTES", "EARNINGS", "COMMISION", "", ""]}
+              columns={['QUOTES', 'EARNINGS', 'COMMISION', '', '']}
               rowdata={QUOTATIONS_DATA}
             />
           </DivAtom>

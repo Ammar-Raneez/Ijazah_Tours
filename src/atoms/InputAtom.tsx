@@ -1,6 +1,6 @@
 import { ReactNode, CSSProperties, ChangeEvent } from 'react';
-import { Input, InputAdornment } from "@material-ui/core";
-import styled from "styled-components";
+import { Input, InputAdornment } from '@material-ui/core';
+import styled from 'styled-components';
 
 interface InputAtomProps {
   value: string | number;
@@ -14,7 +14,7 @@ interface InputAtomProps {
   multiline?: boolean;
   error?: boolean;
   rows?: number;
-  adornmentposition?: "start" | "end";
+  adornmentposition?: 'start' | 'end';
   children?: ReactNode;
   style?: CSSProperties;
 }
@@ -49,7 +49,7 @@ function InputAtom({
       error={error}
       placeholder={placeholder}
       fullWidth={fullWidth}
-      disableUnderline={plain === "false"}
+      disableUnderline={plain === 'false'}
       startAdornment={
         adornmentposition && (
           <InputAdornment position={adornmentposition}>
@@ -58,7 +58,7 @@ function InputAtom({
         )
       }
       inputProps={{
-        min: 0
+        min: 0,
       }}
     />
   );
@@ -67,9 +67,8 @@ function InputAtom({
 export default InputAtom;
 
 const StyledInput = styled(Input)<InputAtomProps>`
-  ${({ plain }) =>
-    plain === "false" &&
-    `
+  ${({ plain }) => plain === 'false'
+    && `
       &.MuiInputBase-root {
         border-bottom: 0px;
         border-radius: 0.5rem;
