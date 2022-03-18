@@ -41,7 +41,7 @@ module.exports = {
     'consistent-return': 'off',
     'import/prefer-default-export': 'off',
     'import/extensions': ['off'],
-    'linebreak-style': ['error', 'windows'],
+    'linebreak-style': 'off',
     'max-len': ['error', { code: 120 }],
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error', { ignoreTypeValueShadow: true }],
