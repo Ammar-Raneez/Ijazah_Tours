@@ -6,6 +6,5 @@ module.exports = {
   tabWidth: 2,
   arrowParens: 'always',
   quoteProps: 'as-needed',
-  endOfLine: 'crlf',
   trailingComma: 'all',
 };
