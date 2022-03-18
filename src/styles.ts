@@ -165,6 +165,11 @@ export const quoteCreateQuoteStyles = {
   ...formCreateMemberStyles,
 };
 
+// dashboard
+export const dashboardStyles = {
+  ...quotationsStyles,
+};
+
 // Utilities
 export const guestProfileStyles = {
   container: {
@@ -244,4 +249,9 @@ export const tableRowTextCellStyles = {
     margin: '0px',
     fontSize: '0.875rem',
   },
+};
+
+export const tableRowCheckboxCellStyles = {
+  display: 'flex',
+  alignItems: 'center',
 };

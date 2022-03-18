@@ -18,6 +18,7 @@ import Driver from './pages/library/driver/Driver';
 import Guest from './pages/library/guest/Guest';
 import Tasks from './pages/task/tasks/Tasks';
 import Customer from './pages/task/customer/Customer';
+import Dashboard from './pages/dashboard/Dashboard';
 
 function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -37,6 +38,9 @@ function App() {
         />
         <Switch>
           <Route path="/dashboard">
+            <StyledDivAtom>
+              <Dashboard />
+            </StyledDivAtom>
           </Route>
           <Route path="/quote">
             <StyledDivAtom>
