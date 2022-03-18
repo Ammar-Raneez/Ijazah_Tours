@@ -12,6 +12,7 @@ import Accomodation from './create-quotation/Accomodation';
 import Costing from './create-quotation/Costing';
 import Approval from './create-quotation/Approval';
 import CreateQuotationNavbar from '../../../organisms/quote/quotation/CreateQuotationNavbar';
+import DataCard from '../../../molecules/DataCard';
 
 function Quotations() {
   const [search, setSearch] = useState('');
@@ -93,6 +94,17 @@ function Quotations() {
                 onClick={() => null}
                 size="large"
               />
+            </DivAtom>
+            <DivAtom
+              style={{
+                ...quotationsStyles.dataCardContainer,
+                flexDirection: width < 768 ? 'column' : 'row',
+              }}
+            >
+              <DataCard title="Total" total={60} />
+              <DataCard title="Closed" total={16} />
+              <DataCard title="Completed" total={43} />
+              <DataCard title="On Going" total={64} />
             </DivAtom>
             <DivAtom
               style={{

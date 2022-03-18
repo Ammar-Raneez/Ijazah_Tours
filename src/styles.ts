@@ -29,12 +29,18 @@ export const quotationsStyles = {
   btnMainContainer: {
     display: 'flex',
     justifyContent: 'flex-start',
-    marginBottom: '4rem',
+    marginBottom: '2rem',
   },
   btnSubContainer: {
     display: 'flex',
     justifyContent: 'space-between',
     marginBottom: '1rem',
+  },
+  dataCardContainer: {
+    display: 'flex',
+    marginBottom: '4rem',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap' as const,
   },
   btnSubInnerContainer: {
     display: 'flex',
@@ -254,4 +260,19 @@ export const tableRowTextCellStyles = {
 export const tableRowCheckboxCellStyles = {
   display: 'flex',
   alignItems: 'center',
+};
+
+export const DataCardStyles = {
+  title: {
+    color: '#9FA2B4',
+    fontWeight: 'bold',
+    margin: '0',
+    textAlign: 'center' as const,
+  },
+  total: {
+    fontWeight: 'bold',
+    fontSize: '3rem',
+    margin: '0',
+    textAlign: 'center' as const,
+  },
 };
