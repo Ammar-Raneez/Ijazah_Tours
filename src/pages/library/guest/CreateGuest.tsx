@@ -7,13 +7,18 @@ import ButtonAtom from '../../../atoms/ButtonAtom';
 import IconAtom from '../../../atoms/IconAtom';
 import FormControlInput from '../../../molecules/FormControlInput';
 import { libraryCreateGuestStyles } from '../../../styles';
+import ImageUploader from '../../../organisms/library/guest/ImageUploader';
 
 function CreateGuest() {
-  const [refNum, setRefNum] = useState('');
+  // Generate ref num on creation
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [country, setCountry] = useState('');
+  const [city, setCity] = useState('');
   const [contactNumber, setContactNumber] = useState('');
+  const [email, setEmail] = useState('');
   const [occupation, setOccupation] = useState('');
+  const [passport, setPassport] = useState([]);
   const [width, setWidth] = useState(0);
   const history = useHistory();
 
@@ -53,16 +58,6 @@ function CreateGuest() {
       </DivAtom>
 
       <DivAtom style={libraryCreateGuestStyles.formContainer}>
-        <FormControlInput
-          margin="0 0 1rem 0"
-          label="Reference Number"
-          fullWidth
-          multiline={false}
-          rows={1}
-          value={refNum}
-          setValue={setRefNum}
-          placeholder="Enter Reference Number"
-        />
         <DivAtom
           style={{
             ...libraryCreateGuestStyles.multiFieldContainer,
@@ -93,6 +88,67 @@ function CreateGuest() {
             placeholder="Enter Last Name"
           />
         </DivAtom>
+        <DivAtom
+          style={{
+            ...libraryCreateGuestStyles.multiFieldContainer,
+            justifyContent: 'space-between',
+            flexDirection: width < 600 ? 'column' : 'row',
+          }}
+        >
+          <FormControlInput
+            margin="0 1rem 1rem 0"
+            flex={1}
+            label="Country"
+            fullWidth
+            multiline={false}
+            rows={1}
+            value={country}
+            setValue={setCountry}
+            placeholder="Enter Country"
+          />
+          <FormControlInput
+            margin="0 0 1rem 0"
+            flex={1}
+            label="City"
+            fullWidth
+            multiline={false}
+            rows={1}
+            value={city}
+            setValue={setCity}
+            placeholder="Enter City"
+          />
+        </DivAtom>
+        <DivAtom
+          style={{
+            ...libraryCreateGuestStyles.multiFieldContainer,
+            justifyContent: 'space-between',
+            flexDirection: width < 600 ? 'column' : 'row',
+          }}
+        >
+          <FormControlInput
+            margin="0 1rem 1rem 0"
+            flex={1}
+            label="Contact Number"
+            fullWidth
+            multiline={false}
+            rows={1}
+            value={contactNumber}
+            setValue={setContactNumber}
+            placeholder="Enter Contact Number"
+          />
+          <FormControlInput
+            type="email"
+            margin="0 0 1rem 0"
+            flex={1}
+            label="Email"
+            fullWidth
+            multiline={false}
+            rows={1}
+            value={email}
+            setValue={setEmail}
+            placeholder="Enter Email"
+          />
+        </DivAtom>
         <FormControlInput
           margin="0 0 1rem 0"
           label="Occupation"
@@ -103,15 +159,12 @@ function CreateGuest() {
           setValue={setOccupation}
           placeholder="Enter Occupation"
         />
-        <FormControlInput
-          margin="0 0 1rem 0"
-          label="Contact Number"
-          fullWidth
-          multiline={false}
-          rows={1}
-          value={contactNumber}
-          setValue={setContactNumber}
-          placeholder="Enter Contact Number"
+      </DivAtom>
+
+      <DivAtom>
+        <ImageUploader
+          passport={passport}
+          setPassport={setPassport}
         />
       </DivAtom>
 

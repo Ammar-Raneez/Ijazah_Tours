@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
 import DivAtom from '../../../atoms/DivAtom';
@@ -7,18 +7,32 @@ import ButtonAtom from '../../../atoms/ButtonAtom';
 import ImageUploader from '../../../organisms/library/driver/ImageUploader';
 import IconAtom from '../../../atoms/IconAtom';
 import FormControlInput from '../../../molecules/FormControlInput';
-import { formCreateMemberStyles } from '../../../styles';
+import { formCreateMemberStyles, libraryStyles } from '../../../styles';
+import TextFieldAtom from '../../../atoms/TextFieldAtom';
+import CheckboxGroup from '../../../molecules/CheckboxGroup';
+
+const options = [
+  { label: 'Nissan', value: 'Nissan' },
+  { label: 'Suzuki', value: 'Suzuki' },
+  { label: 'BMW', value: 'BMW' },
+];
 
 function CreateDriver() {
-  const [refNum, setRefNum] = useState('');
+  // Generate ref num on creation
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [contactNumber, setContactNumber] = useState('');
+  const [email, setEmail] = useState('');
+  const [nic, setNic] = useState('');
+  const [boardCertNum, setBoardCertNum] = useState('');
   const [address, setAddress] = useState('');
   const [address2, setAddress2] = useState('');
-  const [city, setCity] = useState('');
-  const [occupation, setOccupation] = useState('');
-  const [license, setLicense] = useState([]);
+  const [vehicleType, setVehicleType] = useState(options[0].value);
+  const [rate, setRate] = useState('');
+  const [notes, setNotes] = useState('');
+  const [english, setEnglish] = useState(false);
+  const [arabic, setArabic] = useState(false);
+  const [insurance, setInsurance] = useState([]);
   const [profilePic, setProfilePic] = useState([]);
   const [vehiclePic, setVehiclePic] = useState([]);
   const [width, setWidth] = useState(0);
@@ -55,16 +69,6 @@ function CreateDriver() {
       </DivAtom>
 
       <DivAtom style={formCreateMemberStyles.formContainer}>
-        <FormControlInput
-          margin="0 0 1rem 0"
-          label="Reference Number"
-          fullWidth
-          multiline={false}
-          rows={1}
-          value={refNum}
-          setValue={setRefNum}
-          placeholder="Enter Reference Number"
-        />
         <DivAtom
           style={{
             ...formCreateMemberStyles.multiFieldContainer,
@@ -94,26 +98,121 @@ function CreateDriver() {
             placeholder="Enter Last Name"
           />
         </DivAtom>
+        <DivAtom
+          style={{
+            ...formCreateMemberStyles.multiFieldContainer,
+            justifyContent: 'space-between',
+            flexDirection: width < 600 ? 'column' : 'row',
+          }}
+        >
+          <FormControlInput
+            margin="0 1rem 1rem 0"
+            flex={1}
+            label="NIC"
+            fullWidth
+            multiline={false}
+            rows={1}
+            value={nic}
+            setValue={setNic}
+            placeholder="Enter NIC"
+          />
+          <FormControlInput
+            margin="0 0 1rem 0"
+            flex={1}
+            label="Tourist Board Certificate Number"
+            fullWidth
+            multiline={false}
+            rows={1}
+            value={boardCertNum}
+            setValue={setBoardCertNum}
+            placeholder="Enter Tourist Board Certificate Number"
+          />
+        </DivAtom>
+        <DivAtom
+          style={{
+            ...formCreateMemberStyles.multiFieldContainer,
+            flexDirection: width < 600 ? 'column' : 'row',
+          }}
+        >
+          <TextFieldAtom
+            variant="standard"
+            size="medium"
+            label="Vehicle"
+            value={vehicleType}
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setVehicleType(e.target.value)
+            }
+            options={options}
+            adornmentposition="end"
+            style={{
+              ...libraryStyles.textField,
+              flex: 1,
+              width: width < 600 ? '100%' : 'auto',
+              margin: '0 1rem 1rem 0',
+            }}
+            disableUnderline={false}
+            select
+          />
+          <FormControlInput
+            margin="0 0 1rem 0"
+            flex={1}
+            label="Rate"
+            fullWidth
+            multiline={false}
+            rows={1}
+            value={rate}
+            setValue={setRate}
+            placeholder="Enter Rate"
+          />
+          <CheckboxGroup
+            grouptitle="Language"
+            labels={['English', 'Arabic']}
+            names={['english', 'arabic']}
+            checked={[english, arabic]}
+            setChecked={[setEnglish, setArabic]}
+          />
+        </DivAtom>
         <FormControlInput
           margin="0 0 1rem 0"
-          label="Occupation"
+          flex={1}
+          label="Notes"
           fullWidth
-          multiline={false}
-          rows={1}
-          value={occupation}
-          setValue={setOccupation}
-          placeholder="Enter Occupation"
+          multiline
+          rows={2}
+          value={notes}
+          setValue={setNotes}
+          placeholder="Enter Notes"
         />
-        <FormControlInput
-          margin="0 0 1rem 0"
-          label="Contact Number"
-          fullWidth
-          multiline={false}
-          rows={1}
-          value={contactNumber}
-          setValue={setContactNumber}
-          placeholder="Enter Contact Number"
-        />
+        <DivAtom
+          style={{
+            ...formCreateMemberStyles.multiFieldContainer,
+            justifyContent: 'space-between',
+            flexDirection: width < 600 ? 'column' : 'row',
+          }}
+        >
+          <FormControlInput
+            margin="0 1rem 1rem 0"
+            flex={1}
+            label="Contact Number"
+            fullWidth
+            multiline={false}
+            rows={1}
+            value={contactNumber}
+            setValue={setContactNumber}
+            placeholder="Enter Contact Number"
+          />
+          <FormControlInput
+            type="email"
+            margin="0 0 1rem 0"
+            flex={1}
+            label="Email"
+            fullWidth
+            multiline={false}
+            rows={1}
+            value={email}
+            setValue={setEmail}
+            placeholder="Enter Email"
+          />
+        </DivAtom>
         <DivAtom
           style={{
             ...formCreateMemberStyles.multiFieldContainer,
@@ -143,22 +242,12 @@ function CreateDriver() {
             placeholder="Enter Address Line 02"
           />
         </DivAtom>
-        <FormControlInput
-          margin="0 0 1rem 0"
-          label="City"
-          fullWidth
-          multiline={false}
-          rows={1}
-          value={city}
-          setValue={setCity}
-          placeholder="Enter City"
-        />
       </DivAtom>
 
       <DivAtom>
         <ImageUploader
-          license={license}
-          setLicense={setLicense}
+          insurance={insurance}
+          setInsurance={setInsurance}
           profilePic={profilePic}
           setProfilePic={setProfilePic}
           vehiclePic={vehiclePic}

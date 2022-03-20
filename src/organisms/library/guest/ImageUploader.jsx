@@ -1,26 +1,13 @@
 import styled from 'styled-components';
 import Uploader from '../../../molecules/Uploader';
 
-function ImageUploader({
-  insurance,
-  setInsurance,
-  profilePic,
-  setProfilePic,
-  vehiclePic,
-  setVehiclePic,
-}) {
+function ImageUploader({ passport, setPassport }) {
   return (
     <ImageUploadContainer>
-      <Uploader images={insurance} setter={setInsurance} btnText="Upload Full Insurance" />
       <Uploader
-        images={profilePic}
-        setter={setProfilePic}
-        btnText="Upload Profile"
-      />
-      <Uploader
-        images={vehiclePic}
-        setter={setVehiclePic}
-        btnText="Upload Vehicle Image"
+        images={passport}
+        setter={setPassport}
+        btnText="Upload Passport"
       />
     </ImageUploadContainer>
   );
