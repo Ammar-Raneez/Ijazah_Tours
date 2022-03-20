@@ -6,6 +6,7 @@ import {
 } from '@material-ui/core';
 import { green } from '@material-ui/core/colors';
 import { ChangeEvent } from 'react';
+import styled from 'styled-components';
 
 const GreenCheckbox = withStyles({
   root: {
@@ -31,7 +32,7 @@ function CheckboxAtom({
   setChecked,
 }: CheckboxAtomProps) {
   return (
-    <FormControlLabel
+    <StyledFormControlLabel
       control={
         <GreenCheckbox
           checked={checked}
@@ -45,3 +46,7 @@ function CheckboxAtom({
 }
 
 export default CheckboxAtom;
+
+const StyledFormControlLabel = styled(FormControlLabel)`
+  color: rgba(0, 0, 0, 0.54) !important;
+`;

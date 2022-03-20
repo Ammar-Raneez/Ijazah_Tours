@@ -172,7 +172,7 @@ function Accomodation() {
             columns={[
               'LOCATION',
               'ACCOMODATION',
-              'No OF DAYS',
+              'NO OF DAYS',
               'SPECIFICATION',
             ]}
             data={accomodationData}

@@ -76,7 +76,7 @@ function CreateDriver() {
           }}
         >
           <FormControlInput
-            margin="0 1rem 1rem 0"
+            margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
             flex={1}
             label="First Name"
             fullWidth
@@ -106,7 +106,7 @@ function CreateDriver() {
           }}
         >
           <FormControlInput
-            margin="0 1rem 1rem 0"
+            margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
             flex={1}
             label="NIC"
             fullWidth
@@ -169,6 +169,7 @@ function CreateDriver() {
             names={['english', 'arabic']}
             checked={[english, arabic]}
             setChecked={[setEnglish, setArabic]}
+            style={{ flexDirection: 'row' }}
           />
         </DivAtom>
         <FormControlInput
@@ -190,7 +191,7 @@ function CreateDriver() {
           }}
         >
           <FormControlInput
-            margin="0 1rem 1rem 0"
+            margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
             flex={1}
             label="Contact Number"
             fullWidth
@@ -220,7 +221,7 @@ function CreateDriver() {
           }}
         >
           <FormControlInput
-            margin="0 1rem 1rem 0"
+            margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
             label="Address Line 01"
             fullWidth
             flex={1}

@@ -66,7 +66,7 @@ function CreateGuest() {
           }}
         >
           <FormControlInput
-            margin="0 1rem 1rem 0"
+            margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
             flex={1}
             label="First Name"
             fullWidth
@@ -96,7 +96,7 @@ function CreateGuest() {
           }}
         >
           <FormControlInput
-            margin="0 1rem 1rem 0"
+            margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
             flex={1}
             label="Country"
             fullWidth
@@ -126,7 +126,7 @@ function CreateGuest() {
           }}
         >
           <FormControlInput
-            margin="0 1rem 1rem 0"
+            margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
             flex={1}
             label="Contact Number"
             fullWidth

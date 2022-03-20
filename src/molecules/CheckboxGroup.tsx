@@ -6,12 +6,12 @@ import {
   makeStyles,
   Theme,
 } from '@material-ui/core';
+import { CSSProperties } from 'react';
 import CheckboxAtom from '../atoms/CheckboxAtom';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
     display: 'flex',
-    flexDirection: 'row' as const,
   },
   formControl: {
     marginLeft: theme.spacing(3),
@@ -24,6 +24,7 @@ interface CheckboxGroupProps {
   names: string[];
   checked: boolean[];
   setChecked: any[];
+  style: CSSProperties;
 }
 
 function CheckboxGroup({
@@ -32,6 +33,7 @@ function CheckboxGroup({
   names,
   checked,
   setChecked,
+  style,
 }: CheckboxGroupProps) {
   const classes = useStyles();
 
@@ -39,7 +41,7 @@ function CheckboxGroup({
     <FormControl component="fieldset" className={classes.formControl}>
       <FormLabel component="legend">{grouptitle}</FormLabel>
 
-      <FormGroup className={classes.root}>
+      <FormGroup style={style} className={classes.root}>
         {labels.map((lb, index) => (
           <CheckboxAtom
             label={lb}
