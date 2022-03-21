@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+
+import TaskTable from '../../organisms/dashboard/TaskTable';
 import ButtonAtom from '../../atoms/ButtonAtom';
 import DivAtom from '../../atoms/DivAtom';
 import { DASHBOARD_TASK_DATA } from '../../data';
-import TaskTable from '../../organisms/dashboard/TaskTable';
 import { dashboardStyles } from '../../styles';
 
 function Dashboard() {

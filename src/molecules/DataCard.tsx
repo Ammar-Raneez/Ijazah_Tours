@@ -1,7 +1,8 @@
+import { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import { useEffect, useState } from 'react';
+
 import ParagraphAtom from '../atoms/ParagraphAtom';
 import { DataCardStyles } from '../styles';
 
@@ -9,9 +10,6 @@ const useStyles = makeStyles({
   root: {
     minWidth: 275,
     height: 120,
-  },
-  pos: {
-    marginBottom: 12,
   },
 });
 

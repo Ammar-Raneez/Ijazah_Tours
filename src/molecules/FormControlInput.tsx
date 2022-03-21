@@ -1,5 +1,6 @@
-import { FormControl, InputLabel } from '@material-ui/core';
 import { ChangeEvent } from 'react';
+import { FormControl, InputLabel } from '@material-ui/core';
+
 import InputAtom from '../atoms/InputAtom';
 
 interface FormControlInputProps {

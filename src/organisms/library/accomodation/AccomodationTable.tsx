@@ -21,13 +21,14 @@ import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import { getComparator, Order, stableSort } from '../../../utils/helpers';
+
 import TableRowTextCell from '../../../molecules/TableRowTextCell';
 import LibraryTableToolbar from '../../../molecules/LibraryTableToolbar';
 import LibraryTableHead from '../../../molecules/LibraryTableHead';
 import TableRowIconCell from '../../../molecules/TableRowIconCell';
 import SpanAtom from '../../../atoms/SpanAtom';
 import { libraryTableStyles } from '../../../styles';
+import { getComparator, Order, stableSort } from '../../../utils/helpers';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -39,9 +40,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   table: {
     minWidth: 750,
-  },
-  container: {
-    // maxHeight: 300
   },
   visuallyHidden: {
     border: 0,
@@ -130,7 +128,7 @@ export default function AccomodationTable({ data }: AccomodationTableProps) {
           numSelected={selected.length}
           addbtntext="Add Accomodation"
         />
-        <TableContainer className={classes.container}>
+        <TableContainer>
           <Table
             className={classes.table}
             stickyHeader

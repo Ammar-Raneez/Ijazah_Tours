@@ -1,5 +1,5 @@
-import IconButton from '@material-ui/core/IconButton';
 import { ReactNode, CSSProperties, MouseEventHandler } from 'react';
+import IconButton from '@material-ui/core/IconButton';
 
 interface IconAtomProps {
   size: 'small' | 'medium';

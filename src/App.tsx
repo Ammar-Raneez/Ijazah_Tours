@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   BrowserRouter as Router,
   Redirect,
@@ -5,11 +6,7 @@ import {
   Switch,
 } from 'react-router-dom';
 import styled from 'styled-components';
-import { useState } from 'react';
-import Header from './organisms/Header';
-import GlobalStyle from './globalStyle';
-import Sidebar from './organisms/Sidebar';
-import Navbar from './organisms/Navbar';
+
 import Quotations from './pages/quote/quotation/Quotations';
 import Voucher from './pages/quote/voucher/Voucher';
 import Summary from './pages/quote/summary/Summary';
@@ -20,6 +17,10 @@ import Dashboard from './pages/dashboard/Dashboard';
 import SettingsAccomodation from './pages/settings/accomodation/SettingsAccomodation';
 import Tour from './pages/settings/tour/Tour';
 import UserManagement from './pages/settings/user-management/UserManagement';
+import Header from './organisms/Header';
+import Sidebar from './organisms/Sidebar';
+import Navbar from './organisms/Navbar';
+import GlobalStyle from './globalStyle';
 
 function App() {
   const [mobileOpen, setMobileOpen] = useState(false);

@@ -1,5 +1,6 @@
 import { TableCell } from '@material-ui/core';
 import { v4 as uuid } from 'uuid';
+
 import ParagraphAtom from '../atoms/ParagraphAtom';
 import { tableRowTextCellStyles } from '../styles';
 

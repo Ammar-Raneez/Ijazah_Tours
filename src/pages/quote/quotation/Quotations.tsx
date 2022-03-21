@@ -1,18 +1,19 @@
 import { ChangeEvent, useEffect, useState } from 'react';
-import SearchIcon from '@material-ui/icons/Search';
 import { Link, Route } from 'react-router-dom';
-import DivAtom from '../../../atoms/DivAtom';
-import QuotationsTable from '../../../organisms/quote/quotation/QuotationsTable';
-import { QUOTATIONS_DATA } from '../../../data';
-import ButtonAtom from '../../../atoms/ButtonAtom';
-import InputAtom from '../../../atoms/InputAtom';
-import { quotationsStyles } from '../../../styles';
+import SearchIcon from '@material-ui/icons/Search';
+
 import Customer from './create-quotation/Customer';
 import Accomodation from './create-quotation/Accomodation';
 import Costing from './create-quotation/Costing';
 import Approval from './create-quotation/Approval';
+import QuotationsTable from '../../../organisms/quote/quotation/QuotationsTable';
 import CreateQuotationNavbar from '../../../organisms/quote/quotation/CreateQuotationNavbar';
 import DataCard from '../../../molecules/DataCard';
+import DivAtom from '../../../atoms/DivAtom';
+import ButtonAtom from '../../../atoms/ButtonAtom';
+import InputAtom from '../../../atoms/InputAtom';
+import { QUOTATIONS_DATA } from '../../../data';
+import { quotationsStyles } from '../../../styles';
 
 function Quotations() {
   const [search, setSearch] = useState('');

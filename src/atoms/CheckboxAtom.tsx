@@ -1,3 +1,4 @@
+import { ChangeEvent } from 'react';
 import {
   Checkbox,
   CheckboxProps,
@@ -5,7 +6,6 @@ import {
   withStyles,
 } from '@material-ui/core';
 import { green } from '@material-ui/core/colors';
-import { ChangeEvent } from 'react';
 import styled from 'styled-components';
 
 const GreenCheckbox = withStyles({

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import Uploader from '../../../molecules/Uploader';
 
 function ImageUploader({ passport, setPassport }) {

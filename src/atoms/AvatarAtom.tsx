@@ -1,5 +1,5 @@
-import Avatar from '@material-ui/core/Avatar';
 import { CSSProperties } from 'react';
+import Avatar from '@material-ui/core/Avatar';
 
 interface AvatarAtomProps {
   image: string;

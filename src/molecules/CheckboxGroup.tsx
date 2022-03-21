@@ -1,3 +1,4 @@
+import { CSSProperties } from 'react';
 import {
   createStyles,
   FormControl,
@@ -6,7 +7,7 @@ import {
   makeStyles,
   Theme,
 } from '@material-ui/core';
-import { CSSProperties } from 'react';
+
 import CheckboxAtom from '../atoms/CheckboxAtom';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({

@@ -3,21 +3,22 @@ import {
 } from 'react';
 import { useHistory } from 'react-router-dom';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
+
+import CreateQuotationTable from '../../../../organisms/quote/quotation/CreateQuotationTable';
+import FormControlInput from '../../../../molecules/FormControlInput';
 import DivAtom from '../../../../atoms/DivAtom';
+import H2Atom from '../../../../atoms/H2Atom';
+import TextFieldAtom from '../../../../atoms/TextFieldAtom';
+import ButtonAtom from '../../../../atoms/ButtonAtom';
+import {
+  QUOIATIONS_ACCOMODATION_DATA,
+  QUOTATIONS_LOCATION_DATA,
+} from '../../../../data';
 import {
   formCreateMemberStyles,
   libraryStyles,
   libraryTableToolbarStyles,
 } from '../../../../styles';
-import H2Atom from '../../../../atoms/H2Atom';
-import FormControlInput from '../../../../molecules/FormControlInput';
-import TextFieldAtom from '../../../../atoms/TextFieldAtom';
-import {
-  QUOIATIONS_ACCOMODATION_DATA,
-  QUOTATIONS_LOCATION_DATA,
-} from '../../../../data';
-import ButtonAtom from '../../../../atoms/ButtonAtom';
-import CreateQuotationTable from '../../../../organisms/quote/quotation/CreateQuotationTable';
 
 function Accomodation() {
   const [noOfDays, setNoOfDays] = useState(0);

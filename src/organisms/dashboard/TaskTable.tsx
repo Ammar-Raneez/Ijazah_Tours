@@ -1,5 +1,4 @@
 import { ChangeEvent, Fragment, useState } from 'react';
-import { v4 as uuid } from 'uuid';
 import Box from '@material-ui/core/Box';
 import Collapse from '@material-ui/core/Collapse';
 import Table from '@material-ui/core/Table';
@@ -11,6 +10,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
+import { v4 as uuid } from 'uuid';
+
 import TableColumnCell from '../../molecules/TableColumnCell';
 import TableRowButtonCell from '../../molecules/TableRowButtonCell';
 import TableRowIconCell from '../../molecules/TableRowIconCell';

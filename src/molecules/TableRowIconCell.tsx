@@ -1,5 +1,6 @@
-import { TableCell } from '@material-ui/core';
 import { MouseEventHandler, ReactNode } from 'react';
+import { TableCell } from '@material-ui/core';
+
 import IconAtom from '../atoms/IconAtom';
 
 interface TableRowIconCellProps {

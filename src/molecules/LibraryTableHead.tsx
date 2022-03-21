@@ -1,3 +1,4 @@
+import { ChangeEvent, MouseEvent } from 'react';
 import {
   Checkbox,
   TableCell,
@@ -5,9 +6,9 @@ import {
   TableRow,
   TableSortLabel,
 } from '@material-ui/core';
-import { ChangeEvent, MouseEvent } from 'react';
-import { Order } from '../utils/helpers';
+
 import TableColumnCell from './TableColumnCell';
+import { Order } from '../utils/helpers';
 
 const headCells = [
   { id: 'name', label: 'NAME' },

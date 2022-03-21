@@ -4,11 +4,12 @@ import {
 import { Link, useHistory } from 'react-router-dom';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
+
+import FormControlInput from '../../../../molecules/FormControlInput';
 import DivAtom from '../../../../atoms/DivAtom';
 import H2Atom from '../../../../atoms/H2Atom';
 import ButtonAtom from '../../../../atoms/ButtonAtom';
 import IconAtom from '../../../../atoms/IconAtom';
-import FormControlInput from '../../../../molecules/FormControlInput';
 import {
   formCreateMemberStyles,
   libraryStyles,

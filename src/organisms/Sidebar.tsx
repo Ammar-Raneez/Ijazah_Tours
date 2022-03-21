@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import clsx from 'clsx';
 import {
   Divider,
   Drawer,
@@ -10,10 +8,13 @@ import {
   makeStyles,
   Theme,
 } from '@material-ui/core';
+import styled from 'styled-components';
+import clsx from 'clsx';
+
 import LinkAtom from '../atoms/LinkAtom';
 import LinkTextAtom from '../atoms/LinkTextAtom';
-import { sidebarStyles } from '../styles';
 import DivAtom from '../atoms/DivAtom';
+import { sidebarStyles } from '../styles';
 
 const drawerWidth = 240;
 

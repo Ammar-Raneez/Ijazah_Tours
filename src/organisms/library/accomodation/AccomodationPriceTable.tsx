@@ -8,6 +8,7 @@ import {
   TableRow,
 } from '@material-ui/core';
 import { v4 as uuid } from 'uuid';
+
 import TableColumnCell from '../../../molecules/TableColumnCell';
 import TableRowTextCell from '../../../molecules/TableRowTextCell';
 
@@ -28,6 +29,7 @@ function AccomodationPriceTable({
   columns,
 }: AccomodationPriceTableProps) {
   const classes = useStyles();
+
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="quotations table">
