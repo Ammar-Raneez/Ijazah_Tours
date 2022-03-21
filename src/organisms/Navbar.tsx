@@ -29,16 +29,17 @@ const LINKS = [
     ],
   },
   {
-    type: 'task',
+    type: 'settings',
     links: [
-      { key: '1', text: 'Tasks', link: '/task/tasks' },
-      { key: '2', text: 'Customer', link: '/task/customer' },
+      { key: '1', text: 'Accomodation', link: '/settings/accomodation' },
+      { key: '2', text: 'Tour', link: '/settings/tour' },
+      { key: '3', text: 'User Management', link: '/settings/user-management' },
     ],
   },
 ];
 
 interface NavbarProps {
-  type: 'quote' | 'library' | 'task';
+  type: 'quote' | 'library' | 'settings';
 }
 
 function Navbar({ type }: NavbarProps) {

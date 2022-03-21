@@ -16,9 +16,10 @@ import Summary from './pages/quote/summary/Summary';
 import Accomodation from './pages/library/accomodation/Accomodation';
 import Driver from './pages/library/driver/Driver';
 import Guest from './pages/library/guest/Guest';
-import Tasks from './pages/task/tasks/Tasks';
-import Customer from './pages/task/customer/Customer';
 import Dashboard from './pages/dashboard/Dashboard';
+import SettingsAccomodation from './pages/settings/accomodation/SettingsAccomodation';
+import Tour from './pages/settings/tour/Tour';
+import UserManagement from './pages/settings/user-management/UserManagement';
 
 function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -76,17 +77,20 @@ function App() {
               </Route>
             </StyledDivAtom>
           </Route>
-          <Route path="/task">
+          <Route path="/settings">
             <StyledDivAtom>
-              <Navbar type="task" />
-              <Route path="/task/tasks">
-                <Tasks />
+              <Navbar type="settings" />
+              <Route path="/settings/accomodation">
+                <SettingsAccomodation />
               </Route>
-              <Route path="/task/customer">
-                <Customer />
+              <Route path="/settings/tour">
+                <Tour />
               </Route>
-              <Route exact path="/task">
-                <Redirect to="/task/tasks" />
+              <Route path="/settings/user-management">
+                <UserManagement />
+              </Route>
+              <Route exact path="/settings">
+                <Redirect to="/settings/accomodation" />
               </Route>
             </StyledDivAtom>
           </Route>

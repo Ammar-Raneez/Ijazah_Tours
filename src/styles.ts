@@ -62,6 +62,22 @@ export const voucherStyles = {
 };
 
 // Library
+export const libraryStyles = {
+  ...mainContainerStyles,
+  btn: {
+    ...shadowButtonStyles,
+    width: '11rem',
+  },
+  textField: {
+    width: '11rem',
+  },
+  btnContainer: {
+    justifyContent: 'flex-start',
+    marginBottom: '4rem',
+    display: 'flex',
+  },
+};
+
 export const libraryTableToolbarStyles = {
   container: {
     width: '100%',
@@ -89,22 +105,6 @@ export const libraryTableToolbarStyles = {
     backgroundColor: '#0A65FF',
     borderRadius: '0.5rem',
     margin: '0px',
-  },
-};
-
-export const libraryStyles = {
-  ...mainContainerStyles,
-  btn: {
-    ...shadowButtonStyles,
-    width: '11rem',
-  },
-  textField: {
-    width: '11rem',
-  },
-  btnContainer: {
-    justifyContent: 'flex-start',
-    marginBottom: '4rem',
-    display: 'flex',
   },
 };
 
@@ -171,8 +171,13 @@ export const quoteCreateQuoteStyles = {
   ...formCreateMemberStyles,
 };
 
-// dashboard
+// Dashboard
 export const dashboardStyles = {
+  ...quotationsStyles,
+};
+
+// Settings
+export const settingsStyles = {
   ...quotationsStyles,
 };
 
