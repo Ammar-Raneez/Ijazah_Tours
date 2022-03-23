@@ -19,6 +19,10 @@ function CreateGuest() {
   const [contactNumber, setContactNumber] = useState('');
   const [email, setEmail] = useState('');
   const [occupation, setOccupation] = useState('');
+  const [adults, setAdults] = useState(0);
+  const [children, setChildren] = useState(0);
+  const [allChildren, setAllChildren] = useState<number[]>([]);
+  const [rooms, setRooms] = useState(0);
   const [passport, setPassport] = useState([]);
   const [width, setWidth] = useState(0);
   const history = useHistory();
@@ -160,6 +164,74 @@ function CreateGuest() {
           setValue={setOccupation}
           placeholder="Enter Occupation"
         />
+        <DivAtom
+          style={{
+            ...libraryCreateGuestStyles.multiFieldContainer,
+            justifyContent: 'space-between',
+            flexDirection: width < 600 ? 'column' : 'row',
+          }}
+        >
+          <FormControlInput
+            margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
+            flex={1}
+            type="number"
+            label="Adults"
+            fullWidth
+            multiline={false}
+            rows={1}
+            value={adults}
+            setValue={setAdults}
+            placeholder="Enter No. of Adults"
+          />
+          <FormControlInput
+            margin="0 0 1rem 0"
+            flex={1}
+            type="number"
+            label="Rooms"
+            fullWidth
+            multiline={false}
+            rows={1}
+            value={rooms}
+            setValue={setRooms}
+            placeholder="Enter No. of Rooms"
+          />
+        </DivAtom>
+        <DivAtom>
+          <DivAtom
+            style={{
+              ...libraryCreateGuestStyles.multiFieldContainer,
+              justifyContent: 'flex-start',
+              flexDirection: width < 768 ? 'column' : 'row',
+            }}
+          >
+            <FormControlInput
+              margin={width < 768 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
+              type="number"
+              label="Childs Age"
+              fullWidth
+              multiline={false}
+              rows={1}
+              value={children}
+              setValue={setChildren}
+              placeholder="Enter Childs Age"
+            />
+            <ButtonAtom
+              size="large"
+              onClick={() => setAllChildren([...allChildren, children])}
+              style={{
+                ...libraryCreateGuestStyles.addBtn,
+                width: width < 768 ? '100%' : '18%',
+                height: '100%',
+                margin: width < 768 ? '0 0 1rem 0' : '0.5rem 0 0 1rem',
+              }}
+              text="Add Child"
+            />
+          </DivAtom>
+          <H2Atom text="All Children" style={libraryCreateGuestStyles.subtitle} />
+          <ul>
+            {allChildren.map((age, i) => <li key={i}>{age}</li>)}
+          </ul>
+        </DivAtom>
       </DivAtom>
 
       <DivAtom>

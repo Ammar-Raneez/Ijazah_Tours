@@ -165,6 +165,11 @@ export const libraryCreateGuestStyles = {
     ...formCreateMemberStyles.addBtnContainer,
     justifyContent: 'space-between',
   },
+  subtitle: {
+    color: '#C1BFBF',
+    fontSize: '1.3rem',
+    margin: 0,
+  },
 };
 
 export const quoteCreateQuoteStyles = {
