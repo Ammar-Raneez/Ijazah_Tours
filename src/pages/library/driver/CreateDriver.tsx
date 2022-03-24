@@ -31,8 +31,7 @@ function CreateDriver() {
   const [vehicleType, setVehicleType] = useState(options[0].value);
   const [rate, setRate] = useState('');
   const [notes, setNotes] = useState('');
-  const [english, setEnglish] = useState(false);
-  const [arabic, setArabic] = useState(false);
+  const [languages, setLanguages] = useState(new Array(2).fill(false));
   const [insurance, setInsurance] = useState([]);
   const [profilePic, setProfilePic] = useState([]);
   const [vehiclePic, setVehiclePic] = useState([]);
@@ -55,6 +54,11 @@ function CreateDriver() {
   const onAddDriver = () => {
     // eslint-disable-next-line no-console
     console.log('add driver');
+  };
+
+  const onChangeLanguage = (i: number) => {
+    const updatedCheckedState = languages.map((lang, index) => (index === i ? !lang : lang));
+    setLanguages(updatedCheckedState);
   };
 
   return (
@@ -168,8 +172,8 @@ function CreateDriver() {
             grouptitle="Language"
             labels={['English', 'Arabic']}
             names={['english', 'arabic']}
-            checked={[english, arabic]}
-            setChecked={[setEnglish, setArabic]}
+            checked={languages}
+            onChange={(_, i: number) => onChangeLanguage(i)}
             style={{ flexDirection: 'row' }}
           />
         </DivAtom>

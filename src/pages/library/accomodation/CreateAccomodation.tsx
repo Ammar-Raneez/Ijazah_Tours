@@ -6,6 +6,7 @@ import {
   useState,
 } from 'react';
 import { useHistory } from 'react-router-dom';
+import { FormControl, InputLabel } from '@material-ui/core';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 
@@ -18,6 +19,8 @@ import ButtonAtom from '../../../atoms/ButtonAtom';
 import IconAtom from '../../../atoms/IconAtom';
 import TextFieldAtom from '../../../atoms/TextFieldAtom';
 import { formCreateMemberStyles, libraryStyles, libraryTableToolbarStyles } from '../../../styles';
+import ParagraphAtom from '../../../atoms/ParagraphAtom';
+import InputAtom from '../../../atoms/InputAtom';
 
 function CreateAccomodation() {
   // Generate ref num on creation
@@ -30,13 +33,22 @@ function CreateAccomodation() {
   const [webLink, setWebLink] = useState('');
   const [ijazahLink, setIjazahLink] = useState('');
 
-  const [cilantro, setCilantro] = useState(false);
-  const [executive, setExecutive] = useState(false);
-  const [premium, setPremium] = useState(false);
+  const [roomCategories, setRoomCategories] = useState(new Array(3).fill(false));
+  const [roomViews, setRoomViews] = useState(new Array(3).fill(false));
+  const [roomGradings, setRoomGradings] = useState(new Array(3).fill(false));
 
-  const [fiveStar, setFiveStar] = useState(false);
-  const [fourStar, setFourStar] = useState(false);
-  const [threeStar, setThreeStar] = useState(false);
+  const allRoomTypes = [
+    'Cilantro Suite',
+    'Executive Room',
+    'Premium Room',
+  ];
+
+  const [selectedTypes, setSelectedTypes] = useState(new Array(3).fill(undefined));
+  const [selectedTypeValues, setSelectedTypeValues] = useState(
+    Object.fromEntries(
+      allRoomTypes.map((type: string) => [type, '']),
+    ),
+  );
 
   const [rateData, setRateData] = useState<any>([]);
   const [newRateStart, setNewRateStart] = useState('');
@@ -90,6 +102,32 @@ function CreateAccomodation() {
     setNewSinglePrice('');
     setNewDoublePrice('');
     setNewTriplePrice('');
+  };
+
+  const addRoomGradings = (i: number) => {
+    const updatedGradings = roomGradings.map((lang, index) => (index === i ? !lang : lang));
+    setRoomGradings(updatedGradings);
+  };
+
+  const addRoomView = (i: number) => {
+    const updatedViews = roomViews.map((lang, index) => (index === i ? !lang : lang));
+    setRoomViews(updatedViews);
+  };
+
+  const addRoomCategory = (i: number) => {
+    const updatedCategories = roomCategories.map((lang, index) => (index === i ? !lang : lang));
+    setRoomCategories(updatedCategories);
+
+    const updatedSelectedTypes = allRoomTypes.filter((label: string, index: number) => (
+      updatedCategories[index] && label
+    ));
+
+    setSelectedTypes(updatedSelectedTypes);
+  };
+
+  const onSetSelectedTypeValue = (type: string, val: string) => {
+    const updatedSelectedTypeValues = { ...selectedTypeValues, [type]: val };
+    setSelectedTypeValues(updatedSelectedTypeValues);
   };
 
   return (
@@ -235,18 +273,26 @@ function CreateAccomodation() {
         >
           <CheckboxGroup
             grouptitle="Room Categories"
-            labels={[`Cilantro Suite ($150)`, 'Executive Room ($90)', 'Premium Room ($20)']}
+            labels={[`Cilantro Suite`, 'Executive Room', 'Premium Room']}
             names={['cilantro-suite', 'executive-room', 'premium-room']}
-            checked={[cilantro, executive, premium]}
-            setChecked={[setCilantro, setExecutive, setPremium]}
+            checked={roomCategories}
+            onChange={(_, i: number) => addRoomCategory(i)}
+            style={{ flexDirection: 'column', marginBottom: '1rem' }}
+          />
+          <CheckboxGroup
+            grouptitle="Room View"
+            labels={[`Cilantro Suite`, 'Executive Room', 'Premium Room']}
+            names={['cilantro-suite', 'executive-room', 'premium-room']}
+            checked={roomViews}
+            onChange={(_, i: number) => addRoomView(i)}
             style={{ flexDirection: 'column', marginBottom: '1rem' }}
           />
           <CheckboxGroup
             grouptitle="Gradings"
             labels={['5 Star', '4 Star', '3 Star']}
             names={['five', 'four', 'three']}
-            checked={[fiveStar, fourStar, threeStar]}
-            setChecked={[setFiveStar, setFourStar, setThreeStar]}
+            checked={roomGradings}
+            onChange={(_, i: number) => addRoomGradings(i)}
             style={{
               flexDirection: 'column',
             }}
@@ -270,6 +316,32 @@ function CreateAccomodation() {
           rateData={rateData}
           onCreateRate={onCreateRate}
         />
+
+        {(selectedTypes[0] || selectedTypes[1] || selectedTypes[2]) && selectedTypes.map((type, ind) => (
+          <DivAtom
+            key={ind}
+            style={{
+              ...formCreateMemberStyles.multiFieldContainer,
+              flexDirection: width < 600 ? 'column' : 'row',
+              justifyContent: 'flex-start',
+              marginTop: '0.8rem',
+            }}
+          >
+            <ParagraphAtom style={{ width: '150px' }} text={type} />
+            <FormControl style={{ margin: '0 0 1rem 1rem' }}>
+              <InputLabel>Price</InputLabel>
+              <InputAtom
+                plain="true"
+                fullWidth
+                multiline={false}
+                rows={1}
+                value={selectedTypeValues[type]}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => onSetSelectedTypeValue(type, e.target.value)}
+                placeholder="Enter Price"
+              />
+            </FormControl>
+          </DivAtom>
+        ))}
       </DivAtom>
 
       <DivAtom

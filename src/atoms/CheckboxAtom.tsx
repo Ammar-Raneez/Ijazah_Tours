@@ -1,7 +1,6 @@
 import { ChangeEvent } from 'react';
 import {
   Checkbox,
-  CheckboxProps,
   FormControlLabel,
   withStyles,
 } from '@material-ui/core';
@@ -16,27 +15,27 @@ const GreenCheckbox = withStyles({
     },
   },
   checked: {},
-})((props: CheckboxProps) => <Checkbox color="default" {...props} />);
+})((props: any) => <Checkbox color="default" {...props} />);
 
 interface CheckboxAtomProps {
   label: string;
   name: string;
   checked: boolean;
-  setChecked: (checked: boolean) => void;
+  onChange: ((event: ChangeEvent<HTMLInputElement>, index: number) => void);
 }
 
 function CheckboxAtom({
   label,
   name,
   checked,
-  setChecked,
+  onChange,
 }: CheckboxAtomProps) {
   return (
     <StyledFormControlLabel
       control={
         <GreenCheckbox
           checked={checked}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => setChecked(e.target.checked)}
+          onChange={onChange}
           name={name}
         />
       }

@@ -1,4 +1,4 @@
-import { CSSProperties } from 'react';
+import { ChangeEvent, CSSProperties } from 'react';
 import {
   createStyles,
   FormControl,
@@ -24,7 +24,7 @@ interface CheckboxGroupProps {
   labels: string[];
   names: string[];
   checked: boolean[];
-  setChecked: any[];
+  onChange: ((event: ChangeEvent<HTMLInputElement>, index: number) => void);
   style: CSSProperties;
 }
 
@@ -33,7 +33,7 @@ function CheckboxGroup({
   labels,
   names,
   checked,
-  setChecked,
+  onChange,
   style,
 }: CheckboxGroupProps) {
   const classes = useStyles();
@@ -41,13 +41,13 @@ function CheckboxGroup({
   return (
     <FormControl component="fieldset" className={classes.formControl}>
       <FormLabel component="legend">{grouptitle}</FormLabel>
-
       <FormGroup style={style} className={classes.root}>
         {labels.map((lb, index) => (
           <CheckboxAtom
+            key={index}
             label={lb}
             name={names[index]}
-            setChecked={setChecked[index]}
+            onChange={(event) => onChange(event, index)}
             checked={checked[index]}
           />
         ))}
