@@ -1,6 +1,14 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
+import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadString,
+} from 'firebase/storage';
+import { v4 as uuid } from 'uuid';
 
 import ImageUploader from '../../../organisms/library/driver/ImageUploader';
 import FormControlInput from '../../../molecules/FormControlInput';
@@ -11,12 +19,15 @@ import ButtonAtom from '../../../atoms/ButtonAtom';
 import IconAtom from '../../../atoms/IconAtom';
 import TextFieldAtom from '../../../atoms/TextFieldAtom';
 import { formCreateMemberStyles, libraryStyles } from '../../../styles';
+import { db } from '../../../firebase';
 
 const options = [
   { label: 'Nissan', value: 'Nissan' },
   { label: 'Suzuki', value: 'Suzuki' },
   { label: 'BMW', value: 'BMW' },
 ];
+
+const storage = getStorage();
 
 function CreateDriver() {
   // Generate ref num on creation
@@ -32,9 +43,9 @@ function CreateDriver() {
   const [rate, setRate] = useState('');
   const [notes, setNotes] = useState('');
   const [languages, setLanguages] = useState(new Array(2).fill(false));
-  const [insurance, setInsurance] = useState([]);
-  const [profilePic, setProfilePic] = useState([]);
-  const [vehiclePic, setVehiclePic] = useState([]);
+  const [insurance, setInsurance] = useState<any[]>([]);
+  const [profilePic, setProfilePic] = useState<any[]>([]);
+  const [vehiclePic, setVehiclePic] = useState<any[]>([]);
   const [width, setWidth] = useState(0);
   const history = useHistory();
 
@@ -51,9 +62,68 @@ function CreateDriver() {
     return removeEventListeners();
   }, [width]);
 
-  const onAddDriver = () => {
-    // eslint-disable-next-line no-console
-    console.log('add driver');
+  const onAddDriver = async () => {
+    const [insuranceUrl, profilePicUrl, vehiclePicUrl] = await uploadImages();
+    const selectedLanguages = [];
+    if (languages[0]) {
+      selectedLanguages.push('English');
+    }
+    if (languages[1]) {
+      selectedLanguages.push('Arabic');
+    }
+
+    await setDoc(doc(db, 'Library Drivers', uuid()), {
+      name: `${firstName} ${lastName}`,
+      email,
+      tel: contactNumber,
+      nic,
+      boardCertNum,
+      address,
+      address2,
+      vehicleType,
+      insurance: insuranceUrl,
+      profilePic: profilePicUrl,
+      vehiclePic: vehiclePicUrl,
+      languages: selectedLanguages,
+      status: 'Registered',
+      createdAt: serverTimestamp(),
+    });
+
+    clearInputs();
+  };
+
+  const uploadImages = async () => {
+    const insuRandom = uuid();
+    const profRandom = uuid();
+    const vehiRandom = uuid();
+    const storageRefInsurance = ref(storage, `library-driver/${insuRandom + insurance[0].file.name}`);
+    const storageRefProfilePic = ref(storage, `library-driver/${profRandom + profilePic[0].file.name}`);
+    const storageRefVehiclePic = ref(storage, `library-driver/${vehiRandom + vehiclePic[0].file.name}`);
+
+    await uploadString(storageRefInsurance, insurance[0].data_url, 'data_url');
+    await uploadString(storageRefProfilePic, profilePic[0].data_url, 'data_url');
+    await uploadString(storageRefVehiclePic, vehiclePic[0].data_url, 'data_url');
+    const insuranceUrl = await getDownloadURL(storageRefInsurance);
+    const profilePicUrl = await getDownloadURL(storageRefProfilePic);
+    const vehiclePicUrl = await getDownloadURL(storageRefVehiclePic);
+
+    return [insuranceUrl, profilePicUrl, vehiclePicUrl];
+  };
+
+  const clearInputs = () => {
+    setFirstName('');
+    setLastName('');
+    setContactNumber('');
+    setEmail('');
+    setNic('');
+    setBoardCertNum('');
+    setAddress('');
+    setAddress2('');
+    setRate('');
+    setNotes('');
+    setInsurance([]);
+    setProfilePic([]);
+    setVehiclePic([]);
   };
 
   const onChangeLanguage = (i: number) => {
@@ -272,6 +342,21 @@ function CreateDriver() {
         <ButtonAtom
           size="large"
           onClick={onAddDriver}
+          disabled={
+            firstName === ''
+            || lastName === ''
+            || contactNumber === ''
+            || email === ''
+            || nic === ''
+            || boardCertNum === ''
+            || address === ''
+            || address2 === ''
+            || rate === ''
+            || notes === ''
+            || insurance === []
+            || profilePic === []
+            || vehiclePic === []
+          }
           style={{
             ...formCreateMemberStyles.addBtn,
             width: width < 768 ? '100%' : '18%',

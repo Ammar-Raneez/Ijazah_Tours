@@ -50,11 +50,9 @@ function CreateGuest() {
 
     return removeEventListeners();
   }, [width]);
-  const onAddGuest = async () => {
-    const storageRef = ref(storage, passport[0].file.name);
-    await uploadString(storageRef, passport[0].data_url, 'data_url');
-    const url = await getDownloadURL(ref(storage, passport[0].file.name));
 
+  const onAddGuest = async () => {
+    const url = await uploadImage();
     await setDoc(doc(db, 'Library Guests', uuid()), {
       name: `${firstName} ${lastName}`,
       email,
@@ -71,6 +69,13 @@ function CreateGuest() {
     });
 
     clearInputs();
+  };
+
+  const uploadImage = async () => {
+    const passRandom = uuid();
+    const storageRef = ref(storage, `library-guest/${passRandom + passport[0].file.name}`);
+    await uploadString(storageRef, passport[0].data_url, 'data_url');
+    return getDownloadURL(storageRef);
   };
 
   const clearInputs = () => {
@@ -91,6 +96,8 @@ function CreateGuest() {
     // eslint-disable-next-line no-console
     console.log('add reminder');
   };
+
+  const getAgeString = (age: number) => (age === 1 ? `${age} year old` : `${age} years old`);
 
   return (
     <DivAtom>
@@ -272,9 +279,7 @@ function CreateGuest() {
           <H2Atom text="All Children Ages" style={libraryCreateGuestStyles.subtitle} />
           <ul>
             {allChildren.map((age, i) => (
-              <li key={i}>
-                {`${Number(age) === 1 ? `${age} year old` : `${age} years old`}`}
-              </li>
+              <li key={i}>{getAgeString(Number(age))}</li>
             ))}
           </ul>
         </DivAtom>
