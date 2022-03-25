@@ -31,6 +31,10 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
   }
 
+  ul {
+    list-style: none;
+  }
+
   div#root {
     height: 100vh;
     display: flex;

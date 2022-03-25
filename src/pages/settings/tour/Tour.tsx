@@ -7,6 +7,14 @@ import H2Atom from '../../../atoms/H2Atom';
 import { formCreateMemberStyles, libraryTableToolbarStyles, settingsStyles } from '../../../styles';
 import SingleInputDialog from '../../../organisms/settings/SingleInputDialog';
 import ReminderInputDialog from '../../../organisms/settings/tour/ReminderInputDialog';
+import {
+  SETTINGS_COMMENTS_DATA,
+  SETTINGS_HOLIDAY_TYPE_DATA,
+  SETTINGS_REMINDER_DATA,
+  SETTINGS_STATUS_DATA,
+} from '../../../data';
+import ReminderTable from '../../../organisms/settings/tour/ReminderTable';
+import UnorderedListAtom from '../../../atoms/UnorderedListAtom';
 
 const INPUT_TYPES = [
   {
@@ -60,6 +68,18 @@ function SectionContainer({
       />
     </DivAtom>
   );
+}
+
+function listRender(index: number) {
+  if (index === 0) {
+    return SETTINGS_HOLIDAY_TYPE_DATA;
+  }
+
+  if (index === 1) {
+    return SETTINGS_STATUS_DATA;
+  }
+
+  return SETTINGS_COMMENTS_DATA;
 }
 
 function Tour() {
@@ -145,6 +165,7 @@ function Tour() {
               setOpenDialog={() => onOpenDialog(index)}
               onCreate={() => onCreateSingleInput(type.h2Text, index)}
             />
+            <UnorderedListAtom allChildren={listRender(index)} />
           </DivAtom>
         ))}
 
@@ -167,6 +188,14 @@ function Tour() {
             onCreate={onCreateReminder}
             onChangeReminderType={(i: number) => onChangeReminderType(i)}
           />
+          <DivAtom style={{ marginTop: '1rem' }}>
+            {SETTINGS_REMINDER_DATA.length > 0 && (
+              <ReminderTable
+                columns={['TITLE', 'DESCRIPTION', 'TYPE']}
+                data={SETTINGS_REMINDER_DATA}
+              />
+            )}
+          </DivAtom>
         </DivAtom>
       </DivAtom>
     </DivAtom>

@@ -452,3 +452,51 @@ export const SETTINGS_TEAM_MEMBER_DATA = [
     status: 'Registered',
   },
 ];
+
+export const SETTINGS_HOLIDAY_TYPE_DATA = [
+  {
+    id: '1',
+    title: 'Type #1',
+  },
+  {
+    id: '2',
+    title: 'Type #2',
+  },
+];
+
+export const SETTINGS_STATUS_DATA = [
+  {
+    id: '1',
+    title: 'Status #1',
+  },
+  {
+    id: '2',
+    title: 'Status #2',
+  },
+];
+
+export const SETTINGS_COMMENTS_DATA = [
+  {
+    id: '1',
+    title: 'Comment #1',
+  },
+  {
+    id: '2',
+    title: 'Comment #2',
+  },
+];
+
+export const SETTINGS_REMINDER_DATA = [
+  {
+    id: '1',
+    title: 'Reminder #1',
+    desc: 'This is reminder #1',
+    type: 'Customer Creation',
+  },
+  {
+    id: '2',
+    title: 'Reminder #2',
+    desc: 'This is reminder #2',
+    type: 'Quotation Creation',
+  },
+];
