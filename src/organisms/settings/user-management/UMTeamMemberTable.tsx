@@ -7,10 +7,21 @@ import {
   TableHead,
   TableRow,
 } from '@material-ui/core';
+import { Timestamp } from 'firebase/firestore';
 import { v4 as uuid } from 'uuid';
 
 import TableColumnCell from '../../../molecules/TableColumnCell';
 import TableRowTextCell from '../../../molecules/TableRowTextCell';
+
+interface TeamMember {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  createdAt: Timestamp,
+  role: string;
+  status: string;
+}
 
 const useStyles = makeStyles({
   table: {
@@ -20,7 +31,7 @@ const useStyles = makeStyles({
 });
 
 interface UMTeamMemberTableProps {
-  data: { id: string; firstName: string; lastName: string; email: string; role: string; status: string; }[];
+  data: TeamMember[];
   columns: string[];
 }
 
@@ -46,7 +57,7 @@ function UMTeamMemberTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row: { firstName: string, lastName: string, email: string, role: string, status: string }) => (
+          {data.map((row: TeamMember) => (
             <TableRow key={uuid()}>
               <TableRowTextCell
                 key={uuid()}
@@ -71,6 +82,15 @@ function UMTeamMemberTable({
                 cell={{
                   align: 'center',
                   title: row.email,
+                  colors: ['#464E5F', '#B5B5C3'],
+                  weight: 400,
+                }}
+              />
+              <TableRowTextCell
+                key={uuid()}
+                cell={{
+                  align: 'center',
+                  title: row.createdAt.toDate().toLocaleDateString(),
                   colors: ['#464E5F', '#B5B5C3'],
                   weight: 400,
                 }}

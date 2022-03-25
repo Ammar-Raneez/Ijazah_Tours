@@ -24,7 +24,6 @@ function UserManagement() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('');
-  const [status, setStatus] = useState('');
 
   const [teamData, setTeamData] = useState<any[]>([]);
 
@@ -67,7 +66,7 @@ function UserManagement() {
       lastName,
       email,
       role,
-      status,
+      status: 'Registered',
       createdAt: serverTimestamp(),
     });
 
@@ -81,7 +80,6 @@ function UserManagement() {
     setLastName('');
     setRole('');
     setPassword('');
-    setStatus('');
     setEmail('');
   };
 
@@ -122,14 +120,12 @@ function UserManagement() {
           newLastname={lastName}
           newEmail={email}
           newRole={role}
-          newStatus={status}
           newPassword={password}
           onCreateMember={onCreateMember}
           setNewFirstname={setFirstName}
           setNewLastname={setLastName}
           setNewEmail={setEmail}
           setNewRole={setRole}
-          setNewStatus={setStatus}
           setNewPassword={setPassword}
         />
         <DivAtom style={{ marginTop: '1rem' }}>
@@ -140,7 +136,8 @@ function UserManagement() {
                 'LAST NAME',
                 'EMAIL',
                 'SINCE',
-                'REGISTERED',
+                'ROLE',
+                'STATUS',
               ]}
               data={teamData}
             />

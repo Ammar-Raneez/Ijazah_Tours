@@ -14,7 +14,6 @@ interface UMTeamMemberDialogProps {
   newLastname: string;
   newEmail: string;
   newRole: string;
-  newStatus: string;
   newPassword: string;
   openDialog: boolean;
   onCreateMember: MouseEventHandler<HTMLButtonElement>;
@@ -23,7 +22,6 @@ interface UMTeamMemberDialogProps {
   setNewLastname: any;
   setNewEmail: any;
   setNewRole: any;
-  setNewStatus: any;
   setNewPassword: any;
 }
 
@@ -32,7 +30,6 @@ function UMTeamMemberDialog({
   newLastname,
   newEmail,
   newRole,
-  newStatus,
   newPassword,
   openDialog,
   setOpenDialog,
@@ -40,7 +37,6 @@ function UMTeamMemberDialog({
   setNewLastname,
   setNewEmail,
   setNewRole,
-  setNewStatus,
   setNewPassword,
   onCreateMember,
 }: UMTeamMemberDialogProps) {
@@ -103,16 +99,6 @@ function UMTeamMemberDialog({
             setValue={setNewRole}
             placeholder="Enter Role"
           />
-          <FormControlInput
-            flex={1}
-            label="Status"
-            fullWidth
-            multiline={false}
-            rows={1}
-            value={newStatus}
-            setValue={setNewStatus}
-            placeholder="Enter Status"
-          />
           <ButtonAtom
             starticon={<AddCircleOutlineOutlinedIcon />}
             text="Add Team Member"
@@ -121,7 +107,6 @@ function UMTeamMemberDialog({
               || newLastname === ''
               || newEmail === ''
               || newRole === ''
-              || newStatus === ''
             }
             onClick={(event) => onCreateMember(event)}
             style={{
