@@ -1,25 +1,46 @@
 import { useEffect, useState } from 'react';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
+import {
+  collection,
+  doc,
+  getDocs,
+  serverTimestamp,
+  setDoc,
+} from 'firebase/firestore';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { v4 as uuid } from 'uuid';
 
+import UMTeamMemberTable from '../../../organisms/settings/user-management/UMTeamMemberTable';
 import UMTeamMemberDialog from '../../../organisms/settings/user-management/UMTeamMemberDialog';
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
-import { SETTINGS_TEAM_MEMBER_DATA } from '../../../data';
+import { auth, db } from '../../../firebase';
 import { formCreateMemberStyles, libraryTableToolbarStyles, settingsStyles } from '../../../styles';
-import UMTeamMemberTable from '../../../organisms/settings/user-management/UMTeamMemberTable';
 
 function UserManagement() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [role, setRole] = useState('');
   const [status, setStatus] = useState('');
+
+  const [teamData, setTeamData] = useState<any[]>([]);
 
   const [openDialog, setOpenDialog] = useState(false);
 
   const [containerHeight, setContainerHeight] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
+
+  useEffect(() => {
+    const getInitialTeamData = async () => {
+      const data = (await getDocs(collection(db, 'Team Members'))).docs.map((dc) => dc.data());
+      setTeamData(data);
+    };
+
+    getInitialTeamData();
+  }, [openDialog]);
 
   useEffect(() => {
     setContainerHeight(window.innerHeight - 180);
@@ -40,9 +61,28 @@ function UserManagement() {
     return removeEventListeners();
   }, [containerWidth, containerHeight]);
 
-  const onCreateMember = () => {
-    // eslint-disable-next-line no-console
-    console.log('Created member');
+  const onCreateMember = async () => {
+    await setDoc(doc(db, 'Team Members', uuid()), {
+      firstName,
+      lastName,
+      email,
+      role,
+      status,
+      createdAt: serverTimestamp(),
+    });
+
+    await createUserWithEmailAndPassword(auth, email, password);
+    clearInputs();
+    setOpenDialog(false);
+  };
+
+  const clearInputs = () => {
+    setFirstName('');
+    setLastName('');
+    setRole('');
+    setPassword('');
+    setStatus('');
+    setEmail('');
   };
 
   return (
@@ -83,15 +123,17 @@ function UserManagement() {
           newEmail={email}
           newRole={role}
           newStatus={status}
+          newPassword={password}
           onCreateMember={onCreateMember}
           setNewFirstname={setFirstName}
           setNewLastname={setLastName}
           setNewEmail={setEmail}
           setNewRole={setRole}
           setNewStatus={setStatus}
+          setNewPassword={setPassword}
         />
         <DivAtom style={{ marginTop: '1rem' }}>
-          {SETTINGS_TEAM_MEMBER_DATA.length > 0 && (
+          {teamData.length > 0 && (
             <UMTeamMemberTable
               columns={[
                 'FIRST NAME',
@@ -100,7 +142,7 @@ function UserManagement() {
                 'SINCE',
                 'REGISTERED',
               ]}
-              data={SETTINGS_TEAM_MEMBER_DATA}
+              data={teamData}
             />
           )}
         </DivAtom>

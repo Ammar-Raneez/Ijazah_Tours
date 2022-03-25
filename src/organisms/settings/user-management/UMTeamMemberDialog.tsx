@@ -15,6 +15,7 @@ interface UMTeamMemberDialogProps {
   newEmail: string;
   newRole: string;
   newStatus: string;
+  newPassword: string;
   openDialog: boolean;
   onCreateMember: MouseEventHandler<HTMLButtonElement>;
   setOpenDialog: any;
@@ -23,6 +24,7 @@ interface UMTeamMemberDialogProps {
   setNewEmail: any;
   setNewRole: any;
   setNewStatus: any;
+  setNewPassword: any;
 }
 
 function UMTeamMemberDialog({
@@ -31,6 +33,7 @@ function UMTeamMemberDialog({
   newEmail,
   newRole,
   newStatus,
+  newPassword,
   openDialog,
   setOpenDialog,
   setNewFirstname,
@@ -38,6 +41,7 @@ function UMTeamMemberDialog({
   setNewEmail,
   setNewRole,
   setNewStatus,
+  setNewPassword,
   onCreateMember,
 }: UMTeamMemberDialogProps) {
   return (
@@ -76,6 +80,18 @@ function UMTeamMemberDialog({
             value={newEmail}
             setValue={setNewEmail}
             placeholder="Enter Email"
+            type="email"
+          />
+          <FormControlInput
+            flex={1}
+            label="Password"
+            fullWidth
+            multiline={false}
+            rows={1}
+            value={newPassword}
+            setValue={setNewPassword}
+            placeholder="Enter Password"
+            type="password"
           />
           <FormControlInput
             flex={1}
