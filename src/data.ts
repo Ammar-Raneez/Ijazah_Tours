@@ -433,3 +433,22 @@ export const DASHBOARD_TASK_DATA = [
     status: 'C',
   },
 ];
+
+export const SETTINGS_TEAM_MEMBER_DATA = [
+  {
+    id: '1',
+    firstName: 'Arkam',
+    lastName: 'Rizwan',
+    email: 'markamrizwan@gmail.com',
+    role: 'Admin',
+    status: 'Registered',
+  },
+  {
+    id: '2',
+    firstName: 'Ammar',
+    lastName: 'Raneez',
+    email: 'ammarraneez@gmail.com',
+    role: 'Admin',
+    status: 'Registered',
+  },
+];

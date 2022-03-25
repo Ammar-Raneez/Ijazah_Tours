@@ -7,13 +7,14 @@ interface FormControlInputProps {
   label: string;
   value: string | number;
   placeholder: string;
-  margin: string;
   fullWidth: boolean;
   multiline: boolean;
   rows: number;
   setValue: any;
   disabled?: boolean;
   flex?: number;
+  margin?: string;
+  width?: string;
   type?: string;
 }
 
@@ -28,10 +29,11 @@ function FormControlInput({
   setValue,
   disabled,
   flex,
+  width,
   type,
 }: FormControlInputProps) {
   return (
-    <FormControl style={{ margin, flex }}>
+    <FormControl style={{ margin, flex, width }}>
       <InputLabel>{label}</InputLabel>
       <InputAtom
         plain="true"

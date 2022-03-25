@@ -31,9 +31,9 @@ const LINKS = [
   {
     type: 'settings',
     links: [
-      { key: '1', text: 'Accomodation', link: '/settings/accomodation' },
+      { key: '1', text: 'User Management', link: '/settings/user-management' },
       { key: '2', text: 'Tour', link: '/settings/tour' },
-      { key: '3', text: 'User Management', link: '/settings/user-management' },
+      { key: '3', text: 'Accomodation', link: '/settings/accomodation' },
     ],
   },
 ];

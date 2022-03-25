@@ -147,6 +147,12 @@ export const formCreateMemberStyles = {
     display: 'flex',
     justifyContent: 'space-between',
   },
+  multiFieldDialogContainer: {
+    width: '500px',
+    display: 'flex',
+    flexDirection: 'column' as const,
+    padding: '1rem 24px',
+  },
   addBtnContainer: {
     margin: '2rem 1rem 0 0',
     display: 'flex',
