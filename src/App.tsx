@@ -21,6 +21,7 @@ import Header from './organisms/Header';
 import Sidebar from './organisms/Sidebar';
 import Navbar from './organisms/Navbar';
 import GlobalStyle from './globalStyle';
+import General from './pages/settings/general/General';
 
 function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -89,6 +90,9 @@ function App() {
               </Route>
               <Route path="/settings/user-management">
                 <UserManagement />
+              </Route>
+              <Route path="/settings/general">
+                <General />
               </Route>
               <Route exact path="/settings">
                 <Redirect to="/settings/accomodation" />
