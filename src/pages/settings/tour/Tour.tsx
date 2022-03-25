@@ -59,21 +59,21 @@ function Tour() {
   const [openDialogs, setOpenDialogs] = useState<boolean[]>(new Array(3).fill(false));
   const [openReminderDialog, setOpenReminderDialog] = useState(false);
 
+  const [creating, setCreating] = useState(false);
+
   useEffect(() => {
     const getInitialData = async () => {
       const singleData = await Promise.all(
         INPUT_TYPES.map(async (type) => (
           await getDocs(collection(db, `Settings ${type.h2Text}`))).docs.map((dc) => dc.data())),
       );
-
       const reminders = (await getDocs(collection(db, `Settings Reminders`))).docs.map((dc) => dc.data());
-
       setReminderData(reminders);
       setSingleInputsData(singleData);
     };
 
     getInitialData();
-  }, [openReminderDialog, openDialogs]);
+  }, [creating]);
 
   useEffect(() => {
     setContainerHeight(window.innerHeight - 180);
@@ -95,6 +95,7 @@ function Tour() {
   }, [containerWidth, containerHeight]);
 
   const onCreateSingleInput = async (type: string, i: number) => {
+    setCreating(true);
     const val = newSingleInputs[i];
     await setDoc(doc(db, `Settings ${type}`, uuid()), {
       val,
@@ -102,6 +103,7 @@ function Tour() {
     });
 
     clearSingleInputs();
+    setCreating(false);
     onOpenDialog(i);
   };
 
@@ -110,6 +112,7 @@ function Tour() {
   };
 
   const onCreateReminder = async () => {
+    setCreating(true);
     const type = reminderTypes[0] ? 'Creation of Customer' : 'Creation of Quotation';
     await setDoc(doc(db, `Settings Reminders`, uuid()), {
       title: newReminderTitle,
@@ -119,6 +122,7 @@ function Tour() {
     });
 
     clearReminderInputs();
+    setCreating(false);
     setOpenReminderDialog(false);
   };
 
@@ -170,36 +174,34 @@ function Tour() {
           </DivAtom>
         ))}
 
-        {reminderData[0] !== undefined && (
-          <DivAtom style={{ marginBottom: '3rem' }}>
-            <SectionContainer
-              containerWidth={containerWidth}
-              h2Text="Auto Generated Reminders"
-              btnText="Add Reminder"
-              setOpenDialog={() => setOpenReminderDialog(true)}
-            />
-            <ReminderInputDialog
-              title="Add Reminder"
-              newTitle={newReminderTitle}
-              newDesc={newReminderDesc}
-              setNewTitle={setNewReminderTitle}
-              setNewDesc={setNewReminderDesc}
-              reminderTypes={reminderTypes}
-              openDialog={openReminderDialog}
-              setOpenDialog={() => setOpenReminderDialog(false)}
-              onCreate={onCreateReminder}
-              onChangeReminderType={(i: number) => onChangeReminderType(i)}
-            />
-            <DivAtom style={{ marginTop: '1rem' }}>
-              {reminderData.length > 0 && (
-                <ReminderTable
-                  columns={['TITLE', 'DESCRIPTION', 'TYPE']}
-                  data={reminderData}
-                />
-              )}
-            </DivAtom>
+        <DivAtom style={{ marginBottom: '3rem' }}>
+          <SectionContainer
+            containerWidth={containerWidth}
+            h2Text="Auto Generated Reminders"
+            btnText="Add Reminder"
+            setOpenDialog={() => setOpenReminderDialog(true)}
+          />
+          <ReminderInputDialog
+            title="Add Reminder"
+            newTitle={newReminderTitle}
+            newDesc={newReminderDesc}
+            setNewTitle={setNewReminderTitle}
+            setNewDesc={setNewReminderDesc}
+            reminderTypes={reminderTypes}
+            openDialog={openReminderDialog}
+            setOpenDialog={() => setOpenReminderDialog(false)}
+            onCreate={onCreateReminder}
+            onChangeReminderType={(i: number) => onChangeReminderType(i)}
+          />
+          <DivAtom style={{ marginTop: '1rem' }}>
+            {reminderData[0] && (
+              <ReminderTable
+                columns={['TITLE', 'DESCRIPTION', 'TYPE']}
+                data={reminderData}
+              />
+            )}
           </DivAtom>
-        )}
+        </DivAtom>
       </DivAtom>
     </DivAtom>
   );

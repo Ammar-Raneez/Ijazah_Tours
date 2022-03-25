@@ -1,17 +1,20 @@
 import { useEffect, useState } from 'react';
-
-import DivAtom from '../../../atoms/DivAtom';
-import UnorderedListAtom from '../../../atoms/UnorderedListAtom';
 import {
-  SETTINGS_ACCOMODATION_TYPE_DATA,
-  SETTINGS_LOCATION_DATA,
-  SETTINGS_ROOM_TYPE_DATA,
-  SETTINGS_ROOM_VIEWS_DATA,
-} from '../../../data';
+  collection,
+  doc,
+  getDocs,
+  serverTimestamp,
+  setDoc,
+} from 'firebase/firestore';
+import { v4 as uuid } from 'uuid';
+
 import LocationInputDialog from '../../../organisms/settings/accomodation/LocationInputDialog';
 import LocationTable from '../../../organisms/settings/accomodation/Locationtable';
 import SectionContainer from '../../../organisms/settings/SectionContainer';
 import SingleInputDialog from '../../../organisms/settings/SingleInputDialog';
+import DivAtom from '../../../atoms/DivAtom';
+import UnorderedListAtom from '../../../atoms/UnorderedListAtom';
+import { db } from '../../../firebase';
 import { settingsStyles } from '../../../styles';
 
 const INPUT_TYPES = [
@@ -29,16 +32,16 @@ const INPUT_TYPES = [
   },
 ];
 
-function listRender(index: number) {
+function listRender(data: any[][], index: number) {
   if (index === 0) {
-    return SETTINGS_ROOM_TYPE_DATA;
+    return data[0];
   }
 
   if (index === 1) {
-    return SETTINGS_ACCOMODATION_TYPE_DATA;
+    return data[1];
   }
 
-  return SETTINGS_ROOM_VIEWS_DATA;
+  return data[2];
 }
 
 function SettingsAccomodation() {
@@ -46,12 +49,30 @@ function SettingsAccomodation() {
   const [containerWidth, setContainerWidth] = useState(0);
 
   const [newSingleInputs, setNewSingleInputs] = useState<string[]>(new Array(3).fill(''));
+  const [singleInputsData, setSingleInputsData] = useState<any[]>([undefined]);
 
   const [newLocationTitle, setNewLocationTitle] = useState('');
   const [newLocationCity, setNewLocationCity] = useState('');
+  const [locationData, setLocationData] = useState<any[]>([undefined]);
 
   const [openDialogs, setOpenDialogs] = useState<boolean[]>(new Array(3).fill(false));
   const [openLocationDialog, setOpenLocationDialog] = useState(false);
+
+  const [creating, setCreating] = useState(false);
+
+  useEffect(() => {
+    const getInitialData = async () => {
+      const singleData = await Promise.all(
+        INPUT_TYPES.map(async (type) => (
+          await getDocs(collection(db, `Settings ${type.h2Text}`))).docs.map((dc) => dc.data())),
+      );
+      const locations = (await getDocs(collection(db, `Settings Locations`))).docs.map((dc) => dc.data());
+      setLocationData(locations);
+      setSingleInputsData(singleData);
+    };
+
+    getInitialData();
+  }, [creating]);
 
   useEffect(() => {
     setContainerHeight(window.innerHeight - 180);
@@ -72,15 +93,39 @@ function SettingsAccomodation() {
     return removeEventListeners();
   }, [containerWidth, containerHeight]);
 
-  const onCreateSingleInput = (type: string, i: number) => {
+  const onCreateSingleInput = async (type: string, i: number) => {
+    setCreating(true);
     const val = newSingleInputs[i];
-    // eslint-disable-next-line no-console
-    console.log(type, i, val);
+    await setDoc(doc(db, `Settings ${type}`, uuid()), {
+      val,
+      createdAt: serverTimestamp(),
+    });
+
+    clearSingleInputs();
+    setCreating(false);
+    onOpenDialog(i);
   };
 
-  const onCreateLocation = () => {
-    // eslint-disable-next-line no-console
-    console.log(newLocationTitle, newLocationCity);
+  const clearSingleInputs = () => {
+    setNewSingleInputs(new Array(3).fill(''));
+  };
+
+  const onCreateLocation = async () => {
+    setCreating(true);
+    await setDoc(doc(db, `Settings Locations`, uuid()), {
+      title: newLocationTitle,
+      city: newLocationCity,
+      createdAt: serverTimestamp(),
+    });
+
+    clearLocationInputs();
+    setCreating(false);
+    setOpenLocationDialog(false);
+  };
+
+  const clearLocationInputs = () => {
+    setNewLocationTitle('');
+    setNewLocationCity('');
   };
 
   const onOpenDialog = (i: number) => {
@@ -101,7 +146,7 @@ function SettingsAccomodation() {
           height: `${containerHeight}px`,
         }}
       >
-        {INPUT_TYPES.map((type, index) => (
+        {singleInputsData[0] !== undefined && INPUT_TYPES.map((type, index) => (
           <DivAtom key={index} style={{ marginBottom: '3rem' }}>
             <SectionContainer
               containerWidth={containerWidth}
@@ -117,7 +162,7 @@ function SettingsAccomodation() {
               setOpenDialog={() => onOpenDialog(index)}
               onCreate={() => onCreateSingleInput(type.h2Text, index)}
             />
-            <UnorderedListAtom allChildren={listRender(index)} />
+            <UnorderedListAtom allChildren={listRender(singleInputsData, index)} />
           </DivAtom>
         ))}
 
@@ -139,10 +184,10 @@ function SettingsAccomodation() {
             onCreate={onCreateLocation}
           />
           <DivAtom style={{ marginTop: '1rem' }}>
-            {SETTINGS_LOCATION_DATA.length > 0 && (
+            {locationData[0] && (
               <LocationTable
                 columns={['LOCATION', 'CITY']}
-                data={SETTINGS_LOCATION_DATA}
+                data={locationData}
               />
             )}
           </DivAtom>
