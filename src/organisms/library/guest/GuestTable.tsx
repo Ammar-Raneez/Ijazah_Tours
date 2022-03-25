@@ -18,7 +18,6 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
@@ -29,6 +28,16 @@ import TableRowIconCell from '../../../molecules/TableRowIconCell';
 import SpanAtom from '../../../atoms/SpanAtom';
 import { libraryTableStyles } from '../../../styles';
 import { getComparator, Order, stableSort } from '../../../utils/helpers';
+
+const headCells = [
+  { id: 'name', label: 'NAME' },
+  { id: 'ref', label: 'REF NUMBER' },
+  { id: 'tel', label: 'TEL NUMBER' },
+  { id: 'country', label: 'COUNTRY' },
+  { id: 'status', label: 'STATUS' },
+  { id: '...', label: '' },
+  { id: '...1', label: '' },
+];
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -138,6 +147,7 @@ export default function GuestTable({ data }: GuestTableProps) {
           >
             <LibraryTableHead
               classes={classes}
+              headCells={headCells}
               numSelected={selected.length}
               order={order as Order}
               orderBy={orderBy}
@@ -172,62 +182,37 @@ export default function GuestTable({ data }: GuestTableProps) {
                         cell={{
                           align: 'left',
                           title: row.name,
-                          subtitle: row.tel,
-                          colors: ['#464E5F', '#B5B5C3'],
+                          colors: ['#B5B5C3'],
                           weight: 600,
                         }}
                       />
                       <TableRowTextCell
                         cell={{
                           align: 'left',
-                          title: row.description,
-                          colors: ['#B5B5C3'],
-                          weight: 300,
-                        }}
-                      />
-                      <TableRowTextCell
-                        cell={{
-                          align: 'right',
-                          title: row.rate,
-                          subtitle: 'INR',
-                          colors: [
-                            row.rate.toString().includes('-') ? 'red' : 'green',
-                            '#B5B5C3',
-                          ],
+                          title: row.ref,
+                          colors: ['red'],
                           weight: 600,
                         }}
                       />
                       <TableRowTextCell
                         cell={{
-                          align: 'right',
+                          align: 'left',
+                          title: row.tel,
+                          colors: ['green'],
+                          weight: 600,
+                        }}
+                      />
+                      <TableRowTextCell
+                        cell={{
+                          align: 'left',
                           title: row.location,
-                          subtitle: 'INR',
-                          colors: [
-                            row.location.toString().includes('-')
-                              ? 'red'
-                              : 'green',
-                            '#B5B5C3',
-                          ],
+                          colors: ['#B5B5C3'],
                           weight: 600,
                         }}
                       />
                       <TableRowTextCell
                         cell={{
-                          align: 'right',
-                          title: row.ratings,
-                          subtitle: 'INR',
-                          colors: [
-                            row.ratings.toString().includes('-')
-                              ? 'red'
-                              : 'green',
-                            '#B5B5C3',
-                          ],
-                          weight: 600,
-                        }}
-                      />
-                      <TableRowTextCell
-                        cell={{
-                          align: 'center',
+                          align: 'left',
                           title: row.group,
                           marktitle:
                             row.group === 'ACTIVE' || row.group === 'INACTIVE',
@@ -252,14 +237,6 @@ export default function GuestTable({ data }: GuestTableProps) {
                         size="small"
                         padding="8px"
                         children={<DeleteOutlinedIcon />}
-                      />
-                      <TableRowIconCell
-                        align="center"
-                        onClick={() => null}
-                        textcolor="#B5B5C3"
-                        size="small"
-                        padding="8px"
-                        children={<MoreHorizIcon />}
                       />
                     </TableRow>
                   );

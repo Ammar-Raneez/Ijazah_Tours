@@ -30,6 +30,18 @@ import SpanAtom from '../../../atoms/SpanAtom';
 import { libraryTableStyles } from '../../../styles';
 import { getComparator, Order, stableSort } from '../../../utils/helpers';
 
+const headCells = [
+  { id: 'name', label: 'NAME' },
+  { id: 'id', label: 'NIC NUMBER' },
+  { id: 'tel', label: 'TEL NUMBER' },
+  { id: 'rate', label: 'RATE' },
+  { id: 'country', label: 'COUNTRY' },
+  { id: 'vehicle', label: 'VEHICLE' },
+  { id: 'status', label: 'STATUS' },
+  { id: '...', label: '' },
+  { id: '...1', label: '' },
+];
+
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     width: '100%',
@@ -138,6 +150,7 @@ export default function AccomodationTable({ data }: AccomodationTableProps) {
           >
             <LibraryTableHead
               classes={classes}
+              headCells={headCells}
               numSelected={selected.length}
               order={order as Order}
               orderBy={orderBy}

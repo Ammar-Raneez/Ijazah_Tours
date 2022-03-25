@@ -30,6 +30,18 @@ import SpanAtom from '../../../atoms/SpanAtom';
 import { libraryTableStyles } from '../../../styles';
 import { getComparator, Order, stableSort } from '../../../utils/helpers';
 
+const headCells = [
+  { id: 'name', label: 'NAME' },
+  { id: 'id', label: 'NIC NUMBER' },
+  { id: 'tel', label: 'TEL NUMBER' },
+  { id: 'rate', label: 'RATE' },
+  { id: 'country', label: 'COUNTRY' },
+  { id: 'vehicle', label: 'VEHICLE' },
+  { id: 'status', label: 'STATUS' },
+  { id: '...', label: '' },
+  { id: '...1', label: '' },
+];
+
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     width: '100%',
@@ -40,9 +52,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   table: {
     minWidth: 750,
-  },
-  container: {
-    // maxHeight: 300
   },
   visuallyHidden: {
     border: 0,
@@ -131,7 +140,7 @@ export default function DriverTable({ data }: DriverTableProps) {
           numSelected={selected.length}
           addbtntext="Add Driver"
         />
-        <TableContainer className={classes.container}>
+        <TableContainer>
           <Table
             className={classes.table}
             stickyHeader
@@ -141,6 +150,7 @@ export default function DriverTable({ data }: DriverTableProps) {
           >
             <LibraryTableHead
               classes={classes}
+              headCells={headCells}
               numSelected={selected.length}
               order={order as Order}
               orderBy={orderBy}
@@ -175,62 +185,53 @@ export default function DriverTable({ data }: DriverTableProps) {
                         cell={{
                           align: 'left',
                           title: row.name,
-                          subtitle: row.tel,
-                          colors: ['#464E5F', '#B5B5C3'],
+                          colors: ['#B5B5C3'],
                           weight: 600,
                         }}
                       />
                       <TableRowTextCell
                         cell={{
                           align: 'left',
-                          title: row.description,
+                          title: row.nic,
                           colors: ['#B5B5C3'],
-                          weight: 300,
+                          weight: 600,
                         }}
                       />
                       <TableRowTextCell
                         cell={{
-                          align: 'right',
+                          align: 'left',
+                          title: row.tel,
+                          colors: ['green'],
+                          weight: 600,
+                        }}
+                      />
+                      <TableRowTextCell
+                        cell={{
+                          align: 'left',
                           title: row.rate,
-                          subtitle: 'INR',
-                          colors: [
-                            row.rate.toString().includes('-') ? 'red' : 'green',
-                            '#B5B5C3',
-                          ],
+                          colors: ['red'],
                           weight: 600,
                         }}
                       />
                       <TableRowTextCell
                         cell={{
-                          align: 'right',
+                          align: 'left',
                           title: row.location,
-                          subtitle: 'INR',
-                          colors: [
-                            row.location.toString().includes('-')
-                              ? 'red'
-                              : 'green',
-                            '#B5B5C3',
-                          ],
+                          colors: ['#B5B5C3'],
                           weight: 600,
                         }}
                       />
                       <TableRowTextCell
                         cell={{
-                          align: 'right',
-                          title: row.ratings,
-                          subtitle: 'INR',
-                          colors: [
-                            row.ratings.toString().includes('-')
-                              ? 'red'
-                              : 'green',
-                            '#B5B5C3',
-                          ],
+                          align: 'left',
+                          title: row.vehicle,
+                          colors: ['#B5B5C3'],
                           weight: 600,
                         }}
                       />
                       <TableRowTextCell
                         cell={{
-                          align: 'center',
+                          align: 'left',
                           title: row.group,
                           marktitle:
                             row.group === 'ACTIVE' || row.group === 'INACTIVE',

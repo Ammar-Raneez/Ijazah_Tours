@@ -10,23 +10,12 @@ import {
 import TableColumnCell from './TableColumnCell';
 import { Order } from '../utils/helpers';
 
-const headCells = [
-  { id: 'name', label: 'NAME' },
-  { id: 'desc', label: 'DESCRIPTION' },
-  { id: 'rate', numeric: true, label: 'RATE' },
-  { id: 'location', numeric: true, label: 'LOCATION' },
-  { id: 'ratings', numeric: true, label: 'RATINGS' },
-  { id: 'group', label: 'GROUP' },
-  { id: '...', label: '' },
-  { id: '...1', label: '' },
-  { id: '...2', label: '' },
-];
-
 interface LibraryTableHeadProps {
   orderBy: string;
   numSelected: number;
   rowCount: number;
   classes: any;
+  headCells: any;
   onRequestSort: (event: MouseEvent<HTMLSpanElement>, property: string) => void;
   onSelectAllClick: (
     event: ChangeEvent<HTMLInputElement>,
@@ -37,6 +26,7 @@ interface LibraryTableHeadProps {
 
 function LibraryTableHead({
   classes,
+  headCells,
   onSelectAllClick,
   order,
   orderBy,
@@ -50,27 +40,6 @@ function LibraryTableHead({
 
   const spanOrderText = order === 'desc' ? 'sorted descending' : 'sorted ascending';
 
-  const getTableColumnCellAlignment = (headCell: {
-    id: string;
-    label: string;
-    numeric: undefined;
-  } | {
-    id: string;
-    numeric: boolean;
-    label: string;
-  }) => {
-    let alignment: 'center' | 'right' | 'left' | 'justified';
-    if (headCell.id === 'group') {
-      alignment = 'center';
-    } else if (headCell.numeric) {
-      alignment = 'right';
-    } else {
-      alignment = 'left';
-    }
-
-    return alignment;
-  };
-
   return (
     <TableHead>
       <TableRow>
@@ -79,31 +48,27 @@ function LibraryTableHead({
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'select all desserts' }}
           />
         </TableCell>
-        {headCells.map((headCell) => {
-          const align = getTableColumnCellAlignment(headCell);
-          return (
-            <TableColumnCell
-              color="#B5B5C3"
-              key={headCell.id}
-              align={align}
-              sortDirection={orderBy === headCell.id ? order : false}
+        {headCells.map((headCell: any) => (
+          <TableColumnCell
+            color="#B5B5C3"
+            key={headCell.id}
+            align="left"
+            sortDirection={orderBy === headCell.id ? order : false}
+          >
+            <TableSortLabel
+              active={orderBy === headCell.id}
+              direction={orderBy === headCell.id ? order : 'asc'}
+              onClick={createSortHandler(headCell.id)}
             >
-              <TableSortLabel
-                active={orderBy === headCell.id}
-                direction={orderBy === headCell.id ? order : 'asc'}
-                onClick={createSortHandler(headCell.id)}
-              >
-                {headCell.label}
-                {orderBy === headCell.id ? (
-                  <span className={classes.visuallyHidden}>{spanOrderText}</span>
-                ) : null}
-              </TableSortLabel>
-            </TableColumnCell>
-          );
-        })}
+              {headCell.label}
+              {orderBy === headCell.id ? (
+                <span className={classes.visuallyHidden}>{spanOrderText}</span>
+              ) : null}
+            </TableSortLabel>
+          </TableColumnCell>
+        ))}
       </TableRow>
     </TableHead>
   );
