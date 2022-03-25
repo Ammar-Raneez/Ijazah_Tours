@@ -17,7 +17,6 @@ import InputAtom from '../../atoms/InputAtom';
 
 interface SingleInputDialogProps {
   title: string;
-  inputLabel: string;
   newInput: string;
   openDialog: boolean;
   onCreate: MouseEventHandler<HTMLButtonElement>;
@@ -27,7 +26,6 @@ interface SingleInputDialogProps {
 
 function SingleInputDialog({
   title,
-  inputLabel,
   newInput,
   openDialog,
   onChange,
@@ -40,7 +38,7 @@ function SingleInputDialog({
         <DialogTitle style={formCreateMemberStyles.title}>{title}</DialogTitle>
         <DialogContent style={formCreateMemberStyles.multiFieldDialogContainer}>
           <FormControl>
-            <InputLabel>{inputLabel}</InputLabel>
+            <InputLabel>{title.substring(4, title.length)}</InputLabel>
             <InputAtom
               plain="true"
               fullWidth
@@ -48,7 +46,7 @@ function SingleInputDialog({
               rows={1}
               value={newInput}
               onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
-              placeholder={`Enter ${inputLabel}`}
+              placeholder={`${title.substring(4, title.length)}`}
             />
           </FormControl>
           <ButtonAtom

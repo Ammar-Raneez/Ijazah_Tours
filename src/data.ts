@@ -500,3 +500,49 @@ export const SETTINGS_REMINDER_DATA = [
     type: 'Quotation Creation',
   },
 ];
+
+export const SETTINGS_ROOM_TYPE_DATA = [
+  {
+    id: '1',
+    title: 'Room Type #1',
+  },
+  {
+    id: '2',
+    title: 'Room Type #2',
+  },
+];
+
+export const SETTINGS_ACCOMODATION_TYPE_DATA = [
+  {
+    id: '1',
+    title: 'Accomodation Type #1',
+  },
+  {
+    id: '2',
+    title: 'Accomodation Type #2',
+  },
+];
+
+export const SETTINGS_ROOM_VIEWS_DATA = [
+  {
+    id: '1',
+    title: 'Room View #1',
+  },
+  {
+    id: '2',
+    title: 'Room View #2',
+  },
+];
+
+export const SETTINGS_LOCATION_DATA = [
+  {
+    id: '1',
+    title: 'Location Title #1',
+    city: 'Location City #1',
+  },
+  {
+    id: '2',
+    title: 'Location Title #2',
+    city: 'Location City #2',
+  },
+];
