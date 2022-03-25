@@ -7,7 +7,7 @@ function UnorderedListAtom({
 }: UnorderedListAtomProps) {
   return (
     <ul>
-      {allChildren.map((val, i) => <li key={i}>{val.title}</li>)}
+      {allChildren.map((val, i) => <li key={i}>{val.val}</li>)}
     </ul>
   );
 }

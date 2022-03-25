@@ -1,18 +1,21 @@
 import { useEffect, useState } from 'react';
-
-import DivAtom from '../../../atoms/DivAtom';
-import SingleInputDialog from '../../../organisms/settings/SingleInputDialog';
-import ReminderInputDialog from '../../../organisms/settings/tour/ReminderInputDialog';
 import {
-  SETTINGS_COMMENTS_DATA,
-  SETTINGS_HOLIDAY_TYPE_DATA,
-  SETTINGS_REMINDER_DATA,
-  SETTINGS_STATUS_DATA,
-} from '../../../data';
+  collection,
+  doc,
+  getDocs,
+  serverTimestamp,
+  setDoc,
+} from 'firebase/firestore';
+import { v4 as uuid } from 'uuid';
+
+import SectionContainer from '../../../organisms/settings/SectionContainer';
 import ReminderTable from '../../../organisms/settings/tour/ReminderTable';
 import UnorderedListAtom from '../../../atoms/UnorderedListAtom';
+import SingleInputDialog from '../../../organisms/settings/SingleInputDialog';
+import ReminderInputDialog from '../../../organisms/settings/tour/ReminderInputDialog';
+import DivAtom from '../../../atoms/DivAtom';
+import { db } from '../../../firebase';
 import { settingsStyles } from '../../../styles';
-import SectionContainer from '../../../organisms/settings/SectionContainer';
 
 const INPUT_TYPES = [
   {
@@ -29,16 +32,16 @@ const INPUT_TYPES = [
   },
 ];
 
-function listRender(index: number) {
+function listRender(data: any[][], index: number) {
   if (index === 0) {
-    return SETTINGS_HOLIDAY_TYPE_DATA;
+    return data[0];
   }
 
   if (index === 1) {
-    return SETTINGS_STATUS_DATA;
+    return data[1];
   }
 
-  return SETTINGS_COMMENTS_DATA;
+  return data[2];
 }
 
 function Tour() {
@@ -46,13 +49,31 @@ function Tour() {
   const [containerWidth, setContainerWidth] = useState(0);
 
   const [newSingleInputs, setNewSingleInputs] = useState<string[]>(new Array(3).fill(''));
+  const [singleInputsData, setSingleInputsData] = useState<any[]>([undefined]);
 
   const [newReminderTitle, setNewReminderTitle] = useState('');
   const [newReminderDesc, setNewReminderDesc] = useState('');
   const [reminderTypes, setReminderTypes] = useState<boolean[]>(new Array(2).fill(false));
+  const [reminderData, setReminderData] = useState<any[]>([undefined]);
 
   const [openDialogs, setOpenDialogs] = useState<boolean[]>(new Array(3).fill(false));
   const [openReminderDialog, setOpenReminderDialog] = useState(false);
+
+  useEffect(() => {
+    const getInitialData = async () => {
+      const singleData = await Promise.all(
+        INPUT_TYPES.map(async (type) => (
+          await getDocs(collection(db, `Settings ${type.h2Text}`))).docs.map((dc) => dc.data())),
+      );
+
+      const reminders = (await getDocs(collection(db, `Settings Reminders`))).docs.map((dc) => dc.data());
+
+      setReminderData(reminders);
+      setSingleInputsData(singleData);
+    };
+
+    getInitialData();
+  }, [openReminderDialog, openDialogs]);
 
   useEffect(() => {
     setContainerHeight(window.innerHeight - 180);
@@ -73,15 +94,37 @@ function Tour() {
     return removeEventListeners();
   }, [containerWidth, containerHeight]);
 
-  const onCreateSingleInput = (type: string, i: number) => {
+  const onCreateSingleInput = async (type: string, i: number) => {
     const val = newSingleInputs[i];
-    // eslint-disable-next-line no-console
-    console.log(type, i, val);
+    await setDoc(doc(db, `Settings ${type}`, uuid()), {
+      val,
+      createdAt: serverTimestamp(),
+    });
+
+    clearSingleInputs();
+    onOpenDialog(i);
   };
 
-  const onCreateReminder = () => {
-    // eslint-disable-next-line no-console
-    console.log(newReminderTitle, newReminderDesc);
+  const clearSingleInputs = () => {
+    setNewSingleInputs(new Array(3).fill(''));
+  };
+
+  const onCreateReminder = async () => {
+    const type = reminderTypes[0] ? 'Creation of Customer' : 'Creation of Quotation';
+    await setDoc(doc(db, `Settings Reminders`, uuid()), {
+      title: newReminderTitle,
+      description: newReminderDesc,
+      type,
+      createdAt: serverTimestamp(),
+    });
+
+    clearReminderInputs();
+    setOpenReminderDialog(false);
+  };
+
+  const clearReminderInputs = () => {
+    setNewReminderTitle('');
+    setNewReminderDesc('');
   };
 
   const onOpenDialog = (i: number) => {
@@ -107,7 +150,7 @@ function Tour() {
           height: `${containerHeight}px`,
         }}
       >
-        {INPUT_TYPES.map((type, index) => (
+        {singleInputsData[0] !== undefined && INPUT_TYPES.map((type, index) => (
           <DivAtom key={index} style={{ marginBottom: '3rem' }}>
             <SectionContainer
               containerWidth={containerWidth}
@@ -123,38 +166,40 @@ function Tour() {
               setOpenDialog={() => onOpenDialog(index)}
               onCreate={() => onCreateSingleInput(type.h2Text, index)}
             />
-            <UnorderedListAtom allChildren={listRender(index)} />
+            <UnorderedListAtom allChildren={listRender(singleInputsData, index)} />
           </DivAtom>
         ))}
 
-        <DivAtom style={{ marginBottom: '3rem' }}>
-          <SectionContainer
-            containerWidth={containerWidth}
-            h2Text="Auto Generated Reminders"
-            btnText="Add Reminder"
-            setOpenDialog={() => setOpenReminderDialog(true)}
-          />
-          <ReminderInputDialog
-            title="Add Reminder"
-            newTitle={newReminderTitle}
-            newDesc={newReminderDesc}
-            setNewTitle={setNewReminderTitle}
-            setNewDesc={setNewReminderDesc}
-            reminderTypes={reminderTypes}
-            openDialog={openReminderDialog}
-            setOpenDialog={() => setOpenReminderDialog(false)}
-            onCreate={onCreateReminder}
-            onChangeReminderType={(i: number) => onChangeReminderType(i)}
-          />
-          <DivAtom style={{ marginTop: '1rem' }}>
-            {SETTINGS_REMINDER_DATA.length > 0 && (
-              <ReminderTable
-                columns={['TITLE', 'DESCRIPTION', 'TYPE']}
-                data={SETTINGS_REMINDER_DATA}
-              />
-            )}
+        {reminderData[0] !== undefined && (
+          <DivAtom style={{ marginBottom: '3rem' }}>
+            <SectionContainer
+              containerWidth={containerWidth}
+              h2Text="Auto Generated Reminders"
+              btnText="Add Reminder"
+              setOpenDialog={() => setOpenReminderDialog(true)}
+            />
+            <ReminderInputDialog
+              title="Add Reminder"
+              newTitle={newReminderTitle}
+              newDesc={newReminderDesc}
+              setNewTitle={setNewReminderTitle}
+              setNewDesc={setNewReminderDesc}
+              reminderTypes={reminderTypes}
+              openDialog={openReminderDialog}
+              setOpenDialog={() => setOpenReminderDialog(false)}
+              onCreate={onCreateReminder}
+              onChangeReminderType={(i: number) => onChangeReminderType(i)}
+            />
+            <DivAtom style={{ marginTop: '1rem' }}>
+              {reminderData.length > 0 && (
+                <ReminderTable
+                  columns={['TITLE', 'DESCRIPTION', 'TYPE']}
+                  data={reminderData}
+                />
+              )}
+            </DivAtom>
           </DivAtom>
-        </DivAtom>
+        )}
       </DivAtom>
     </DivAtom>
   );

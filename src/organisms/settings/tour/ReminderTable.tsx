@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 });
 
 interface ReminderTableProps {
-  data: { id: string; title: string; desc: string; type: string }[];
+  data: { id: string; title: string; description: string; type: string }[];
   columns: string[];
 }
 
@@ -46,7 +46,7 @@ function ReminderTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row: { title: string; desc: string; type: string }) => (
+          {data.map((row: { title: string; description: string; type: string }) => (
             <TableRow key={uuid()}>
               <TableRowTextCell
                 key={uuid()}
@@ -61,7 +61,7 @@ function ReminderTable({
                 key={uuid()}
                 cell={{
                   align: 'center',
-                  title: row.desc,
+                  title: row.description,
                   colors: ['#464E5F', '#B5B5C3'],
                   weight: 400,
                 }}
