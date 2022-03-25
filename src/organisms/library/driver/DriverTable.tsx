@@ -18,7 +18,6 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
@@ -256,14 +255,6 @@ export default function DriverTable({ data }: DriverTableProps) {
                         size="small"
                         padding="8px"
                         children={<DeleteOutlinedIcon />}
-                      />
-                      <TableRowIconCell
-                        align="center"
-                        onClick={() => null}
-                        textcolor="#B5B5C3"
-                        size="small"
-                        padding="8px"
-                        children={<MoreHorizIcon />}
                       />
                     </TableRow>
                   );

@@ -1,6 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
+import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadString,
+} from 'firebase/storage';
+import { v4 as uuid } from 'uuid';
 
 import ImageUploader from '../../../organisms/library/guest/ImageUploader';
 import FormControlInput from '../../../molecules/FormControlInput';
@@ -9,6 +17,9 @@ import H2Atom from '../../../atoms/H2Atom';
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import IconAtom from '../../../atoms/IconAtom';
 import { libraryCreateGuestStyles } from '../../../styles';
+import { db } from '../../../firebase';
+
+const storage = getStorage();
 
 function CreateGuest() {
   // Generate ref num on creation
@@ -23,7 +34,7 @@ function CreateGuest() {
   const [children, setChildren] = useState(0);
   const [allChildren, setAllChildren] = useState<number[]>([]);
   const [rooms, setRooms] = useState(0);
-  const [passport, setPassport] = useState([]);
+  const [passport, setPassport] = useState<any[]>([]);
   const [width, setWidth] = useState(0);
   const history = useHistory();
 
@@ -39,10 +50,41 @@ function CreateGuest() {
 
     return removeEventListeners();
   }, [width]);
+  const onAddGuest = async () => {
+    const storageRef = ref(storage, passport[0].file.name);
+    await uploadString(storageRef, passport[0].data_url, 'data_url');
+    const url = await getDownloadURL(ref(storage, passport[0].file.name));
 
-  const onAddGuest = () => {
-    // eslint-disable-next-line no-console
-    console.log('add guest');
+    await setDoc(doc(db, 'Library Guests', uuid()), {
+      name: `${firstName} ${lastName}`,
+      email,
+      country,
+      city,
+      occupation,
+      adults,
+      rooms,
+      passport: url,
+      childrenAges: allChildren,
+      tel: contactNumber,
+      status: 'Registered',
+      createdAt: serverTimestamp(),
+    });
+
+    clearInputs();
+  };
+
+  const clearInputs = () => {
+    setFirstName('');
+    setLastName('');
+    setEmail('');
+    setCountry('');
+    setCity('');
+    setOccupation('');
+    setContactNumber('');
+    setAdults(0);
+    setRooms(0);
+    setChildren(0);
+    setAllChildren([]);
   };
 
   const onAddReminder = () => {
@@ -227,9 +269,13 @@ function CreateGuest() {
               text="Add Child"
             />
           </DivAtom>
-          <H2Atom text="All Children" style={libraryCreateGuestStyles.subtitle} />
+          <H2Atom text="All Children Ages" style={libraryCreateGuestStyles.subtitle} />
           <ul>
-            {allChildren.map((age, i) => <li key={i}>{age}</li>)}
+            {allChildren.map((age, i) => (
+              <li key={i}>
+                {`${Number(age) === 1 ? `${age} year old` : `${age} years old`}`}
+              </li>
+            ))}
           </ul>
         </DivAtom>
       </DivAtom>
@@ -255,6 +301,16 @@ function CreateGuest() {
         <ButtonAtom
           size="large"
           onClick={onAddGuest}
+          disabled={
+            firstName === ''
+            || lastName === ''
+            || country === ''
+            || city === ''
+            || contactNumber === ''
+            || email === ''
+            || occupation === ''
+            || passport.length === 0
+          }
           style={{
             ...libraryCreateGuestStyles.addBtn,
             width: width < 768 ? '100%' : '18%',
