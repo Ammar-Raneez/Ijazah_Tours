@@ -3,6 +3,7 @@ import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOut
 import {
   collection,
   doc,
+  DocumentData,
   getDocs,
   serverTimestamp,
   setDoc,
@@ -17,6 +18,7 @@ import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
 import { auth, db } from '../../../firebase';
 import { formCreateMemberStyles, libraryTableToolbarStyles, settingsStyles } from '../../../styles';
+import { SettingsTeamMember } from '../../../utils/types';
 
 function UserManagement() {
   const [firstName, setFirstName] = useState('');
@@ -25,7 +27,7 @@ function UserManagement() {
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('');
 
-  const [teamData, setTeamData] = useState<any[]>([]);
+  const [teamData, setTeamData] = useState<DocumentData[]>([]);
 
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -139,7 +141,7 @@ function UserManagement() {
                 'ROLE',
                 'STATUS',
               ]}
-              data={teamData}
+              data={teamData as SettingsTeamMember[]}
             />
           )}
         </DivAtom>

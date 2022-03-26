@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import {
   collection,
   doc,
+  DocumentData,
   getDocs,
   serverTimestamp,
   setDoc,
@@ -16,6 +17,7 @@ import ReminderInputDialog from '../../../organisms/settings/tour/ReminderInputD
 import DivAtom from '../../../atoms/DivAtom';
 import { db } from '../../../firebase';
 import { settingsStyles } from '../../../styles';
+import { SettingsReminder } from '../../../utils/types';
 
 const INPUT_TYPES = [
   {
@@ -32,16 +34,16 @@ const INPUT_TYPES = [
   },
 ];
 
-function listRender(data: any[][], index: number) {
+function listRender(data: DocumentData[][], index: number) {
   if (index === 0) {
-    return data[0];
+    return data[0] as { val: string; }[];
   }
 
   if (index === 1) {
-    return data[1];
+    return data[1] as { val: string; }[];
   }
 
-  return data[2];
+  return data[2] as { val: string; }[];
 }
 
 function Tour() {
@@ -49,12 +51,12 @@ function Tour() {
   const [containerWidth, setContainerWidth] = useState(0);
 
   const [newSingleInputs, setNewSingleInputs] = useState<string[]>(new Array(3).fill(''));
-  const [singleInputsData, setSingleInputsData] = useState<any[]>([undefined]);
+  const [singleInputsData, setSingleInputsData] = useState<DocumentData[][]>([]);
 
   const [newReminderTitle, setNewReminderTitle] = useState('');
   const [newReminderDesc, setNewReminderDesc] = useState('');
   const [reminderTypes, setReminderTypes] = useState<boolean[]>(new Array(2).fill(false));
-  const [reminderData, setReminderData] = useState<any[]>([undefined]);
+  const [reminderData, setReminderData] = useState<DocumentData[]>([]);
 
   const [openDialogs, setOpenDialogs] = useState<boolean[]>(new Array(3).fill(false));
   const [openReminderDialog, setOpenReminderDialog] = useState(false);
@@ -197,7 +199,7 @@ function Tour() {
             {reminderData[0] && (
               <ReminderTable
                 columns={['TITLE', 'DESCRIPTION', 'TYPE']}
-                data={reminderData}
+                data={reminderData as SettingsReminder[]}
               />
             )}
           </DivAtom>

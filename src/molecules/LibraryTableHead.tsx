@@ -6,16 +6,17 @@ import {
   TableRow,
   TableSortLabel,
 } from '@material-ui/core';
+import { ClassNameMap } from '@material-ui/core/styles/withStyles';
 
 import TableColumnCell from './TableColumnCell';
-import { Order } from '../utils/helpers';
+import { Order, LibraryHeadCell } from '../utils/types';
 
 interface LibraryTableHeadProps {
   orderBy: string;
   numSelected: number;
   rowCount: number;
-  classes: any;
-  headCells: any;
+  classes: ClassNameMap<'root' | 'table' | 'paper' | 'visuallyHidden'>;
+  headCells: LibraryHeadCell[];
   onRequestSort: (event: MouseEvent<HTMLSpanElement>, property: string) => void;
   onSelectAllClick: (
     event: ChangeEvent<HTMLInputElement>,

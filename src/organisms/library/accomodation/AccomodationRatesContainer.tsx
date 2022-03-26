@@ -7,6 +7,7 @@ import ButtonAtom from '../../../atoms/ButtonAtom';
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
 import TextFieldAtom from '../../../atoms/TextFieldAtom';
+import { AccomodationRate } from '../../../utils/types';
 import {
   formCreateMemberStyles,
   libraryStyles,
@@ -21,6 +22,7 @@ interface AccomodationRatesContainerProps {
   newSinglePrice: string;
   newDoublePrice: string;
   newTriplePrice: string;
+  rateData: AccomodationRate[];
   onCreateRate: MouseEventHandler<HTMLButtonElement>;
   setNewRateStart: any;
   setNewRateEnd: any;
@@ -28,7 +30,6 @@ interface AccomodationRatesContainerProps {
   setNewSinglePrice: any;
   setNewDoublePrice: any;
   setNewTriplePrice: any;
-  rateData: any;
 }
 
 function AccomodationRatesContainer({

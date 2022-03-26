@@ -7,21 +7,11 @@ import {
   TableHead,
   TableRow,
 } from '@material-ui/core';
-import { Timestamp } from 'firebase/firestore';
 import { v4 as uuid } from 'uuid';
 
 import TableColumnCell from '../../../molecules/TableColumnCell';
 import TableRowTextCell from '../../../molecules/TableRowTextCell';
-
-interface TeamMember {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  createdAt: Timestamp,
-  role: string;
-  status: string;
-}
+import { SettingsTeamMember } from '../../../utils/types';
 
 const useStyles = makeStyles({
   table: {
@@ -31,7 +21,7 @@ const useStyles = makeStyles({
 });
 
 interface UMTeamMemberTableProps {
-  data: TeamMember[];
+  data: SettingsTeamMember[];
   columns: string[];
 }
 
@@ -57,7 +47,7 @@ function UMTeamMemberTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row: TeamMember) => (
+          {data.map((row: SettingsTeamMember) => (
             <TableRow key={uuid()}>
               <TableRowTextCell
                 key={uuid()}

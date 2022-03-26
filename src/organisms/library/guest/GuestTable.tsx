@@ -26,8 +26,9 @@ import LibraryTableToolbar from '../../../molecules/LibraryTableToolbar';
 import LibraryTableHead from '../../../molecules/LibraryTableHead';
 import TableRowIconCell from '../../../molecules/TableRowIconCell';
 import SpanAtom from '../../../atoms/SpanAtom';
+import { getComparator, stableSort } from '../../../utils/helpers';
+import { GuestTableRow, Order, Status } from '../../../utils/types';
 import { libraryTableStyles } from '../../../styles';
-import { getComparator, Order, stableSort } from '../../../utils/helpers';
 
 const headCells = [
   { id: 'name', label: 'NAME' },
@@ -64,9 +65,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface GuestTableProps {
-  data: any;
-  deleteGuest: (row: any) => void;
-  onEditGuestClick: (row: any) => void;
+  data: GuestTableRow[];
+  deleteGuest: (row: GuestTableRow) => void;
+  onEditGuestClick: (row: GuestTableRow) => void;
 }
 
 export default function GuestTable({ data, deleteGuest, onEditGuestClick }: GuestTableProps) {
@@ -160,7 +161,7 @@ export default function GuestTable({ data, deleteGuest, onEditGuestClick }: Gues
             <TableBody>
               {stableSort(data, getComparator(order as Order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row: any, index) => {
+                .map((row: GuestTableRow, index) => {
                   const isItemSelected = isSelected(row.refNum);
                   const labelId = `library-table-checkbox-${index}`;
 
@@ -257,7 +258,7 @@ export default function GuestTable({ data, deleteGuest, onEditGuestClick }: Gues
           ActionsComponent={() => TablePaginationActions({
             rowsPerPage,
             page,
-            active: data?.filter((obj: { status: string }) => obj.status === 'ACTIVE').length,
+            active: data?.filter((obj: { status: Status }) => obj.status === 'ACTIVE').length,
             count: data.length,
             onPageChange: handleChangePage,
           })}
@@ -284,7 +285,7 @@ const tablePaginationActionsStyle = makeStyles((theme: Theme) => createStyles({
 }));
 
 interface TablePaginationActionsProps {
-  active: string;
+  active: number;
   count: number;
   page: number;
   rowsPerPage: number;

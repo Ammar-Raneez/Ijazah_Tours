@@ -1,5 +1,5 @@
 interface UnorderedListAtomProps {
-  allChildren: any[];
+  allChildren: { val: string }[];
 }
 
 function UnorderedListAtom({

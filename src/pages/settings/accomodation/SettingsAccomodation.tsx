@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import {
   collection,
   doc,
+  DocumentData,
   getDocs,
   serverTimestamp,
   setDoc,
@@ -16,6 +17,7 @@ import DivAtom from '../../../atoms/DivAtom';
 import UnorderedListAtom from '../../../atoms/UnorderedListAtom';
 import { db } from '../../../firebase';
 import { settingsStyles } from '../../../styles';
+import { SettingsLocation } from '../../../utils/types';
 
 const INPUT_TYPES = [
   {
@@ -32,16 +34,16 @@ const INPUT_TYPES = [
   },
 ];
 
-function listRender(data: any[][], index: number) {
+function listRender(data: DocumentData[][], index: number) {
   if (index === 0) {
-    return data[0];
+    return data[0] as { val: string; }[];
   }
 
   if (index === 1) {
-    return data[1];
+    return data[1] as { val: string; }[];
   }
 
-  return data[2];
+  return data[2] as { val: string; }[];
 }
 
 function SettingsAccomodation() {
@@ -49,11 +51,11 @@ function SettingsAccomodation() {
   const [containerWidth, setContainerWidth] = useState(0);
 
   const [newSingleInputs, setNewSingleInputs] = useState<string[]>(new Array(3).fill(''));
-  const [singleInputsData, setSingleInputsData] = useState<any[]>([undefined]);
+  const [singleInputsData, setSingleInputsData] = useState<DocumentData[][]>([]);
 
   const [newLocationTitle, setNewLocationTitle] = useState('');
   const [newLocationCity, setNewLocationCity] = useState('');
-  const [locationData, setLocationData] = useState<any[]>([undefined]);
+  const [locationData, setLocationData] = useState<DocumentData[]>([]);
 
   const [openDialogs, setOpenDialogs] = useState<boolean[]>(new Array(3).fill(false));
   const [openLocationDialog, setOpenLocationDialog] = useState(false);
@@ -187,7 +189,7 @@ function SettingsAccomodation() {
             {locationData[0] && (
               <LocationTable
                 columns={['LOCATION', 'CITY']}
-                data={locationData}
+                data={locationData as SettingsLocation[]}
               />
             )}
           </DivAtom>

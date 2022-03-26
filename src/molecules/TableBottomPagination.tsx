@@ -8,13 +8,13 @@ interface TableBottomPaginationProps {
   ActionsComponent: ElementType<TablePaginationActionsProps>;
   onPageChange: () => void;
   onRowsPerPageChange: () => void;
-  rowdata?: any[];
+  length: number;
   rows?: number[];
   colspan?: number;
 }
 
 function TableBottomPagination({
-  rowdata,
+  length,
   rows,
   rowsperpage,
   colspan,
@@ -26,7 +26,7 @@ function TableBottomPagination({
     <StyledTablePagination
       rowsPerPageOptions={[...rows!, { label: 'All', value: -1 }]}
       colSpan={colspan}
-      count={rowdata!.length}
+      count={length}
       rowsPerPage={rowsperpage}
       page={0}
       SelectProps={{

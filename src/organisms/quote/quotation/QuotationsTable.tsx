@@ -111,7 +111,7 @@ function QuotationsTable({ columns, rowdata }: QuotationsTableProps) {
         <TableFooter>
           <TableRow>
             <TableBottomPagination
-              rowdata={rowdata}
+              length={rowdata!.length}
               rows={[5, 10, 25]}
               rowsperpage={5}
               colspan={5}

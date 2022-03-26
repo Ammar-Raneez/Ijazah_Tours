@@ -28,7 +28,8 @@ import LibraryTableHead from '../../../molecules/LibraryTableHead';
 import TableRowIconCell from '../../../molecules/TableRowIconCell';
 import SpanAtom from '../../../atoms/SpanAtom';
 import { libraryTableStyles } from '../../../styles';
-import { getComparator, Order, stableSort } from '../../../utils/helpers';
+import { getComparator, stableSort } from '../../../utils/helpers';
+import { Order } from '../../../utils/types';
 
 const headCells = [
   { id: 'name', label: 'NAME' },

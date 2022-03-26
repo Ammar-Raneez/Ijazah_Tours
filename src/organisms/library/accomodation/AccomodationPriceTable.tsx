@@ -11,6 +11,7 @@ import { v4 as uuid } from 'uuid';
 
 import TableColumnCell from '../../../molecules/TableColumnCell';
 import TableRowTextCell from '../../../molecules/TableRowTextCell';
+import { AccomodationRate } from '../../../utils/types';
 
 const useStyles = makeStyles({
   table: {
@@ -19,17 +20,8 @@ const useStyles = makeStyles({
   },
 });
 
-interface Rate {
-  newRateStart: string;
-  newRateEnd: string;
-  newMealPlan: string;
-  newSinglePrice: string;
-  newDoublePrice: string;
-  newTriplePrice: string;
-}
-
 interface AccomodationPriceTableProps {
-  data: Rate[];
+  data: AccomodationRate[];
   columns: string[];
 }
 
@@ -55,7 +47,7 @@ function AccomodationPriceTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row: Rate) => (
+          {data.map((row: AccomodationRate) => (
             <TableRow key={uuid()}>
               <TableRowTextCell
                 key={uuid()}

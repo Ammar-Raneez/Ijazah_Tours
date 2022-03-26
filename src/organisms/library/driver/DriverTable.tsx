@@ -27,7 +27,8 @@ import LibraryTableHead from '../../../molecules/LibraryTableHead';
 import TableRowIconCell from '../../../molecules/TableRowIconCell';
 import SpanAtom from '../../../atoms/SpanAtom';
 import { libraryTableStyles } from '../../../styles';
-import { getComparator, Order, stableSort } from '../../../utils/helpers';
+import { getComparator, stableSort } from '../../../utils/helpers';
+import { DriverTableRow, Order, Status } from '../../../utils/types';
 
 const headCells = [
   { id: 'name', label: 'NAME' },
@@ -66,9 +67,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface DriverTableProps {
-  data: any;
-  deleteDriver: (row: any) => void;
-  onEditDriverClick: (row: any) => void;
+  data: DriverTableRow[];
+  deleteDriver: (row: DriverTableRow) => void;
+  onEditDriverClick: (row: DriverTableRow) => void;
 }
 
 export default function DriverTable({ data, deleteDriver, onEditDriverClick }: DriverTableProps) {
@@ -91,7 +92,7 @@ export default function DriverTable({ data, deleteDriver, onEditDriverClick }: D
 
   const handleSelectAllClick = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = data.map((n: any) => n.nic);
+      const newSelecteds = data.map((n: DriverTableRow) => n.nic);
       setSelected(newSelecteds);
       return;
     }
@@ -162,7 +163,7 @@ export default function DriverTable({ data, deleteDriver, onEditDriverClick }: D
             <TableBody>
               {stableSort(data, getComparator(order as Order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row: any, index) => {
+                .map((row: DriverTableRow, index) => {
                   const isItemSelected = isSelected(row.nic);
                   const labelId = `library-table-checkbox-${index}`;
 
@@ -275,7 +276,7 @@ export default function DriverTable({ data, deleteDriver, onEditDriverClick }: D
           ActionsComponent={() => TablePaginationActions({
             rowsPerPage,
             page,
-            active: data?.filter((obj: { status: string }) => obj.status === 'ACTIVE').length,
+            active: data?.filter((obj: { status: Status }) => obj.status === 'ACTIVE').length,
             count: data.length,
             onPageChange: handleChangePage,
           })}
@@ -302,7 +303,7 @@ const tablePaginationActionsStyle = makeStyles((theme: Theme) => createStyles({
 }));
 
 interface TablePaginationActionsProps {
-  active: string;
+  active: number;
   count: number;
   page: number;
   rowsPerPage: number;

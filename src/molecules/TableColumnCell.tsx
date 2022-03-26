@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { TableCell } from '@material-ui/core';
 import { v4 as uuid } from 'uuid';
 
-import { Order } from '../utils/helpers';
+import { Order } from '../utils/types';
 
 interface TableColumnCellProps {
   color: string;

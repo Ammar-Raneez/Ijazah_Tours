@@ -11,6 +11,7 @@ import { v4 as uuid } from 'uuid';
 
 import TableColumnCell from '../../../molecules/TableColumnCell';
 import TableRowTextCell from '../../../molecules/TableRowTextCell';
+import { SettingsReminder } from '../../../utils/types';
 
 const useStyles = makeStyles({
   table: {
@@ -20,7 +21,7 @@ const useStyles = makeStyles({
 });
 
 interface ReminderTableProps {
-  data: { id: string; title: string; description: string; type: string }[];
+  data: SettingsReminder[];
   columns: string[];
 }
 
@@ -46,7 +47,7 @@ function ReminderTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row: { title: string; description: string; type: string }) => (
+          {data.map((row: SettingsReminder) => (
             <TableRow key={uuid()}>
               <TableRowTextCell
                 key={uuid()}

@@ -11,6 +11,7 @@ import { v4 as uuid } from 'uuid';
 
 import TableColumnCell from '../../../molecules/TableColumnCell';
 import TableRowTextCell from '../../../molecules/TableRowTextCell';
+import { SettingsLocation } from '../../../utils/types';
 
 const useStyles = makeStyles({
   table: {
@@ -20,7 +21,7 @@ const useStyles = makeStyles({
 });
 
 interface LocationTableProps {
-  data: { id: string; title: string; city: string }[];
+  data: SettingsLocation[];
   columns: string[];
 }
 
@@ -46,7 +47,7 @@ function LocationTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row: { title: string; city: string }) => (
+          {data.map((row: SettingsLocation) => (
             <TableRow key={uuid()}>
               <TableRowTextCell
                 key={uuid()}
