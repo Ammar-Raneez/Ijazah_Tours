@@ -7,12 +7,14 @@ interface ButtonAtomProps {
   onClick?: MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
   starticon?: ReactNode;
+  endicon?: ReactNode;
   style?: CSSProperties;
 }
 
 function ButtonAtom({
   text,
   starticon,
+  endicon,
   disabled,
   onClick,
   style,
@@ -23,6 +25,7 @@ function ButtonAtom({
       onClick={onClick}
       style={{ ...style, textTransform: 'none' }}
       startIcon={starticon}
+      endIcon={endicon}
       disabled={disabled}
       size={size}
     >

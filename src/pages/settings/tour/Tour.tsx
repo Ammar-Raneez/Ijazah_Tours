@@ -203,7 +203,6 @@ function Tour() {
     const input = singleInputsData[i].find((inp) => inp.id === id);
     setEditSingleInput((input as { val: string }).val);
     setEditId((input as { id: string }).id);
-    console.log(id);
     onOpenEditDialog(i);
   };
 

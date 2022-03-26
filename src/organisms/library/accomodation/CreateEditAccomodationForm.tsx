@@ -1,5 +1,5 @@
 import { ChangeEvent, MouseEvent } from 'react';
-import { FormControl, InputLabel } from '@material-ui/core';
+import { CircularProgress, FormControl, InputLabel } from '@material-ui/core';
 
 import AccomodationRatesContainer from './AccomodationRatesContainer';
 import FormControlInput from '../../../molecules/FormControlInput';
@@ -33,6 +33,7 @@ interface CreateEditAccomodationFormProps {
   rateData: AccomodationRate[];
   width: number;
   btnText: string;
+  showValidationErrorMessage: boolean;
   location: string;
   city: string;
   group: string;
@@ -47,6 +48,7 @@ interface CreateEditAccomodationFormProps {
   newSinglePrice: string;
   newDoublePrice: string;
   newTriplePrice: string;
+  isCreating: boolean;
   selectedTypes: string[];
   roomCategories: boolean[];
   roomViews: boolean[];
@@ -78,6 +80,7 @@ function CreateEditAccomodationForm({
   rateData,
   width,
   btnText,
+  showValidationErrorMessage,
   location,
   city,
   group,
@@ -92,6 +95,7 @@ function CreateEditAccomodationForm({
   newSinglePrice,
   newDoublePrice,
   newTriplePrice,
+  isCreating,
   selectedTypes,
   roomCategories,
   roomViews,
@@ -319,6 +323,13 @@ function CreateEditAccomodationForm({
         ))}
       </DivAtom>
 
+      {showValidationErrorMessage && (
+        <ParagraphAtom
+          text="Please fill in all the fields"
+          style={{ color: 'red', textAlign: 'center' }}
+        />
+      )}
+
       <DivAtom
         style={{
           ...formCreateMemberStyles.addBtnContainer,
@@ -328,7 +339,9 @@ function CreateEditAccomodationForm({
         }}
       >
         <ButtonAtom
+          endicon={isCreating && <CircularProgress size={20} color="inherit" />}
           size="large"
+          disabled={isCreating}
           text={btnText}
           onClick={onAddEditAccomodation}
           style={{

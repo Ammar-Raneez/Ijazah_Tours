@@ -24,6 +24,8 @@ function Accomodation() {
   const [search, setSearch] = useState('');
 
   const [editAccomodationData, setEditAccomodationData] = useState<LibraryAccomodation>();
+  const [isCreating, setIsCreating] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const history = useHistory();
 
@@ -58,7 +60,7 @@ function Accomodation() {
     };
 
     getIntialData();
-  }, [isDeleting]);
+  }, [isDeleting, isCreating, isUpdating]);
 
   const deleteAccomodation = async (row: LibraryAccomodation) => {
     // eslint-disable-next-line no-alert, no-restricted-globals
@@ -84,10 +86,14 @@ function Accomodation() {
         }}
       >
         <Route path="/library/accomodation/create">
-          <CreateAccomodation />
+          <CreateAccomodation isCreating={isCreating} setIsCreating={setIsCreating} />
         </Route>
         <Route path="/library/accomodation/edit/:id">
-          <EditAccomodation row={editAccomodationData as LibraryAccomodation} />
+          <EditAccomodation
+            isUpdating={isUpdating}
+            setIsUpdating={setIsUpdating}
+            row={editAccomodationData as LibraryAccomodation}
+          />
         </Route>
         <Route exact path="/library/accomodation">
           <DivAtom>

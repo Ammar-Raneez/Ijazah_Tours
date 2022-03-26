@@ -17,6 +17,8 @@ import { formCreateMemberStyles } from '../../../styles';
 
 interface EditAccomodationProps {
   row: LibraryAccomodation;
+  isUpdating: boolean;
+  setIsUpdating: any;
 }
 
 const allRoomTypes = [
@@ -25,7 +27,7 @@ const allRoomTypes = [
   'Premium Room',
 ];
 
-function EditAccomodation({ row }: EditAccomodationProps) {
+function EditAccomodation({ row, isUpdating, setIsUpdating }: EditAccomodationProps) {
   const [name, setName] = useState(row.name);
   const [group, setGroup] = useState(row.group);
   const [location, setLocation] = useState(row.country);
@@ -57,6 +59,8 @@ function EditAccomodation({ row }: EditAccomodationProps) {
   const [newDoublePrice, setNewDoublePrice] = useState('');
   const [newTriplePrice, setNewTriplePrice] = useState('');
 
+  const [showValidationErrorMessage, setShowValidationErrorMessage] = useState(false);
+
   const [width, setWidth] = useState(0);
   const history = useHistory();
 
@@ -74,6 +78,15 @@ function EditAccomodation({ row }: EditAccomodationProps) {
   }, [width]);
 
   const onEditAccomodation = async () => {
+    setShowValidationErrorMessage(false);
+    if (name.trim() === '' || group.trim() === '' || location.trim() === ''
+      || city.trim() === '' || contactNumber.trim() === '' || email.trim() === ''
+      || webLink.trim() === '' || ijazahLink.trim() === '' || rateData.length === 0) {
+      setShowValidationErrorMessage(true);
+      return;
+    }
+
+    setIsUpdating(true);
     await updateDoc(doc(db, 'Library Accomodation', row.id), {
       name,
       group,
@@ -90,6 +103,8 @@ function EditAccomodation({ row }: EditAccomodationProps) {
       rates: rateData,
       updatedAt: serverTimestamp(),
     });
+
+    setIsUpdating(false);
   };
 
   const onCreateRate = (
@@ -160,9 +175,11 @@ function EditAccomodation({ row }: EditAccomodationProps) {
       </DivAtom>
 
       <CreateEditAccomodationForm
+        isCreating={isUpdating}
         rateData={rateData}
         width={width}
         btnText="Update"
+        showValidationErrorMessage={showValidationErrorMessage}
         location={location}
         city={city}
         group={group}

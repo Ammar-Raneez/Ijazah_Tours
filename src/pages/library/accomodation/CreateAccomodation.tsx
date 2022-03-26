@@ -22,7 +22,15 @@ const allRoomTypes = [
   'Premium Room',
 ];
 
-function CreateAccomodation() {
+interface CreateAccomodationProps {
+  isCreating: boolean;
+  setIsCreating: any;
+}
+
+function CreateAccomodation({
+  isCreating,
+  setIsCreating,
+}: CreateAccomodationProps) {
   const [name, setName] = useState('');
   const [group, setGroup] = useState('');
   const [location, setLocation] = useState('');
@@ -51,6 +59,8 @@ function CreateAccomodation() {
   const [newDoublePrice, setNewDoublePrice] = useState('');
   const [newTriplePrice, setNewTriplePrice] = useState('');
 
+  const [showValidationErrorMessage, setShowValidationErrorMessage] = useState(false);
+
   const [width, setWidth] = useState(0);
   const history = useHistory();
 
@@ -68,6 +78,15 @@ function CreateAccomodation() {
   }, [width]);
 
   const onAddAccomodation = async () => {
+    setShowValidationErrorMessage(false);
+    if (name.trim() === '' || group.trim() === '' || location.trim() === ''
+    || city.trim() === '' || contactNumber.trim() === '' || email.trim() === ''
+    || webLink.trim() === '' || ijazahLink.trim() === '' || rateData.length === 0) {
+      setShowValidationErrorMessage(true);
+      return;
+    }
+
+    setIsCreating(true);
     await setDoc(doc(db, 'Library Accomodation', uuid()), {
       name,
       group,
@@ -85,7 +104,9 @@ function CreateAccomodation() {
       createdAt: serverTimestamp(),
     });
 
+    setIsCreating(false);
     clearInputs();
+    history.replace('/library/accomodation');
   };
 
   const onCreateRate = (
@@ -169,6 +190,8 @@ function CreateAccomodation() {
 
       <CreateEditAccomodationForm
         rateData={rateData}
+        isCreating={isCreating}
+        showValidationErrorMessage={showValidationErrorMessage}
         width={width}
         btnText="Create"
         location={location}
