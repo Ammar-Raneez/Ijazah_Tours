@@ -11,6 +11,7 @@ import { statusOptions, vehicleOptions } from '../../../utils/helpers';
 
 interface CreateEditDriverFormProps {
   width: number;
+  btnText: string,
   firstName: string;
   lastName: string;
   nic: string;
@@ -41,11 +42,12 @@ interface CreateEditDriverFormProps {
   setProfilePic: any;
   setVehiclePic: any;
   onChangeLanguage: (i: number) => void;
-  onAddDriver: () => Promise<void>;
+  onAddEditDriver: () => Promise<void>;
 }
 
 function CreateEditDriverForm({
   width,
+  btnText,
   firstName,
   lastName,
   nic,
@@ -76,7 +78,7 @@ function CreateEditDriverForm({
   setProfilePic,
   setVehiclePic,
   onChangeLanguage,
-  onAddDriver,
+  onAddEditDriver,
 }: CreateEditDriverFormProps) {
   return (
     <>
@@ -283,7 +285,7 @@ function CreateEditDriverForm({
       >
         <ButtonAtom
           size="large"
-          onClick={onAddDriver}
+          onClick={onAddEditDriver}
           disabled={
             firstName === ''
             || lastName === ''
@@ -303,7 +305,7 @@ function CreateEditDriverForm({
             width: width < 768 ? '100%' : '18%',
             margin: width < 768 ? '0 0 1rem 0' : '0px',
           }}
-          text="Create"
+          text={btnText}
         />
       </DivAtom>
     </>

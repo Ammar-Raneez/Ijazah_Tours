@@ -34,7 +34,7 @@ const headCells = [
   { id: 'id', label: 'NIC NUMBER' },
   { id: 'tel', label: 'TEL NUMBER' },
   { id: 'rate', label: 'RATE' },
-  { id: 'country', label: 'COUNTRY' },
+  { id: 'boardcertnum', label: 'BOARD CERT NUMBER' },
   { id: 'vehicle', label: 'VEHICLE' },
   { id: 'status', label: 'STATUS' },
   { id: '...', label: '' },
@@ -67,9 +67,11 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface DriverTableProps {
   data: any;
+  deleteDriver: (row: any) => void;
+  onEditDriverClick: (row: any) => void;
 }
 
-export default function DriverTable({ data }: DriverTableProps) {
+export default function DriverTable({ data, deleteDriver, onEditDriverClick }: DriverTableProps) {
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('calories');
@@ -89,7 +91,7 @@ export default function DriverTable({ data }: DriverTableProps) {
 
   const handleSelectAllClick = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = data.map((n: any) => n.name);
+      const newSelecteds = data.map((n: any) => n.nic);
       setSelected(newSelecteds);
       return;
     }
@@ -97,14 +99,14 @@ export default function DriverTable({ data }: DriverTableProps) {
   };
 
   const handleClick = (
-    _: MouseEvent<HTMLTableRowElement, globalThis.MouseEvent>,
-    name: string,
+    _: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
+    nic: string,
   ) => {
-    const selectedIndex = selected.indexOf(name);
+    const selectedIndex = selected.indexOf(nic);
     let newSelected: string[] = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+      newSelected = newSelected.concat(selected, nic);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -161,13 +163,12 @@ export default function DriverTable({ data }: DriverTableProps) {
               {stableSort(data, getComparator(order as Order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row: any, index) => {
-                  const isItemSelected = isSelected(row.name);
+                  const isItemSelected = isSelected(row.nic);
                   const labelId = `library-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.name)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
@@ -177,6 +178,7 @@ export default function DriverTable({ data }: DriverTableProps) {
                       <TableCell padding="checkbox">
                         <Checkbox
                           checked={isItemSelected}
+                          onClick={(event) => handleClick(event, row.nic)}
                           inputProps={{ 'aria-labelledby': labelId }}
                         />
                       </TableCell>
@@ -215,7 +217,7 @@ export default function DriverTable({ data }: DriverTableProps) {
                       <TableRowTextCell
                         cell={{
                           align: 'left',
-                          title: row.location,
+                          title: row.boardCertNum,
                           colors: ['#B5B5C3'],
                           weight: 600,
                         }}
@@ -223,7 +225,7 @@ export default function DriverTable({ data }: DriverTableProps) {
                       <TableRowTextCell
                         cell={{
                           align: 'left',
-                          title: row.vehicle,
+                          title: row.vehicleType,
                           colors: ['#B5B5C3'],
                           weight: 600,
                         }}
@@ -231,18 +233,18 @@ export default function DriverTable({ data }: DriverTableProps) {
                       <TableRowTextCell
                         cell={{
                           align: 'left',
-                          title: row.group,
+                          title: row.status,
                           marktitle:
-                            row.group === 'ACTIVE' || row.group === 'INACTIVE',
+                            row.status === 'ACTIVE' || row.status === 'INACTIVE',
                           colors: [
-                            row.group === 'ACTIVE' ? '#0A65FF' : '#B5B5C3',
+                            row.status === 'ACTIVE' ? '#0A65FF' : '#B5B5C3',
                           ],
                           weight: 300,
                         }}
                       />
                       <TableRowIconCell
                         align="center"
-                        onClick={() => null}
+                        onClick={() => onEditDriverClick(row)}
                         textcolor="#B5B5C3"
                         size="small"
                         padding="8px"
@@ -250,7 +252,7 @@ export default function DriverTable({ data }: DriverTableProps) {
                       />
                       <TableRowIconCell
                         align="center"
-                        onClick={() => null}
+                        onClick={() => deleteDriver(row)}
                         textcolor="#B5B5C3"
                         size="small"
                         padding="8px"
@@ -268,9 +270,15 @@ export default function DriverTable({ data }: DriverTableProps) {
           count={data.length}
           rowsPerPage={rowsPerPage}
           page={page}
-          onPageChange={handleChangePage as any}
+          onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
-          ActionsComponent={TablePaginationActions}
+          ActionsComponent={() => TablePaginationActions({
+            rowsPerPage,
+            page,
+            active: data?.filter((obj: { status: string }) => obj.status === 'ACTIVE').length,
+            count: data.length,
+            onPageChange: handleChangePage,
+          })}
         />
       </Paper>
     </div>
@@ -294,6 +302,7 @@ const tablePaginationActionsStyle = makeStyles((theme: Theme) => createStyles({
 }));
 
 interface TablePaginationActionsProps {
+  active: string;
   count: number;
   page: number;
   rowsPerPage: number;
@@ -305,6 +314,7 @@ interface TablePaginationActionsProps {
 
 function TablePaginationActions({
   count,
+  active,
   page,
   rowsPerPage,
   onPageChange,
@@ -370,8 +380,8 @@ function TablePaginationActions({
         >
           <SpanAtom text="ACTIVE CUSTOMERS: " style={libraryTableStyles.totalUsers} />
           <Fragment>&nbsp;</Fragment>
-          <SpanAtom text="479" style={libraryTableStyles.activeUsers} />
-          <SpanAtom text="/706" style={libraryTableStyles.totalUsers} />
+          <SpanAtom text={`${active}/`} style={libraryTableStyles.activeUsers} />
+          <SpanAtom text={String(count)} style={libraryTableStyles.totalUsers} />
         </div>
       </div>
     </>

@@ -17,7 +17,6 @@ import EditGuest from './EditGuest';
 function Guest() {
   const [containerHeight, setContainerHeight] = useState(0);
   const [guestData, setGuestData] = useState<any[]>([]);
-
   const [editGuestData, setEditGuestData] = useState<any>();
   const [isDeleting, setIsDeleting] = useState(false);
   const history = useHistory();
@@ -64,9 +63,6 @@ function Guest() {
     setEditGuestData(row);
     history.replace(`/library/guest/edit/${row.id}`);
   };
-
-  // const editGuest = async (row: any) => {
-  // };
 
   return (
     <DivAtom style={libraryStyles.container}>

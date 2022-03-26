@@ -1,3 +1,11 @@
+import {
+  FirebaseStorage,
+  getDownloadURL,
+  ref,
+  uploadString,
+} from 'firebase/storage';
+import { v4 as uuid } from 'uuid';
+
 export function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -39,3 +47,10 @@ export const vehicleOptions = [
   { label: 'Suzuki', value: 'Suzuki' },
   { label: 'BMW', value: 'BMW' },
 ];
+
+export const uploadImage = async (storage: FirebaseStorage, container: string, pic: any, filepath: string) => {
+  const randomString = uuid();
+  const storageRef = ref(storage, `${container}/${randomString + filepath}`);
+  await uploadString(storageRef, pic, 'data_url');
+  return getDownloadURL(storageRef);
+};

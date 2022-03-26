@@ -2,40 +2,38 @@ import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
 import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadString,
-} from 'firebase/storage';
-import { v4 as uuid } from 'uuid';
+import { getStorage } from 'firebase/storage';
 
 import CreateEditDriverForm from '../../../organisms/library/driver/CreateEditDriverForm';
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
 import IconAtom from '../../../atoms/IconAtom';
-import { formCreateMemberStyles } from '../../../styles';
 import { db } from '../../../firebase';
-import { statusOptions, vehicleOptions } from '../../../utils/helpers';
+import { formCreateMemberStyles } from '../../../styles';
+import { uploadImage } from '../../../utils/helpers';
 
 const storage = getStorage();
 
-function CreateDriver() {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [contactNumber, setContactNumber] = useState('');
-  const [email, setEmail] = useState('');
-  const [nic, setNic] = useState('');
-  const [boardCertNum, setBoardCertNum] = useState('');
-  const [address, setAddress] = useState('');
-  const [vehicleType, setVehicleType] = useState(vehicleOptions[0].value);
-  const [status, setStatus] = useState(statusOptions[0].value);
-  const [rate, setRate] = useState('');
-  const [notes, setNotes] = useState('');
-  const [languages, setLanguages] = useState(new Array(2).fill(false));
-  const [insurance, setInsurance] = useState<any[]>([]);
-  const [profilePic, setProfilePic] = useState<any[]>([]);
-  const [vehiclePic, setVehiclePic] = useState<any[]>([]);
+interface EditDriverProps {
+  row: any;
+}
+
+function EditDriver({ row }: EditDriverProps) {
+  const [firstName, setFirstName] = useState(row.name.split(' ')[0]);
+  const [lastName, setLastName] = useState(row.name.split(' ')[1]);
+  const [contactNumber, setContactNumber] = useState(row.tel);
+  const [email, setEmail] = useState(row.email);
+  const [nic, setNic] = useState(row.nic);
+  const [boardCertNum, setBoardCertNum] = useState(row.boardCertNum);
+  const [address, setAddress] = useState(row.address);
+  const [vehicleType, setVehicleType] = useState(row.vehicleType);
+  const [status, setStatus] = useState(row.status);
+  const [rate, setRate] = useState(row.rate);
+  const [notes, setNotes] = useState(row.notes);
+  const [languages, setLanguages] = useState([row.languages[0], row.languages[1]]);
+  const [insurance, setInsurance] = useState<any[]>([row.insurance]);
+  const [profilePic, setProfilePic] = useState<any[]>([row.profilePic]);
+  const [vehiclePic, setVehiclePic] = useState<any[]>([row.vehiclePic]);
   const [width, setWidth] = useState(0);
   const history = useHistory();
 
@@ -52,8 +50,20 @@ function CreateDriver() {
     return removeEventListeners();
   }, [width]);
 
-  const onAddDriver = async () => {
-    const [insuranceUrl, profilePicUrl, vehiclePicUrl] = await uploadImages();
+  const onEditDriver = async () => {
+    let insuUrl;
+    let profUrl;
+    let vehiUrl;
+    if (insurance[0].file) {
+      insuUrl = await uploadInsurance();
+    }
+    if (profilePic[0].file) {
+      profUrl = await uploadProfilePic();
+    }
+    if (vehiclePic[0].file) {
+      vehiUrl = await uploadVehiclePic();
+    }
+
     const selectedLanguages = [];
     if (languages[0]) {
       selectedLanguages.push('English');
@@ -62,7 +72,7 @@ function CreateDriver() {
       selectedLanguages.push('Arabic');
     }
 
-    await setDoc(doc(db, 'Library Drivers', uuid()), {
+    await setDoc(doc(db, 'Library Drivers', row.id), {
       name: `${firstName} ${lastName}`,
       email,
       tel: contactNumber,
@@ -73,48 +83,23 @@ function CreateDriver() {
       status,
       rate,
       notes,
-      insurance: insuranceUrl,
-      profilePic: profilePicUrl,
-      vehiclePic: vehiclePicUrl,
+      insurance: insuUrl || insurance[0],
+      profilePic: profUrl || profilePic[0],
+      vehiclePic: vehiUrl || vehiclePic[0],
       languages: selectedLanguages,
       createdAt: serverTimestamp(),
     });
-
-    clearInputs();
   };
 
-  const uploadImages = async () => {
-    const insuRandom = uuid();
-    const profRandom = uuid();
-    const vehiRandom = uuid();
-    const storageRefInsurance = ref(storage, `library-driver/${insuRandom + insurance[0].file.name}`);
-    const storageRefProfilePic = ref(storage, `library-driver/${profRandom + profilePic[0].file.name}`);
-    const storageRefVehiclePic = ref(storage, `library-driver/${vehiRandom + vehiclePic[0].file.name}`);
-
-    await uploadString(storageRefInsurance, insurance[0].data_url, 'data_url');
-    await uploadString(storageRefProfilePic, profilePic[0].data_url, 'data_url');
-    await uploadString(storageRefVehiclePic, vehiclePic[0].data_url, 'data_url');
-    const insuranceUrl = await getDownloadURL(storageRefInsurance);
-    const profilePicUrl = await getDownloadURL(storageRefProfilePic);
-    const vehiclePicUrl = await getDownloadURL(storageRefVehiclePic);
-
-    return [insuranceUrl, profilePicUrl, vehiclePicUrl];
-  };
-
-  const clearInputs = () => {
-    setFirstName('');
-    setLastName('');
-    setContactNumber('');
-    setEmail('');
-    setNic('');
-    setBoardCertNum('');
-    setAddress('');
-    setRate('');
-    setNotes('');
-    setInsurance([]);
-    setProfilePic([]);
-    setVehiclePic([]);
-  };
+  const uploadInsurance = async () => (
+    uploadImage(storage, 'library-driver', insurance[0].data_url, insurance[0].file.name)
+  );
+  const uploadProfilePic = async () => (
+    uploadImage(storage, 'library-driver', profilePic[0].data_url, profilePic[0].file.name)
+  );
+  const uploadVehiclePic = async () => (
+    uploadImage(storage, 'library-driver', vehiclePic[0].data_url, vehiclePic[0].file.name)
+  );
 
   const onChangeLanguage = (i: number) => {
     const updatedCheckedState = languages.map((lang, index) => (index === i ? !lang : lang));
@@ -130,12 +115,12 @@ function CreateDriver() {
           style={formCreateMemberStyles.backBtn}
           onClick={() => history.replace('/library/driver')}
         />
-        <H2Atom style={formCreateMemberStyles.title} text="Create Driver" />
+        <H2Atom style={formCreateMemberStyles.title} text="Edit Driver" />
       </DivAtom>
 
       <CreateEditDriverForm
         width={width}
-        btnText="Create"
+        btnText="Update"
         firstName={firstName}
         lastName={lastName}
         nic={nic}
@@ -166,10 +151,10 @@ function CreateDriver() {
         setProfilePic={setProfilePic}
         setVehiclePic={setVehiclePic}
         onChangeLanguage={onChangeLanguage}
-        onAddEditDriver={onAddDriver}
+        onAddEditDriver={onEditDriver}
       />
     </DivAtom>
   );
 }
 
-export default CreateDriver;
+export default EditDriver;
