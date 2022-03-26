@@ -28,3 +28,14 @@ export function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
   });
   return stabilizedThis.map((el) => el[0]);
 }
+
+export const statusOptions = [
+  { label: 'ACTIVE', value: 'ACTIVE' },
+  { label: 'INACTIVE', value: 'INACTIVE' },
+];
+
+export const vehicleOptions = [
+  { label: 'Nissan', value: 'Nissan' },
+  { label: 'Suzuki', value: 'Suzuki' },
+  { label: 'BMW', value: 'BMW' },
+];
