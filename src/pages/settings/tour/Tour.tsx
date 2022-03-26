@@ -55,8 +55,8 @@ function Tour() {
   const [containerHeight, setContainerHeight] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
 
-  const [newSingleInputs, setNewSingleInputs] = useState<string[]>(new Array(3).fill(''));
   const [singleInputsData, setSingleInputsData] = useState<DocumentData[][]>([]);
+  const [newSingleInput, setNewSingleInput] = useState('');
   const [editInput, setEditInput] = useState('');
   const [editId, setEditId] = useState('');
 
@@ -121,19 +121,15 @@ function Tour() {
 
   const onCreateSingleInput = async (type: string, i: number) => {
     setCreating(true);
-    const val = newSingleInputs[i];
+    const val = newSingleInput;
     await setDoc(doc(db, `Settings ${type}`, uuid()), {
       val,
       createdAt: serverTimestamp(),
     });
 
-    clearSingleInputs();
+    setNewSingleInput('');
     setCreating(false);
     onOpenNewDialog(i);
-  };
-
-  const clearSingleInputs = () => {
-    setNewSingleInputs(new Array(3).fill(''));
   };
 
   const onCreateReminder = async () => {
@@ -151,6 +147,11 @@ function Tour() {
     setOpenReminderDialog(false);
   };
 
+  const clearReminderInputs = () => {
+    setNewReminderTitle('');
+    setNewReminderDesc('');
+  };
+
   const onEditSingleInput = async (type: string, id: string, i: number) => {
     setIsEditing(true);
     await updateDoc(doc(db, `Settings ${type}`, id), {
@@ -161,14 +162,7 @@ function Tour() {
     onOpenEditDialog(i);
   };
 
-  const onEditItem = (i: number, id: string) => {
-    const input = singleInputsData[i].find((inp) => inp.id === id);
-    setEditInput((input as { val: string }).val);
-    setEditId((input as { id: string }).id);
-    onOpenEditDialog(i);
-  };
-
-  const onDeleteItem = async (type: string, id: string) => {
+  const onDeleteSingleInput = async (type: string, id: string) => {
     // eslint-disable-next-line no-alert, no-restricted-globals
     const confirmDelete = confirm('Are you sure you want to delete this item?');
     if (confirmDelete) {
@@ -178,9 +172,11 @@ function Tour() {
     }
   };
 
-  const clearReminderInputs = () => {
-    setNewReminderTitle('');
-    setNewReminderDesc('');
+  const onEditItemClick = (i: number, id: string) => {
+    const input = singleInputsData[i].find((inp) => inp.id === id);
+    setEditInput((input as { val: string }).val);
+    setEditId((input as { id: string }).id);
+    onOpenEditDialog(i);
   };
 
   const onOpenNewDialog = (i: number) => {
@@ -191,11 +187,6 @@ function Tour() {
   const onOpenEditDialog = (i: number) => {
     const updatedOpenDialogs = openEditDialogs.map((open, index) => (index === i ? !open : open));
     setOpenEditDialogs(updatedOpenDialogs);
-  };
-
-  const onSetNewSingleInputs = (i: number, val: string) => {
-    const updatedSingleInputs = newSingleInputs.map((_, index) => (index === i ? val : ''));
-    setNewSingleInputs(updatedSingleInputs);
   };
 
   const onChangeReminderType = (i: number) => {
@@ -222,8 +213,8 @@ function Tour() {
             {/* Create New Dialog */}
             <SingleInputDialog
               title={type.btnNewText}
-              newInput={newSingleInputs[index]}
-              onChange={(val: string) => onSetNewSingleInputs(index, val)}
+              newInput={newSingleInput}
+              onChange={(val: string) => setNewSingleInput(val)}
               openDialog={openNewDialogs[index]}
               setOpenDialog={() => onOpenNewDialog(index)}
               onEditCreate={() => onCreateSingleInput(type.h2Text, index)}
@@ -239,8 +230,8 @@ function Tour() {
             />
             <UnorderedListAtom
               type={type.h2Text}
-              onEditItem={(_, _id) => onEditItem(index, _id)}
-              onDeleteItem={(tp, _id) => onDeleteItem(tp, _id)}
+              onEditItem={(_, _id) => onEditItemClick(index, _id)}
+              onDeleteItem={(tp, _id) => onDeleteSingleInput(tp, _id)}
               allChildren={listRender(singleInputsData, index)}
             />
           </DivAtom>
