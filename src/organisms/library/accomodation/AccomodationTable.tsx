@@ -29,7 +29,7 @@ import LibraryTableToolbar from '../../../molecules/LibraryTableToolbar';
 import LibraryTableHead from '../../../molecules/LibraryTableHead';
 import TableRowIconCell from '../../../molecules/TableRowIconCell';
 import { getComparator, stableSort } from '../../../utils/helpers';
-import { AccomodationTableRow, Order } from '../../../utils/types';
+import { LibraryAccomodation, Order } from '../../../utils/types';
 
 const headCells = [
   { id: 'name', label: 'NAME' },
@@ -66,11 +66,12 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface AccomodationTableProps {
-  data: AccomodationTableRow[];
-  deleteAccomodation: (row: AccomodationTableRow) => void;
+  data: LibraryAccomodation[];
+  deleteAccomodation: (row: LibraryAccomodation) => void;
+  onEditAccomodationClick: (row: LibraryAccomodation) => void;
 }
 
-export default function AccomodationTable({ data, deleteAccomodation }: AccomodationTableProps) {
+function AccomodationTable({ data, deleteAccomodation, onEditAccomodationClick }: AccomodationTableProps) {
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('calories');
@@ -90,7 +91,7 @@ export default function AccomodationTable({ data, deleteAccomodation }: Accomoda
 
   const handleSelectAllClick = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = data.map((n: AccomodationTableRow) => n.name);
+      const newSelecteds = data.map((n: LibraryAccomodation) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -161,7 +162,7 @@ export default function AccomodationTable({ data, deleteAccomodation }: Accomoda
             <TableBody>
               {stableSort(data, getComparator(order as Order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row: AccomodationTableRow, index) => {
+                .map((row: LibraryAccomodation, index) => {
                   const isItemSelected = isSelected(row.id);
                   const labelId = `library-table-checkbox-${index}`;
 
@@ -223,7 +224,7 @@ export default function AccomodationTable({ data, deleteAccomodation }: Accomoda
                       />
                       <TableRowIconCell
                         align="center"
-                        onClick={() => null}
+                        onClick={() => onEditAccomodationClick(row)}
                         textcolor="#B5B5C3"
                         size="small"
                         padding="8px"
@@ -348,3 +349,5 @@ function TablePaginationActions({
     </>
   );
 }
+
+export default AccomodationTable;

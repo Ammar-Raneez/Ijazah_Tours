@@ -11,11 +11,12 @@ import IconAtom from '../../../atoms/IconAtom';
 import { libraryCreateGuestStyles } from '../../../styles';
 import { db } from '../../../firebase';
 import { uploadImage } from '../../../utils/helpers';
+import { LibraryGuest } from '../../../utils/types';
 
 const storage = getStorage();
 
 interface EditGuestProps {
-  row: any;
+  row: LibraryGuest;
 }
 
 function EditGuest({ row }: EditGuestProps) {

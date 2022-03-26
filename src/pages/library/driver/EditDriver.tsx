@@ -11,11 +11,12 @@ import IconAtom from '../../../atoms/IconAtom';
 import { db } from '../../../firebase';
 import { formCreateMemberStyles } from '../../../styles';
 import { uploadImage } from '../../../utils/helpers';
+import { LibraryDriver } from '../../../utils/types';
 
 const storage = getStorage();
 
 interface EditDriverProps {
-  row: any;
+  row: LibraryDriver;
 }
 
 function EditDriver({ row }: EditDriverProps) {

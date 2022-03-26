@@ -13,13 +13,13 @@ import EditGuest from './EditGuest';
 import GuestTable from '../../../organisms/library/guest/GuestTable';
 import DivAtom from '../../../atoms/DivAtom';
 import { db } from '../../../firebase';
-import { GuestTableRow } from '../../../utils/types';
+import { LibraryGuest } from '../../../utils/types';
 import { libraryStyles } from '../../../styles';
 
 function Guest() {
   const [containerHeight, setContainerHeight] = useState(0);
   const [guestData, setGuestData] = useState<DocumentData[]>([]);
-  const [editGuestData, setEditGuestData] = useState<GuestTableRow>();
+  const [editGuestData, setEditGuestData] = useState<LibraryGuest>();
   const [isDeleting, setIsDeleting] = useState(false);
   const history = useHistory();
 
@@ -51,7 +51,7 @@ function Guest() {
     getIntialData();
   }, [isDeleting]);
 
-  const deleteGuest = async (row: GuestTableRow) => {
+  const deleteGuest = async (row: LibraryGuest) => {
     // eslint-disable-next-line no-alert, no-restricted-globals
     const confirmDelete = confirm('Are you sure you want to delete this guest?');
     if (confirmDelete) {
@@ -61,7 +61,7 @@ function Guest() {
     }
   };
 
-  const onEditGuestClick = (row: GuestTableRow) => {
+  const onEditGuestClick = (row: LibraryGuest) => {
     setEditGuestData(row);
     history.replace(`/library/guest/edit/${row.id}`);
   };
@@ -79,13 +79,13 @@ function Guest() {
             <CreateGuest />
           </Route>
           <Route path="/library/guest/edit/:id">
-            <EditGuest row={editGuestData} />
+            <EditGuest row={editGuestData as LibraryGuest} />
           </Route>
           <Route exact path="/library/guest">
             <GuestTable
               onEditGuestClick={onEditGuestClick}
               deleteGuest={deleteGuest}
-              data={guestData as GuestTableRow[]}
+              data={guestData as LibraryGuest[]}
             />
           </Route>
         </DivAtom>

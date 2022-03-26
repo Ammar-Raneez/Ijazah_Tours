@@ -6,15 +6,18 @@ import {
 import { useHistory } from 'react-router-dom';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
 import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
-import { v4 as uuid } from 'uuid';
 
+import CreateEditAccomodationForm from '../../../organisms/library/accomodation/CreateEditAccomodationForm';
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
 import IconAtom from '../../../atoms/IconAtom';
 import { db } from '../../../firebase';
-import { AccomodationRate } from '../../../utils/types';
+import { AccomodationRate, LibraryAccomodation } from '../../../utils/types';
 import { formCreateMemberStyles } from '../../../styles';
-import CreateEditAccomodationForm from '../../../organisms/library/accomodation/CreateEditAccomodationForm';
+
+interface EditAccomodationProps {
+  row: LibraryAccomodation;
+}
 
 const allRoomTypes = [
   'Cilantro Suite',
@@ -22,28 +25,31 @@ const allRoomTypes = [
   'Premium Room',
 ];
 
-function CreateAccomodation() {
-  const [name, setName] = useState('');
-  const [group, setGroup] = useState('');
-  const [location, setLocation] = useState('');
-  const [city, setCity] = useState('');
-  const [contactNumber, setContactNumber] = useState('');
-  const [email, setEmail] = useState('');
-  const [webLink, setWebLink] = useState('');
-  const [ijazahLink, setIjazahLink] = useState('');
+function EditAccomodation({ row }: EditAccomodationProps) {
+  const [name, setName] = useState(row.name);
+  const [group, setGroup] = useState(row.group);
+  const [location, setLocation] = useState(row.country);
+  const [city, setCity] = useState(row.city);
+  const [contactNumber, setContactNumber] = useState(row.tel);
+  const [email, setEmail] = useState(row.email);
+  const [webLink, setWebLink] = useState(row.webLink);
+  const [ijazahLink, setIjazahLink] = useState(row.ijazahLink);
 
-  const [roomCategories, setRoomCategories] = useState(new Array(3).fill(false));
-  const [roomViews, setRoomViews] = useState(new Array(3).fill(false));
-  const [roomGradings, setRoomGradings] = useState(new Array(3).fill(false));
+  const [roomCategories, setRoomCategories] = useState(row.categories);
+  const [roomViews, setRoomViews] = useState(row.views);
+  const [roomGradings, setRoomGradings] = useState(row.gradings);
 
-  const [selectedTypes, setSelectedTypes] = useState(new Array(3).fill(undefined));
+  const [selectedTypes, setSelectedTypes] = useState(
+    allRoomTypes.filter((type, index) => roomCategories[index] && type),
+  );
+
   const [selectedTypeValues, setSelectedTypeValues] = useState(
     Object.fromEntries(
-      allRoomTypes.map((type: string) => [type, '']),
+      allRoomTypes.map((type) => [type, row.categoryValues[type]]),
     ),
   );
 
-  const [rateData, setRateData] = useState<AccomodationRate[]>([]);
+  const [rateData, setRateData] = useState<AccomodationRate[]>(row.rates);
   const [newRateStart, setNewRateStart] = useState('');
   const [newRateEnd, setNewRateEnd] = useState('');
   const [newMealPlan, setNewMealPlan] = useState('');
@@ -67,8 +73,8 @@ function CreateAccomodation() {
     return removeEventListeners();
   }, [width]);
 
-  const onAddAccomodation = async () => {
-    await setDoc(doc(db, 'Library Accomodation', uuid()), {
+  const onEditAccomodation = async () => {
+    await setDoc(doc(db, 'Library Accomodation', row.id), {
       name,
       group,
       city,
@@ -84,8 +90,6 @@ function CreateAccomodation() {
       rates: rateData,
       createdAt: serverTimestamp(),
     });
-
-    clearInputs();
   };
 
   const onCreateRate = (
@@ -112,18 +116,6 @@ function CreateAccomodation() {
     setNewSinglePrice('');
     setNewDoublePrice('');
     setNewTriplePrice('');
-  };
-
-  const clearInputs = () => {
-    setName('');
-    setGroup('');
-    setLocation('');
-    setCity('');
-    setContactNumber('');
-    setEmail('');
-    setWebLink('');
-    setIjazahLink('');
-    clearRateInputs();
   };
 
   const addRoomGradings = (i: number) => {
@@ -163,14 +155,14 @@ function CreateAccomodation() {
         />
         <H2Atom
           style={formCreateMemberStyles.title}
-          text="Create Accomodation"
+          text="Edit Accomodation"
         />
       </DivAtom>
 
       <CreateEditAccomodationForm
         rateData={rateData}
         width={width}
-        btnText="Create"
+        btnText="Update"
         location={location}
         city={city}
         group={group}
@@ -195,7 +187,7 @@ function CreateAccomodation() {
         addRoomGradings={addRoomGradings}
         onSetSelectedTypeValue={onSetSelectedTypeValue}
         onCreateRate={onCreateRate}
-        onAddEditAccomodation={onAddAccomodation}
+        onAddEditAccomodation={onEditAccomodation}
         setLocation={setLocation}
         setCity={setCity}
         setGroup={setGroup}
@@ -215,4 +207,4 @@ function CreateAccomodation() {
   );
 }
 
-export default CreateAccomodation;
+export default EditAccomodation;

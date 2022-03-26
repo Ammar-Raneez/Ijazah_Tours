@@ -17,16 +17,24 @@ export interface AccomodationRate {
   newTriplePrice: string;
 }
 
-export interface AccomodationTableRow {
+export interface LibraryAccomodation {
   id: string;
   name: string;
   tel: string;
   city: string;
   country: string;
   group: string;
+  email: string;
+  webLink: string;
+  ijazahLink: string;
+  views: boolean[];
+  categories: boolean[];
+  gradings: boolean[];
+  rates: AccomodationRate[];
+  categoryValues: any;
 }
 
-export interface DriverTableRow {
+export interface LibraryDriver {
   id: string;
   name: string;
   nic: string;
@@ -35,15 +43,29 @@ export interface DriverTableRow {
   boardCertNum: string;
   vehicleType: string;
   status: Status;
+  email: string;
+  address: string;
+  notes: string;
+  languages: boolean[];
+  insurance: any;
+  profilePic: any;
+  vehiclePic: any;
 }
 
-export interface GuestTableRow {
+export interface LibraryGuest {
   id: string;
   name: string;
   refNum: string;
   tel: string;
   country: string;
   status: Status;
+  occupation: string;
+  city: string;
+  email: string;
+  adults: number;
+  rooms: number;
+  childrenAges: number[];
+  passport: any;
 }
 
 export interface SettingsLocation {

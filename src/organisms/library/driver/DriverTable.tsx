@@ -28,7 +28,7 @@ import TableRowIconCell from '../../../molecules/TableRowIconCell';
 import SpanAtom from '../../../atoms/SpanAtom';
 import { libraryTableStyles } from '../../../styles';
 import { getComparator, stableSort } from '../../../utils/helpers';
-import { DriverTableRow, Order, Status } from '../../../utils/types';
+import { LibraryDriver, Order, Status } from '../../../utils/types';
 
 const headCells = [
   { id: 'name', label: 'NAME' },
@@ -67,9 +67,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface DriverTableProps {
-  data: DriverTableRow[];
-  deleteDriver: (row: DriverTableRow) => void;
-  onEditDriverClick: (row: DriverTableRow) => void;
+  data: LibraryDriver[];
+  deleteDriver: (row: LibraryDriver) => void;
+  onEditDriverClick: (row: LibraryDriver) => void;
 }
 
 export default function DriverTable({ data, deleteDriver, onEditDriverClick }: DriverTableProps) {
@@ -92,7 +92,7 @@ export default function DriverTable({ data, deleteDriver, onEditDriverClick }: D
 
   const handleSelectAllClick = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = data.map((n: DriverTableRow) => n.nic);
+      const newSelecteds = data.map((n: LibraryDriver) => n.nic);
       setSelected(newSelecteds);
       return;
     }
@@ -163,7 +163,7 @@ export default function DriverTable({ data, deleteDriver, onEditDriverClick }: D
             <TableBody>
               {stableSort(data, getComparator(order as Order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row: DriverTableRow, index) => {
+                .map((row: LibraryDriver, index) => {
                   const isItemSelected = isSelected(row.nic);
                   const labelId = `library-table-checkbox-${index}`;
 

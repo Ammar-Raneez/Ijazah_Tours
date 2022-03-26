@@ -27,7 +27,7 @@ import LibraryTableHead from '../../../molecules/LibraryTableHead';
 import TableRowIconCell from '../../../molecules/TableRowIconCell';
 import SpanAtom from '../../../atoms/SpanAtom';
 import { getComparator, stableSort } from '../../../utils/helpers';
-import { GuestTableRow, Order, Status } from '../../../utils/types';
+import { LibraryGuest, Order, Status } from '../../../utils/types';
 import { libraryTableStyles } from '../../../styles';
 
 const headCells = [
@@ -65,9 +65,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface GuestTableProps {
-  data: GuestTableRow[];
-  deleteGuest: (row: GuestTableRow) => void;
-  onEditGuestClick: (row: GuestTableRow) => void;
+  data: LibraryGuest[];
+  deleteGuest: (row: LibraryGuest) => void;
+  onEditGuestClick: (row: LibraryGuest) => void;
 }
 
 export default function GuestTable({ data, deleteGuest, onEditGuestClick }: GuestTableProps) {
@@ -161,7 +161,7 @@ export default function GuestTable({ data, deleteGuest, onEditGuestClick }: Gues
             <TableBody>
               {stableSort(data, getComparator(order as Order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row: GuestTableRow, index) => {
+                .map((row: LibraryGuest, index) => {
                   const isItemSelected = isSelected(row.refNum);
                   const labelId = `library-table-checkbox-${index}`;
 

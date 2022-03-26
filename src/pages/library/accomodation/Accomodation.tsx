@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, useHistory } from 'react-router-dom';
 import {
   collection,
   deleteDoc,
@@ -13,14 +13,15 @@ import AccomodationTable from '../../../organisms/library/accomodation/Accomodat
 import DivAtom from '../../../atoms/DivAtom';
 import { db } from '../../../firebase';
 import { libraryStyles } from '../../../styles';
-import { AccomodationTableRow } from '../../../utils/types';
+import { LibraryAccomodation } from '../../../utils/types';
+import EditAccomodation from './EditAccomodation';
 
 function Accomodation() {
   const [containerHeight, setContainerHeight] = useState(0);
   const [accomodationData, setAccomodationData] = useState<DocumentData[]>([]);
-  // const [editAccomodationData, setEditAccomodationData] = useState<AccomodationTableRow>();
+  const [editAccomodationData, setEditAccomodationData] = useState<LibraryAccomodation>();
   const [isDeleting, setIsDeleting] = useState(false);
-  // const history = useHistory();
+  const history = useHistory();
 
   useEffect(() => {
     setContainerHeight(window.innerHeight - 180);
@@ -50,7 +51,7 @@ function Accomodation() {
     getIntialData();
   }, [isDeleting]);
 
-  const deleteAccomodation = async (row: AccomodationTableRow) => {
+  const deleteAccomodation = async (row: LibraryAccomodation) => {
     // eslint-disable-next-line no-alert, no-restricted-globals
     const confirmDelete = confirm('Are you sure you want to delete this accomodation?');
     if (confirmDelete) {
@@ -58,6 +59,11 @@ function Accomodation() {
       await deleteDoc(doc(db, 'Library Accomodation', row.id));
       setIsDeleting(true);
     }
+  };
+
+  const onEditAccomodationClick = (row: LibraryAccomodation) => {
+    setEditAccomodationData(row);
+    history.replace(`/library/accomodation/edit/${row.id}`);
   };
 
   return (
@@ -71,11 +77,15 @@ function Accomodation() {
         <Route path="/library/accomodation/create">
           <CreateAccomodation />
         </Route>
+        <Route path="/library/accomodation/edit/:id">
+          <EditAccomodation row={editAccomodationData as LibraryAccomodation} />
+        </Route>
         <Route exact path="/library/accomodation">
           <DivAtom>
             <AccomodationTable
               deleteAccomodation={deleteAccomodation}
-              data={accomodationData as AccomodationTableRow[]}
+              onEditAccomodationClick={onEditAccomodationClick}
+              data={accomodationData as LibraryAccomodation[]}
             />
           </DivAtom>
         </Route>
