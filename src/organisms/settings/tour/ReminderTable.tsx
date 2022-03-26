@@ -7,9 +7,12 @@ import {
   TableHead,
   TableRow,
 } from '@material-ui/core';
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { v4 as uuid } from 'uuid';
 
 import TableColumnCell from '../../../molecules/TableColumnCell';
+import TableRowIconCell from '../../../molecules/TableRowIconCell';
 import TableRowTextCell from '../../../molecules/TableRowTextCell';
 import { SettingsReminder } from '../../../utils/types';
 
@@ -23,11 +26,15 @@ const useStyles = makeStyles({
 interface ReminderTableProps {
   data: SettingsReminder[];
   columns: string[];
+  onEditReminderClick: (row: SettingsReminder) => void;
+  deleteReminder: (row: SettingsReminder) => void;
 }
 
 function ReminderTable({
   data,
   columns,
+  onEditReminderClick,
+  deleteReminder,
 }: ReminderTableProps) {
   const classes = useStyles();
 
@@ -75,6 +82,22 @@ function ReminderTable({
                   colors: ['#464E5F', '#B5B5C3'],
                   weight: 400,
                 }}
+              />
+              <TableRowIconCell
+                align="center"
+                onClick={() => onEditReminderClick(row)}
+                textcolor="#B5B5C3"
+                size="small"
+                padding="8px"
+                children={<EditOutlinedIcon />}
+              />
+              <TableRowIconCell
+                align="center"
+                onClick={() => deleteReminder(row)}
+                textcolor="#B5B5C3"
+                size="small"
+                padding="8px"
+                children={<DeleteOutlinedIcon />}
               />
             </TableRow>
           ))}

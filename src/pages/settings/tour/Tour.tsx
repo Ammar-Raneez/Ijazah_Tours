@@ -60,14 +60,18 @@ function Tour() {
   const [editInput, setEditInput] = useState('');
   const [editId, setEditId] = useState('');
 
+  const [reminderData, setReminderData] = useState<DocumentData[]>([]);
   const [newReminderTitle, setNewReminderTitle] = useState('');
   const [newReminderDesc, setNewReminderDesc] = useState('');
-  const [reminderTypes, setReminderTypes] = useState<boolean[]>(new Array(2).fill(false));
-  const [reminderData, setReminderData] = useState<DocumentData[]>([]);
+  const [newReminderTypes, setNewReminderTypes] = useState<boolean[]>(new Array(2).fill(false));
+  const [editReminderTitle, setEditReminderTitle] = useState('');
+  const [editReminderDesc, setEditReminderDesc] = useState('');
+  const [editReminderTypes, setEditReminderTypes] = useState<boolean[]>(new Array(2).fill(false));
 
   const [openNewDialogs, setOpenNewDialogs] = useState<boolean[]>(new Array(3).fill(false));
   const [openEditDialogs, setOpenEditDialogs] = useState<boolean[]>(new Array(3).fill(false));
-  const [openReminderDialog, setOpenReminderDialog] = useState(false);
+  const [openNewReminderDialog, setOpenNewReminderDialog] = useState(false);
+  const [openEditReminderDialog, setOpenEditReminderDialog] = useState(false);
 
   const [isDeleting, setIsDeleting] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -132,29 +136,9 @@ function Tour() {
     onOpenNewDialog(i);
   };
 
-  const onCreateReminder = async () => {
-    setCreating(true);
-    const type = reminderTypes[0] ? 'Creation of Customer' : 'Creation of Quotation';
-    await setDoc(doc(db, `Settings Reminders`, uuid()), {
-      title: newReminderTitle,
-      description: newReminderDesc,
-      type,
-      createdAt: serverTimestamp(),
-    });
-
-    clearReminderInputs();
-    setCreating(false);
-    setOpenReminderDialog(false);
-  };
-
-  const clearReminderInputs = () => {
-    setNewReminderTitle('');
-    setNewReminderDesc('');
-  };
-
-  const onEditSingleInput = async (type: string, id: string, i: number) => {
+  const onEditSingleInput = async (type: string, i: number) => {
     setIsEditing(true);
-    await updateDoc(doc(db, `Settings ${type}`, id), {
+    await updateDoc(doc(db, `Settings ${type}`, editId), {
       val: editInput,
       updatedAt: serverTimestamp(),
     });
@@ -172,11 +156,63 @@ function Tour() {
     }
   };
 
+  const onCreateReminder = async () => {
+    setCreating(true);
+    const type = newReminderTypes[0] ? 'Creation of Customer' : 'Creation of Quotation';
+    await setDoc(doc(db, `Settings Reminders`, uuid()), {
+      title: newReminderTitle,
+      description: newReminderDesc,
+      type,
+      createdAt: serverTimestamp(),
+    });
+
+    clearReminderInputs();
+    setCreating(false);
+    setOpenNewReminderDialog(false);
+  };
+
+  const clearReminderInputs = () => {
+    setNewReminderTitle('');
+    setNewReminderDesc('');
+  };
+
+  const onEditReminder = async () => {
+    setIsEditing(true);
+    const type = editReminderTypes[0] ? 'Creation of Customer' : 'Creation of Quotation';
+    await updateDoc(doc(db, `Settings Reminders`, editId), {
+      title: editReminderTitle,
+      description: editReminderDesc,
+      type,
+      updatedAt: serverTimestamp(),
+    });
+    setIsEditing(false);
+    setOpenEditReminderDialog(false);
+  };
+
+  const deleteReminder = async (row: SettingsReminder) => {
+    // eslint-disable-next-line no-alert, no-restricted-globals
+    const confirmDelete = confirm('Are you sure you want to delete this item?');
+    if (confirmDelete) {
+      setIsDeleting(false);
+      await deleteDoc(doc(db, `Settings Reminders`, row.id));
+      setIsDeleting(true);
+    }
+  };
+
   const onEditItemClick = (i: number, id: string) => {
     const input = singleInputsData[i].find((inp) => inp.id === id);
     setEditInput((input as { val: string }).val);
     setEditId((input as { id: string }).id);
     onOpenEditDialog(i);
+  };
+
+  const onEditReminderClick = (row: SettingsReminder) => {
+    const type = row.type.includes('Customer') ? [true, false] : [false, true];
+    setOpenEditReminderDialog(true);
+    setEditReminderTitle(row.title);
+    setEditReminderTypes(type);
+    setEditId(row.id);
+    setEditReminderDesc(row.description);
   };
 
   const onOpenNewDialog = (i: number) => {
@@ -189,9 +225,14 @@ function Tour() {
     setOpenEditDialogs(updatedOpenDialogs);
   };
 
-  const onChangeReminderType = (i: number) => {
-    const updatedCheckedState = reminderTypes.map((type, index) => (index === i ? !type : type));
-    setReminderTypes(updatedCheckedState);
+  const onChangeNewReminderType = (i: number) => {
+    const updatedCheckedState = newReminderTypes.map((type, index) => (index === i ? !type : type));
+    setNewReminderTypes(updatedCheckedState);
+  };
+
+  const onChangeEditReminderType = (i: number) => {
+    const updatedCheckedState = editReminderTypes.map((type, index) => (index === i ? !type : type));
+    setEditReminderTypes(updatedCheckedState);
   };
 
   return (
@@ -226,7 +267,7 @@ function Tour() {
               onChange={(val: string) => setEditInput(val)}
               openDialog={openEditDialogs[index]}
               setOpenDialog={() => onOpenEditDialog(index)}
-              onEditCreate={() => onEditSingleInput(type.h2Text, editId, index)}
+              onEditCreate={() => onEditSingleInput(type.h2Text, index)}
             />
             <UnorderedListAtom
               type={type.h2Text}
@@ -242,25 +283,41 @@ function Tour() {
             containerWidth={containerWidth}
             h2Text="Auto Generated Reminders"
             btnText="Add Reminder"
-            setOpenDialog={() => setOpenReminderDialog(true)}
+            setOpenDialog={() => setOpenNewReminderDialog(true)}
           />
+          {/* Add Reminder */}
           <ReminderInputDialog
             title="Add Reminder"
             newTitle={newReminderTitle}
             newDesc={newReminderDesc}
             setNewTitle={setNewReminderTitle}
             setNewDesc={setNewReminderDesc}
-            reminderTypes={reminderTypes}
-            openDialog={openReminderDialog}
-            setOpenDialog={() => setOpenReminderDialog(false)}
-            onCreate={onCreateReminder}
-            onChangeReminderType={(i: number) => onChangeReminderType(i)}
+            reminderTypes={newReminderTypes}
+            openDialog={openNewReminderDialog}
+            setOpenDialog={() => setOpenNewReminderDialog(false)}
+            onAddEdit={onCreateReminder}
+            onChangeReminderType={(i: number) => onChangeNewReminderType(i)}
+          />
+          {/* Edit Reminder */}
+          <ReminderInputDialog
+            title="Edit Reminder"
+            newTitle={editReminderTitle}
+            newDesc={editReminderDesc}
+            setNewTitle={setEditReminderTitle}
+            setNewDesc={setEditReminderDesc}
+            reminderTypes={editReminderTypes}
+            openDialog={openEditReminderDialog}
+            setOpenDialog={() => setOpenEditReminderDialog(false)}
+            onAddEdit={onEditReminder}
+            onChangeReminderType={(i: number) => onChangeEditReminderType(i)}
           />
           <DivAtom style={{ marginTop: '1rem' }}>
             {reminderData[0] && (
               <ReminderTable
-                columns={['TITLE', 'DESCRIPTION', 'TYPE']}
+                columns={['TITLE', 'DESCRIPTION', 'TYPE', '', '']}
                 data={reminderData as SettingsReminder[]}
+                deleteReminder={deleteReminder}
+                onEditReminderClick={onEditReminderClick}
               />
             )}
           </DivAtom>

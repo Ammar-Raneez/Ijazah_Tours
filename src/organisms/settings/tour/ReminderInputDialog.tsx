@@ -20,7 +20,7 @@ interface ReminderInputDialogProps {
   newDesc: string;
   reminderTypes: boolean[];
   openDialog: boolean;
-  onCreate: MouseEventHandler<HTMLButtonElement>;
+  onAddEdit: MouseEventHandler<HTMLButtonElement>;
   onChangeReminderType: (i: number) => void;
   setNewTitle: any;
   setNewDesc: any;
@@ -36,7 +36,7 @@ function ReminderInputDialog({
   setOpenDialog,
   setNewTitle,
   setNewDesc,
-  onCreate,
+  onAddEdit,
   onChangeReminderType,
 }: ReminderInputDialogProps) {
   return (
@@ -78,7 +78,7 @@ function ReminderInputDialog({
             starticon={<AddCircleOutlineOutlinedIcon />}
             text={title}
             disabled={newTitle === '' || newDesc === ''}
-            onClick={onCreate}
+            onClick={onAddEdit}
             style={{
               ...libraryTableToolbarStyles.addBtn,
               marginTop: '1rem',
