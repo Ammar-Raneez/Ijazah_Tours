@@ -4,20 +4,22 @@ import {
   collection,
   deleteDoc,
   doc,
+  DocumentData,
   getDocs,
 } from 'firebase/firestore';
 
 import CreateGuest from './CreateGuest';
+import EditGuest from './EditGuest';
 import GuestTable from '../../../organisms/library/guest/GuestTable';
 import DivAtom from '../../../atoms/DivAtom';
 import { db } from '../../../firebase';
+import { GuestTableRow } from '../../../utils/types';
 import { libraryStyles } from '../../../styles';
-import EditGuest from './EditGuest';
 
 function Guest() {
   const [containerHeight, setContainerHeight] = useState(0);
-  const [guestData, setGuestData] = useState<any[]>([]);
-  const [editGuestData, setEditGuestData] = useState<any>();
+  const [guestData, setGuestData] = useState<DocumentData[]>([]);
+  const [editGuestData, setEditGuestData] = useState<GuestTableRow>();
   const [isDeleting, setIsDeleting] = useState(false);
   const history = useHistory();
 
@@ -49,7 +51,7 @@ function Guest() {
     getIntialData();
   }, [isDeleting]);
 
-  const deleteGuest = async (row: any) => {
+  const deleteGuest = async (row: GuestTableRow) => {
     // eslint-disable-next-line no-alert, no-restricted-globals
     const confirmDelete = confirm('Are you sure you want to delete this guest?');
     if (confirmDelete) {
@@ -59,7 +61,7 @@ function Guest() {
     }
   };
 
-  const onEditGuestClick = (row: any) => {
+  const onEditGuestClick = (row: GuestTableRow) => {
     setEditGuestData(row);
     history.replace(`/library/guest/edit/${row.id}`);
   };
@@ -80,7 +82,11 @@ function Guest() {
             <EditGuest row={editGuestData} />
           </Route>
           <Route exact path="/library/guest">
-            <GuestTable onEditGuestClick={onEditGuestClick} deleteGuest={deleteGuest} data={guestData} />
+            <GuestTable
+              onEditGuestClick={onEditGuestClick}
+              deleteGuest={deleteGuest}
+              data={guestData as GuestTableRow[]}
+            />
           </Route>
         </DivAtom>
       </DivAtom>

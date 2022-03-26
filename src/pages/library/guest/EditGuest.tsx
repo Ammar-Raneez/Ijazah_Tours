@@ -68,7 +68,7 @@ function EditGuest({ row }: EditGuestProps) {
       status,
       passport: url || passport[0],
       tel: contactNumber,
-      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
     });
   };
 

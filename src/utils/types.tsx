@@ -18,6 +18,7 @@ export interface AccomodationRate {
 }
 
 export interface AccomodationTableRow {
+  id: string;
   name: string;
   tel: string;
   city: string;
@@ -66,4 +67,8 @@ export interface SettingsTeamMember {
   createdAt: Timestamp,
   role: string;
   status: Status;
+}
+
+export interface SettingsSingleInput {
+  val: string;
 }

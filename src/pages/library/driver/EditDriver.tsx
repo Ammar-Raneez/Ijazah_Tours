@@ -87,7 +87,7 @@ function EditDriver({ row }: EditDriverProps) {
       profilePic: profUrl || profilePic[0],
       vehiclePic: vehiUrl || vehiclePic[0],
       languages: selectedLanguages,
-      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
     });
   };
 

@@ -17,7 +17,7 @@ import ReminderInputDialog from '../../../organisms/settings/tour/ReminderInputD
 import DivAtom from '../../../atoms/DivAtom';
 import { db } from '../../../firebase';
 import { settingsStyles } from '../../../styles';
-import { SettingsReminder } from '../../../utils/types';
+import { SettingsReminder, SettingsSingleInput } from '../../../utils/types';
 
 const INPUT_TYPES = [
   {
@@ -36,14 +36,14 @@ const INPUT_TYPES = [
 
 function listRender(data: DocumentData[][], index: number) {
   if (index === 0) {
-    return data[0] as { val: string; }[];
+    return data[0] as SettingsSingleInput[];
   }
 
   if (index === 1) {
-    return data[1] as { val: string; }[];
+    return data[1] as SettingsSingleInput[];
   }
 
-  return data[2] as { val: string; }[];
+  return data[2] as SettingsSingleInput[];
 }
 
 function Tour() {

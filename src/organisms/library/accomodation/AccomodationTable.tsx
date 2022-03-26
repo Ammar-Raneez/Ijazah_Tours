@@ -1,5 +1,8 @@
 import {
-  ChangeEvent, Fragment, MouseEvent, useEffect, useState,
+  ChangeEvent,
+  MouseEvent,
+  useEffect,
+  useState,
 } from 'react';
 import {
   Theme,
@@ -18,7 +21,6 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
@@ -26,19 +28,15 @@ import TableRowTextCell from '../../../molecules/TableRowTextCell';
 import LibraryTableToolbar from '../../../molecules/LibraryTableToolbar';
 import LibraryTableHead from '../../../molecules/LibraryTableHead';
 import TableRowIconCell from '../../../molecules/TableRowIconCell';
-import SpanAtom from '../../../atoms/SpanAtom';
-import { libraryTableStyles } from '../../../styles';
 import { getComparator, stableSort } from '../../../utils/helpers';
-import { Order } from '../../../utils/types';
+import { AccomodationTableRow, Order } from '../../../utils/types';
 
 const headCells = [
   { id: 'name', label: 'NAME' },
-  { id: 'id', label: 'NIC NUMBER' },
   { id: 'tel', label: 'TEL NUMBER' },
-  { id: 'rate', label: 'RATE' },
+  { id: 'city', label: 'CITY' },
   { id: 'country', label: 'COUNTRY' },
-  { id: 'vehicle', label: 'VEHICLE' },
-  { id: 'status', label: 'STATUS' },
+  { id: 'group', label: 'GROUP' },
   { id: '...', label: '' },
   { id: '...1', label: '' },
 ];
@@ -68,10 +66,11 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface AccomodationTableProps {
-  data: any;
+  data: AccomodationTableRow[];
+  deleteAccomodation: (row: AccomodationTableRow) => void;
 }
 
-export default function AccomodationTable({ data }: AccomodationTableProps) {
+export default function AccomodationTable({ data, deleteAccomodation }: AccomodationTableProps) {
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('calories');
@@ -91,7 +90,7 @@ export default function AccomodationTable({ data }: AccomodationTableProps) {
 
   const handleSelectAllClick = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = data.map((n: any) => n.name);
+      const newSelecteds = data.map((n: AccomodationTableRow) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -99,7 +98,7 @@ export default function AccomodationTable({ data }: AccomodationTableProps) {
   };
 
   const handleClick = (
-    _: MouseEvent<HTMLTableRowElement, globalThis.MouseEvent>,
+    _: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
     name: string,
   ) => {
     const selectedIndex = selected.indexOf(name);
@@ -162,14 +161,13 @@ export default function AccomodationTable({ data }: AccomodationTableProps) {
             <TableBody>
               {stableSort(data, getComparator(order as Order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row: any, index) => {
-                  const isItemSelected = isSelected(row.name);
+                .map((row: AccomodationTableRow, index) => {
+                  const isItemSelected = isSelected(row.id);
                   const labelId = `library-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.name)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
@@ -179,6 +177,7 @@ export default function AccomodationTable({ data }: AccomodationTableProps) {
                       <TableCell padding="checkbox">
                         <Checkbox
                           checked={isItemSelected}
+                          onClick={(event) => handleClick(event, row.id)}
                           inputProps={{ 'aria-labelledby': labelId }}
                         />
                       </TableCell>
@@ -186,69 +185,40 @@ export default function AccomodationTable({ data }: AccomodationTableProps) {
                         cell={{
                           align: 'left',
                           title: row.name,
-                          subtitle: row.tel,
-                          colors: ['#464E5F', '#B5B5C3'],
+                          colors: ['#B5B5C3'],
                           weight: 600,
                         }}
                       />
                       <TableRowTextCell
                         cell={{
                           align: 'left',
-                          title: row.description,
+                          title: row.tel,
+                          colors: ['green'],
+                          weight: 600,
+                        }}
+                      />
+                      <TableRowTextCell
+                        cell={{
+                          align: 'left',
+                          title: row.city,
                           colors: ['#B5B5C3'],
-                          weight: 300,
-                        }}
-                      />
-                      <TableRowTextCell
-                        cell={{
-                          align: 'right',
-                          title: row.rate,
-                          subtitle: 'INR',
-                          colors: [
-                            row.rate.toString().includes('-') ? 'red' : 'green',
-                            '#B5B5C3',
-                          ],
                           weight: 600,
                         }}
                       />
                       <TableRowTextCell
                         cell={{
-                          align: 'right',
-                          title: row.location,
-                          subtitle: 'INR',
-                          colors: [
-                            row.location.toString().includes('-')
-                              ? 'red'
-                              : 'green',
-                            '#B5B5C3',
-                          ],
+                          align: 'left',
+                          title: row.country,
+                          colors: ['#B5B5C3'],
                           weight: 600,
                         }}
                       />
                       <TableRowTextCell
                         cell={{
-                          align: 'right',
-                          title: row.ratings,
-                          subtitle: 'INR',
-                          colors: [
-                            row.ratings.toString().includes('-')
-                              ? 'red'
-                              : 'green',
-                            '#B5B5C3',
-                          ],
-                          weight: 600,
-                        }}
-                      />
-                      <TableRowTextCell
-                        cell={{
-                          align: 'center',
+                          align: 'left',
                           title: row.group,
-                          marktitle:
-                            row.group === 'ACTIVE' || row.group === 'INACTIVE',
-                          colors: [
-                            row.group === 'ACTIVE' ? '#0A65FF' : '#B5B5C3',
-                          ],
-                          weight: 300,
+                          colors: ['red'],
+                          weight: 600,
                         }}
                       />
                       <TableRowIconCell
@@ -261,19 +231,11 @@ export default function AccomodationTable({ data }: AccomodationTableProps) {
                       />
                       <TableRowIconCell
                         align="center"
-                        onClick={() => null}
+                        onClick={() => deleteAccomodation(row)}
                         textcolor="#B5B5C3"
                         size="small"
                         padding="8px"
                         children={<DeleteOutlinedIcon />}
-                      />
-                      <TableRowIconCell
-                        align="center"
-                        onClick={() => null}
-                        textcolor="#B5B5C3"
-                        size="small"
-                        padding="8px"
-                        children={<MoreHorizIcon />}
                       />
                     </TableRow>
                   );
@@ -287,7 +249,7 @@ export default function AccomodationTable({ data }: AccomodationTableProps) {
           count={data.length}
           rowsPerPage={rowsPerPage}
           page={page}
-          onPageChange={handleChangePage as any}
+          onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
           ActionsComponent={TablePaginationActions}
         />
@@ -382,16 +344,6 @@ function TablePaginationActions({
             <KeyboardArrowRight />
           )}
         </IconButton>
-
-        <div
-          style={width < 700 ? { display: 'none' } : {}}
-          className={classes.activeUsers}
-        >
-          <SpanAtom text="ACTIVE CUSTOMERS: " style={libraryTableStyles.totalUsers} />
-          <Fragment>&nbsp;</Fragment>
-          <SpanAtom text="479" style={libraryTableStyles.activeUsers} />
-          <SpanAtom text="/706" style={libraryTableStyles.totalUsers} />
-        </div>
       </div>
     </>
   );

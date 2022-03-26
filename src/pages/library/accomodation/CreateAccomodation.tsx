@@ -7,7 +7,7 @@ import {
 import { useHistory } from 'react-router-dom';
 import { FormControl, InputLabel } from '@material-ui/core';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { v4 as uuid } from 'uuid';
 
 import AccomodationRatesContainer from '../../../organisms/library/accomodation/AccomodationRatesContainer';
@@ -20,6 +20,7 @@ import IconAtom from '../../../atoms/IconAtom';
 import ParagraphAtom from '../../../atoms/ParagraphAtom';
 import InputAtom from '../../../atoms/InputAtom';
 import { db } from '../../../firebase';
+import { AccomodationRate } from '../../../utils/types';
 import { formCreateMemberStyles } from '../../../styles';
 
 function CreateAccomodation() {
@@ -61,7 +62,7 @@ function CreateAccomodation() {
     ),
   );
 
-  const [rateData, setRateData] = useState<any>([]);
+  const [rateData, setRateData] = useState<AccomodationRate[]>([]);
   const [newRateStart, setNewRateStart] = useState('');
   const [newRateEnd, setNewRateEnd] = useState('');
   const [newMealPlan, setNewMealPlan] = useState('');
@@ -89,17 +90,18 @@ function CreateAccomodation() {
     await setDoc(doc(db, 'Library Accomodation', uuid()), {
       name,
       group,
-      location,
       city,
       email,
       webLink,
       ijazahLink,
       gradings: roomGradings,
+      country: location,
       views: roomViews,
       categories: roomCategories,
       categoryValues: selectedTypeValues,
       tel: contactNumber,
       rates: rateData,
+      createdAt: serverTimestamp(),
     });
   };
 
@@ -119,6 +121,18 @@ function CreateAccomodation() {
       },
     ]);
 
+    clearInputs();
+  };
+
+  const clearInputs = () => {
+    setName('');
+    setGroup('');
+    setLocation('');
+    setCity('');
+    setContactNumber('');
+    setEmail('');
+    setWebLink('');
+    setIjazahLink('');
     setNewMealPlan('');
     setNewSinglePrice('');
     setNewDoublePrice('');

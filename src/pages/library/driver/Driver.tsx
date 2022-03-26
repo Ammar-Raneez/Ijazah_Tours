@@ -4,6 +4,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  DocumentData,
   getDocs,
 } from 'firebase/firestore';
 
@@ -13,11 +14,12 @@ import DriverTable from '../../../organisms/library/driver/DriverTable';
 import DivAtom from '../../../atoms/DivAtom';
 import { db } from '../../../firebase';
 import { libraryStyles } from '../../../styles';
+import { DriverTableRow } from '../../../utils/types';
 
 function Driver() {
   const [containerHeight, setContainerHeight] = useState(0);
-  const [driverData, setDriverData] = useState<any[]>([]);
-  const [editDriverData, setEditDriverData] = useState<any>();
+  const [driverData, setDriverData] = useState<DocumentData[]>([]);
+  const [editDriverData, setEditDriverData] = useState<DriverTableRow>();
   const [isDeleting, setIsDeleting] = useState(false);
   const history = useHistory();
 
@@ -49,7 +51,7 @@ function Driver() {
     getIntialData();
   }, [isDeleting]);
 
-  const deleteDriver = async (row: any) => {
+  const deleteDriver = async (row: DriverTableRow) => {
     // eslint-disable-next-line no-alert, no-restricted-globals
     const confirmDelete = confirm('Are you sure you want to delete this driver?');
     if (confirmDelete) {
@@ -59,7 +61,7 @@ function Driver() {
     }
   };
 
-  const onEditDriverClick = (row: any) => {
+  const onEditDriverClick = (row: DriverTableRow) => {
     setEditDriverData(row);
     history.replace(`/library/driver/edit/${row.id}`);
   };
@@ -80,7 +82,11 @@ function Driver() {
             <EditDriver row={editDriverData} />
           </Route>
           <Route exact path="/library/driver">
-            <DriverTable onEditDriverClick={onEditDriverClick} deleteDriver={deleteDriver} data={driverData} />
+            <DriverTable
+              onEditDriverClick={onEditDriverClick}
+              deleteDriver={deleteDriver}
+              data={driverData as DriverTableRow[]}
+            />
           </Route>
         </DivAtom>
       </DivAtom>
