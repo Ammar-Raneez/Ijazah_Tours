@@ -35,9 +35,12 @@ function UserManagement() {
   const [editRole, setEditRole] = useState('');
 
   const [teamData, setTeamData] = useState<DocumentData[]>([]);
-  const [isCreating, setIsCreating] = useState(false);
+
+  const [showValidationErrorMessage, setShowValidationErrorMessage] = useState(false);
+
   const [isDeleting, setIsDeleting] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [isCreating, setIsCreating] = useState(false);
 
   const [openNewDialog, setNewOpenDialog] = useState(false);
   const [openEditDialog, setEditOpenDialog] = useState(false);
@@ -58,7 +61,7 @@ function UserManagement() {
     };
 
     getInitialTeamData();
-  }, [isDeleting, isEditing, isCreating]);
+  }, [isDeleting, isUpdating, isCreating]);
 
   useEffect(() => {
     setContainerHeight(window.innerHeight - 180);
@@ -80,6 +83,13 @@ function UserManagement() {
   }, [containerWidth, containerHeight]);
 
   const onCreateMember = async () => {
+    setShowValidationErrorMessage(false);
+    if (newFirstName.trim() === '' || newLastName.trim() === ''
+      || newEmail.trim() === '' || newRole.trim() === '') {
+      setShowValidationErrorMessage(true);
+      return;
+    }
+
     setIsCreating(true);
     await setDoc(doc(db, 'Team Members', uuid()), {
       firstName: newFirstName,
@@ -106,32 +116,42 @@ function UserManagement() {
     }
   };
 
-  const onEditTeamMemberClick = (row: SettingsTeamMember) => {
-    setEditOpenDialog(true);
-    setEditId(row.id);
-    setEditFirstName(row.firstName);
-    setEditLastName(row.lastName);
-    setEditRole(row.role);
-  };
-
   const onEditMember = async () => {
-    setIsEditing(true);
+    setShowValidationErrorMessage(false);
+    if (editFirstName.trim() === '' || editLastName.trim() === ''
+      || editRole.trim() === '') {
+      setShowValidationErrorMessage(true);
+      return;
+    }
+
+    setIsUpdating(true);
     await updateDoc(doc(db, 'Team Members', editId), {
       firstName: editFirstName,
       lastName: editLastName,
       role: editRole,
       updatedAt: serverTimestamp(),
     });
-    setIsEditing(false);
+
+    setIsUpdating(false);
     setEditOpenDialog(false);
   };
 
   const clearInputs = () => {
+    setShowValidationErrorMessage(false);
     setNewFirstName('');
     setNewLastName('');
     setNewRole('');
     setNewPassword('');
     setNewEmail('');
+  };
+
+  const onEditTeamMemberClick = (row: SettingsTeamMember) => {
+    setEditOpenDialog(true);
+    setEditId(row.id);
+    setEditFirstName(row.firstName);
+    setEditLastName(row.lastName);
+    setEditRole(row.role);
+    setShowValidationErrorMessage(false);
   };
 
   return (
@@ -164,8 +184,11 @@ function UserManagement() {
             size="large"
           />
         </DivAtom>
+        {/* Create Team Member */}
         <UMTeamMemberDialog
           btnText="Create Team Member"
+          showValidationErrorMessage={showValidationErrorMessage}
+          isCreating={isCreating}
           openDialog={openNewDialog}
           setOpenDialog={setNewOpenDialog}
           newFirstname={newFirstName}
@@ -180,8 +203,11 @@ function UserManagement() {
           setNewRole={setNewRole}
           setNewPassword={setNewPassword}
         />
+        {/* Edit Team Member */}
         <UMTeamMemberDialog
           btnText="Edit Team Member"
+          showValidationErrorMessage={showValidationErrorMessage}
+          isCreating={isUpdating}
           openDialog={openEditDialog}
           setOpenDialog={setEditOpenDialog}
           newFirstname={editFirstName}

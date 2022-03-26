@@ -1,10 +1,10 @@
 import { MouseEventHandler } from 'react';
 import {
+  CircularProgress,
   Dialog,
   DialogContent,
   DialogTitle,
 } from '@material-ui/core';
-import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import {
@@ -13,6 +13,7 @@ import {
 } from '../../../styles';
 import FormControlInput from '../../../molecules/FormControlInput';
 import CheckboxGroup from '../../../molecules/CheckboxGroup';
+import ParagraphAtom from '../../../atoms/ParagraphAtom';
 
 interface ReminderInputDialogProps {
   title: string;
@@ -20,6 +21,8 @@ interface ReminderInputDialogProps {
   newDesc: string;
   reminderTypes: boolean[];
   openDialog: boolean;
+  showValidationErrorMessage: boolean;
+  isCreating: boolean;
   onAddEdit: MouseEventHandler<HTMLButtonElement>;
   onChangeReminderType: (i: number) => void;
   setNewTitle: any;
@@ -33,6 +36,8 @@ function ReminderInputDialog({
   newDesc,
   reminderTypes,
   openDialog,
+  showValidationErrorMessage,
+  isCreating,
   setOpenDialog,
   setNewTitle,
   setNewDesc,
@@ -74,16 +79,22 @@ function ReminderInputDialog({
             margin="0 0 1rem 0"
             flex={1}
           />
+          {showValidationErrorMessage && (
+            <ParagraphAtom
+              text="Please fill in all the fields"
+              style={{ color: 'red', textAlign: 'center' }}
+            />
+          )}
           <ButtonAtom
-            starticon={<AddCircleOutlineOutlinedIcon />}
+            endicon={isCreating && <CircularProgress size={20} color="inherit" />}
+            size="large"
+            disabled={isCreating}
             text={title}
-            disabled={newTitle === '' || newDesc === ''}
             onClick={onAddEdit}
             style={{
               ...libraryTableToolbarStyles.addBtn,
               marginTop: '1rem',
             }}
-            size="large"
           />
         </DialogContent>
       </Dialog>

@@ -1,12 +1,12 @@
 import { ChangeEvent, MouseEventHandler } from 'react';
 import {
+  CircularProgress,
   Dialog,
   DialogContent,
   DialogTitle,
   FormControl,
   InputLabel,
 } from '@material-ui/core';
-import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 
 import ButtonAtom from '../../atoms/ButtonAtom';
 import {
@@ -14,11 +14,14 @@ import {
   libraryTableToolbarStyles,
 } from '../../styles';
 import InputAtom from '../../atoms/InputAtom';
+import ParagraphAtom from '../../atoms/ParagraphAtom';
 
 interface SingleInputDialogProps {
   title: string;
   newInput: string;
   openDialog: boolean;
+  showValidationErrorMessage: boolean;
+  isCreating: boolean;
   onEditCreate: MouseEventHandler<HTMLButtonElement>;
   onChange: (val: string) => void;
   setOpenDialog: any;
@@ -28,6 +31,8 @@ function SingleInputDialog({
   title,
   newInput,
   openDialog,
+  showValidationErrorMessage,
+  isCreating,
   onChange,
   setOpenDialog,
   onEditCreate,
@@ -49,16 +54,22 @@ function SingleInputDialog({
               placeholder={`${title.substring(4, title.length)}`}
             />
           </FormControl>
+          {showValidationErrorMessage && (
+            <ParagraphAtom
+              text="Please fill in all the fields"
+              style={{ color: 'red', textAlign: 'center' }}
+            />
+          )}
           <ButtonAtom
-            starticon={<AddCircleOutlineOutlinedIcon />}
             text={title}
-            disabled={newInput === ''}
+            endicon={isCreating && <CircularProgress size={20} color="inherit" />}
+            size="large"
+            disabled={isCreating}
             onClick={onEditCreate}
             style={{
               ...libraryTableToolbarStyles.addBtn,
               marginTop: '1rem',
             }}
-            size="large"
           />
         </DialogContent>
       </Dialog>

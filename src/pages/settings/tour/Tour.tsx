@@ -74,9 +74,11 @@ function Tour() {
   const [openNewReminderDialog, setOpenNewReminderDialog] = useState(false);
   const [openEditReminderDialog, setOpenEditReminderDialog] = useState(false);
 
+  const [showValidationErrorMessage, setShowValidationErrorMessage] = useState(false);
+
   const [isDeleting, setIsDeleting] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [creating, setCreating] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [isCreating, setIsCreating] = useState(false);
 
   useEffect(() => {
     const getInitialData = async () => {
@@ -103,7 +105,7 @@ function Tour() {
     };
 
     getInitialData();
-  }, [creating, isEditing, isDeleting]);
+  }, [isCreating, isDeleting, isUpdating]);
 
   useEffect(() => {
     setContainerHeight(window.innerHeight - 180);
@@ -125,24 +127,36 @@ function Tour() {
   }, [containerWidth, containerHeight]);
 
   const onCreateSingleInput = async (type: string, i: number) => {
-    setCreating(true);
+    setShowValidationErrorMessage(false);
+    if (newSingleInput.trim() === '') {
+      setShowValidationErrorMessage(true);
+      return;
+    }
+
+    setIsCreating(true);
     await setDoc(doc(db, `Settings ${type}`, uuid()), {
       val: newSingleInput,
       createdAt: serverTimestamp(),
     });
 
     setNewSingleInput('');
-    setCreating(false);
+    setIsCreating(false);
     onOpenNewDialog(i);
   };
 
   const onEditSingleInput = async (type: string, i: number) => {
-    setIsEditing(true);
+    setShowValidationErrorMessage(false);
+    if (editSingleInput.trim() === '') {
+      setShowValidationErrorMessage(true);
+      return;
+    }
+
+    setIsUpdating(true);
     await updateDoc(doc(db, `Settings ${type}`, editId), {
       val: editSingleInput,
       updatedAt: serverTimestamp(),
     });
-    setIsEditing(false);
+    setIsUpdating(false);
     onOpenEditDialog(i);
   };
 
@@ -157,7 +171,13 @@ function Tour() {
   };
 
   const onCreateReminder = async () => {
-    setCreating(true);
+    setShowValidationErrorMessage(false);
+    if (newReminderTitle.trim() === '' || newReminderDesc.trim() === '') {
+      setShowValidationErrorMessage(true);
+      return;
+    }
+
+    setIsCreating(true);
     const type = newReminderTypes[0] ? 'Creation of Customer' : 'Creation of Quotation';
     await setDoc(doc(db, `Settings Reminders`, uuid()), {
       title: newReminderTitle,
@@ -167,7 +187,7 @@ function Tour() {
     });
 
     clearReminderInputs();
-    setCreating(false);
+    setIsCreating(false);
     setOpenNewReminderDialog(false);
   };
 
@@ -177,7 +197,13 @@ function Tour() {
   };
 
   const onEditReminder = async () => {
-    setIsEditing(true);
+    setShowValidationErrorMessage(false);
+    if (editReminderTitle.trim() === '' || editReminderDesc.trim() === '') {
+      setShowValidationErrorMessage(true);
+      return;
+    }
+
+    setIsUpdating(true);
     const type = editReminderTypes[0] ? 'Creation of Customer' : 'Creation of Quotation';
     await updateDoc(doc(db, `Settings Reminders`, editId), {
       title: editReminderTitle,
@@ -185,7 +211,7 @@ function Tour() {
       type,
       updatedAt: serverTimestamp(),
     });
-    setIsEditing(false);
+    setIsUpdating(false);
     setOpenEditReminderDialog(false);
   };
 
@@ -218,21 +244,25 @@ function Tour() {
   const onOpenNewDialog = (i: number) => {
     const updatedOpenDialogs = openNewDialogs.map((open, index) => (index === i ? !open : open));
     setOpenNewDialogs(updatedOpenDialogs);
+    setShowValidationErrorMessage(false);
   };
 
   const onOpenEditDialog = (i: number) => {
     const updatedOpenDialogs = openEditDialogs.map((open, index) => (index === i ? !open : open));
     setOpenEditDialogs(updatedOpenDialogs);
+    setShowValidationErrorMessage(false);
   };
 
   const onChangeNewReminderType = (i: number) => {
     const updatedCheckedState = newReminderTypes.map((type, index) => (index === i ? !type : type));
     setNewReminderTypes(updatedCheckedState);
+    setShowValidationErrorMessage(false);
   };
 
   const onChangeEditReminderType = (i: number) => {
     const updatedCheckedState = editReminderTypes.map((type, index) => (index === i ? !type : type));
     setEditReminderTypes(updatedCheckedState);
+    setShowValidationErrorMessage(false);
   };
 
   return (
@@ -255,6 +285,8 @@ function Tour() {
             <SingleInputDialog
               title={type.btnNewText}
               newInput={newSingleInput}
+              showValidationErrorMessage={showValidationErrorMessage}
+              isCreating={isCreating}
               onChange={(val: string) => setNewSingleInput(val)}
               openDialog={openNewDialogs[index]}
               setOpenDialog={() => onOpenNewDialog(index)}
@@ -263,6 +295,8 @@ function Tour() {
             {/* Edit Item Dialog */}
             <SingleInputDialog
               title={type.btnEditText}
+              showValidationErrorMessage={showValidationErrorMessage}
+              isCreating={isUpdating}
               newInput={editSingleInput}
               onChange={(val: string) => setEditSingleInput(val)}
               openDialog={openEditDialogs[index]}
@@ -288,6 +322,8 @@ function Tour() {
           {/* Add Reminder */}
           <ReminderInputDialog
             title="Add Reminder"
+            showValidationErrorMessage={showValidationErrorMessage}
+            isCreating={isCreating}
             newTitle={newReminderTitle}
             newDesc={newReminderDesc}
             setNewTitle={setNewReminderTitle}
@@ -301,6 +337,8 @@ function Tour() {
           {/* Edit Reminder */}
           <ReminderInputDialog
             title="Edit Reminder"
+            showValidationErrorMessage={showValidationErrorMessage}
+            isCreating={isUpdating}
             newTitle={editReminderTitle}
             newDesc={editReminderDesc}
             setNewTitle={setEditReminderTitle}

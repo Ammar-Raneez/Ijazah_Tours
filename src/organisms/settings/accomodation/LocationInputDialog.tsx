@@ -1,10 +1,10 @@
 import { MouseEventHandler } from 'react';
 import {
+  CircularProgress,
   Dialog,
   DialogContent,
   DialogTitle,
 } from '@material-ui/core';
-import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import {
@@ -12,12 +12,15 @@ import {
   libraryTableToolbarStyles,
 } from '../../../styles';
 import FormControlInput from '../../../molecules/FormControlInput';
+import ParagraphAtom from '../../../atoms/ParagraphAtom';
 
 interface LocationInputDialogProps {
   title: string;
   newTitle: string;
   newCity: string;
   openDialog: boolean;
+  showValidationErrorMessage: boolean;
+  isCreating: boolean;
   onCreate: MouseEventHandler<HTMLButtonElement>;
   setNewTitle: any;
   setNewCity: any;
@@ -29,6 +32,8 @@ function LocationInputDialog({
   newTitle,
   newCity,
   openDialog,
+  showValidationErrorMessage,
+  isCreating,
   setOpenDialog,
   setNewTitle,
   setNewCity,
@@ -61,16 +66,22 @@ function LocationInputDialog({
             margin="0 0 1rem 0"
             flex={1}
           />
+          {showValidationErrorMessage && (
+            <ParagraphAtom
+              text="Please fill in all the fields"
+              style={{ color: 'red', textAlign: 'center' }}
+            />
+          )}
           <ButtonAtom
-            starticon={<AddCircleOutlineOutlinedIcon />}
             text={title}
-            disabled={newTitle === '' || newCity === ''}
+            endicon={isCreating && <CircularProgress size={20} color="inherit" />}
+            size="large"
+            disabled={isCreating}
             onClick={onCreate}
             style={{
               ...libraryTableToolbarStyles.addBtn,
               marginTop: '1rem',
             }}
-            size="large"
           />
         </DialogContent>
       </Dialog>

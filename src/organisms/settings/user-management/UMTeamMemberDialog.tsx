@@ -1,6 +1,10 @@
 import { MouseEventHandler } from 'react';
-import { Dialog, DialogContent, DialogTitle } from '@material-ui/core';
-import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
+import {
+  CircularProgress,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+} from '@material-ui/core';
 
 import FormControlInput from '../../../molecules/FormControlInput';
 import ButtonAtom from '../../../atoms/ButtonAtom';
@@ -8,6 +12,7 @@ import {
   formCreateMemberStyles,
   libraryTableToolbarStyles,
 } from '../../../styles';
+import ParagraphAtom from '../../../atoms/ParagraphAtom';
 
 interface UMTeamMemberDialogProps {
   btnText: string;
@@ -15,6 +20,8 @@ interface UMTeamMemberDialogProps {
   newLastname: string;
   newRole: string;
   openDialog: boolean;
+  showValidationErrorMessage: boolean;
+  isCreating: boolean;
   onEditCreateMember: MouseEventHandler<HTMLButtonElement>;
   newPassword?: string;
   newEmail?: string;
@@ -34,6 +41,8 @@ function UMTeamMemberDialog({
   newRole,
   newPassword,
   openDialog,
+  showValidationErrorMessage,
+  isCreating,
   setOpenDialog,
   setNewFirstname,
   setNewLastname,
@@ -105,21 +114,22 @@ function UMTeamMemberDialog({
             setValue={setNewRole}
             placeholder="Enter Role"
           />
+          {showValidationErrorMessage && (
+            <ParagraphAtom
+              text="Please fill in all the fields"
+              style={{ color: 'red', textAlign: 'center' }}
+            />
+          )}
           <ButtonAtom
-            starticon={<AddCircleOutlineOutlinedIcon />}
             text={btnText}
-            disabled={
-              newFirstname === ''
-              || newLastname === ''
-              || newEmail === ''
-              || newRole === ''
-            }
+            endicon={isCreating && <CircularProgress size={20} color="inherit" />}
+            size="large"
+            disabled={isCreating}
             onClick={(event) => onEditCreateMember(event)}
             style={{
               ...libraryTableToolbarStyles.addBtn,
               marginTop: '1rem',
             }}
-            size="large"
           />
         </DialogContent>
       </Dialog>

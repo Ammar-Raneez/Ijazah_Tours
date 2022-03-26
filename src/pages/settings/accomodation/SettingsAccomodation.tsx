@@ -72,9 +72,11 @@ function SettingsAccomodation() {
   const [openNewLocationDialog, setOpenNewLocationDialog] = useState(false);
   const [openEditLocationDialog, setOpenEditLocationDialog] = useState(false);
 
+  const [showValidationErrorMessage, setShowValidationErrorMessage] = useState(false);
+
   const [isDeleting, setIsDeleting] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [creating, setCreating] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [isCreating, setIsCreating] = useState(false);
 
   useEffect(() => {
     const getInitialData = async () => {
@@ -101,7 +103,7 @@ function SettingsAccomodation() {
     };
 
     getInitialData();
-  }, [creating, isDeleting, isEditing]);
+  }, [isCreating, isDeleting, isUpdating]);
 
   useEffect(() => {
     setContainerHeight(window.innerHeight - 180);
@@ -123,24 +125,36 @@ function SettingsAccomodation() {
   }, [containerWidth, containerHeight]);
 
   const onCreateSingleInput = async (type: string, i: number) => {
-    setCreating(true);
+    setShowValidationErrorMessage(false);
+    if (newSingleInput.trim() === '') {
+      setShowValidationErrorMessage(true);
+      return;
+    }
+
+    setIsCreating(true);
     await setDoc(doc(db, `Settings ${type}`, uuid()), {
       val: newSingleInput,
       createdAt: serverTimestamp(),
     });
 
     setNewSingleInput('');
-    setCreating(false);
+    setIsCreating(false);
     onOpenNewDialog(i);
   };
 
   const onEditSingleInput = async (type: string, i: number) => {
-    setIsEditing(true);
+    setShowValidationErrorMessage(false);
+    if (editSingleInput.trim() === '') {
+      setShowValidationErrorMessage(true);
+      return;
+    }
+
+    setIsUpdating(true);
     await updateDoc(doc(db, `Settings ${type}`, editId), {
       val: editSingleInput,
       updatedAt: serverTimestamp(),
     });
-    setIsEditing(false);
+    setIsUpdating(false);
     onOpenEditDialog(i);
   };
 
@@ -155,7 +169,13 @@ function SettingsAccomodation() {
   };
 
   const onCreateLocation = async () => {
-    setCreating(true);
+    setShowValidationErrorMessage(false);
+    if (newLocationTitle.trim() === '' || newLocationCity.trim() === '') {
+      setShowValidationErrorMessage(true);
+      return;
+    }
+
+    setIsCreating(true);
     await setDoc(doc(db, `Settings Locations`, uuid()), {
       title: newLocationTitle,
       city: newLocationCity,
@@ -163,7 +183,7 @@ function SettingsAccomodation() {
     });
 
     clearLocationInputs();
-    setCreating(false);
+    setIsCreating(false);
     setOpenNewLocationDialog(false);
   };
 
@@ -173,13 +193,19 @@ function SettingsAccomodation() {
   };
 
   const onEditLocation = async () => {
-    setIsEditing(true);
+    setShowValidationErrorMessage(false);
+    if (editLocationTitle.trim() === '' || editLocationCity.trim() === '') {
+      setShowValidationErrorMessage(true);
+      return;
+    }
+
+    setIsUpdating(true);
     await updateDoc(doc(db, `Settings Locations`, editId), {
       title: editLocationTitle,
       city: editLocationCity,
       updatedAt: serverTimestamp(),
     });
-    setIsEditing(false);
+    setIsUpdating(false);
     setOpenEditLocationDialog(false);
   };
 
@@ -198,6 +224,7 @@ function SettingsAccomodation() {
     setEditSingleInput((input as { val: string }).val);
     setEditId((input as { id: string }).id);
     onOpenEditDialog(i);
+    setShowValidationErrorMessage(false);
   };
 
   const onEditLocationClick = (row: SettingsLocation) => {
@@ -205,16 +232,19 @@ function SettingsAccomodation() {
     setEditLocationTitle(row.title);
     setEditLocationCity(row.city);
     setEditId(row.id);
+    setShowValidationErrorMessage(false);
   };
 
   const onOpenNewDialog = (i: number) => {
     const updatedOpenDialogs = openNewDialogs.map((open, index) => (index === i ? !open : open));
     setOpenNewDialogs(updatedOpenDialogs);
+    setShowValidationErrorMessage(false);
   };
 
   const onOpenEditDialog = (i: number) => {
     const updatedOpenDialogs = openEditDialogs.map((open, index) => (index === i ? !open : open));
     setOpenEditDialogs(updatedOpenDialogs);
+    setShowValidationErrorMessage(false);
   };
 
   return (
@@ -236,6 +266,8 @@ function SettingsAccomodation() {
             {/* Create Item Dialog */}
             <SingleInputDialog
               title={type.btnText}
+              showValidationErrorMessage={showValidationErrorMessage}
+              isCreating={isCreating}
               newInput={newSingleInput}
               onChange={(val: string) => setNewSingleInput(val)}
               openDialog={openNewDialogs[index]}
@@ -245,6 +277,8 @@ function SettingsAccomodation() {
             {/* Edit Item Dialog */}
             <SingleInputDialog
               title={type.btnEditText}
+              showValidationErrorMessage={showValidationErrorMessage}
+              isCreating={isUpdating}
               newInput={editSingleInput}
               onChange={(val: string) => setEditSingleInput(val)}
               openDialog={openEditDialogs[index]}
@@ -270,6 +304,8 @@ function SettingsAccomodation() {
           {/* Add Location */}
           <LocationInputDialog
             title="Add Location"
+            showValidationErrorMessage={showValidationErrorMessage}
+            isCreating={isCreating}
             newTitle={newLocationTitle}
             newCity={newLocationCity}
             setNewTitle={setNewLocationTitle}
@@ -281,6 +317,8 @@ function SettingsAccomodation() {
           {/* Edit Location */}
           <LocationInputDialog
             title="Edit Location"
+            showValidationErrorMessage={showValidationErrorMessage}
+            isCreating={isUpdating}
             newTitle={editLocationTitle}
             newCity={editLocationCity}
             setNewTitle={setEditLocationTitle}
