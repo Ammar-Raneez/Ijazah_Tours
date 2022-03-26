@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
 import { Route } from 'react-router-dom';
+import { collection, getDocs } from 'firebase/firestore';
 
-import GuestTable from '../../../organisms/library/guest/GuestTable';
 import CreateGuest from './CreateGuest';
+import GuestTable from '../../../organisms/library/guest/GuestTable';
 import DivAtom from '../../../atoms/DivAtom';
-import { LIBRARY_GUEST_DATA } from '../../../data';
+import { db } from '../../../firebase';
 import { libraryStyles } from '../../../styles';
 
 function Guest() {
   const [containerHeight, setContainerHeight] = useState(0);
+  const [guestData, setGuestData] = useState<any[]>([]);
 
   useEffect(() => {
     setContainerHeight(window.innerHeight - 180);
@@ -23,6 +25,15 @@ function Guest() {
     return removeEventListeners();
   }, [containerHeight]);
 
+  useEffect(() => {
+    const getIntialData = async () => {
+      const data = (await getDocs(collection(db, 'Library Guests'))).docs.map((dc) => dc.data());
+      setGuestData(data);
+    };
+
+    getIntialData();
+  }, []);
+
   return (
     <DivAtom style={libraryStyles.container}>
       <DivAtom
@@ -36,7 +47,7 @@ function Guest() {
             <CreateGuest />
           </Route>
           <Route exact path="/library/guest">
-            <GuestTable data={LIBRARY_GUEST_DATA} />
+            <GuestTable data={guestData} />
           </Route>
         </DivAtom>
       </DivAtom>

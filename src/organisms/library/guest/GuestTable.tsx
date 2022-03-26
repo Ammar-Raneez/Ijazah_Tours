@@ -189,7 +189,7 @@ export default function GuestTable({ data }: GuestTableProps) {
                       <TableRowTextCell
                         cell={{
                           align: 'left',
-                          title: row.ref,
+                          title: row.refNum,
                           colors: ['red'],
                           weight: 600,
                         }}
@@ -205,7 +205,7 @@ export default function GuestTable({ data }: GuestTableProps) {
                       <TableRowTextCell
                         cell={{
                           align: 'left',
-                          title: row.location,
+                          title: row.country,
                           colors: ['#B5B5C3'],
                           weight: 600,
                         }}
@@ -213,11 +213,11 @@ export default function GuestTable({ data }: GuestTableProps) {
                       <TableRowTextCell
                         cell={{
                           align: 'left',
-                          title: row.group,
+                          title: row.status,
                           marktitle:
-                            row.group === 'ACTIVE' || row.group === 'INACTIVE',
+                            row.status === 'ACTIVE' || row.status === 'INACTIVE',
                           colors: [
-                            row.group === 'ACTIVE' ? '#0A65FF' : '#B5B5C3',
+                            row.status === 'ACTIVE' ? '#0A65FF' : '#B5B5C3',
                           ],
                           weight: 300,
                         }}
@@ -252,7 +252,13 @@ export default function GuestTable({ data }: GuestTableProps) {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
-          ActionsComponent={TablePaginationActions}
+          ActionsComponent={() => TablePaginationActions({
+            rowsPerPage,
+            page,
+            active: data?.filter((obj: { status: string }) => obj.status === 'ACTIVE').length,
+            count: data.length,
+            onPageChange: handleChangePage,
+          })}
         />
       </Paper>
     </div>
@@ -276,6 +282,7 @@ const tablePaginationActionsStyle = makeStyles((theme: Theme) => createStyles({
 }));
 
 interface TablePaginationActionsProps {
+  active: string;
   count: number;
   page: number;
   rowsPerPage: number;
@@ -287,6 +294,7 @@ interface TablePaginationActionsProps {
 
 function TablePaginationActions({
   count,
+  active,
   page,
   rowsPerPage,
   onPageChange,
@@ -352,8 +360,8 @@ function TablePaginationActions({
         >
           <SpanAtom text="ACTIVE CUSTOMERS: " style={libraryTableStyles.totalUsers} />
           <Fragment>&nbsp;</Fragment>
-          <SpanAtom text="479" style={libraryTableStyles.activeUsers} />
-          <SpanAtom text="/706" style={libraryTableStyles.totalUsers} />
+          <SpanAtom text={`${active}/`} style={libraryTableStyles.activeUsers} />
+          <SpanAtom text={String(count)} style={libraryTableStyles.totalUsers} />
         </div>
       </div>
     </>
