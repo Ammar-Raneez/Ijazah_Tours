@@ -2,12 +2,7 @@ import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
 import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadString,
-} from 'firebase/storage';
+import { getStorage } from 'firebase/storage';
 import { v4 as uuid } from 'uuid';
 
 import CreateEditDriverForm from '../../../organisms/library/driver/CreateEditDriverForm';
@@ -16,7 +11,7 @@ import H2Atom from '../../../atoms/H2Atom';
 import IconAtom from '../../../atoms/IconAtom';
 import { formCreateMemberStyles } from '../../../styles';
 import { db } from '../../../firebase';
-import { statusOptions, vehicleOptions } from '../../../utils/helpers';
+import { statusOptions, uploadImage, vehicleOptions } from '../../../utils/helpers';
 
 const storage = getStorage();
 
@@ -83,23 +78,17 @@ function CreateDriver() {
     clearInputs();
   };
 
-  const uploadImages = async () => {
-    const insuRandom = uuid();
-    const profRandom = uuid();
-    const vehiRandom = uuid();
-    const storageRefInsurance = ref(storage, `library-driver/${insuRandom + insurance[0].file.name}`);
-    const storageRefProfilePic = ref(storage, `library-driver/${profRandom + profilePic[0].file.name}`);
-    const storageRefVehiclePic = ref(storage, `library-driver/${vehiRandom + vehiclePic[0].file.name}`);
+  const uploadInsurance = async () => (
+    uploadImage(storage, 'library-driver', insurance[0].data_url, insurance[0].file.name)
+  );
+  const uploadProfilePic = async () => (
+    uploadImage(storage, 'library-driver', profilePic[0].data_url, profilePic[0].file.name)
+  );
+  const uploadVehiclePic = async () => (
+    uploadImage(storage, 'library-driver', vehiclePic[0].data_url, vehiclePic[0].file.name)
+  );
 
-    await uploadString(storageRefInsurance, insurance[0].data_url, 'data_url');
-    await uploadString(storageRefProfilePic, profilePic[0].data_url, 'data_url');
-    await uploadString(storageRefVehiclePic, vehiclePic[0].data_url, 'data_url');
-    const insuranceUrl = await getDownloadURL(storageRefInsurance);
-    const profilePicUrl = await getDownloadURL(storageRefProfilePic);
-    const vehiclePicUrl = await getDownloadURL(storageRefVehiclePic);
-
-    return [insuranceUrl, profilePicUrl, vehiclePicUrl];
-  };
+  const uploadImages = async () => [await uploadInsurance(), await uploadProfilePic(), await uploadVehiclePic()];
 
   const clearInputs = () => {
     setFirstName('');

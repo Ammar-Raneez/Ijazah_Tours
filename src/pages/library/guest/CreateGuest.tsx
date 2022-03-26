@@ -2,12 +2,7 @@ import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
 import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadString,
-} from 'firebase/storage';
+import { getStorage } from 'firebase/storage';
 import { v4 as uuid } from 'uuid';
 
 import CreateEditGuestForm from '../../../organisms/library/guest/CreateEditGuestForm';
@@ -16,7 +11,7 @@ import H2Atom from '../../../atoms/H2Atom';
 import IconAtom from '../../../atoms/IconAtom';
 import { libraryCreateGuestStyles } from '../../../styles';
 import { db } from '../../../firebase';
-import { statusOptions } from '../../../utils/helpers';
+import { statusOptions, uploadImage } from '../../../utils/helpers';
 
 const storage = getStorage();
 
@@ -52,7 +47,7 @@ function CreateGuest() {
   }, [width]);
 
   const onAddGuest = async () => {
-    const url = await uploadImage();
+    const url = await uploadPassport();
     await setDoc(doc(db, 'Library Guests', uuid()), {
       name: `${firstName} ${lastName}`,
       refNum,
@@ -72,12 +67,9 @@ function CreateGuest() {
     clearInputs();
   };
 
-  const uploadImage = async () => {
-    const passRandom = uuid();
-    const storageRef = ref(storage, `library-guest/${passRandom + passport[0].file.name}`);
-    await uploadString(storageRef, passport[0].data_url, 'data_url');
-    return getDownloadURL(storageRef);
-  };
+  const uploadPassport = async () => (
+    uploadImage(storage, 'library-guest', passport[0].data_url, passport[0].file.name)
+  );
 
   const clearInputs = () => {
     setRefNum('');

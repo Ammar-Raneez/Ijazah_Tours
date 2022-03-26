@@ -296,9 +296,9 @@ function CreateEditDriverForm({
             || address === ''
             || rate === ''
             || notes === ''
-            || insurance === []
-            || profilePic === []
-            || vehiclePic === []
+            || insurance.length === 0
+            || profilePic.length === 0
+            || vehiclePic.length === 0
           }
           style={{
             ...formCreateMemberStyles.addBtn,
