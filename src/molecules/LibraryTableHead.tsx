@@ -51,7 +51,7 @@ function LibraryTableHead({
             onChange={onSelectAllClick}
           />
         </TableCell>
-        {headCells.map((headCell: any) => (
+        {headCells.map((headCell: LibraryHeadCell) => (
           <TableColumnCell
             color="black"
             key={headCell.id}

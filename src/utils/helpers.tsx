@@ -47,7 +47,7 @@ export const vehicleOptions = [
   { label: 'BMW', value: 'BMW' },
 ];
 
-export const uploadImage = async (storage: FirebaseStorage, container: string, pic: any, filepath: string) => {
+export const uploadImage = async (storage: FirebaseStorage, container: string, pic: string, filepath: string) => {
   const randomString = uuid();
   const storageRef = ref(storage, `${container}/${randomString + filepath}`);
   await uploadString(storageRef, pic, 'data_url');

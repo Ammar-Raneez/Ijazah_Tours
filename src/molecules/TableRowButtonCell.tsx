@@ -12,7 +12,7 @@ interface TableRowButtonCellProps {
   btndisabled?: boolean;
   btntext?: string;
   btncolors?: string[];
-  cell?: any;
+  cell?: { status: string };
 }
 
 function TableRowButtonCell({
@@ -31,8 +31,8 @@ function TableRowButtonCell({
   if (btncolors) {
     [backgroundColor, color] = btncolors;
   } else {
-    backgroundColor = cell.status === 'Approved' ? '#41E93E' : '#C1BFBF';
-    color = cell.status === 'Approved' ? '#146521' : '#464E5F';
+    backgroundColor = cell!.status === 'Approved' ? '#41E93E' : '#C1BFBF';
+    color = cell!.status === 'Approved' ? '#146521' : '#464E5F';
   }
 
   return (
@@ -46,7 +46,7 @@ function TableRowButtonCell({
         }}
         size={btnsize}
         onClick={onClick}
-        text={btntext || cell.status}
+        text={btntext || cell!.status}
         disabled={btndisabled}
       />
     </TableCell>

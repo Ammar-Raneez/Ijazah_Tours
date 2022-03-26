@@ -90,7 +90,7 @@ export default function GuestTable({ data, deleteGuest, onEditGuestClick }: Gues
 
   const handleSelectAllClick = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = data.map((n: any) => n.refNum);
+      const newSelecteds = data.map((n: LibraryGuest) => n.refNum);
       setSelected(newSelecteds);
       return;
     }
@@ -99,7 +99,7 @@ export default function GuestTable({ data, deleteGuest, onEditGuestClick }: Gues
 
   const handleClick = (
     _: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
-    row: any,
+    row: LibraryGuest,
   ) => {
     const selectedIndex = selected.indexOf(row.refNum);
     let newSelected: string[] = [];
