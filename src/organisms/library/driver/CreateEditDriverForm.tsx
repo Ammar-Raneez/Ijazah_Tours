@@ -249,7 +249,7 @@ function CreateEditDriverForm({
           }}
         >
           <FormControlInput
-            margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
+            margin="0 0 1rem 0"
             label="Address"
             fullWidth
             flex={1}
