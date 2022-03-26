@@ -187,15 +187,15 @@ function AccomodationTable({ data, deleteAccomodation, onEditAccomodationClick }
                           align: 'left',
                           title: row.name,
                           colors: ['#B5B5C3'],
-                          weight: 600,
+                          weight: 500,
                         }}
                       />
                       <TableRowTextCell
                         cell={{
                           align: 'left',
                           title: row.tel,
-                          colors: ['green'],
-                          weight: 600,
+                          colors: ['#B5B5C3'],
+                          weight: 500,
                         }}
                       />
                       <TableRowTextCell
@@ -203,7 +203,7 @@ function AccomodationTable({ data, deleteAccomodation, onEditAccomodationClick }
                           align: 'left',
                           title: row.city,
                           colors: ['#B5B5C3'],
-                          weight: 600,
+                          weight: 500,
                         }}
                       />
                       <TableRowTextCell
@@ -211,15 +211,15 @@ function AccomodationTable({ data, deleteAccomodation, onEditAccomodationClick }
                           align: 'left',
                           title: row.country,
                           colors: ['#B5B5C3'],
-                          weight: 600,
+                          weight: 500,
                         }}
                       />
                       <TableRowTextCell
                         cell={{
                           align: 'left',
                           title: row.group,
-                          colors: ['red'],
-                          weight: 600,
+                          colors: ['#B5B5C3'],
+                          weight: 500,
                         }}
                       />
                       <TableRowIconCell
@@ -228,7 +228,7 @@ function AccomodationTable({ data, deleteAccomodation, onEditAccomodationClick }
                         textcolor="#B5B5C3"
                         size="small"
                         padding="8px"
-                        children={<EditOutlinedIcon />}
+                        children={<EditOutlinedIcon style={{ color: 'green' }} />}
                       />
                       <TableRowIconCell
                         align="center"
@@ -236,7 +236,7 @@ function AccomodationTable({ data, deleteAccomodation, onEditAccomodationClick }
                         textcolor="#B5B5C3"
                         size="small"
                         padding="8px"
-                        children={<DeleteOutlinedIcon />}
+                        children={<DeleteOutlinedIcon style={{ color: 'red' }} />}
                       />
                     </TableRow>
                   );

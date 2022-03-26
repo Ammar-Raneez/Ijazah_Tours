@@ -53,7 +53,7 @@ function LibraryTableHead({
         </TableCell>
         {headCells.map((headCell: any) => (
           <TableColumnCell
-            color="#B5B5C3"
+            color="black"
             key={headCell.id}
             align="left"
             sortDirection={orderBy === headCell.id ? order : false}
