@@ -92,5 +92,6 @@ export interface SettingsTeamMember {
 }
 
 export interface SettingsSingleInput {
+  id: string;
   val: string;
 }

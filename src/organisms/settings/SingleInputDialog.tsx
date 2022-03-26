@@ -19,7 +19,7 @@ interface SingleInputDialogProps {
   title: string;
   newInput: string;
   openDialog: boolean;
-  onCreate: MouseEventHandler<HTMLButtonElement>;
+  onEditCreate: MouseEventHandler<HTMLButtonElement>;
   onChange: (val: string) => void;
   setOpenDialog: any;
 }
@@ -30,7 +30,7 @@ function SingleInputDialog({
   openDialog,
   onChange,
   setOpenDialog,
-  onCreate,
+  onEditCreate,
 }: SingleInputDialogProps) {
   return (
     <>
@@ -53,7 +53,7 @@ function SingleInputDialog({
             starticon={<AddCircleOutlineOutlinedIcon />}
             text={title}
             disabled={newInput === ''}
-            onClick={onCreate}
+            onClick={onEditCreate}
             style={{
               ...libraryTableToolbarStyles.addBtn,
               marginTop: '1rem',

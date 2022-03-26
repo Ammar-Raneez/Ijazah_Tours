@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import {
   collection,
+  deleteDoc,
   doc,
   DocumentData,
   getDocs,
   serverTimestamp,
   setDoc,
+  updateDoc,
 } from 'firebase/firestore';
 import { v4 as uuid } from 'uuid';
 
@@ -22,15 +24,18 @@ import { SettingsReminder, SettingsSingleInput } from '../../../utils/types';
 const INPUT_TYPES = [
   {
     h2Text: 'Holiday Types',
-    btnText: 'Add Holiday Type',
+    btnNewText: 'Add Holiday Type',
+    btnEditText: 'Edit Holiday Type',
   },
   {
     h2Text: 'Status',
-    btnText: 'Add status',
+    btnNewText: 'Add status',
+    btnEditText: 'Edit status',
   },
   {
     h2Text: 'Comments',
-    btnText: 'Add Comment',
+    btnNewText: 'Add Comment',
+    btnEditText: 'Edit Comment',
   },
 ];
 
@@ -52,30 +57,48 @@ function Tour() {
 
   const [newSingleInputs, setNewSingleInputs] = useState<string[]>(new Array(3).fill(''));
   const [singleInputsData, setSingleInputsData] = useState<DocumentData[][]>([]);
+  const [editInput, setEditInput] = useState('');
+  const [editId, setEditId] = useState('');
 
   const [newReminderTitle, setNewReminderTitle] = useState('');
   const [newReminderDesc, setNewReminderDesc] = useState('');
   const [reminderTypes, setReminderTypes] = useState<boolean[]>(new Array(2).fill(false));
   const [reminderData, setReminderData] = useState<DocumentData[]>([]);
 
-  const [openDialogs, setOpenDialogs] = useState<boolean[]>(new Array(3).fill(false));
+  const [openNewDialogs, setOpenNewDialogs] = useState<boolean[]>(new Array(3).fill(false));
+  const [openEditDialogs, setOpenEditDialogs] = useState<boolean[]>(new Array(3).fill(false));
   const [openReminderDialog, setOpenReminderDialog] = useState(false);
 
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const [creating, setCreating] = useState(false);
 
   useEffect(() => {
     const getInitialData = async () => {
       const singleData = await Promise.all(
-        INPUT_TYPES.map(async (type) => (
-          await getDocs(collection(db, `Settings ${type.h2Text}`))).docs.map((dc) => dc.data())),
+        INPUT_TYPES.map(async (type) => {
+          const sData = (await getDocs(collection(db, `Settings ${type.h2Text}`))).docs;
+          const data = sData.map((dc) => dc.data());
+          const ids = sData.map((dc) => dc.id);
+          ids.forEach((id, i) => {
+            data[i].id = id;
+          });
+          return data;
+        }),
       );
-      const reminders = (await getDocs(collection(db, `Settings Reminders`))).docs.map((dc) => dc.data());
+
+      const rData = (await getDocs(collection(db, `Settings Reminders`))).docs;
+      const reminders = rData.map((dc) => dc.data());
+      const reminderIds = rData.map((dc) => dc.id);
+      reminderIds.forEach((id, i) => {
+        reminders[i].id = id;
+      });
       setReminderData(reminders);
       setSingleInputsData(singleData);
     };
 
     getInitialData();
-  }, [creating]);
+  }, [creating, isEditing, isDeleting]);
 
   useEffect(() => {
     setContainerHeight(window.innerHeight - 180);
@@ -106,7 +129,7 @@ function Tour() {
 
     clearSingleInputs();
     setCreating(false);
-    onOpenDialog(i);
+    onOpenNewDialog(i);
   };
 
   const clearSingleInputs = () => {
@@ -128,14 +151,46 @@ function Tour() {
     setOpenReminderDialog(false);
   };
 
+  const onEditSingleInput = async (type: string, id: string, i: number) => {
+    setIsEditing(true);
+    await updateDoc(doc(db, `Settings ${type}`, id), {
+      val: editInput,
+      updatedAt: serverTimestamp(),
+    });
+    setIsEditing(false);
+    onOpenEditDialog(i);
+  };
+
+  const onEditItem = (i: number, id: string) => {
+    const input = singleInputsData[i].find((inp) => inp.id === id);
+    setEditInput((input as { val: string }).val);
+    setEditId((input as { id: string }).id);
+    onOpenEditDialog(i);
+  };
+
+  const onDeleteItem = async (type: string, id: string) => {
+    // eslint-disable-next-line no-alert, no-restricted-globals
+    const confirmDelete = confirm('Are you sure you want to delete this item?');
+    if (confirmDelete) {
+      setIsDeleting(false);
+      await deleteDoc(doc(db, `Settings ${type}`, id));
+      setIsDeleting(true);
+    }
+  };
+
   const clearReminderInputs = () => {
     setNewReminderTitle('');
     setNewReminderDesc('');
   };
 
-  const onOpenDialog = (i: number) => {
-    const updatedOpenDialogs = openDialogs.map((open, index) => (index === i ? !open : open));
-    setOpenDialogs(updatedOpenDialogs);
+  const onOpenNewDialog = (i: number) => {
+    const updatedOpenDialogs = openNewDialogs.map((open, index) => (index === i ? !open : open));
+    setOpenNewDialogs(updatedOpenDialogs);
+  };
+
+  const onOpenEditDialog = (i: number) => {
+    const updatedOpenDialogs = openEditDialogs.map((open, index) => (index === i ? !open : open));
+    setOpenEditDialogs(updatedOpenDialogs);
   };
 
   const onSetNewSingleInputs = (i: number, val: string) => {
@@ -161,18 +216,33 @@ function Tour() {
             <SectionContainer
               containerWidth={containerWidth}
               h2Text={type.h2Text}
-              btnText={type.btnText}
-              setOpenDialog={() => onOpenDialog(index)}
+              btnText={type.btnNewText}
+              setOpenDialog={() => onOpenNewDialog(index)}
             />
+            {/* Create New Dialog */}
             <SingleInputDialog
-              title={type.btnText}
+              title={type.btnNewText}
               newInput={newSingleInputs[index]}
               onChange={(val: string) => onSetNewSingleInputs(index, val)}
-              openDialog={openDialogs[index]}
-              setOpenDialog={() => onOpenDialog(index)}
-              onCreate={() => onCreateSingleInput(type.h2Text, index)}
+              openDialog={openNewDialogs[index]}
+              setOpenDialog={() => onOpenNewDialog(index)}
+              onEditCreate={() => onCreateSingleInput(type.h2Text, index)}
             />
-            <UnorderedListAtom allChildren={listRender(singleInputsData, index)} />
+            {/* Edit Item Dialog */}
+            <SingleInputDialog
+              title={type.btnEditText}
+              newInput={editInput}
+              onChange={(val: string) => setEditInput(val)}
+              openDialog={openEditDialogs[index]}
+              setOpenDialog={() => onOpenEditDialog(index)}
+              onEditCreate={() => onEditSingleInput(type.h2Text, editId, index)}
+            />
+            <UnorderedListAtom
+              type={type.h2Text}
+              onEditItem={(_, _id) => onEditItem(index, _id)}
+              onDeleteItem={(tp, _id) => onDeleteItem(tp, _id)}
+              allChildren={listRender(singleInputsData, index)}
+            />
           </DivAtom>
         ))}
 

@@ -14,10 +14,10 @@ import LocationTable from '../../../organisms/settings/accomodation/Locationtabl
 import SectionContainer from '../../../organisms/settings/SectionContainer';
 import SingleInputDialog from '../../../organisms/settings/SingleInputDialog';
 import DivAtom from '../../../atoms/DivAtom';
-import UnorderedListAtom from '../../../atoms/UnorderedListAtom';
+// import UnorderedListAtom from '../../../atoms/UnorderedListAtom';
 import { db } from '../../../firebase';
 import { settingsStyles } from '../../../styles';
-import { SettingsLocation, SettingsSingleInput } from '../../../utils/types';
+import { SettingsLocation } from '../../../utils/types';
 
 const INPUT_TYPES = [
   {
@@ -34,17 +34,17 @@ const INPUT_TYPES = [
   },
 ];
 
-function listRender(data: DocumentData[][], index: number) {
-  if (index === 0) {
-    return data[0] as SettingsSingleInput[];
-  }
+// function listRender(data: DocumentData[][], index: number) {
+//   if (index === 0) {
+//     return data[0] as SettingsSingleInput[];
+//   }
 
-  if (index === 1) {
-    return data[1] as SettingsSingleInput[];
-  }
+//   if (index === 1) {
+//     return data[1] as SettingsSingleInput[];
+//   }
 
-  return data[2] as SettingsSingleInput[];
-}
+//   return data[2] as SettingsSingleInput[];
+// }
 
 function SettingsAccomodation() {
   const [containerHeight, setContainerHeight] = useState(0);
@@ -162,9 +162,9 @@ function SettingsAccomodation() {
               onChange={(val: string) => onSetNewSingleInputs(index, val)}
               openDialog={openDialogs[index]}
               setOpenDialog={() => onOpenDialog(index)}
-              onCreate={() => onCreateSingleInput(type.h2Text, index)}
+              onEditCreate={() => onCreateSingleInput(type.h2Text, index)}
             />
-            <UnorderedListAtom allChildren={listRender(singleInputsData, index)} />
+            {/* <UnorderedListAtom allChildren={listRender(singleInputsData, index)} /> */}
           </DivAtom>
         ))}
 
