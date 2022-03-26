@@ -57,8 +57,7 @@ function Tour() {
 
   const [singleInputsData, setSingleInputsData] = useState<DocumentData[][]>([]);
   const [newSingleInput, setNewSingleInput] = useState('');
-  const [editInput, setEditInput] = useState('');
-  const [editId, setEditId] = useState('');
+  const [editSingleInput, setEditSingleInput] = useState('');
 
   const [reminderData, setReminderData] = useState<DocumentData[]>([]);
   const [newReminderTitle, setNewReminderTitle] = useState('');
@@ -67,6 +66,8 @@ function Tour() {
   const [editReminderTitle, setEditReminderTitle] = useState('');
   const [editReminderDesc, setEditReminderDesc] = useState('');
   const [editReminderTypes, setEditReminderTypes] = useState<boolean[]>(new Array(2).fill(false));
+
+  const [editId, setEditId] = useState('');
 
   const [openNewDialogs, setOpenNewDialogs] = useState<boolean[]>(new Array(3).fill(false));
   const [openEditDialogs, setOpenEditDialogs] = useState<boolean[]>(new Array(3).fill(false));
@@ -125,9 +126,8 @@ function Tour() {
 
   const onCreateSingleInput = async (type: string, i: number) => {
     setCreating(true);
-    const val = newSingleInput;
     await setDoc(doc(db, `Settings ${type}`, uuid()), {
-      val,
+      val: newSingleInput,
       createdAt: serverTimestamp(),
     });
 
@@ -139,7 +139,7 @@ function Tour() {
   const onEditSingleInput = async (type: string, i: number) => {
     setIsEditing(true);
     await updateDoc(doc(db, `Settings ${type}`, editId), {
-      val: editInput,
+      val: editSingleInput,
       updatedAt: serverTimestamp(),
     });
     setIsEditing(false);
@@ -201,8 +201,9 @@ function Tour() {
 
   const onEditItemClick = (i: number, id: string) => {
     const input = singleInputsData[i].find((inp) => inp.id === id);
-    setEditInput((input as { val: string }).val);
+    setEditSingleInput((input as { val: string }).val);
     setEditId((input as { id: string }).id);
+    console.log(id);
     onOpenEditDialog(i);
   };
 
@@ -251,7 +252,7 @@ function Tour() {
               btnText={type.btnNewText}
               setOpenDialog={() => onOpenNewDialog(index)}
             />
-            {/* Create New Dialog */}
+            {/* Create Item Dialog */}
             <SingleInputDialog
               title={type.btnNewText}
               newInput={newSingleInput}
@@ -263,8 +264,8 @@ function Tour() {
             {/* Edit Item Dialog */}
             <SingleInputDialog
               title={type.btnEditText}
-              newInput={editInput}
-              onChange={(val: string) => setEditInput(val)}
+              newInput={editSingleInput}
+              onChange={(val: string) => setEditSingleInput(val)}
               openDialog={openEditDialogs[index]}
               setOpenDialog={() => onOpenEditDialog(index)}
               onEditCreate={() => onEditSingleInput(type.h2Text, index)}

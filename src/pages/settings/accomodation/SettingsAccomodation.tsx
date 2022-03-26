@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import {
   collection,
+  deleteDoc,
   doc,
   DocumentData,
   getDocs,
   serverTimestamp,
   setDoc,
+  updateDoc,
 } from 'firebase/firestore';
 import { v4 as uuid } from 'uuid';
 
@@ -14,67 +16,92 @@ import LocationTable from '../../../organisms/settings/accomodation/Locationtabl
 import SectionContainer from '../../../organisms/settings/SectionContainer';
 import SingleInputDialog from '../../../organisms/settings/SingleInputDialog';
 import DivAtom from '../../../atoms/DivAtom';
-// import UnorderedListAtom from '../../../atoms/UnorderedListAtom';
+import UnorderedListAtom from '../../../atoms/UnorderedListAtom';
 import { db } from '../../../firebase';
+import { SettingsLocation, SettingsSingleInput } from '../../../utils/types';
 import { settingsStyles } from '../../../styles';
-import { SettingsLocation } from '../../../utils/types';
 
 const INPUT_TYPES = [
   {
     h2Text: 'Room Types',
     btnText: 'Add Room Type',
+    btnEditText: 'Edit Room Type',
   },
   {
     h2Text: 'Accomodation Types',
     btnText: 'Add Accomodation Type',
+    btnEditText: 'Edit Accomodation Type',
   },
   {
     h2Text: 'Room Views',
     btnText: 'Add Room View',
+    btnEditText: 'Edit Room View',
   },
 ];
 
-// function listRender(data: DocumentData[][], index: number) {
-//   if (index === 0) {
-//     return data[0] as SettingsSingleInput[];
-//   }
+function listRender(data: DocumentData[][], index: number) {
+  if (index === 0) {
+    return data[0] as SettingsSingleInput[];
+  }
 
-//   if (index === 1) {
-//     return data[1] as SettingsSingleInput[];
-//   }
+  if (index === 1) {
+    return data[1] as SettingsSingleInput[];
+  }
 
-//   return data[2] as SettingsSingleInput[];
-// }
+  return data[2] as SettingsSingleInput[];
+}
 
 function SettingsAccomodation() {
   const [containerHeight, setContainerHeight] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
 
-  const [newSingleInputs, setNewSingleInputs] = useState<string[]>(new Array(3).fill(''));
   const [singleInputsData, setSingleInputsData] = useState<DocumentData[][]>([]);
+  const [newSingleInput, setNewSingleInput] = useState('');
+  const [editSingleInput, setEditSingleInput] = useState('');
 
+  const [locationData, setLocationData] = useState<DocumentData[]>([]);
   const [newLocationTitle, setNewLocationTitle] = useState('');
   const [newLocationCity, setNewLocationCity] = useState('');
-  const [locationData, setLocationData] = useState<DocumentData[]>([]);
+  const [editLocationTitle, setEditLocationTitle] = useState('');
+  const [editLocationCity, setEditLocationCity] = useState('');
 
-  const [openDialogs, setOpenDialogs] = useState<boolean[]>(new Array(3).fill(false));
-  const [openLocationDialog, setOpenLocationDialog] = useState(false);
+  const [editId, setEditId] = useState('');
 
+  const [openNewDialogs, setOpenNewDialogs] = useState<boolean[]>(new Array(3).fill(false));
+  const [openEditDialogs, setOpenEditDialogs] = useState<boolean[]>(new Array(3).fill(false));
+  const [openNewLocationDialog, setOpenNewLocationDialog] = useState(false);
+  const [openEditLocationDialog, setOpenEditLocationDialog] = useState(false);
+
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const [creating, setCreating] = useState(false);
 
   useEffect(() => {
     const getInitialData = async () => {
       const singleData = await Promise.all(
-        INPUT_TYPES.map(async (type) => (
-          await getDocs(collection(db, `Settings ${type.h2Text}`))).docs.map((dc) => dc.data())),
+        INPUT_TYPES.map(async (type) => {
+          const sData = (await getDocs(collection(db, `Settings ${type.h2Text}`))).docs;
+          const data = sData.map((dc) => dc.data());
+          const ids = sData.map((dc) => dc.id);
+          ids.forEach((id, i) => {
+            data[i].id = id;
+          });
+          return data;
+        }),
       );
-      const locations = (await getDocs(collection(db, `Settings Locations`))).docs.map((dc) => dc.data());
+
+      const lData = (await getDocs(collection(db, `Settings Locations`))).docs;
+      const locations = lData.map((dc) => dc.data());
+      const locationIds = lData.map((dc) => dc.id);
+      locationIds.forEach((id, i) => {
+        locations[i].id = id;
+      });
       setLocationData(locations);
       setSingleInputsData(singleData);
     };
 
     getInitialData();
-  }, [creating]);
+  }, [creating, isDeleting, isEditing]);
 
   useEffect(() => {
     setContainerHeight(window.innerHeight - 180);
@@ -97,19 +124,34 @@ function SettingsAccomodation() {
 
   const onCreateSingleInput = async (type: string, i: number) => {
     setCreating(true);
-    const val = newSingleInputs[i];
     await setDoc(doc(db, `Settings ${type}`, uuid()), {
-      val,
+      val: newSingleInput,
       createdAt: serverTimestamp(),
     });
 
-    clearSingleInputs();
+    setNewSingleInput('');
     setCreating(false);
-    onOpenDialog(i);
+    onOpenNewDialog(i);
   };
 
-  const clearSingleInputs = () => {
-    setNewSingleInputs(new Array(3).fill(''));
+  const onEditSingleInput = async (type: string, i: number) => {
+    setIsEditing(true);
+    await updateDoc(doc(db, `Settings ${type}`, editId), {
+      val: editSingleInput,
+      updatedAt: serverTimestamp(),
+    });
+    setIsEditing(false);
+    onOpenEditDialog(i);
+  };
+
+  const onDeleteSingleInput = async (type: string, id: string) => {
+    // eslint-disable-next-line no-alert, no-restricted-globals
+    const confirmDelete = confirm('Are you sure you want to delete this item?');
+    if (confirmDelete) {
+      setIsDeleting(false);
+      await deleteDoc(doc(db, `Settings ${type}`, id));
+      setIsDeleting(true);
+    }
   };
 
   const onCreateLocation = async () => {
@@ -122,7 +164,7 @@ function SettingsAccomodation() {
 
     clearLocationInputs();
     setCreating(false);
-    setOpenLocationDialog(false);
+    setOpenNewLocationDialog(false);
   };
 
   const clearLocationInputs = () => {
@@ -130,14 +172,49 @@ function SettingsAccomodation() {
     setNewLocationCity('');
   };
 
-  const onOpenDialog = (i: number) => {
-    const updatedOpenDialogs = openDialogs.map((open, index) => (index === i ? !open : open));
-    setOpenDialogs(updatedOpenDialogs);
+  const onEditLocation = async () => {
+    setIsEditing(true);
+    await updateDoc(doc(db, `Settings Locations`, editId), {
+      title: editLocationTitle,
+      city: editLocationCity,
+      updatedAt: serverTimestamp(),
+    });
+    setIsEditing(false);
+    setOpenEditLocationDialog(false);
   };
 
-  const onSetNewSingleInputs = (i: number, val: string) => {
-    const updatedSingleInputs = newSingleInputs.map((_, index) => (index === i ? val : ''));
-    setNewSingleInputs(updatedSingleInputs);
+  const deleteLocation = async (row: SettingsLocation) => {
+    // eslint-disable-next-line no-alert, no-restricted-globals
+    const confirmDelete = confirm('Are you sure you want to delete this item?');
+    if (confirmDelete) {
+      setIsDeleting(false);
+      await deleteDoc(doc(db, `Settings Locations`, row.id));
+      setIsDeleting(true);
+    }
+  };
+
+  const onEditItemClick = (i: number, id: string) => {
+    const input = singleInputsData[i].find((inp) => inp.id === id);
+    setEditSingleInput((input as { val: string }).val);
+    setEditId((input as { id: string }).id);
+    onOpenEditDialog(i);
+  };
+
+  const onEditLocationClick = (row: SettingsLocation) => {
+    setOpenEditLocationDialog(true);
+    setEditLocationTitle(row.title);
+    setEditLocationCity(row.city);
+    setEditId(row.id);
+  };
+
+  const onOpenNewDialog = (i: number) => {
+    const updatedOpenDialogs = openNewDialogs.map((open, index) => (index === i ? !open : open));
+    setOpenNewDialogs(updatedOpenDialogs);
+  };
+
+  const onOpenEditDialog = (i: number) => {
+    const updatedOpenDialogs = openEditDialogs.map((open, index) => (index === i ? !open : open));
+    setOpenEditDialogs(updatedOpenDialogs);
   };
 
   return (
@@ -154,17 +231,32 @@ function SettingsAccomodation() {
               containerWidth={containerWidth}
               h2Text={type.h2Text}
               btnText={type.btnText}
-              setOpenDialog={() => onOpenDialog(index)}
+              setOpenDialog={() => onOpenNewDialog(index)}
             />
+            {/* Create Item Dialog */}
             <SingleInputDialog
               title={type.btnText}
-              newInput={newSingleInputs[index]}
-              onChange={(val: string) => onSetNewSingleInputs(index, val)}
-              openDialog={openDialogs[index]}
-              setOpenDialog={() => onOpenDialog(index)}
+              newInput={newSingleInput}
+              onChange={(val: string) => setNewSingleInput(val)}
+              openDialog={openNewDialogs[index]}
+              setOpenDialog={() => onOpenNewDialog(index)}
               onEditCreate={() => onCreateSingleInput(type.h2Text, index)}
             />
-            {/* <UnorderedListAtom allChildren={listRender(singleInputsData, index)} /> */}
+            {/* Edit Item Dialog */}
+            <SingleInputDialog
+              title={type.btnEditText}
+              newInput={editSingleInput}
+              onChange={(val: string) => setEditSingleInput(val)}
+              openDialog={openEditDialogs[index]}
+              setOpenDialog={() => onOpenEditDialog(index)}
+              onEditCreate={() => onEditSingleInput(type.h2Text, index)}
+            />
+            <UnorderedListAtom
+              allChildren={listRender(singleInputsData, index)}
+              type={type.h2Text}
+              onEditItem={(_, _id) => onEditItemClick(index, _id)}
+              onDeleteItem={(tp, _id) => onDeleteSingleInput(tp, _id)}
+            />
           </DivAtom>
         ))}
 
@@ -173,23 +265,37 @@ function SettingsAccomodation() {
             containerWidth={containerWidth}
             h2Text="Locations"
             btnText="Add Location"
-            setOpenDialog={() => setOpenLocationDialog(true)}
+            setOpenDialog={() => setOpenNewLocationDialog(true)}
           />
+          {/* Add Location */}
           <LocationInputDialog
             title="Add Location"
             newTitle={newLocationTitle}
             newCity={newLocationCity}
             setNewTitle={setNewLocationTitle}
             setNewCity={setNewLocationCity}
-            openDialog={openLocationDialog}
-            setOpenDialog={() => setOpenLocationDialog(false)}
+            openDialog={openNewLocationDialog}
+            setOpenDialog={() => setOpenNewLocationDialog(false)}
             onCreate={onCreateLocation}
+          />
+          {/* Edit Location */}
+          <LocationInputDialog
+            title="Edit Location"
+            newTitle={editLocationTitle}
+            newCity={editLocationCity}
+            setNewTitle={setEditLocationTitle}
+            setNewCity={setEditLocationCity}
+            openDialog={openEditLocationDialog}
+            setOpenDialog={() => setOpenEditLocationDialog(false)}
+            onCreate={onEditLocation}
           />
           <DivAtom style={{ marginTop: '1rem' }}>
             {locationData[0] && (
               <LocationTable
-                columns={['LOCATION', 'CITY']}
+                columns={['LOCATION', 'CITY', '', '']}
                 data={locationData as SettingsLocation[]}
+                deleteLocation={deleteLocation}
+                onEditLocationClick={onEditLocationClick}
               />
             )}
           </DivAtom>

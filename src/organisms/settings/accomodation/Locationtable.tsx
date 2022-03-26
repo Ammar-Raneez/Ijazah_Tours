@@ -7,9 +7,12 @@ import {
   TableHead,
   TableRow,
 } from '@material-ui/core';
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { v4 as uuid } from 'uuid';
 
 import TableColumnCell from '../../../molecules/TableColumnCell';
+import TableRowIconCell from '../../../molecules/TableRowIconCell';
 import TableRowTextCell from '../../../molecules/TableRowTextCell';
 import { SettingsLocation } from '../../../utils/types';
 
@@ -23,17 +26,21 @@ const useStyles = makeStyles({
 interface LocationTableProps {
   data: SettingsLocation[];
   columns: string[];
+  onEditLocationClick: (row: SettingsLocation) => void;
+  deleteLocation: (row: SettingsLocation) => void;
 }
 
 function LocationTable({
   data,
   columns,
+  onEditLocationClick,
+  deleteLocation,
 }: LocationTableProps) {
   const classes = useStyles();
 
   return (
     <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="reminder table">
+      <Table className={classes.table} aria-label="location table">
         <TableHead>
           <TableRow>
             {columns.map((column) => (
@@ -66,6 +73,22 @@ function LocationTable({
                   colors: ['#464E5F', '#B5B5C3'],
                   weight: 400,
                 }}
+              />
+              <TableRowIconCell
+                align="center"
+                onClick={() => onEditLocationClick(row)}
+                textcolor="#B5B5C3"
+                size="small"
+                padding="8px"
+                children={<EditOutlinedIcon />}
+              />
+              <TableRowIconCell
+                align="center"
+                onClick={() => deleteLocation(row)}
+                textcolor="#B5B5C3"
+                size="small"
+                padding="8px"
+                children={<DeleteOutlinedIcon />}
               />
             </TableRow>
           ))}
