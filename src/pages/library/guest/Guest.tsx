@@ -24,6 +24,8 @@ function Guest() {
   const [search, setSearch] = useState('');
 
   const [editGuestData, setEditGuestData] = useState<LibraryGuest>();
+  const [isCreating, setIsCreating] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const history = useHistory();
 
@@ -58,7 +60,7 @@ function Guest() {
     };
 
     getIntialData();
-  }, [isDeleting]);
+  }, [isDeleting, isCreating, isUpdating]);
 
   const deleteGuest = async (row: LibraryGuest) => {
     // eslint-disable-next-line no-alert, no-restricted-globals
@@ -85,10 +87,14 @@ function Guest() {
       >
         <DivAtom>
           <Route path="/library/guest/create">
-            <CreateGuest />
+            <CreateGuest isCreating={isCreating} setIsCreating={setIsCreating} />
           </Route>
           <Route path="/library/guest/edit/:id">
-            <EditGuest row={editGuestData as LibraryGuest} />
+            <EditGuest
+              isUpdating={isUpdating}
+              setIsUpdating={setIsUpdating}
+              row={editGuestData as LibraryGuest}
+            />
           </Route>
           <Route exact path="/library/guest">
             <GuestTable

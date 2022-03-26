@@ -1,4 +1,5 @@
 import { ChangeEvent } from 'react';
+import { CircularProgress } from '@material-ui/core';
 
 import FormControlInput from '../../../molecules/FormControlInput';
 import ButtonAtom from '../../../atoms/ButtonAtom';
@@ -8,9 +9,12 @@ import { libraryCreateGuestStyles, libraryStyles } from '../../../styles';
 import ImageUploader from './ImageUploader';
 import { statusOptions } from '../../../utils/helpers';
 import H2Atom from '../../../atoms/H2Atom';
+import ParagraphAtom from '../../../atoms/ParagraphAtom';
 
 interface CreateEditGuestFormProps {
   width: number;
+  isCreating: boolean;
+  showValidationErrorMessage: boolean;
   btnText: string;
   refNum: string;
   firstName: string;
@@ -46,6 +50,8 @@ interface CreateEditGuestFormProps {
 
 function CreateEditGuestForm({
   width,
+  isCreating,
+  showValidationErrorMessage,
   btnText,
   refNum,
   firstName,
@@ -290,6 +296,13 @@ function CreateEditGuestForm({
         />
       </DivAtom>
 
+      {showValidationErrorMessage && (
+        <ParagraphAtom
+          text="Please fill in all the fields"
+          style={{ color: 'red', textAlign: 'center' }}
+        />
+      )}
+
       <DivAtom
         style={{
           ...libraryCreateGuestStyles.addBtnContainer,
@@ -303,18 +316,9 @@ function CreateEditGuestForm({
       >
         <ButtonAtom
           size="large"
+          endicon={isCreating && <CircularProgress size={20} color="inherit" />}
           onClick={onAddEditGuest}
-          disabled={
-            refNum === ''
-            || firstName === ''
-            || lastName === ''
-            || country === ''
-            || city === ''
-            || contactNumber === ''
-            || email === ''
-            || occupation === ''
-            || passport.length === 0
-          }
+          disabled={isCreating}
           style={{
             ...libraryCreateGuestStyles.addBtn,
             width: width < 768 ? '100%' : '18%',

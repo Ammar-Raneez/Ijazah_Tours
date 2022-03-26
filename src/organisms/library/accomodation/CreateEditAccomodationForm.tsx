@@ -32,8 +32,8 @@ const allRoomGradings = [
 interface CreateEditAccomodationFormProps {
   rateData: AccomodationRate[];
   width: number;
-  btnText: string;
   showValidationErrorMessage: boolean;
+  btnText: string;
   location: string;
   city: string;
   group: string;

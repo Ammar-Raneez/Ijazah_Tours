@@ -24,6 +24,8 @@ function Driver() {
   const [search, setSearch] = useState('');
 
   const [editDriverData, setEditDriverData] = useState<LibraryDriver>();
+  const [isCreating, setIsCreating] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const history = useHistory();
 
@@ -58,7 +60,7 @@ function Driver() {
     };
 
     getIntialData();
-  }, [isDeleting]);
+  }, [isDeleting, isCreating, isUpdating]);
 
   const deleteDriver = async (row: LibraryDriver) => {
     // eslint-disable-next-line no-alert, no-restricted-globals
@@ -85,10 +87,14 @@ function Driver() {
       >
         <DivAtom>
           <Route path="/library/driver/create">
-            <CreateDriver />
+            <CreateDriver isCreating={isCreating} setIsCreating={setIsCreating} />
           </Route>
           <Route path="/library/driver/edit/:id">
-            <EditDriver row={editDriverData as LibraryDriver} />
+            <EditDriver
+              isUpdating={isUpdating}
+              setIsUpdating={setIsUpdating}
+              row={editDriverData as LibraryDriver}
+            />
           </Route>
           <Route exact path="/library/driver">
             <DriverTable

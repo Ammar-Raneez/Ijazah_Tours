@@ -1,4 +1,5 @@
 import { ChangeEvent } from 'react';
+import { CircularProgress } from '@material-ui/core';
 
 import FormControlInput from '../../../molecules/FormControlInput';
 import ButtonAtom from '../../../atoms/ButtonAtom';
@@ -8,9 +9,12 @@ import { formCreateMemberStyles, libraryStyles } from '../../../styles';
 import ImageUploader from './ImageUploader';
 import CheckboxGroup from '../../../molecules/CheckboxGroup';
 import { statusOptions, vehicleOptions } from '../../../utils/helpers';
+import ParagraphAtom from '../../../atoms/ParagraphAtom';
 
 interface CreateEditDriverFormProps {
   width: number;
+  isCreating: boolean;
+  showValidationErrorMessage: boolean;
   btnText: string,
   firstName: string;
   lastName: string;
@@ -48,6 +52,8 @@ interface CreateEditDriverFormProps {
 function CreateEditDriverForm({
   width,
   btnText,
+  isCreating,
+  showValidationErrorMessage,
   firstName,
   lastName,
   nic,
@@ -275,6 +281,13 @@ function CreateEditDriverForm({
         />
       </DivAtom>
 
+      {showValidationErrorMessage && (
+        <ParagraphAtom
+          text="Please fill in all the fields"
+          style={{ color: 'red', textAlign: 'center' }}
+        />
+      )}
+
       <DivAtom
         style={{
           ...formCreateMemberStyles.addBtnContainer,
@@ -285,21 +298,9 @@ function CreateEditDriverForm({
       >
         <ButtonAtom
           size="large"
+          endicon={isCreating && <CircularProgress size={20} color="inherit" />}
           onClick={onAddEditDriver}
-          disabled={
-            firstName === ''
-            || lastName === ''
-            || contactNumber === ''
-            || email === ''
-            || nic === ''
-            || boardCertNum === ''
-            || address === ''
-            || rate === ''
-            || notes === ''
-            || insurance.length === 0
-            || profilePic.length === 0
-            || vehiclePic.length === 0
-          }
+          disabled={isCreating}
           style={{
             ...formCreateMemberStyles.addBtn,
             width: width < 768 ? '100%' : '18%',

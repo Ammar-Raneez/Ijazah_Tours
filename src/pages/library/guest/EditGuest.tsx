@@ -17,9 +17,11 @@ const storage = getStorage();
 
 interface EditGuestProps {
   row: LibraryGuest;
+  isUpdating: boolean;
+  setIsUpdating: any;
 }
 
-function EditGuest({ row }: EditGuestProps) {
+function EditGuest({ row, isUpdating, setIsUpdating }: EditGuestProps) {
   const [refNum, setRefNum] = useState(row.refNum);
   const [firstName, setFirstName] = useState(row.name.split(' ')[0]);
   const [lastName, setLastName] = useState(row.name.split(' ')[1]);
@@ -34,6 +36,9 @@ function EditGuest({ row }: EditGuestProps) {
   const [childrenAges, setChildrenAges] = useState<number[]>(row.childrenAges);
   const [rooms, setRooms] = useState(row.rooms);
   const [passport, setPassport] = useState<any[]>([row.passport]);
+
+  const [showValidationErrorMessage, setShowValidationErrorMessage] = useState(false);
+
   const [width, setWidth] = useState(0);
   const history = useHistory();
 
@@ -51,6 +56,16 @@ function EditGuest({ row }: EditGuestProps) {
   }, [width]);
 
   const onEditGuest = async () => {
+    setShowValidationErrorMessage(false);
+    if (firstName.trim() === '' || lastName.trim() === '' || refNum.trim() === ''
+      || country.trim() === '' || contactNumber.trim() === '' || email.trim() === ''
+      || city.trim() === '' || occupation.trim() === '' || status.trim() === ''
+      || passport.length === 0 || !passport) {
+      setShowValidationErrorMessage(true);
+      return;
+    }
+
+    setIsUpdating(true);
     let url;
     if (passport[0].file) {
       url = await uploadPassport();
@@ -71,6 +86,8 @@ function EditGuest({ row }: EditGuestProps) {
       tel: contactNumber,
       updatedAt: serverTimestamp(),
     });
+
+    setIsUpdating(false);
   };
 
   const uploadPassport = async () => (
@@ -92,6 +109,8 @@ function EditGuest({ row }: EditGuestProps) {
       <CreateEditGuestForm
         width={width}
         btnText="Update"
+        showValidationErrorMessage={showValidationErrorMessage}
+        isCreating={isUpdating}
         refNum={refNum}
         setRefNum={setRefNum}
         firstName={firstName}

@@ -15,7 +15,15 @@ import { statusOptions, uploadImage } from '../../../utils/helpers';
 
 const storage = getStorage();
 
-function CreateGuest() {
+interface CreateGuestProps {
+  isCreating: boolean;
+  setIsCreating: any;
+}
+
+function CreateGuest({
+  isCreating,
+  setIsCreating,
+}: CreateGuestProps) {
   const [refNum, setRefNum] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -30,6 +38,9 @@ function CreateGuest() {
   const [childrenAges, setChildrenAges] = useState<number[]>([]);
   const [rooms, setRooms] = useState(0);
   const [passport, setPassport] = useState<any[]>([]);
+
+  const [showValidationErrorMessage, setShowValidationErrorMessage] = useState(false);
+
   const [width, setWidth] = useState(0);
   const history = useHistory();
 
@@ -47,6 +58,16 @@ function CreateGuest() {
   }, [width]);
 
   const onAddGuest = async () => {
+    setShowValidationErrorMessage(false);
+    if (firstName.trim() === '' || lastName.trim() === '' || refNum.trim() === ''
+      || country.trim() === '' || contactNumber.trim() === '' || email.trim() === ''
+      || city.trim() === '' || occupation.trim() === '' || status.trim() === ''
+      || passport.length === 0 || !passport) {
+      setShowValidationErrorMessage(true);
+      return;
+    }
+
+    setIsCreating(true);
     const url = await uploadPassport();
     await setDoc(doc(db, 'Library Guests', uuid()), {
       name: `${firstName} ${lastName}`,
@@ -64,7 +85,9 @@ function CreateGuest() {
       createdAt: serverTimestamp(),
     });
 
+    setIsCreating(false);
     clearInputs();
+    history.replace('/library/guest');
   };
 
   const uploadPassport = async () => (
@@ -104,6 +127,8 @@ function CreateGuest() {
       </DivAtom>
 
       <CreateEditGuestForm
+        showValidationErrorMessage={showValidationErrorMessage}
+        isCreating={isCreating}
         width={width}
         btnText="Create"
         refNum={refNum}

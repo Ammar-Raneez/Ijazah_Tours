@@ -17,9 +17,11 @@ const storage = getStorage();
 
 interface EditDriverProps {
   row: LibraryDriver;
+  isUpdating: boolean;
+  setIsUpdating: any;
 }
 
-function EditDriver({ row }: EditDriverProps) {
+function EditDriver({ row, isUpdating, setIsUpdating }: EditDriverProps) {
   const [firstName, setFirstName] = useState(row.name.split(' ')[0]);
   const [lastName, setLastName] = useState(row.name.split(' ')[1]);
   const [contactNumber, setContactNumber] = useState(row.tel);
@@ -35,6 +37,9 @@ function EditDriver({ row }: EditDriverProps) {
   const [insurance, setInsurance] = useState<any[]>([row.insurance]);
   const [profilePic, setProfilePic] = useState<any[]>([row.profilePic]);
   const [vehiclePic, setVehiclePic] = useState<any[]>([row.vehiclePic]);
+
+  const [showValidationErrorMessage, setShowValidationErrorMessage] = useState(false);
+
   const [width, setWidth] = useState(0);
   const history = useHistory();
 
@@ -52,6 +57,17 @@ function EditDriver({ row }: EditDriverProps) {
   }, [width]);
 
   const onEditDriver = async () => {
+    setShowValidationErrorMessage(false);
+    if (firstName.trim() === '' || lastName.trim() === '' || nic.trim() === ''
+      || boardCertNum.trim() === '' || contactNumber.trim() === '' || email.trim() === ''
+      || address.trim() === '' || vehicleType.trim() === '' || status.trim() === ''
+      || rate.trim() === '' || notes.trim() === '' || insurance.length === 0 || !insurance
+      || profilePic.length === 0 || !profilePic || vehiclePic.length === 0 || !vehiclePic) {
+      setShowValidationErrorMessage(true);
+      return;
+    }
+
+    setIsUpdating(true);
     let insuUrl;
     let profUrl;
     let vehiUrl;
@@ -90,6 +106,8 @@ function EditDriver({ row }: EditDriverProps) {
       languages: selectedLanguages,
       updatedAt: serverTimestamp(),
     });
+
+    setIsUpdating(false);
   };
 
   const uploadInsurance = async () => (
@@ -120,6 +138,8 @@ function EditDriver({ row }: EditDriverProps) {
       </DivAtom>
 
       <CreateEditDriverForm
+        showValidationErrorMessage={showValidationErrorMessage}
+        isCreating={isUpdating}
         width={width}
         btnText="Update"
         firstName={firstName}

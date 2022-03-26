@@ -15,7 +15,15 @@ import { statusOptions, uploadImage, vehicleOptions } from '../../../utils/helpe
 
 const storage = getStorage();
 
-function CreateDriver() {
+interface CreateDriverProps {
+  isCreating: boolean;
+  setIsCreating: any;
+}
+
+function CreateDriver({
+  isCreating,
+  setIsCreating,
+}: CreateDriverProps) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [contactNumber, setContactNumber] = useState('');
@@ -31,6 +39,9 @@ function CreateDriver() {
   const [insurance, setInsurance] = useState<any[]>([]);
   const [profilePic, setProfilePic] = useState<any[]>([]);
   const [vehiclePic, setVehiclePic] = useState<any[]>([]);
+
+  const [showValidationErrorMessage, setShowValidationErrorMessage] = useState(false);
+
   const [width, setWidth] = useState(0);
   const history = useHistory();
 
@@ -48,6 +59,17 @@ function CreateDriver() {
   }, [width]);
 
   const onAddDriver = async () => {
+    setShowValidationErrorMessage(false);
+    if (firstName.trim() === '' || lastName.trim() === '' || nic.trim() === ''
+      || boardCertNum.trim() === '' || contactNumber.trim() === '' || email.trim() === ''
+      || address.trim() === '' || vehicleType.trim() === '' || status.trim() === ''
+      || rate.trim() === '' || notes.trim() === '' || insurance.length === 0 || !insurance
+      || profilePic.length === 0 || !profilePic || vehiclePic.length === 0 || !vehiclePic) {
+      setShowValidationErrorMessage(true);
+      return;
+    }
+
+    setIsCreating(true);
     const [insuranceUrl, profilePicUrl, vehiclePicUrl] = await uploadImages();
     const selectedLanguages = [];
     if (languages[0]) {
@@ -75,7 +97,9 @@ function CreateDriver() {
       createdAt: serverTimestamp(),
     });
 
+    setIsCreating(false);
     clearInputs();
+    history.replace('/library/driver');
   };
 
   const uploadInsurance = async () => (
@@ -123,6 +147,8 @@ function CreateDriver() {
       </DivAtom>
 
       <CreateEditDriverForm
+        showValidationErrorMessage={showValidationErrorMessage}
+        isCreating={isCreating}
         width={width}
         btnText="Create"
         firstName={firstName}
