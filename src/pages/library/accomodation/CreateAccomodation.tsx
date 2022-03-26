@@ -7,6 +7,8 @@ import {
 import { useHistory } from 'react-router-dom';
 import { FormControl, InputLabel } from '@material-ui/core';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
+import { doc, setDoc } from 'firebase/firestore';
+import { v4 as uuid } from 'uuid';
 
 import AccomodationRatesContainer from '../../../organisms/library/accomodation/AccomodationRatesContainer';
 import FormControlInput from '../../../molecules/FormControlInput';
@@ -17,10 +19,10 @@ import ButtonAtom from '../../../atoms/ButtonAtom';
 import IconAtom from '../../../atoms/IconAtom';
 import ParagraphAtom from '../../../atoms/ParagraphAtom';
 import InputAtom from '../../../atoms/InputAtom';
+import { db } from '../../../firebase';
 import { formCreateMemberStyles } from '../../../styles';
 
 function CreateAccomodation() {
-  // Generate ref num on creation
   const [name, setName] = useState('');
   const [group, setGroup] = useState('');
   const [location, setLocation] = useState('');
@@ -38,6 +40,18 @@ function CreateAccomodation() {
     'Cilantro Suite',
     'Executive Room',
     'Premium Room',
+  ];
+
+  const allRoomViews = [
+    'Cilantro Suite',
+    'Executive Room',
+    'Premium Room',
+  ];
+
+  const allRoomGradings = [
+    '5 Star',
+    '2 Star',
+    '3 Star',
   ];
 
   const [selectedTypes, setSelectedTypes] = useState(new Array(3).fill(undefined));
@@ -71,28 +85,38 @@ function CreateAccomodation() {
     return removeEventListeners();
   }, [width]);
 
-  const onAddAccomodation = () => {
-    // eslint-disable-next-line no-console
-    console.log('add accomodation');
+  const onAddAccomodation = async () => {
+    await setDoc(doc(db, 'Library Accomodation', uuid()), {
+      name,
+      group,
+      location,
+      city,
+      email,
+      webLink,
+      ijazahLink,
+      gradings: roomGradings,
+      views: roomViews,
+      categories: roomCategories,
+      categoryValues: selectedTypeValues,
+      tel: contactNumber,
+      rates: rateData,
+    });
   };
 
   const onCreateRate = (
     event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
   ) => {
     event.preventDefault();
-    localStorage.setItem(
-      'New Accomodation Rates',
-      JSON.stringify({
-        data: [
-          ...rateData,
-          [newRateStart, newRateEnd, newMealPlan, newSinglePrice, newDoublePrice, newTriplePrice],
-        ],
-      }),
-    );
-
     setRateData([
       ...rateData,
-      [newRateStart, newRateEnd, newMealPlan, newSinglePrice, newDoublePrice, newTriplePrice],
+      {
+        newRateStart,
+        newRateEnd,
+        newMealPlan,
+        newSinglePrice,
+        newDoublePrice,
+        newTriplePrice,
+      },
     ]);
 
     setNewMealPlan('');
@@ -270,7 +294,7 @@ function CreateAccomodation() {
         >
           <CheckboxGroup
             grouptitle="Room Categories"
-            labels={[`Cilantro Suite`, 'Executive Room', 'Premium Room']}
+            labels={allRoomTypes}
             names={['cilantro-suite', 'executive-room', 'premium-room']}
             checked={roomCategories}
             onChange={(_, i: number) => addRoomCategory(i)}
@@ -278,7 +302,7 @@ function CreateAccomodation() {
           />
           <CheckboxGroup
             grouptitle="Room View"
-            labels={[`Cilantro Suite`, 'Executive Room', 'Premium Room']}
+            labels={allRoomViews}
             names={['cilantro-suite', 'executive-room', 'premium-room']}
             checked={roomViews}
             onChange={(_, i: number) => addRoomView(i)}
@@ -286,7 +310,7 @@ function CreateAccomodation() {
           />
           <CheckboxGroup
             grouptitle="Gradings"
-            labels={['5 Star', '4 Star', '3 Star']}
+            labels={allRoomGradings}
             names={['five', 'four', 'three']}
             checked={roomGradings}
             onChange={(_, i: number) => addRoomGradings(i)}

@@ -19,8 +19,17 @@ const useStyles = makeStyles({
   },
 });
 
+interface Rate {
+  newRateStart: string;
+  newRateEnd: string;
+  newMealPlan: string;
+  newSinglePrice: string;
+  newDoublePrice: string;
+  newTriplePrice: string;
+}
+
 interface AccomodationPriceTableProps {
-  data: [][];
+  data: Rate[];
   columns: string[];
 }
 
@@ -46,25 +55,64 @@ function AccomodationPriceTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(
-            (row: []) => (
-              <TableRow key={uuid()}>
-                {row.map(
-                  (cell: string | number, index: number) => index <= columns.length - 1 && (
-                    <TableRowTextCell
-                      key={uuid()}
-                      cell={{
-                        align: 'center',
-                        title: cell,
-                        colors: ['#464E5F', '#B5B5C3'],
-                        weight: 400,
-                      }}
-                    />
-                  ),
-                )}
-              </TableRow>
-            ),
-          )}
+          {data.map((row: Rate) => (
+            <TableRow key={uuid()}>
+              <TableRowTextCell
+                key={uuid()}
+                cell={{
+                  align: 'center',
+                  title: row.newRateStart,
+                  colors: ['#464E5F', '#B5B5C3'],
+                  weight: 400,
+                }}
+              />
+              <TableRowTextCell
+                key={uuid()}
+                cell={{
+                  align: 'center',
+                  title: row.newRateEnd,
+                  colors: ['#464E5F', '#B5B5C3'],
+                  weight: 400,
+                }}
+              />
+              <TableRowTextCell
+                key={uuid()}
+                cell={{
+                  align: 'center',
+                  title: row.newMealPlan,
+                  colors: ['#464E5F', '#B5B5C3'],
+                  weight: 400,
+                }}
+              />
+              <TableRowTextCell
+                key={uuid()}
+                cell={{
+                  align: 'center',
+                  title: row.newSinglePrice,
+                  colors: ['#464E5F', '#B5B5C3'],
+                  weight: 400,
+                }}
+              />
+              <TableRowTextCell
+                key={uuid()}
+                cell={{
+                  align: 'center',
+                  title: row.newDoublePrice,
+                  colors: ['#464E5F', '#B5B5C3'],
+                  weight: 400,
+                }}
+              />
+              <TableRowTextCell
+                key={uuid()}
+                cell={{
+                  align: 'center',
+                  title: row.newTriplePrice,
+                  colors: ['#464E5F', '#B5B5C3'],
+                  weight: 400,
+                }}
+              />
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </TableContainer>
