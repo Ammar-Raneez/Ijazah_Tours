@@ -12,7 +12,6 @@ import {
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import SearchIcon from '@material-ui/icons/Search';
-import FilterListIcon from '@material-ui/icons/FilterList';
 import clsx from 'clsx';
 
 import ButtonAtom from '../atoms/ButtonAtom';
@@ -96,7 +95,7 @@ const LibraryTableToolbar = ({
             width: width < 540 ? '100%' : 'auto',
           }}
         >
-          {numSelected > 0 ? (
+          {numSelected > 0 && (
             <Tooltip title="Delete">
               <IconButton
                 size="medium"
@@ -104,16 +103,6 @@ const LibraryTableToolbar = ({
                 onClick={() => null}
               >
                 <DeleteOutlinedIcon />
-              </IconButton>
-            </Tooltip>
-          ) : (
-            <Tooltip title="Filter list">
-              <IconButton
-                size="medium"
-                style={libraryTableToolbarStyles.filterIcon}
-                onClick={() => null}
-              >
-                <FilterListIcon />
               </IconButton>
             </Tooltip>
           )}
