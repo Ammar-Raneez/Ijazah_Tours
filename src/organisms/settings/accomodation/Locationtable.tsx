@@ -80,7 +80,7 @@ function LocationTable({
                 textcolor="#B5B5C3"
                 size="small"
                 padding="8px"
-                children={<EditOutlinedIcon />}
+                children={<EditOutlinedIcon style={{ color: 'green' }} />}
               />
               <TableRowIconCell
                 align="center"
@@ -88,7 +88,7 @@ function LocationTable({
                 textcolor="#B5B5C3"
                 size="small"
                 padding="8px"
-                children={<DeleteOutlinedIcon />}
+                children={<DeleteOutlinedIcon style={{ color: 'red' }} />}
               />
             </TableRow>
           ))}

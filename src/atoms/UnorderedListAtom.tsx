@@ -1,7 +1,8 @@
-import IconButton from '@material-ui/core/IconButton';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+
 import DivAtom from './DivAtom';
+import IconAtom from './IconAtom';
 
 interface UnorderedListAtomProps {
   type: string;
@@ -21,12 +22,12 @@ function UnorderedListAtom({
       {allChildren.map((val) => (
         <DivAtom style={{ display: 'flex', alignItems: 'center' }}>
           <li style={{ width: '150px' }} key={val.id}>{val.val}</li>
-          <IconButton onClick={() => onEditItem(type, val.id)}>
+          <IconAtom size="small" onClick={() => onEditItem(type, val.id)} style={{ color: 'green' }}>
             <EditOutlinedIcon />
-          </IconButton>
-          <IconButton onClick={() => onDeleteItem(type, val.id)}>
+          </IconAtom>
+          <IconAtom size="small" onClick={() => onDeleteItem(type, val.id)} style={{ color: 'red' }}>
             <DeleteOutlinedIcon />
-          </IconButton>
+          </IconAtom>
         </DivAtom>
       ))}
     </ul>
