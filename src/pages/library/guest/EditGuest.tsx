@@ -16,25 +16,28 @@ import H2Atom from '../../../atoms/H2Atom';
 import IconAtom from '../../../atoms/IconAtom';
 import { libraryCreateGuestStyles } from '../../../styles';
 import { db } from '../../../firebase';
-import { statusOptions } from '../../../utils/helpers';
 
 const storage = getStorage();
 
-function CreateGuest() {
-  const [refNum, setRefNum] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [country, setCountry] = useState('');
-  const [city, setCity] = useState('');
-  const [contactNumber, setContactNumber] = useState('');
-  const [email, setEmail] = useState('');
-  const [occupation, setOccupation] = useState('');
-  const [adults, setAdults] = useState(0);
+interface EditGuestProps {
+  row: any;
+}
+
+function EditGuest({ row }: EditGuestProps) {
+  const [refNum, setRefNum] = useState(row.refNum);
+  const [firstName, setFirstName] = useState(row.name.split(' ')[0]);
+  const [lastName, setLastName] = useState(row.name.split(' ')[1]);
+  const [country, setCountry] = useState(row.country);
+  const [city, setCity] = useState(row.city);
+  const [contactNumber, setContactNumber] = useState(row.tel);
+  const [email, setEmail] = useState(row.email);
+  const [occupation, setOccupation] = useState(row.occupation);
+  const [adults, setAdults] = useState(row.adults);
   const [childAge, setChildAge] = useState(0);
-  const [status, setStatus] = useState(statusOptions[0].value);
-  const [childrenAges, setChildrenAges] = useState<number[]>([]);
-  const [rooms, setRooms] = useState(0);
-  const [passport, setPassport] = useState<any[]>([]);
+  const [status, setStatus] = useState(row.status);
+  const [childrenAges, setChildrenAges] = useState<number[]>(row.childrenAges);
+  const [rooms, setRooms] = useState(row.rooms);
+  const [passport, setPassport] = useState<any[]>([row.passport]);
   const [width, setWidth] = useState(0);
   const history = useHistory();
 
@@ -51,9 +54,13 @@ function CreateGuest() {
     return removeEventListeners();
   }, [width]);
 
-  const onAddGuest = async () => {
-    const url = await uploadImage();
-    await setDoc(doc(db, 'Library Guests', uuid()), {
+  const onEditGuest = async () => {
+    let url;
+    if (passport[0].file) {
+      url = await uploadImage();
+    }
+
+    await setDoc(doc(db, 'Library Guests', row.id), {
       name: `${firstName} ${lastName}`,
       refNum,
       email,
@@ -64,12 +71,10 @@ function CreateGuest() {
       rooms,
       childrenAges,
       status,
-      passport: url,
+      passport: url || passport[0],
       tel: contactNumber,
       createdAt: serverTimestamp(),
     });
-
-    clearInputs();
   };
 
   const uploadImage = async () => {
@@ -77,26 +82,6 @@ function CreateGuest() {
     const storageRef = ref(storage, `library-guest/${passRandom + passport[0].file.name}`);
     await uploadString(storageRef, passport[0].data_url, 'data_url');
     return getDownloadURL(storageRef);
-  };
-
-  const clearInputs = () => {
-    setRefNum('');
-    setFirstName('');
-    setLastName('');
-    setEmail('');
-    setCountry('');
-    setCity('');
-    setOccupation('');
-    setContactNumber('');
-    setAdults(0);
-    setRooms(0);
-    setChildAge(0);
-    setChildrenAges([]);
-  };
-
-  const onAddReminder = () => {
-    // eslint-disable-next-line no-console
-    console.log('add reminder');
   };
 
   return (
@@ -108,12 +93,12 @@ function CreateGuest() {
           style={libraryCreateGuestStyles.backBtn}
           onClick={() => history.replace('/library/guest')}
         />
-        <H2Atom style={libraryCreateGuestStyles.title} text="Create Guest" />
+        <H2Atom style={libraryCreateGuestStyles.title} text="Edit Guest" />
       </DivAtom>
 
       <CreateEditGuestForm
         width={width}
-        btnText="Create"
+        btnText="Update"
         refNum={refNum}
         setRefNum={setRefNum}
         firstName={firstName}
@@ -142,11 +127,10 @@ function CreateGuest() {
         setChildAge={setChildAge}
         setChildrenAges={setChildrenAges}
         setPassport={setPassport}
-        onAddEditGuest={onAddGuest}
-        onAddReminder={onAddReminder}
+        onAddEditGuest={onEditGuest}
       />
     </DivAtom>
   );
 }
 
-export default CreateGuest;
+export default EditGuest;

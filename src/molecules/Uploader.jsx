@@ -31,7 +31,7 @@ export default function Uploader({ images, setter, btnText }) {
             <div key={uuid()}>
               <img
                 style={{ margin: '1rem 0' }}
-                src={image.data_url}
+                src={image.data_url || image}
                 alt=""
                 width="320"
               />

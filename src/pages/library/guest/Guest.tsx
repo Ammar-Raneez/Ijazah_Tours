@@ -1,16 +1,26 @@
 import { useEffect, useState } from 'react';
-import { Route } from 'react-router-dom';
-import { collection, getDocs } from 'firebase/firestore';
+import { Route, useHistory } from 'react-router-dom';
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+} from 'firebase/firestore';
 
 import CreateGuest from './CreateGuest';
 import GuestTable from '../../../organisms/library/guest/GuestTable';
 import DivAtom from '../../../atoms/DivAtom';
 import { db } from '../../../firebase';
 import { libraryStyles } from '../../../styles';
+import EditGuest from './EditGuest';
 
 function Guest() {
   const [containerHeight, setContainerHeight] = useState(0);
   const [guestData, setGuestData] = useState<any[]>([]);
+
+  const [editGuestData, setEditGuestData] = useState<any>();
+  const [isDeleting, setIsDeleting] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     setContainerHeight(window.innerHeight - 180);
@@ -27,12 +37,36 @@ function Guest() {
 
   useEffect(() => {
     const getIntialData = async () => {
-      const data = (await getDocs(collection(db, 'Library Guests'))).docs.map((dc) => dc.data());
-      setGuestData(data);
+      const data = (await getDocs(collection(db, 'Library Guests'))).docs;
+      const guests = data.map((dc) => dc.data());
+      const ids = data.map((dc) => dc.id);
+      ids.forEach((id, i) => {
+        guests[i].id = id;
+      });
+
+      setGuestData(guests);
     };
 
     getIntialData();
-  }, []);
+  }, [isDeleting]);
+
+  const deleteGuest = async (row: any) => {
+    // eslint-disable-next-line no-alert, no-restricted-globals
+    const confirmDelete = confirm('Are you sure you want to delete this guest?');
+    if (confirmDelete) {
+      setIsDeleting(false);
+      await deleteDoc(doc(db, 'Library Guests', row.id));
+      setIsDeleting(true);
+    }
+  };
+
+  const onEditGuestClick = (row: any) => {
+    setEditGuestData(row);
+    history.replace(`/library/guest/edit/${row.id}`);
+  };
+
+  // const editGuest = async (row: any) => {
+  // };
 
   return (
     <DivAtom style={libraryStyles.container}>
@@ -46,8 +80,11 @@ function Guest() {
           <Route path="/library/guest/create">
             <CreateGuest />
           </Route>
+          <Route path="/library/guest/edit/:id">
+            <EditGuest row={editGuestData} />
+          </Route>
           <Route exact path="/library/guest">
-            <GuestTable data={guestData} />
+            <GuestTable onEditGuestClick={onEditGuestClick} deleteGuest={deleteGuest} data={guestData} />
           </Route>
         </DivAtom>
       </DivAtom>

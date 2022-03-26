@@ -11,6 +11,7 @@ import H2Atom from '../../../atoms/H2Atom';
 
 interface CreateEditGuestFormProps {
   width: number;
+  btnText: string;
   refNum: string;
   firstName: string;
   lastName: string;
@@ -39,12 +40,13 @@ interface CreateEditGuestFormProps {
   setChildAge: any;
   setChildrenAges: any;
   setPassport: any;
-  onAddGuest: () => Promise<void>;
-  onAddReminder: () => void;
+  onAddEditGuest: () => Promise<void>;
+  onAddReminder?: () => void;
 }
 
 function CreateEditGuestForm({
   width,
+  btnText,
   refNum,
   firstName,
   lastName,
@@ -73,7 +75,7 @@ function CreateEditGuestForm({
   setChildAge,
   setChildrenAges,
   setPassport,
-  onAddGuest,
+  onAddEditGuest,
   onAddReminder,
 }: CreateEditGuestFormProps) {
   const getAgeString = (age: number) => (age === 1 ? `${age} year old` : `${age} years old`);
@@ -301,7 +303,7 @@ function CreateEditGuestForm({
       >
         <ButtonAtom
           size="large"
-          onClick={onAddGuest}
+          onClick={onAddEditGuest}
           disabled={
             refNum === ''
             || firstName === ''
@@ -318,17 +320,19 @@ function CreateEditGuestForm({
             width: width < 768 ? '100%' : '18%',
             margin: width < 768 ? '0 0 1rem 0' : '0 0 0 1rem',
           }}
-          text="Create"
+          text={btnText}
         />
-        <ButtonAtom
-          size="large"
-          onClick={onAddReminder}
-          style={{
-            ...libraryCreateGuestStyles.addBtn,
-            width: width < 768 ? '100%' : '18%',
-          }}
-          text="Add Reminder"
-        />
+        {onAddReminder && (
+          <ButtonAtom
+            size="large"
+            onClick={onAddReminder}
+            style={{
+              ...libraryCreateGuestStyles.addBtn,
+              width: width < 768 ? '100%' : '18%',
+            }}
+            text="Add Reminder"
+          />
+        )}
       </DivAtom>
     </>
   );

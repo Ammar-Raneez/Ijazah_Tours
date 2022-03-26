@@ -65,9 +65,11 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface GuestTableProps {
   data: any;
+  deleteGuest: (row: any) => void;
+  onEditGuestClick: (row: any) => void;
 }
 
-export default function GuestTable({ data }: GuestTableProps) {
+export default function GuestTable({ data, deleteGuest, onEditGuestClick }: GuestTableProps) {
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('calories');
@@ -87,7 +89,7 @@ export default function GuestTable({ data }: GuestTableProps) {
 
   const handleSelectAllClick = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = data.map((n: any) => n.name);
+      const newSelecteds = data.map((n: any) => n.refNum);
       setSelected(newSelecteds);
       return;
     }
@@ -95,14 +97,14 @@ export default function GuestTable({ data }: GuestTableProps) {
   };
 
   const handleClick = (
-    _: MouseEvent<HTMLTableRowElement, globalThis.MouseEvent>,
-    name: string,
+    _: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
+    row: any,
   ) => {
-    const selectedIndex = selected.indexOf(name);
+    const selectedIndex = selected.indexOf(row.refNum);
     let newSelected: string[] = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+      newSelected = newSelected.concat(selected, row.refNum);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -159,13 +161,12 @@ export default function GuestTable({ data }: GuestTableProps) {
               {stableSort(data, getComparator(order as Order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row: any, index) => {
-                  const isItemSelected = isSelected(row.name);
+                  const isItemSelected = isSelected(row.refNum);
                   const labelId = `library-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.name)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
@@ -176,6 +177,7 @@ export default function GuestTable({ data }: GuestTableProps) {
                         <Checkbox
                           checked={isItemSelected}
                           inputProps={{ 'aria-labelledby': labelId }}
+                          onClick={(e) => handleClick(e, row)}
                         />
                       </TableCell>
                       <TableRowTextCell
@@ -224,7 +226,7 @@ export default function GuestTable({ data }: GuestTableProps) {
                       />
                       <TableRowIconCell
                         align="center"
-                        onClick={() => null}
+                        onClick={() => onEditGuestClick(row)}
                         textcolor="#B5B5C3"
                         size="small"
                         padding="8px"
@@ -232,7 +234,7 @@ export default function GuestTable({ data }: GuestTableProps) {
                       />
                       <TableRowIconCell
                         align="center"
-                        onClick={() => null}
+                        onClick={() => deleteGuest(row)}
                         textcolor="#B5B5C3"
                         size="small"
                         padding="8px"
