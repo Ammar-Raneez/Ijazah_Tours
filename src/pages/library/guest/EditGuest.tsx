@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
-import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { doc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
 import CreateEditGuestForm from '../../../organisms/library/guest/CreateEditGuestForm';
@@ -56,7 +56,7 @@ function EditGuest({ row }: EditGuestProps) {
       url = await uploadPassport();
     }
 
-    await setDoc(doc(db, 'Library Guests', row.id), {
+    await updateDoc(doc(db, 'Library Guests', row.id), {
       name: `${firstName} ${lastName}`,
       refNum,
       email,

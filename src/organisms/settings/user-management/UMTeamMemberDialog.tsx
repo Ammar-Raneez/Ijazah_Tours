@@ -10,22 +10,24 @@ import {
 } from '../../../styles';
 
 interface UMTeamMemberDialogProps {
+  btnText: string;
   newFirstname: string;
   newLastname: string;
-  newEmail: string;
   newRole: string;
-  newPassword: string;
   openDialog: boolean;
-  onCreateMember: MouseEventHandler<HTMLButtonElement>;
+  onEditCreateMember: MouseEventHandler<HTMLButtonElement>;
+  newPassword?: string;
+  newEmail?: string;
   setOpenDialog: any;
   setNewFirstname: any;
   setNewLastname: any;
-  setNewEmail: any;
   setNewRole: any;
-  setNewPassword: any;
+  setNewEmail?: any;
+  setNewPassword?: any;
 }
 
 function UMTeamMemberDialog({
+  btnText,
   newFirstname,
   newLastname,
   newEmail,
@@ -38,12 +40,12 @@ function UMTeamMemberDialog({
   setNewEmail,
   setNewRole,
   setNewPassword,
-  onCreateMember,
+  onEditCreateMember,
 }: UMTeamMemberDialogProps) {
   return (
     <>
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
-        <DialogTitle style={formCreateMemberStyles.title}>Add Team Member</DialogTitle>
+        <DialogTitle style={formCreateMemberStyles.title}>{btnText}</DialogTitle>
         <DialogContent
           style={formCreateMemberStyles.multiFieldDialogContainer}
         >
@@ -67,28 +69,32 @@ function UMTeamMemberDialog({
             setValue={setNewLastname}
             placeholder="Enter Last Name"
           />
-          <FormControlInput
-            flex={1}
-            label="Email"
-            fullWidth
-            multiline={false}
-            rows={1}
-            value={newEmail}
-            setValue={setNewEmail}
-            placeholder="Enter Email"
-            type="email"
-          />
-          <FormControlInput
-            flex={1}
-            label="Password"
-            fullWidth
-            multiline={false}
-            rows={1}
-            value={newPassword}
-            setValue={setNewPassword}
-            placeholder="Enter Password"
-            type="password"
-          />
+          {newEmail === '' && (
+            <>
+              <FormControlInput
+                flex={1}
+                label="Email"
+                fullWidth
+                multiline={false}
+                rows={1}
+                value={newEmail}
+                setValue={setNewEmail}
+                placeholder="Enter Email"
+                type="email"
+              />
+              <FormControlInput
+                flex={1}
+                label="Password"
+                fullWidth
+                multiline={false}
+                rows={1}
+                value={newPassword!}
+                setValue={setNewPassword}
+                placeholder="Enter Password"
+                type="password"
+              />
+            </>
+          )}
           <FormControlInput
             flex={1}
             label="Role"
@@ -101,14 +107,14 @@ function UMTeamMemberDialog({
           />
           <ButtonAtom
             starticon={<AddCircleOutlineOutlinedIcon />}
-            text="Add Team Member"
+            text={btnText}
             disabled={
               newFirstname === ''
               || newLastname === ''
               || newEmail === ''
               || newRole === ''
             }
-            onClick={(event) => onCreateMember(event)}
+            onClick={(event) => onEditCreateMember(event)}
             style={{
               ...libraryTableToolbarStyles.addBtn,
               marginTop: '1rem',

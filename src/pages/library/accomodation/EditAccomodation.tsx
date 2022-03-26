@@ -5,7 +5,7 @@ import {
 } from 'react';
 import { useHistory } from 'react-router-dom';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
-import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { doc, serverTimestamp, updateDoc } from 'firebase/firestore';
 
 import CreateEditAccomodationForm from '../../../organisms/library/accomodation/CreateEditAccomodationForm';
 import DivAtom from '../../../atoms/DivAtom';
@@ -74,7 +74,7 @@ function EditAccomodation({ row }: EditAccomodationProps) {
   }, [width]);
 
   const onEditAccomodation = async () => {
-    await setDoc(doc(db, 'Library Accomodation', row.id), {
+    await updateDoc(doc(db, 'Library Accomodation', row.id), {
       name,
       group,
       city,
@@ -88,7 +88,7 @@ function EditAccomodation({ row }: EditAccomodationProps) {
       categoryValues: selectedTypeValues,
       tel: contactNumber,
       rates: rateData,
-      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
     });
   };
 

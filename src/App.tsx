@@ -95,7 +95,7 @@ function App() {
                 <General />
               </Route>
               <Route exact path="/settings">
-                <Redirect to="/settings/accomodation" />
+                <Redirect to="/settings/user-management" />
               </Route>
             </StyledDivAtom>
           </Route>

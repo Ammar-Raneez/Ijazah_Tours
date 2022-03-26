@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
-import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { doc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
 import CreateEditDriverForm from '../../../organisms/library/driver/CreateEditDriverForm';
@@ -73,7 +73,7 @@ function EditDriver({ row }: EditDriverProps) {
       selectedLanguages.push('Arabic');
     }
 
-    await setDoc(doc(db, 'Library Drivers', row.id), {
+    await updateDoc(doc(db, 'Library Drivers', row.id), {
       name: `${firstName} ${lastName}`,
       email,
       tel: contactNumber,

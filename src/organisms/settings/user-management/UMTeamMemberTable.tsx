@@ -7,9 +7,12 @@ import {
   TableHead,
   TableRow,
 } from '@material-ui/core';
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { v4 as uuid } from 'uuid';
 
 import TableColumnCell from '../../../molecules/TableColumnCell';
+import TableRowIconCell from '../../../molecules/TableRowIconCell';
 import TableRowTextCell from '../../../molecules/TableRowTextCell';
 import { SettingsTeamMember } from '../../../utils/types';
 
@@ -23,11 +26,15 @@ const useStyles = makeStyles({
 interface UMTeamMemberTableProps {
   data: SettingsTeamMember[];
   columns: string[];
+  deleteTeamMember: (row: SettingsTeamMember) => void;
+  onEditTeamMemberClick: (row: SettingsTeamMember) => void;
 }
 
 function UMTeamMemberTable({
   data,
   columns,
+  deleteTeamMember,
+  onEditTeamMemberClick,
 }: UMTeamMemberTableProps) {
   const classes = useStyles();
 
@@ -102,6 +109,24 @@ function UMTeamMemberTable({
                   colors: ['#464E5F', '#B5B5C3'],
                   weight: 400,
                 }}
+              />
+              <TableRowIconCell
+                key={uuid()}
+                align="center"
+                onClick={() => onEditTeamMemberClick(row)}
+                textcolor="#B5B5C3"
+                size="small"
+                padding="8px"
+                children={<EditOutlinedIcon />}
+              />
+              <TableRowIconCell
+                key={uuid()}
+                align="center"
+                onClick={() => deleteTeamMember(row)}
+                textcolor="#B5B5C3"
+                size="small"
+                padding="8px"
+                children={<DeleteOutlinedIcon />}
               />
             </TableRow>
           ))}

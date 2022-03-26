@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import {
   collection,
+  deleteDoc,
   doc,
   DocumentData,
   getDocs,
   serverTimestamp,
   setDoc,
+  updateDoc,
 } from 'firebase/firestore';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { v4 as uuid } from 'uuid';
@@ -21,27 +23,42 @@ import { formCreateMemberStyles, libraryTableToolbarStyles, settingsStyles } fro
 import { SettingsTeamMember } from '../../../utils/types';
 
 function UserManagement() {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [role, setRole] = useState('');
+  const [newFirstName, setNewFirstName] = useState('');
+  const [newLastName, setNewLastName] = useState('');
+  const [newEmail, setNewEmail] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [newRole, setNewRole] = useState('');
+
+  const [editId, setEditId] = useState('');
+  const [editFirstName, setEditFirstName] = useState('');
+  const [editLastName, setEditLastName] = useState('');
+  const [editRole, setEditRole] = useState('');
 
   const [teamData, setTeamData] = useState<DocumentData[]>([]);
+  const [isCreating, setIsCreating] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
-  const [openDialog, setOpenDialog] = useState(false);
+  const [openNewDialog, setNewOpenDialog] = useState(false);
+  const [openEditDialog, setEditOpenDialog] = useState(false);
 
   const [containerHeight, setContainerHeight] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
 
   useEffect(() => {
     const getInitialTeamData = async () => {
-      const data = (await getDocs(collection(db, 'Team Members'))).docs.map((dc) => dc.data());
-      setTeamData(data);
+      const data = (await getDocs(collection(db, 'Team Members'))).docs;
+      const members = data.map((dc) => dc.data());
+      const ids = data.map((dc) => dc.id);
+      ids.forEach((id, i) => {
+        members[i].id = id;
+      });
+
+      setTeamData(members);
     };
 
     getInitialTeamData();
-  }, [openDialog]);
+  }, [isDeleting, isEditing, isCreating]);
 
   useEffect(() => {
     setContainerHeight(window.innerHeight - 180);
@@ -63,26 +80,58 @@ function UserManagement() {
   }, [containerWidth, containerHeight]);
 
   const onCreateMember = async () => {
+    setIsCreating(true);
     await setDoc(doc(db, 'Team Members', uuid()), {
-      firstName,
-      lastName,
-      email,
-      role,
-      status: 'Registered',
+      firstName: newFirstName,
+      lastName: newLastName,
+      email: newEmail,
+      role: newRole,
+      status: 'ACTIVE',
       createdAt: serverTimestamp(),
     });
 
-    await createUserWithEmailAndPassword(auth, email, password);
+    await createUserWithEmailAndPassword(auth, newEmail, newPassword);
     clearInputs();
-    setOpenDialog(false);
+    setIsCreating(false);
+    setNewOpenDialog(false);
+  };
+
+  const deleteTeamMember = async (row: SettingsTeamMember) => {
+    // eslint-disable-next-line no-alert, no-restricted-globals
+    const confirmDelete = confirm('Are you sure you want to delete this team member?');
+    if (confirmDelete) {
+      setIsDeleting(false);
+      await deleteDoc(doc(db, 'Team Members', row.id));
+      setIsDeleting(true);
+    }
+  };
+
+  const onEditTeamMemberClick = (row: SettingsTeamMember) => {
+    setEditOpenDialog(true);
+    setEditId(row.id);
+    setEditFirstName(row.firstName);
+    setEditLastName(row.lastName);
+    setEditRole(row.role);
+  };
+
+  const onEditMember = async () => {
+    setIsEditing(true);
+    await updateDoc(doc(db, 'Team Members', editId), {
+      firstName: editFirstName,
+      lastName: editLastName,
+      role: editRole,
+      updatedAt: serverTimestamp(),
+    });
+    setIsEditing(false);
+    setEditOpenDialog(false);
   };
 
   const clearInputs = () => {
-    setFirstName('');
-    setLastName('');
-    setRole('');
-    setPassword('');
-    setEmail('');
+    setNewFirstName('');
+    setNewLastName('');
+    setNewRole('');
+    setNewPassword('');
+    setNewEmail('');
   };
 
   return (
@@ -104,7 +153,7 @@ function UserManagement() {
           <ButtonAtom
             starticon={<AddCircleOutlineOutlinedIcon />}
             text="Add Team Member"
-            onClick={() => setOpenDialog(true)}
+            onClick={() => setNewOpenDialog(true)}
             style={{
               ...libraryTableToolbarStyles.addBtn,
               width: containerWidth < 1000 ? '100%' : 'auto',
@@ -116,19 +165,32 @@ function UserManagement() {
           />
         </DivAtom>
         <UMTeamMemberDialog
-          openDialog={openDialog}
-          setOpenDialog={setOpenDialog}
-          newFirstname={firstName}
-          newLastname={lastName}
-          newEmail={email}
-          newRole={role}
-          newPassword={password}
-          onCreateMember={onCreateMember}
-          setNewFirstname={setFirstName}
-          setNewLastname={setLastName}
-          setNewEmail={setEmail}
-          setNewRole={setRole}
-          setNewPassword={setPassword}
+          btnText="Create Team Member"
+          openDialog={openNewDialog}
+          setOpenDialog={setNewOpenDialog}
+          newFirstname={newFirstName}
+          newLastname={newLastName}
+          newEmail={newEmail}
+          newRole={newRole}
+          newPassword={newPassword}
+          onEditCreateMember={onCreateMember}
+          setNewFirstname={setNewFirstName}
+          setNewLastname={setNewLastName}
+          setNewEmail={setNewEmail}
+          setNewRole={setNewRole}
+          setNewPassword={setNewPassword}
+        />
+        <UMTeamMemberDialog
+          btnText="Edit Team Member"
+          openDialog={openEditDialog}
+          setOpenDialog={setEditOpenDialog}
+          newFirstname={editFirstName}
+          newLastname={editLastName}
+          newRole={editRole}
+          onEditCreateMember={onEditMember}
+          setNewFirstname={setEditFirstName}
+          setNewLastname={setEditLastName}
+          setNewRole={setEditRole}
         />
         <DivAtom style={{ marginTop: '1rem' }}>
           {teamData.length > 0 && (
@@ -140,7 +202,11 @@ function UserManagement() {
                 'SINCE',
                 'ROLE',
                 'STATUS',
+                '',
+                '',
               ]}
+              deleteTeamMember={deleteTeamMember}
+              onEditTeamMemberClick={onEditTeamMemberClick}
               data={teamData as SettingsTeamMember[]}
             />
           )}
