@@ -15,10 +15,14 @@ import DivAtom from '../../../atoms/DivAtom';
 import { db } from '../../../firebase';
 import { libraryStyles } from '../../../styles';
 import { LibraryDriver } from '../../../utils/types';
+import { searchData } from '../../../utils/helpers';
 
 function Driver() {
   const [containerHeight, setContainerHeight] = useState(0);
   const [driverData, setDriverData] = useState<DocumentData[]>([]);
+  const [initialDriverSearchData, setInitialDriverSearchData] = useState<DocumentData[]>([]);
+  const [search, setSearch] = useState('');
+
   const [editDriverData, setEditDriverData] = useState<LibraryDriver>();
   const [isDeleting, setIsDeleting] = useState(false);
   const history = useHistory();
@@ -37,6 +41,10 @@ function Driver() {
   }, [containerHeight]);
 
   useEffect(() => {
+    searchData(search, initialDriverSearchData, setDriverData);
+  }, [initialDriverSearchData, search]);
+
+  useEffect(() => {
     const getIntialData = async () => {
       const data = (await getDocs(collection(db, 'Library Drivers'))).docs;
       const drivers = data.map((dc) => dc.data());
@@ -46,6 +54,7 @@ function Driver() {
       });
 
       setDriverData(drivers);
+      setInitialDriverSearchData(drivers);
     };
 
     getIntialData();
@@ -83,6 +92,8 @@ function Driver() {
           </Route>
           <Route exact path="/library/driver">
             <DriverTable
+              search={search}
+              setSearch={setSearch}
               onEditDriverClick={onEditDriverClick}
               deleteDriver={deleteDriver}
               data={driverData as LibraryDriver[]}

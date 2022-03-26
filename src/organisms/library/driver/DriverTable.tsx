@@ -68,16 +68,23 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface DriverTableProps {
   data: LibraryDriver[];
+  search: string;
+  setSearch: any;
   deleteDriver: (row: LibraryDriver) => void;
   onEditDriverClick: (row: LibraryDriver) => void;
 }
 
-export default function DriverTable({ data, deleteDriver, onEditDriverClick }: DriverTableProps) {
+export default function DriverTable({
+  data,
+  search,
+  setSearch,
+  deleteDriver,
+  onEditDriverClick,
+}: DriverTableProps) {
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('calories');
   const [selected, setSelected] = useState<string[]>([]);
-  const [search, setSearch] = useState('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 

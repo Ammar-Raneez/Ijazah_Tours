@@ -15,10 +15,14 @@ import { db } from '../../../firebase';
 import { libraryStyles } from '../../../styles';
 import { LibraryAccomodation } from '../../../utils/types';
 import EditAccomodation from './EditAccomodation';
+import { searchData } from '../../../utils/helpers';
 
 function Accomodation() {
   const [containerHeight, setContainerHeight] = useState(0);
   const [accomodationData, setAccomodationData] = useState<DocumentData[]>([]);
+  const [initialAccomodationSearchData, setInitialAccomodationSearchData] = useState<DocumentData[]>([]);
+  const [search, setSearch] = useState('');
+
   const [editAccomodationData, setEditAccomodationData] = useState<LibraryAccomodation>();
   const [isDeleting, setIsDeleting] = useState(false);
   const history = useHistory();
@@ -37,15 +41,20 @@ function Accomodation() {
   }, [containerHeight]);
 
   useEffect(() => {
+    searchData(search, initialAccomodationSearchData, setAccomodationData);
+  }, [initialAccomodationSearchData, search]);
+
+  useEffect(() => {
     const getIntialData = async () => {
       const data = (await getDocs(collection(db, 'Library Accomodation'))).docs;
-      const guests = data.map((dc) => dc.data());
+      const accomodation = data.map((dc) => dc.data());
       const ids = data.map((dc) => dc.id);
       ids.forEach((id, i) => {
-        guests[i].id = id;
+        accomodation[i].id = id;
       });
 
-      setAccomodationData(guests);
+      setAccomodationData(accomodation);
+      setInitialAccomodationSearchData(accomodation);
     };
 
     getIntialData();
@@ -83,6 +92,8 @@ function Accomodation() {
         <Route exact path="/library/accomodation">
           <DivAtom>
             <AccomodationTable
+              search={search}
+              setSearch={setSearch}
               deleteAccomodation={deleteAccomodation}
               onEditAccomodationClick={onEditAccomodationClick}
               data={accomodationData as LibraryAccomodation[]}

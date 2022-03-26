@@ -15,10 +15,14 @@ import DivAtom from '../../../atoms/DivAtom';
 import { db } from '../../../firebase';
 import { LibraryGuest } from '../../../utils/types';
 import { libraryStyles } from '../../../styles';
+import { searchData } from '../../../utils/helpers';
 
 function Guest() {
   const [containerHeight, setContainerHeight] = useState(0);
   const [guestData, setGuestData] = useState<DocumentData[]>([]);
+  const [initialGuestSearchData, setInitialGuestSearchData] = useState<DocumentData[]>([]);
+  const [search, setSearch] = useState('');
+
   const [editGuestData, setEditGuestData] = useState<LibraryGuest>();
   const [isDeleting, setIsDeleting] = useState(false);
   const history = useHistory();
@@ -37,6 +41,10 @@ function Guest() {
   }, [containerHeight]);
 
   useEffect(() => {
+    searchData(search, initialGuestSearchData, setGuestData);
+  }, [initialGuestSearchData, search]);
+
+  useEffect(() => {
     const getIntialData = async () => {
       const data = (await getDocs(collection(db, 'Library Guests'))).docs;
       const guests = data.map((dc) => dc.data());
@@ -46,6 +54,7 @@ function Guest() {
       });
 
       setGuestData(guests);
+      setInitialGuestSearchData(guests);
     };
 
     getIntialData();
@@ -83,6 +92,8 @@ function Guest() {
           </Route>
           <Route exact path="/library/guest">
             <GuestTable
+              search={search}
+              setSearch={setSearch}
               onEditGuestClick={onEditGuestClick}
               deleteGuest={deleteGuest}
               data={guestData as LibraryGuest[]}

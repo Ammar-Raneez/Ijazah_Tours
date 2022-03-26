@@ -67,16 +67,23 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface AccomodationTableProps {
   data: LibraryAccomodation[];
+  search: string;
+  setSearch: any;
   deleteAccomodation: (row: LibraryAccomodation) => void;
   onEditAccomodationClick: (row: LibraryAccomodation) => void;
 }
 
-function AccomodationTable({ data, deleteAccomodation, onEditAccomodationClick }: AccomodationTableProps) {
+function AccomodationTable({
+  data,
+  search,
+  setSearch,
+  deleteAccomodation,
+  onEditAccomodationClick,
+}: AccomodationTableProps) {
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('calories');
   const [selected, setSelected] = useState<string[]>([]);
-  const [search, setSearch] = useState('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 

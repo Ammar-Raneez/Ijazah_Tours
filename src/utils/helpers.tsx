@@ -53,3 +53,19 @@ export const uploadImage = async (storage: FirebaseStorage, container: string, p
   await uploadString(storageRef, pic, 'data_url');
   return getDownloadURL(storageRef);
 };
+
+export const searchData = (search: string, initialData: any, setter: any) => {
+  if (search) {
+    const filteredData: any[] = [];
+
+    initialData?.forEach((each: any) => {
+      if ((each?.name?.toLowerCase().includes(search.toLowerCase()))) {
+        filteredData.push(each);
+      }
+    });
+
+    setter(filteredData);
+  } else {
+    setter(initialData);
+  }
+};

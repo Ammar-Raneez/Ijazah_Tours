@@ -66,16 +66,23 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface GuestTableProps {
   data: LibraryGuest[];
+  search: string;
+  setSearch: any;
   deleteGuest: (row: LibraryGuest) => void;
   onEditGuestClick: (row: LibraryGuest) => void;
 }
 
-export default function GuestTable({ data, deleteGuest, onEditGuestClick }: GuestTableProps) {
+export default function GuestTable({
+  data,
+  search,
+  setSearch,
+  deleteGuest,
+  onEditGuestClick,
+}: GuestTableProps) {
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('calories');
   const [selected, setSelected] = useState<string[]>([]);
-  const [search, setSearch] = useState('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
