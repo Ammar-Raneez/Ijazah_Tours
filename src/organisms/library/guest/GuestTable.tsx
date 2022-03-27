@@ -26,7 +26,7 @@ import { LibraryGuest, Order, Status } from '../../../utils/types';
 
 const headCells = [
   { id: 'name', label: 'NAME' },
-  { id: 'ref', label: 'REF NUMBER' },
+  { id: 'refNum', label: 'REF NUMBER' },
   { id: 'tel', label: 'TEL NUMBER' },
   { id: 'country', label: 'COUNTRY' },
   { id: 'status', label: 'STATUS' },

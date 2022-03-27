@@ -28,11 +28,11 @@ import { LibraryDriver, Order, Status } from '../../../utils/types';
 
 const headCells = [
   { id: 'name', label: 'NAME' },
-  { id: 'id', label: 'NIC NUMBER' },
+  { id: 'nic', label: 'NIC NUMBER' },
   { id: 'tel', label: 'TEL NUMBER' },
   { id: 'rate', label: 'RATE' },
-  { id: 'boardcertnum', label: 'BOARD CERT NUMBER' },
-  { id: 'vehicle', label: 'VEHICLE' },
+  { id: 'boardCertNum', label: 'BOARD CERT NUMBER' },
+  { id: 'vehicleType', label: 'VEHICLE' },
   { id: 'status', label: 'STATUS' },
   { id: '...', label: '' },
   { id: '...1', label: '' },
