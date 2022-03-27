@@ -116,6 +116,7 @@ function CreateAccomodation({
     setRateData([
       ...rateData,
       {
+        id: uuid(),
         newRateStart,
         newRateEnd,
         newMealPlan,
@@ -126,6 +127,12 @@ function CreateAccomodation({
     ]);
 
     clearRateInputs();
+  };
+
+  const deleteRate = (row: AccomodationRate) => {
+    const updatedRateData = [...rateData];
+    updatedRateData.splice(rateData.findIndex((val) => val.id === row.id), 1);
+    setRateData(updatedRateData);
   };
 
   const clearRateInputs = () => {
@@ -191,6 +198,7 @@ function CreateAccomodation({
       <CreateEditAccomodationForm
         rateData={rateData}
         isCreating={isCreating}
+        deleteRate={(row: AccomodationRate) => deleteRate(row)}
         showValidationErrorMessage={showValidationErrorMessage}
         width={width}
         btnText="Create"

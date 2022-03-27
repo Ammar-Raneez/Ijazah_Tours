@@ -86,7 +86,10 @@ function Accomodation() {
         }}
       >
         <Route path="/library/accomodation/create">
-          <CreateAccomodation isCreating={isCreating} setIsCreating={setIsCreating} />
+          <CreateAccomodation
+            isCreating={isCreating}
+            setIsCreating={setIsCreating}
+          />
         </Route>
         <Route path="/library/accomodation/edit/:id">
           <EditAccomodation

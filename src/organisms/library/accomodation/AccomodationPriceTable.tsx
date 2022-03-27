@@ -7,9 +7,11 @@ import {
   TableHead,
   TableRow,
 } from '@material-ui/core';
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import { v4 as uuid } from 'uuid';
 
 import TableColumnCell from '../../../molecules/TableColumnCell';
+import TableRowIconCell from '../../../molecules/TableRowIconCell';
 import TableRowTextCell from '../../../molecules/TableRowTextCell';
 import { AccomodationRate } from '../../../utils/types';
 
@@ -23,11 +25,13 @@ const useStyles = makeStyles({
 interface AccomodationPriceTableProps {
   data: AccomodationRate[];
   columns: string[];
+  deleteRate: ((row: AccomodationRate) => Promise<void>) | ((row: AccomodationRate) => void);
 }
 
 function AccomodationPriceTable({
   data,
   columns,
+  deleteRate,
 }: AccomodationPriceTableProps) {
   const classes = useStyles();
 
@@ -102,6 +106,14 @@ function AccomodationPriceTable({
                   colors: ['#464E5F', '#B5B5C3'],
                   weight: 400,
                 }}
+              />
+              <TableRowIconCell
+                align="center"
+                onClick={() => deleteRate(row)}
+                textcolor="#B5B5C3"
+                size="small"
+                padding="8px"
+                children={<DeleteOutlinedIcon style={{ color: 'red' }} />}
               />
             </TableRow>
           ))}

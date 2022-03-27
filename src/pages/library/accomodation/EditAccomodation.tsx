@@ -6,6 +6,7 @@ import {
 import { useHistory } from 'react-router-dom';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
 import { doc, serverTimestamp, updateDoc } from 'firebase/firestore';
+import { v4 as uuid } from 'uuid';
 
 import CreateEditAccomodationForm from '../../../organisms/library/accomodation/CreateEditAccomodationForm';
 import DivAtom from '../../../atoms/DivAtom';
@@ -27,7 +28,11 @@ const allRoomTypes = [
   'Premium Room',
 ];
 
-function EditAccomodation({ row, isUpdating, setIsUpdating }: EditAccomodationProps) {
+function EditAccomodation({
+  row,
+  isUpdating,
+  setIsUpdating,
+}: EditAccomodationProps) {
   const [name, setName] = useState(row.name);
   const [group, setGroup] = useState(row.group);
   const [location, setLocation] = useState(row.country);
@@ -114,6 +119,7 @@ function EditAccomodation({ row, isUpdating, setIsUpdating }: EditAccomodationPr
     setRateData([
       ...rateData,
       {
+        id: uuid(),
         newRateStart,
         newRateEnd,
         newMealPlan,
@@ -124,6 +130,12 @@ function EditAccomodation({ row, isUpdating, setIsUpdating }: EditAccomodationPr
     ]);
 
     clearRateInputs();
+  };
+
+  const deleteRate = (rw: AccomodationRate) => {
+    const updatedRateData = [...rateData];
+    updatedRateData.splice(rateData.findIndex((val) => val.id === rw.id), 1);
+    setRateData(updatedRateData);
   };
 
   const clearRateInputs = () => {
@@ -176,6 +188,7 @@ function EditAccomodation({ row, isUpdating, setIsUpdating }: EditAccomodationPr
 
       <CreateEditAccomodationForm
         isCreating={isUpdating}
+        deleteRate={deleteRate}
         rateData={rateData}
         width={width}
         btnText="Update"

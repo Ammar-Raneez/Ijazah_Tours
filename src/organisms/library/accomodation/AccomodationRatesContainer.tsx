@@ -23,6 +23,7 @@ interface AccomodationRatesContainerProps {
   newDoublePrice: string;
   newTriplePrice: string;
   rateData: AccomodationRate[];
+  deleteRate: ((row: AccomodationRate) => Promise<void>) | ((row: AccomodationRate) => void);
   onCreateRate: MouseEventHandler<HTMLButtonElement>;
   setNewRateStart: any;
   setNewRateEnd: any;
@@ -48,6 +49,7 @@ function AccomodationRatesContainer({
   setNewTriplePrice,
   rateData,
   onCreateRate,
+  deleteRate,
 }: AccomodationRatesContainerProps) {
   return (
     <>
@@ -171,8 +173,10 @@ function AccomodationRatesContainer({
               'SINGLE',
               'DOUBLE',
               'TRIPLE',
+              '',
             ]}
             data={rateData}
+            deleteRate={deleteRate}
           />
         )}
       </DivAtom>

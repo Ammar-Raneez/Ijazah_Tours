@@ -59,6 +59,7 @@ interface CreateEditAccomodationFormProps {
   addRoomGradings: (i: number) => void;
   onSetSelectedTypeValue: (type: string, val: string) => void;
   onCreateRate: (event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => void;
+  deleteRate: ((row: AccomodationRate) => Promise<void>) | ((row: AccomodationRate) => void);
   onAddEditAccomodation: () => Promise<void>;
   setLocation: any;
   setCity: any;
@@ -107,6 +108,7 @@ function CreateEditAccomodationForm({
   onSetSelectedTypeValue,
   onCreateRate,
   onAddEditAccomodation,
+  deleteRate,
   setLocation,
   setCity,
   setGroup,
@@ -280,6 +282,7 @@ function CreateEditAccomodationForm({
 
         <AccomodationRatesContainer
           width={width}
+          deleteRate={deleteRate}
           newRateStart={newRateStart}
           newRateEnd={newRateEnd}
           newMealPlan={newMealPlan}

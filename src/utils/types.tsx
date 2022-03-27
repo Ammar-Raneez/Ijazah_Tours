@@ -9,6 +9,7 @@ export interface LibraryHeadCell {
 }
 
 export interface AccomodationRate {
+  id: string;
   newRateStart: string;
   newRateEnd: string;
   newMealPlan: string;
