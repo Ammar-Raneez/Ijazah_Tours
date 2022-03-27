@@ -77,13 +77,20 @@ function Quotations() {
               height: `${containerHeight}px`,
             }}
           >
-            <DivAtom style={quotationsStyles.btnMainContainer}>
+            <DivAtom
+              style={{
+                ...quotationsStyles.btnMainContainer,
+                flexDirection: width < 768 ? 'column' : 'row',
+              }}
+            >
               <Link to="/quote/quotations/create/customer">
                 <ButtonAtom
                   text="New Quote +"
                   style={{
                     ...quotationsStyles.btn,
                     marginRight: '16px',
+                    marginBottom: width < 768 ? '1rem' : 0,
+                    width: width < 768 ? '100%' : '11rem',
                   }}
                   onClick={() => null}
                   size="large"
@@ -91,7 +98,22 @@ function Quotations() {
               </Link>
               <ButtonAtom
                 text="Compare Rates"
-                style={quotationsStyles.btn}
+                style={{
+                  ...quotationsStyles.btn,
+                  marginRight: '16px',
+                  marginBottom: width < 768 ? '1rem' : 0,
+                  width: width < 768 ? '100%' : '11rem',
+                }}
+                onClick={() => null}
+                size="large"
+              />
+              <ButtonAtom
+                text="Preset Quotes"
+                style={{
+                  ...quotationsStyles.btn,
+                  marginBottom: width < 768 ? '1rem' : 0,
+                  width: width < 768 ? '100%' : '11rem',
+                }}
                 onClick={() => null}
                 size="large"
               />
@@ -120,7 +142,7 @@ function Quotations() {
                 }}
               >
                 <ButtonAtom
-                  text="Approved Quotes"
+                  text="Approved"
                   style={{
                     ...quotationsStyles.btn,
                     marginRight: '16px',
@@ -129,7 +151,7 @@ function Quotations() {
                   size="large"
                 />
                 <ButtonAtom
-                  text="On Progress"
+                  text="Complete"
                   style={quotationsStyles.btn}
                   onClick={() => null}
                   size="large"
@@ -151,19 +173,9 @@ function Quotations() {
                   }
                   children={<SearchIcon />}
                 />
-                <ButtonAtom
-                  text="Search"
-                  style={{
-                    ...quotationsStyles.btn,
-                    marginLeft: '16px',
-                  }}
-                  onClick={() => null}
-                  size="large"
-                />
               </DivAtom>
             </DivAtom>
             <QuotationsTable
-              columns={['QUOTES', 'EARNINGS', 'COMMISION', '', '']}
               rowdata={QUOTATIONS_DATA}
             />
           </DivAtom>

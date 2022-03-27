@@ -1,12 +1,11 @@
 import {
-  ChangeEvent, Fragment, MouseEvent, useEffect, useState,
+  ChangeEvent,
+  MouseEvent,
+  useState,
 } from 'react';
 import {
   Theme,
   makeStyles,
-  createStyles,
-  useTheme,
-  IconButton,
 } from '@material-ui/core';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -18,17 +17,14 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
 import TableRowTextCell from '../../../molecules/TableRowTextCell';
 import LibraryTableToolbar from '../../../molecules/LibraryTableToolbar';
 import LibraryTableHead from '../../../molecules/LibraryTableHead';
 import TableRowIconCell from '../../../molecules/TableRowIconCell';
-import SpanAtom from '../../../atoms/SpanAtom';
-import { libraryTableStyles } from '../../../styles';
 import { getComparator, stableSort } from '../../../utils/helpers';
 import { LibraryDriver, Order, Status } from '../../../utils/types';
+import TablePaginationActions from '../../../molecules/TableBottomPagination';
 
 const headCells = [
   { id: 'name', label: 'NAME' },
@@ -290,108 +286,5 @@ export default function DriverTable({
         />
       </Paper>
     </div>
-  );
-}
-
-const tablePaginationActionsStyle = makeStyles((theme: Theme) => createStyles({
-  root: {
-    flexShrink: 0,
-    marginLeft: theme.spacing(2.5),
-    marginRight: theme.spacing(0.5),
-    display: 'flex',
-  },
-  activeUsers: {
-    display: 'flex',
-    alignItems: 'center',
-    position: 'absolute',
-    top: theme.spacing(2),
-    left: theme.spacing(2.5),
-  },
-}));
-
-interface TablePaginationActionsProps {
-  active: number;
-  count: number;
-  page: number;
-  rowsPerPage: number;
-  onPageChange: (
-    event: MouseEvent<HTMLButtonElement>,
-    newPage: number
-  ) => void;
-}
-
-function TablePaginationActions({
-  count,
-  active,
-  page,
-  rowsPerPage,
-  onPageChange,
-}: TablePaginationActionsProps) {
-  const classes = tablePaginationActionsStyle();
-  const theme = useTheme();
-  const [width, setWidth] = useState(0);
-
-  useEffect(() => {
-    setWidth(window.innerWidth);
-    const widthListener = window.addEventListener('resize', () => {
-      setWidth(window.innerWidth);
-    });
-
-    const removeEventListeners = () => {
-      window.removeEventListener('resize', widthListener as any);
-    };
-
-    return removeEventListeners();
-  }, [width]);
-
-  const handleBackButtonClick = (
-    event: MouseEvent<HTMLButtonElement>,
-  ) => {
-    onPageChange(event, page - 1);
-  };
-
-  const handleNextButtonClick = (
-    event: MouseEvent<HTMLButtonElement>,
-  ) => {
-    onPageChange(event, page + 1);
-  };
-
-  return (
-    <>
-      <div className={classes.root}>
-        <IconButton
-          onClick={handleBackButtonClick}
-          disabled={page === 0}
-          aria-label="previous page"
-        >
-          {theme.direction === 'rtl' ? (
-            <KeyboardArrowRight />
-          ) : (
-            <KeyboardArrowLeft />
-          )}
-        </IconButton>
-        <IconButton
-          onClick={handleNextButtonClick}
-          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-          aria-label="next page"
-        >
-          {theme.direction === 'rtl' ? (
-            <KeyboardArrowLeft />
-          ) : (
-            <KeyboardArrowRight />
-          )}
-        </IconButton>
-
-        <div
-          style={width < 700 ? { display: 'none' } : {}}
-          className={classes.activeUsers}
-        >
-          <SpanAtom text="ACTIVE CUSTOMERS: " style={libraryTableStyles.totalUsers} />
-          <Fragment>&nbsp;</Fragment>
-          <SpanAtom text={`${active}/`} style={libraryTableStyles.activeUsers} />
-          <SpanAtom text={String(count)} style={libraryTableStyles.totalUsers} />
-        </div>
-      </div>
-    </>
   );
 }

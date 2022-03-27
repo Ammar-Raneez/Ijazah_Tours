@@ -1,61 +1,46 @@
 export const QUOTATIONS_DATA = [
-  [
-    {
-      image: require('./assets/logo.png'),
-      title: 'Brad Simmons',
-      subtitle: 'HTML CSS ReactJS',
-    },
-    {
-      title: '$2500',
-      subtitle: 'In Process',
-    },
-    {
-      title: '$520',
-      subtitle: 'Paid',
-    },
-    {
-      quote: '',
-      status: 'Approved',
-    },
-  ],
-  [
-    {
-      image: require('./assets/logo.png'),
-      title: 'Brad Simmons',
-      subtitle: 'HTML CSS ReactJS',
-    },
-    {
-      title: '$2500',
-      subtitle: 'In Process',
-    },
-    {
-      title: '$520',
-      subtitle: 'Paid',
-    },
-    {
-      quote: '',
-      status: 'Approved',
-    },
-  ],
-  [
-    {
-      image: require('./assets/logo.png'),
-      title: 'Brad Simmons',
-      subtitle: 'HTML CSS ReactJS',
-    },
-    {
-      title: '$2500',
-      subtitle: 'In Process',
-    },
-    {
-      title: '$520',
-      subtitle: 'Paid',
-    },
-    {
-      quote: '',
-      status: 'In Progress',
-    },
-  ],
+  {
+    image: require('./assets/logo.png'),
+    title: 'Brad Simmons',
+    earning: '$2500',
+    commission: '$520',
+    status: 'Approved',
+  },
+  {
+    image: require('./assets/logo.png'),
+    title: 'Grad Simmons',
+    earning: '$250',
+    commission: '$52',
+    status: 'In Progress',
+  },
+  {
+    image: require('./assets/logo.png'),
+    title: 'Ab Simmons',
+    earning: '$25000',
+    commission: '$5200',
+    status: 'Approved',
+  },
+  {
+    image: require('./assets/logo.png'),
+    title: 'Bret Simmons',
+    earning: '$2500',
+    commission: '$520',
+    status: 'Approved',
+  },
+  {
+    image: require('./assets/logo.png'),
+    title: 'Craig Simmons',
+    earning: '$2500',
+    commission: '$520',
+    status: 'Approved',
+  },
+  {
+    image: require('./assets/logo.png'),
+    title: 'Me Simmons',
+    earning: '$2500',
+    commission: '$520',
+    status: 'Approved',
+  },
 ];
 
 export const QUOTATIONS_REFERENCE_DATA = [
@@ -80,41 +65,6 @@ export const QUOIATIONS_ACCOMODATION_DATA = [
   { label: 'Nuwera Eliya Hotel', value: 'Nuwera Eliya Hotel', location: 'Nuwera Eliya' },
   { label: 'Galle Hotel', value: 'Galle Hotel', location: 'Galle' },
   { label: 'Bentota Hotel', value: 'Bentota Hotel', location: 'Bentota' },
-];
-
-export const LIBRARY_ACCOMODATION_DATA = [
-  {
-    id: '1',
-    name: 'galadari',
-    tel: '1212121212',
-    city: 'Colombo',
-    country: 'Sri Lanka',
-    group: 'ACTIVE',
-  },
-  {
-    id: '2',
-    name: 'galadari',
-    tel: '1212121212',
-    city: 'Colombo',
-    country: 'Sri Lanka',
-    group: 'ACTIVE',
-  },
-  {
-    id: '3',
-    name: 'galadari',
-    tel: '1212121212',
-    city: 'Colombo',
-    country: 'Sri Lanka',
-    group: 'ACTIVE',
-  },
-  {
-    id: '4',
-    name: 'galadari',
-    tel: '1212121212',
-    city: 'Colombo',
-    country: 'Sri Lanka',
-    group: 'ACTIVE',
-  },
 ];
 
 export const DASHBOARD_TASK_DATA = [

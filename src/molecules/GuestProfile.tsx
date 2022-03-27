@@ -6,7 +6,7 @@ import { guestProfileStyles } from '../styles';
 interface GuestProfileProps {
   image: string;
   title: string;
-  subtitle: string;
+  subtitle?: string;
   titleweight?: number;
 }
 
@@ -29,10 +29,9 @@ function GuestProfile({
           style={{ ...guestProfileStyles.paragraph, fontWeight: titleweight }}
           text={title}
         />
-        <ParagraphAtom
-          style={guestProfileStyles.paragraph}
-          text={subtitle}
-        />
+        {subtitle && (
+          <ParagraphAtom style={guestProfileStyles.paragraph} text={subtitle} />
+        )}
       </DivAtom>
     </DivAtom>
   );

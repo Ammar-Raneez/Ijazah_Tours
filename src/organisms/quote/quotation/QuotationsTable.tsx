@@ -1,4 +1,4 @@
-import React from 'react';
+import { ChangeEvent, MouseEvent, useState } from 'react';
 import {
   makeStyles,
   Paper,
@@ -6,123 +6,169 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-  TableFooter,
-  TableHead,
+  TablePagination,
   TableRow,
+  Theme,
 } from '@material-ui/core';
 import { v4 as uuid } from 'uuid';
 
 import GuestProfile from '../../../molecules/GuestProfile';
-import TableBottomPagination from '../../../molecules/TableBottomPagination';
-import TableColumnCell from '../../../molecules/TableColumnCell';
 import TableRowButtonCell from '../../../molecules/TableRowButtonCell';
 import TableRowTextCell from '../../../molecules/TableRowTextCell';
+import TablePaginationActions from '../../../molecules/TableBottomPagination';
+import { Order } from '../../../utils/types';
+import { getComparator, stableSort } from '../../../utils/helpers';
+import LibraryTableHead from '../../../molecules/LibraryTableHead';
+
+const headCells = [
+  { id: 'guest', label: 'GUEST' },
+  { id: 'earning', label: 'EARNINGS' },
+  { id: 'commission', label: 'COMMISION' },
+  { id: '...', label: '' },
+  { id: '...1', label: '' },
+];
 
 interface QuotationsTableProps {
-  columns?: string[];
-  rowdata?: any[];
+  rowdata: any[];
 }
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-    overflow: 'scroll',
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    width: '100%',
   },
-});
+  paper: {
+    width: '100%',
+    marginBottom: theme.spacing(2),
+  },
+  table: {
+    minWidth: 750,
+  },
+  visuallyHidden: {
+    border: 0,
+    clip: 'rect(0 0 0 0)',
+    height: 1,
+    margin: -1,
+    overflow: 'hidden',
+    padding: 0,
+    position: 'absolute',
+    top: 20,
+    width: 1,
+  },
+}));
 
-function QuotationsTable({ columns, rowdata }: QuotationsTableProps) {
+function QuotationsTable({ rowdata }: QuotationsTableProps) {
   const classes = useStyles();
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('');
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const getTableRowData = (cell: any) => {
-    let tableRowData;
-    if (!cell.status) {
-      if (cell.image) {
-        tableRowData = <TableCell key={uuid()} align="left">
-          <GuestProfile
-            image={cell.image}
-            title={cell.title}
-            subtitle={cell.subtitle}
-            titleweight={600}
-            key={uuid()}
-          />
-        </TableCell>;
-      } else {
-        tableRowData = <TableRowTextCell
-          key={uuid()}
-          cell={{
-            align: 'left',
-            title: cell.title,
-            subtitle: cell.subtitle,
-            colors: ['#464E5F', '#B5B5C3'],
-            weight: 600,
-          }}
-        />;
-      }
-    } else {
-      tableRowData = <React.Fragment key={uuid()}>
-        <TableRowButtonCell
-          key={uuid()}
-          onClick={() => null}
-          align="right"
-          btnwidth="8rem"
-          btnsize="medium"
-          btnborderradius="0.5rem"
-          cell={cell}
-          btndisabled
-        />
-        <TableRowButtonCell
-          key={uuid()}
-          onClick={() => null}
-          align="right"
-          btnwidth="8rem"
-          btnsize="medium"
-          btnborderradius="0.5rem"
-          btntext="View Quote"
-          btncolors={['#C9F7F5', '#1BC5BD']}
-        />
-      </React.Fragment>;
-    }
+  const handleRequestSort = (
+    _: MouseEvent<HTMLSpanElement>,
+    property: string,
+  ) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  };
 
-    return tableRowData;
+  const handleChangePage = (_: unknown, pg: number) => {
+    setPage(pg);
+  };
+
+  const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   };
 
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="quotations table">
-        <TableHead>
-          <TableRow>
-            {columns!.map((column) => (
-              <TableColumnCell
-                key={uuid()}
-                align="left"
-                color="b5b5c3"
-                column={column}
-              />
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rowdata!.map((row: any) => (
-            <TableRow key={uuid()}>
-              {row.map((cell: any) => getTableRowData(cell))}
-            </TableRow>
-          ))}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TableBottomPagination
-              length={rowdata!.length}
-              rows={[5, 10, 25]}
-              rowsperpage={5}
-              colspan={5}
-              onPageChange={() => null}
-              onRowsPerPageChange={() => null}
-              ActionsComponent={() => null}
+    <div className={classes.root}>
+      <Paper className={classes.paper}>
+        <TableContainer>
+          <Table
+            className={classes.table}
+            stickyHeader
+            aria-labelledby="tableTitle"
+            size="medium"
+            aria-label="Library table"
+          >
+            <LibraryTableHead
+              classes={classes}
+              headCells={headCells}
+              numSelected={0}
+              order={order as Order}
+              orderBy={orderBy}
+              onRequestSort={handleRequestSort}
+              rowCount={rowdata.length}
             />
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </TableContainer>
+            <TableBody>
+              {stableSort(rowdata, getComparator(order as Order, orderBy))
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row: any) => (
+                  <TableRow
+                    hover
+                    tabIndex={-1}
+                    key={row.id}
+                  >
+                    <TableCell align="left">
+                      <GuestProfile
+                        image={row.image}
+                        title={row.title}
+                        titleweight={300}
+                        key={uuid()}
+                      />
+                    </TableCell>
+                    <TableRowTextCell
+                      cell={{
+                        align: 'left',
+                        title: row.earning,
+                        colors: ['#464E5F', '#B5B5C3'],
+                        weight: 300,
+                      }}
+                    />
+                    <TableRowTextCell
+                      cell={{
+                        align: 'left',
+                        title: row.commission,
+                        colors: ['#464E5F', '#B5B5C3'],
+                        weight: 300,
+                      }}
+                    />
+                    <TableRowButtonCell
+                      onClick={() => null}
+                      align="right"
+                      btnwidth="8rem"
+                      btnsize="medium"
+                      btnborderradius="0.5rem"
+                      cell={row}
+                      btndisabled
+                    />
+                    <TableRowButtonCell
+                      onClick={() => null}
+                      align="right"
+                      btnwidth="8rem"
+                      btnsize="medium"
+                      btnborderradius="0.5rem"
+                      btntext="View Quote"
+                      btncolors={['#C9F7F5', '#1BC5BD']}
+                    />
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={rowdata.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+          ActionsComponent={TablePaginationActions}
+        />
+      </Paper>
+    </div>
   );
 }
 

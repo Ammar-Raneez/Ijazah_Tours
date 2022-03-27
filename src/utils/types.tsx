@@ -52,6 +52,11 @@ export interface LibraryHeadCell {
   label: string;
 }
 
+export interface QuoteHeadCell {
+  id: string;
+  label: string;
+}
+
 export interface LibraryAccomodation {
   id: string;
   name: string;

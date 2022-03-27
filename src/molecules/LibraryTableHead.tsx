@@ -9,20 +9,20 @@ import {
 import { ClassNameMap } from '@material-ui/core/styles/withStyles';
 
 import TableColumnCell from './TableColumnCell';
-import { Order, LibraryHeadCell } from '../utils/types';
+import { Order, LibraryHeadCell, QuoteHeadCell } from '../utils/types';
 
 interface LibraryTableHeadProps {
   orderBy: string;
   numSelected: number;
   rowCount: number;
   classes: ClassNameMap<'root' | 'table' | 'paper' | 'visuallyHidden'>;
-  headCells: LibraryHeadCell[];
+  headCells: LibraryHeadCell[] | QuoteHeadCell[];
   onRequestSort: (event: MouseEvent<HTMLSpanElement>, property: string) => void;
-  onSelectAllClick: (
+  order: Order;
+  onSelectAllClick?: (
     event: ChangeEvent<HTMLInputElement>,
     checked: boolean,
   ) => void;
-  order: Order;
 }
 
 function LibraryTableHead({
@@ -44,13 +44,15 @@ function LibraryTableHead({
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-          />
-        </TableCell>
+        {onSelectAllClick && (
+          <TableCell padding="checkbox">
+            <Checkbox
+              indeterminate={numSelected > 0 && numSelected < rowCount}
+              checked={rowCount > 0 && numSelected === rowCount}
+              onChange={onSelectAllClick}
+            />
+          </TableCell>
+        )}
         {headCells.map((headCell: LibraryHeadCell) => (
           <TableColumnCell
             color="black"
