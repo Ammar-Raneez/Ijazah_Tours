@@ -6,9 +6,7 @@ import {
 import { useHistory } from 'react-router-dom';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
 import {
-  collection,
   doc,
-  getDocs,
   serverTimestamp,
   setDoc,
 } from 'firebase/firestore';
@@ -24,11 +22,17 @@ import CreateEditAccomodationForm from '../../../organisms/library/accomodation/
 
 interface CreateAccomodationProps {
   isCreating: boolean;
+  roomViewData: SettingsRoomProperties[];
+  roomCategoriesData: SettingsRoomProperties[];
+  roomGradingsData: SettingsRoomProperties[];
   setIsCreating: any;
 }
 
 function CreateAccomodation({
   isCreating,
+  roomViewData,
+  roomCategoriesData,
+  roomGradingsData,
   setIsCreating,
 }: CreateAccomodationProps) {
   const [name, setName] = useState('');
@@ -40,15 +44,19 @@ function CreateAccomodation({
   const [webLink, setWebLink] = useState('');
   const [ijazahLink, setIjazahLink] = useState('');
 
-  const [roomViewData, setRoomViewData] = useState<SettingsRoomProperties[]>([]);
-  const [roomCategoriesData, setRoomCategoriesData] = useState<SettingsRoomProperties[]>([]);
-  const [roomGradingsData, setRoomGradingsData] = useState<SettingsRoomProperties[]>([]);
+  const [roomCategories, setRoomCategories] = useState<boolean[]>(
+    new Array(roomCategoriesData.length).fill(false),
+  );
+  const [roomViews, setRoomViews] = useState<boolean[]>(
+    new Array(roomViewData.length).fill(false),
+  );
+  const [roomGradings, setRoomGradings] = useState<boolean[]>(
+    new Array(roomGradingsData.length).fill(false),
+  );
 
-  const [roomCategories, setRoomCategories] = useState<boolean[]>([]);
-  const [roomViews, setRoomViews] = useState<boolean[]>([]);
-  const [roomGradings, setRoomGradings] = useState<boolean[]>([]);
-
-  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+  const [selectedTypes, setSelectedTypes] = useState<string[]>(
+    new Array(roomCategoriesData.length).fill(undefined),
+  );
   const [selectedTypeValues, setSelectedTypeValues] = useState<{ [k: string]: string; }>({});
 
   const [rateData, setRateData] = useState<AccomodationRate[]>([]);
@@ -76,45 +84,6 @@ function CreateAccomodation({
 
     return removeEventListeners();
   }, [width]);
-
-  useEffect(() => {
-    const getIntialData = async () => {
-      const vData = (await getDocs(collection(db, 'Settings Room Views'))).docs;
-      const tData = (await getDocs(collection(db, 'Settings Room Types'))).docs;
-      const gData = (await getDocs(collection(db, 'Settings Room Gradings'))).docs;
-      const views = vData.map((dc) => dc.data());
-      const types = tData.map((dc) => dc.data());
-      const gradings = gData.map((dc) => dc.data());
-      const viewIds = vData.map((dc) => dc.id);
-      const typeIds = tData.map((dc) => dc.id);
-      const gradingIds = gData.map((dc) => dc.id);
-      viewIds.forEach((id, i) => {
-        views[i].id = id;
-      });
-      typeIds.forEach((id, i) => {
-        types[i].id = id;
-      });
-      gradingIds.forEach((id, i) => {
-        gradings[i].id = id;
-      });
-
-      setSelectedTypeValues(
-        Object.fromEntries(
-          types.map((type) => [type, '']),
-        ),
-      );
-
-      setSelectedTypes(new Array(types.length).fill(undefined));
-      setRoomViews(new Array(views.length).fill(false));
-      setRoomGradings(new Array(gradings.length).fill(false));
-      setRoomCategories(new Array(types.length).fill(false));
-      setRoomGradingsData(gradings as SettingsRoomProperties[]);
-      setRoomViewData(views as SettingsRoomProperties[]);
-      setRoomCategoriesData(types as SettingsRoomProperties[]);
-    };
-
-    getIntialData();
-  }, []);
 
   const onAddAccomodation = async () => {
     setShowValidationErrorMessage(false);
@@ -202,17 +171,17 @@ function CreateAccomodation({
   };
 
   const addRoomGradings = (i: number) => {
-    const updatedGradings = roomGradings.map((lang, index) => (index === i ? !lang : lang));
+    const updatedGradings = roomGradings.map((val, index) => (index === i ? !val : val));
     setRoomGradings(updatedGradings);
   };
 
   const addRoomView = (i: number) => {
-    const updatedViews = roomViews.map((lang, index) => (index === i ? !lang : lang));
+    const updatedViews = roomViews.map((val, index) => (index === i ? !val : val));
     setRoomViews(updatedViews);
   };
 
   const addRoomCategory = (i: number) => {
-    const updatedCategories = roomCategories.map((lang, index) => (index === i ? !lang : lang));
+    const updatedCategories = roomCategories.map((val, index) => (index === i ? !val : val));
     setRoomCategories(updatedCategories);
 
     const updatedSelectedTypes = roomCategoriesData.filter(({ val }, index: number) => (

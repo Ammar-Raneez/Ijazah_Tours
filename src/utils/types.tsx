@@ -3,9 +3,38 @@ import { Timestamp } from 'firebase/firestore';
 export type Order = 'asc' | 'desc';
 export type Status = 'ACTIVE' | 'INACTIVE';
 
-export interface LibraryHeadCell {
+export interface SettingsRoomProperties {
+  val: string;
+  checked?: boolean;
+  createdAt: string,
+}
+
+export interface SettingsLocation {
   id: string;
-  label: string;
+  title: string;
+  city: string;
+}
+
+export interface SettingsReminder {
+  id: string;
+  title: string;
+  description: string;
+  type: string;
+}
+
+export interface SettingsTeamMember {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  createdAt: Timestamp,
+  role: string;
+  status: Status;
+}
+
+export interface SettingsSingleInput {
+  id: string;
+  val: string;
 }
 
 export interface AccomodationRate {
@@ -18,6 +47,11 @@ export interface AccomodationRate {
   newTriplePrice: string;
 }
 
+export interface LibraryHeadCell {
+  id: string;
+  label: string;
+}
+
 export interface LibraryAccomodation {
   id: string;
   name: string;
@@ -28,11 +62,10 @@ export interface LibraryAccomodation {
   email: string;
   webLink: string;
   ijazahLink: string;
-  views: boolean[];
-  categories: boolean[];
-  gradings: boolean[];
+  views: SettingsRoomProperties[];
+  gradings: SettingsRoomProperties[];
   rates: AccomodationRate[];
-  categoryValues: any;
+  categoryValues: { [k: string]: string; };
 }
 
 export interface LibraryDriver {
@@ -67,38 +100,4 @@ export interface LibraryGuest {
   rooms: number;
   childrenAges: number[];
   passport: any;
-}
-
-export interface SettingsRoomProperties {
-  val: string;
-  checked?: boolean;
-  createdAt: string,
-}
-
-export interface SettingsLocation {
-  id: string;
-  title: string;
-  city: string;
-}
-
-export interface SettingsReminder {
-  id: string;
-  title: string;
-  description: string;
-  type: string;
-}
-
-export interface SettingsTeamMember {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  createdAt: Timestamp,
-  role: string;
-  status: Status;
-}
-
-export interface SettingsSingleInput {
-  id: string;
-  val: string;
 }

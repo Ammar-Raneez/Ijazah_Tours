@@ -14,24 +14,24 @@ import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
 import IconAtom from '../../../atoms/IconAtom';
 import { db } from '../../../firebase';
-import { AccomodationRate, LibraryAccomodation } from '../../../utils/types';
+import { AccomodationRate, LibraryAccomodation, SettingsRoomProperties } from '../../../utils/types';
 import { formCreateMemberStyles } from '../../../styles';
 
 interface EditAccomodationProps {
   row: LibraryAccomodation;
   isUpdating: boolean;
+  roomViewData: SettingsRoomProperties[];
+  roomCategoriesData: SettingsRoomProperties[];
+  roomGradingsData: SettingsRoomProperties[];
   setIsUpdating: any;
 }
-
-const allRoomTypes = [
-  'Cilantro Suite',
-  'Executive Room',
-  'Premium Room',
-];
 
 function EditAccomodation({
   row,
   isUpdating,
+  roomViewData,
+  roomCategoriesData,
+  roomGradingsData,
   setIsUpdating,
 }: EditAccomodationProps) {
   const [name, setName] = useState(row.name);
@@ -43,19 +43,19 @@ function EditAccomodation({
   const [webLink, setWebLink] = useState(row.webLink);
   const [ijazahLink, setIjazahLink] = useState(row.ijazahLink);
 
-  const [roomCategories, setRoomCategories] = useState(row.categories);
-  const [roomViews, setRoomViews] = useState(row.views);
-  const [roomGradings, setRoomGradings] = useState(row.gradings);
-
-  const [selectedTypes, setSelectedTypes] = useState(
-    allRoomTypes.filter((type, index) => roomCategories[index] && type),
+  const [roomCategories, setRoomCategories] = useState(
+    roomCategoriesData.map((category) => (!!row.categoryValues[category.val])),
+  );
+  const [roomViews, setRoomViews] = useState(
+    row.views.map((val) => val.checked || false),
+  );
+  const [roomGradings, setRoomGradings] = useState(
+    row.gradings.map((val) => val.checked || false),
   );
 
-  const [selectedTypeValues, setSelectedTypeValues] = useState(
-    Object.fromEntries(
-      allRoomTypes.map((type) => [type, row.categoryValues[type]]),
-    ),
-  );
+  const [selectedTypes, setSelectedTypes] = useState(Object.keys(row.categoryValues));
+
+  const [selectedTypeValues, setSelectedTypeValues] = useState(row.categoryValues);
 
   const [rateData, setRateData] = useState<AccomodationRate[]>(row.rates);
   const [newRateStart, setNewRateStart] = useState('');
@@ -160,11 +160,11 @@ function EditAccomodation({
     const updatedCategories = roomCategories.map((lang, index) => (index === i ? !lang : lang));
     setRoomCategories(updatedCategories);
 
-    const updatedSelectedTypes = allRoomTypes.filter((label: string, index: number) => (
-      updatedCategories[index] && label
+    const updatedSelectedTypes = roomCategoriesData.filter((label, index: number) => (
+      updatedCategories[index] && label.val
     ));
 
-    setSelectedTypes(updatedSelectedTypes);
+    setSelectedTypes(updatedSelectedTypes.map((type) => type.val));
   };
 
   const onSetSelectedTypeValue = (type: string, val: string) => {
@@ -187,8 +187,11 @@ function EditAccomodation({
         />
       </DivAtom>
 
-      {/* <CreateEditAccomodationForm
+      <CreateEditAccomodationForm
         isCreating={isUpdating}
+        allRoomTypes={roomCategoriesData}
+        allRoomViews={roomViewData}
+        allRoomGradings={roomGradingsData}
         deleteRate={deleteRate}
         rateData={rateData}
         width={width}
@@ -233,7 +236,7 @@ function EditAccomodation({
         setNewSinglePrice={setNewSinglePrice}
         setNewDoublePrice={setNewDoublePrice}
         setNewTriplePrice={setNewTriplePrice}
-      /> */}
+      />
     </DivAtom>
   );
 }

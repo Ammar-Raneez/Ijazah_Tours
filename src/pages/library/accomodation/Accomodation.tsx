@@ -13,13 +13,16 @@ import AccomodationTable from '../../../organisms/library/accomodation/Accomodat
 import DivAtom from '../../../atoms/DivAtom';
 import { db } from '../../../firebase';
 import { libraryStyles } from '../../../styles';
-import { LibraryAccomodation } from '../../../utils/types';
+import { LibraryAccomodation, SettingsRoomProperties } from '../../../utils/types';
 import EditAccomodation from './EditAccomodation';
 import { searchData } from '../../../utils/helpers';
 
 function Accomodation() {
   const [containerHeight, setContainerHeight] = useState(0);
   const [accomodationData, setAccomodationData] = useState<DocumentData[]>([]);
+  const [roomViewData, setRoomViewData] = useState<SettingsRoomProperties[]>([]);
+  const [roomCategoriesData, setRoomCategoriesData] = useState<SettingsRoomProperties[]>([]);
+  const [roomGradingsData, setRoomGradingsData] = useState<SettingsRoomProperties[]>([]);
   const [initialAccomodationSearchData, setInitialAccomodationSearchData] = useState<DocumentData[]>([]);
   const [search, setSearch] = useState('');
 
@@ -47,7 +50,7 @@ function Accomodation() {
   }, [initialAccomodationSearchData, search]);
 
   useEffect(() => {
-    const getIntialData = async () => {
+    const getIntialAccomodationData = async () => {
       const data = (await getDocs(collection(db, 'Library Accomodation'))).docs;
       const accomodation = data.map((dc) => dc.data());
       const ids = data.map((dc) => dc.id);
@@ -59,8 +62,37 @@ function Accomodation() {
       setInitialAccomodationSearchData(accomodation);
     };
 
-    getIntialData();
+    getIntialAccomodationData();
   }, [isDeleting, isCreating, isUpdating]);
+
+  useEffect(() => {
+    const getIntialRoomData = async () => {
+      const vData = (await getDocs(collection(db, 'Settings Room Views'))).docs;
+      const tData = (await getDocs(collection(db, 'Settings Room Types'))).docs;
+      const gData = (await getDocs(collection(db, 'Settings Room Gradings'))).docs;
+      const views = vData.map((dc) => dc.data());
+      const types = tData.map((dc) => dc.data());
+      const gradings = gData.map((dc) => dc.data());
+      const viewIds = vData.map((dc) => dc.id);
+      const typeIds = tData.map((dc) => dc.id);
+      const gradingIds = gData.map((dc) => dc.id);
+      viewIds.forEach((id, i) => {
+        views[i].id = id;
+      });
+      typeIds.forEach((id, i) => {
+        types[i].id = id;
+      });
+      gradingIds.forEach((id, i) => {
+        gradings[i].id = id;
+      });
+
+      setRoomGradingsData(gradings as SettingsRoomProperties[]);
+      setRoomViewData(views as SettingsRoomProperties[]);
+      setRoomCategoriesData(types as SettingsRoomProperties[]);
+    };
+
+    getIntialRoomData();
+  }, []);
 
   const deleteAccomodation = async (row: LibraryAccomodation) => {
     // eslint-disable-next-line no-alert, no-restricted-globals
@@ -87,12 +119,18 @@ function Accomodation() {
       >
         <Route path="/library/accomodation/create">
           <CreateAccomodation
+            roomViewData={roomViewData}
+            roomCategoriesData={roomCategoriesData}
+            roomGradingsData={roomGradingsData}
             isCreating={isCreating}
             setIsCreating={setIsCreating}
           />
         </Route>
         <Route path="/library/accomodation/edit/:id">
           <EditAccomodation
+            roomViewData={roomViewData}
+            roomCategoriesData={roomCategoriesData}
+            roomGradingsData={roomGradingsData}
             isUpdating={isUpdating}
             setIsUpdating={setIsUpdating}
             row={editAccomodationData as LibraryAccomodation}
