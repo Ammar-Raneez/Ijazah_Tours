@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   MouseEvent,
   useEffect,
@@ -186,7 +187,7 @@ function EditAccomodation({
         />
       </DivAtom>
 
-      <CreateEditAccomodationForm
+      {/* <CreateEditAccomodationForm
         isCreating={isUpdating}
         deleteRate={deleteRate}
         rateData={rateData}
@@ -232,7 +233,7 @@ function EditAccomodation({
         setNewSinglePrice={setNewSinglePrice}
         setNewDoublePrice={setNewDoublePrice}
         setNewTriplePrice={setNewTriplePrice}
-      />
+      /> */}
     </DivAtom>
   );
 }

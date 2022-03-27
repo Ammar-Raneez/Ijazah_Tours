@@ -69,6 +69,12 @@ export interface LibraryGuest {
   passport: any;
 }
 
+export interface SettingsRoomProperties {
+  val: string;
+  checked?: boolean;
+  createdAt: string,
+}
+
 export interface SettingsLocation {
   id: string;
   title: string;

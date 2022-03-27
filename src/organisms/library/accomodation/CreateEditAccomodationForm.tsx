@@ -9,28 +9,13 @@ import ParagraphAtom from '../../../atoms/ParagraphAtom';
 import InputAtom from '../../../atoms/InputAtom';
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import { formCreateMemberStyles } from '../../../styles';
-import { AccomodationRate } from '../../../utils/types';
-
-const allRoomTypes = [
-  'Cilantro Suite',
-  'Executive Room',
-  'Premium Room',
-];
-
-const allRoomViews = [
-  'Cilantro Suite',
-  'Executive Room',
-  'Premium Room',
-];
-
-const allRoomGradings = [
-  '5 Star',
-  '2 Star',
-  '3 Star',
-];
+import { AccomodationRate, SettingsRoomProperties } from '../../../utils/types';
 
 interface CreateEditAccomodationFormProps {
   rateData: AccomodationRate[];
+  allRoomTypes: SettingsRoomProperties[];
+  allRoomViews: SettingsRoomProperties[];
+  allRoomGradings: SettingsRoomProperties[];
   width: number;
   showValidationErrorMessage: boolean;
   btnText: string;
@@ -53,7 +38,7 @@ interface CreateEditAccomodationFormProps {
   roomCategories: boolean[];
   roomViews: boolean[];
   roomGradings: boolean[];
-  selectedTypeValues: { [k: string]: any };
+  selectedTypeValues: { [k: string]: string };
   addRoomCategory: (i: number) => void;
   addRoomView: (i: number) => void;
   addRoomGradings: (i: number) => void;
@@ -79,6 +64,9 @@ interface CreateEditAccomodationFormProps {
 
 function CreateEditAccomodationForm({
   rateData,
+  allRoomTypes,
+  allRoomViews,
+  allRoomGradings,
   width,
   btnText,
   showValidationErrorMessage,
@@ -254,24 +242,24 @@ function CreateEditAccomodationForm({
         >
           <CheckboxGroup
             grouptitle="Room Categories"
-            labels={allRoomTypes}
-            names={['cilantro-suite', 'executive-room', 'premium-room']}
+            labels={allRoomTypes.map((type) => type.val)}
+            names={allRoomTypes.map((type) => type.val)}
             checked={roomCategories}
             onChange={(_, i: number) => addRoomCategory(i)}
             style={{ flexDirection: 'column', marginBottom: '1rem' }}
           />
           <CheckboxGroup
             grouptitle="Room View"
-            labels={allRoomViews}
-            names={['cilantro-suite', 'executive-room', 'premium-room']}
+            labels={allRoomViews.map((type) => type.val)}
+            names={allRoomViews.map((type) => type.val)}
             checked={roomViews}
             onChange={(_, i: number) => addRoomView(i)}
             style={{ flexDirection: 'column', marginBottom: '1rem' }}
           />
           <CheckboxGroup
             grouptitle="Gradings"
-            labels={allRoomGradings}
-            names={['five', 'four', 'three']}
+            labels={allRoomGradings.map((type) => type.val)}
+            names={allRoomGradings.map((type) => type.val)}
             checked={roomGradings}
             onChange={(_, i: number) => addRoomGradings(i)}
             style={{

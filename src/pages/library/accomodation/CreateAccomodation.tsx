@@ -5,22 +5,22 @@ import {
 } from 'react';
 import { useHistory } from 'react-router-dom';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
-import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
+import {
+  collection,
+  doc,
+  getDocs,
+  serverTimestamp,
+  setDoc,
+} from 'firebase/firestore';
 import { v4 as uuid } from 'uuid';
 
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
 import IconAtom from '../../../atoms/IconAtom';
 import { db } from '../../../firebase';
-import { AccomodationRate } from '../../../utils/types';
+import { AccomodationRate, SettingsRoomProperties } from '../../../utils/types';
 import { formCreateMemberStyles } from '../../../styles';
 import CreateEditAccomodationForm from '../../../organisms/library/accomodation/CreateEditAccomodationForm';
-
-const allRoomTypes = [
-  'Cilantro Suite',
-  'Executive Room',
-  'Premium Room',
-];
 
 interface CreateAccomodationProps {
   isCreating: boolean;
@@ -40,16 +40,16 @@ function CreateAccomodation({
   const [webLink, setWebLink] = useState('');
   const [ijazahLink, setIjazahLink] = useState('');
 
-  const [roomCategories, setRoomCategories] = useState(new Array(3).fill(false));
-  const [roomViews, setRoomViews] = useState(new Array(3).fill(false));
-  const [roomGradings, setRoomGradings] = useState(new Array(3).fill(false));
+  const [roomViewData, setRoomViewData] = useState<SettingsRoomProperties[]>([]);
+  const [roomCategoriesData, setRoomCategoriesData] = useState<SettingsRoomProperties[]>([]);
+  const [roomGradingsData, setRoomGradingsData] = useState<SettingsRoomProperties[]>([]);
 
-  const [selectedTypes, setSelectedTypes] = useState(new Array(3).fill(undefined));
-  const [selectedTypeValues, setSelectedTypeValues] = useState(
-    Object.fromEntries(
-      allRoomTypes.map((type: string) => [type, '']),
-    ),
-  );
+  const [roomCategories, setRoomCategories] = useState<boolean[]>([]);
+  const [roomViews, setRoomViews] = useState<boolean[]>([]);
+  const [roomGradings, setRoomGradings] = useState<boolean[]>([]);
+
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+  const [selectedTypeValues, setSelectedTypeValues] = useState<{ [k: string]: string; }>({});
 
   const [rateData, setRateData] = useState<AccomodationRate[]>([]);
   const [newRateStart, setNewRateStart] = useState('');
@@ -77,14 +77,62 @@ function CreateAccomodation({
     return removeEventListeners();
   }, [width]);
 
+  useEffect(() => {
+    const getIntialData = async () => {
+      const vData = (await getDocs(collection(db, 'Settings Room Views'))).docs;
+      const tData = (await getDocs(collection(db, 'Settings Room Types'))).docs;
+      const gData = (await getDocs(collection(db, 'Settings Room Gradings'))).docs;
+      const views = vData.map((dc) => dc.data());
+      const types = tData.map((dc) => dc.data());
+      const gradings = gData.map((dc) => dc.data());
+      const viewIds = vData.map((dc) => dc.id);
+      const typeIds = tData.map((dc) => dc.id);
+      const gradingIds = gData.map((dc) => dc.id);
+      viewIds.forEach((id, i) => {
+        views[i].id = id;
+      });
+      typeIds.forEach((id, i) => {
+        types[i].id = id;
+      });
+      gradingIds.forEach((id, i) => {
+        gradings[i].id = id;
+      });
+
+      setSelectedTypeValues(
+        Object.fromEntries(
+          types.map((type) => [type, '']),
+        ),
+      );
+
+      setSelectedTypes(new Array(types.length).fill(undefined));
+      setRoomViews(new Array(views.length).fill(false));
+      setRoomGradings(new Array(gradings.length).fill(false));
+      setRoomCategories(new Array(types.length).fill(false));
+      setRoomGradingsData(gradings as SettingsRoomProperties[]);
+      setRoomViewData(views as SettingsRoomProperties[]);
+      setRoomCategoriesData(types as SettingsRoomProperties[]);
+    };
+
+    getIntialData();
+  }, []);
+
   const onAddAccomodation = async () => {
     setShowValidationErrorMessage(false);
     if (name.trim() === '' || group.trim() === '' || location.trim() === ''
-    || city.trim() === '' || contactNumber.trim() === '' || email.trim() === ''
-    || webLink.trim() === '' || ijazahLink.trim() === '' || rateData.length === 0) {
+      || city.trim() === '' || contactNumber.trim() === '' || email.trim() === ''
+      || webLink.trim() === '' || ijazahLink.trim() === '' || rateData.length === 0) {
       setShowValidationErrorMessage(true);
       return;
     }
+
+    const views = [...roomViewData];
+    views.forEach((v, i) => {
+      v.checked = roomViews[i];
+    });
+    const gradings = [...roomGradingsData];
+    gradings.forEach((v, i) => {
+      v.checked = roomGradings[i];
+    });
 
     setIsCreating(true);
     await setDoc(doc(db, 'Library Accomodation', uuid()), {
@@ -94,10 +142,9 @@ function CreateAccomodation({
       email,
       webLink,
       ijazahLink,
-      gradings: roomGradings,
+      views,
+      gradings,
       country: location,
-      views: roomViews,
-      categories: roomCategories,
       categoryValues: selectedTypeValues,
       tel: contactNumber,
       rates: rateData,
@@ -168,11 +215,11 @@ function CreateAccomodation({
     const updatedCategories = roomCategories.map((lang, index) => (index === i ? !lang : lang));
     setRoomCategories(updatedCategories);
 
-    const updatedSelectedTypes = allRoomTypes.filter((label: string, index: number) => (
-      updatedCategories[index] && label
+    const updatedSelectedTypes = roomCategoriesData.filter(({ val }, index: number) => (
+      updatedCategories[index] && val
     ));
 
-    setSelectedTypes(updatedSelectedTypes);
+    setSelectedTypes(updatedSelectedTypes.map((type) => type.val));
   };
 
   const onSetSelectedTypeValue = (type: string, val: string) => {
@@ -197,6 +244,9 @@ function CreateAccomodation({
 
       <CreateEditAccomodationForm
         rateData={rateData}
+        allRoomTypes={roomCategoriesData}
+        allRoomViews={roomViewData}
+        allRoomGradings={roomGradingsData}
         isCreating={isCreating}
         deleteRate={(row: AccomodationRate) => deleteRate(row)}
         showValidationErrorMessage={showValidationErrorMessage}
