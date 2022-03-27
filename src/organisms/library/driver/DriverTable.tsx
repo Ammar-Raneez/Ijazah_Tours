@@ -22,9 +22,9 @@ import TableRowTextCell from '../../../molecules/TableRowTextCell';
 import LibraryTableToolbar from '../../../molecules/LibraryTableToolbar';
 import LibraryTableHead from '../../../molecules/LibraryTableHead';
 import TableRowIconCell from '../../../molecules/TableRowIconCell';
+import TablePaginationActions from '../../../molecules/TableBottomPagination';
 import { getComparator, stableSort } from '../../../utils/helpers';
 import { LibraryDriver, Order, Status } from '../../../utils/types';
-import TablePaginationActions from '../../../molecules/TableBottomPagination';
 
 const headCells = [
   { id: 'name', label: 'NAME' },
