@@ -159,7 +159,7 @@ function Quotations() {
               </DivAtom>
               <DivAtom
                 style={{
-                  ...quotationsStyles.btnSubInnerContainer,
+                  ...quotationsStyles.searchContainer,
                   justifyContent: width < 768 ? 'flex-start' : 'flex-end',
                 }}
               >

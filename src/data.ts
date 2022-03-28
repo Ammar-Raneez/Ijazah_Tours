@@ -51,20 +51,37 @@ export const QUOTATIONS_REFERENCE_DATA = [
   { label: '05', value: '05' },
 ];
 
-export const QUOTATIONS_LOCATION_DATA = [
-  { label: 'Colombo', value: 'Colombo' },
-  { label: 'Kandy', value: 'Kandy' },
-  { label: 'Nuwera Eliya', value: 'Nuwera Eliya' },
-  { label: 'Galle', value: 'Galle' },
-  { label: 'Bentota', value: 'Bentota' },
-];
-
-export const QUOIATIONS_ACCOMODATION_DATA = [
-  { label: 'Colombo Hotel', value: 'Colombo Hotel', location: 'Colombo' },
-  { label: 'Kandy Hotel', value: 'Kandy Hotel', location: 'Kandy' },
-  { label: 'Nuwera Eliya Hotel', value: 'Nuwera Eliya Hotel', location: 'Nuwera Eliya' },
-  { label: 'Galle Hotel', value: 'Galle Hotel', location: 'Galle' },
-  { label: 'Bentota Hotel', value: 'Bentota Hotel', location: 'Bentota' },
+export const QUOTATIONS_ACCOMODATION_DATA = [
+  {
+    location: 'L1',
+    nights: '2',
+    category: 'Hotel',
+    accomodation: 'Hilton',
+    pax: 'Single',
+    roomType: 'Diluxe',
+    mealPlan: 'FB',
+    city: 'Colombo',
+  },
+  {
+    location: 'L1',
+    nights: '2',
+    category: 'Hotel',
+    accomodation: 'Hilton',
+    pax: 'Single',
+    roomType: 'Mega',
+    mealPlan: 'FB',
+    city: 'Colombo',
+  },
+  {
+    location: 'L1',
+    nights: '2',
+    category: 'Hotel',
+    accomodation: 'Hilton',
+    pax: 'Single',
+    roomType: 'Suite',
+    mealPlan: 'FB',
+    city: 'Colombo',
+  },
 ];
 
 export const DASHBOARD_TASK_DATA = [

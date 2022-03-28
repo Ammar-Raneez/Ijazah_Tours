@@ -1,35 +1,39 @@
 import {
-  ChangeEvent, MouseEvent, useEffect, useState,
+  ChangeEvent,
+  useEffect,
+  useState,
 } from 'react';
 import { useHistory } from 'react-router-dom';
-import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
+import SearchIcon from '@material-ui/icons/Search';
 
 import CreateQuotationTable from '../../../../organisms/quote/quotation/CreateQuotationTable';
-import FormControlInput from '../../../../molecules/FormControlInput';
 import DivAtom from '../../../../atoms/DivAtom';
-import H2Atom from '../../../../atoms/H2Atom';
-import TextFieldAtom from '../../../../atoms/TextFieldAtom';
 import ButtonAtom from '../../../../atoms/ButtonAtom';
-import {
-  QUOIATIONS_ACCOMODATION_DATA,
-  QUOTATIONS_LOCATION_DATA,
-} from '../../../../data';
+import ParagraphAtom from '../../../../atoms/ParagraphAtom';
+import InputAtom from '../../../../atoms/InputAtom';
+import { QuotationAccomodation } from '../../../../utils/types';
+import { QUOTATIONS_ACCOMODATION_DATA } from '../../../../data';
 import {
   quoteCreateQuoteStyles,
-  libraryStyles,
-  TableToolbarStyles,
 } from '../../../../styles';
 
+const roomTypes = [
+  { label: 'Diluxe', value: 'Diluxe' },
+  { label: 'Mega', value: 'Mega' },
+  { label: 'Suite', value: 'Suite' },
+];
+
+const mealPlanOptions = [
+  { label: 'BB', value: 'BB' },
+  { label: 'FB', value: 'FB' },
+  { label: 'HB', value: 'HB' },
+];
+
 function Accomodation() {
-  const [noOfDays, setNoOfDays] = useState(0);
-  const [specification, setSpecification] = useState('');
-  const [location, setLocation] = useState(QUOTATIONS_LOCATION_DATA[0].value);
-  const [accomodation, setAccomodation] = useState(
-    QUOIATIONS_ACCOMODATION_DATA[0].value,
-  );
+  const [search, setSearch] = useState('');
+
   const [width, setWidth] = useState(0);
   const [containerHeight, setContainerHeight] = useState(0);
-  const [accomodationData, setAccomodationData] = useState<any>([]);
   const history = useHistory();
 
   useEffect(() => {
@@ -50,133 +54,89 @@ function Accomodation() {
     return removeEventListeners();
   }, [width, containerHeight]);
 
-  const onCreateAccomodation = (
-    event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
-  ) => {
-    event.preventDefault();
-    localStorage.setItem(
-      'New Quote Accomodations',
-      JSON.stringify({
-        data: [
-          ...accomodationData,
-          [location, accomodation, noOfDays, specification, '$30', '$50'],
-        ],
-      }),
-    );
-
-    setAccomodationData([
-      ...accomodationData,
-      [location, accomodation, noOfDays, specification, '$30', '$50'],
-    ]);
-
-    setNoOfDays(0);
-    setSpecification('');
-    setLocation(QUOTATIONS_LOCATION_DATA[0].value);
-    setAccomodation(QUOIATIONS_ACCOMODATION_DATA[0].value);
+  const deleteAccomodation = (acc: QuotationAccomodation) => {
+    console.log(acc);
   };
 
   return (
     <DivAtom style={{ height: `${containerHeight}px` }}>
-      <DivAtom
-        style={{ ...quoteCreateQuoteStyles.header, paddingLeft: '1rem' }}
-      >
-        <H2Atom style={quoteCreateQuoteStyles.title} text="Add Accomodation" />
-      </DivAtom>
-      <DivAtom
+      <ParagraphAtom
         style={{
-          ...quoteCreateQuoteStyles.multiFieldContainer,
-          flexDirection: width < 900 ? 'column' : 'row',
-          padding: '1rem',
+          ...quoteCreateQuoteStyles.title,
+          marginBottom: '1rem',
+          marginLeft: '1rem',
         }}
-      >
-        <TextFieldAtom
-          variant="standard"
-          size="medium"
-          label="Location"
-          value={location}
-          onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setLocation(e.target.value)
-          }
-          options={QUOTATIONS_LOCATION_DATA}
-          adornmentposition="end"
-          style={{
-            flex: 1,
-            width: width < 600 ? '100%' : 'auto',
-            margin: '0 1rem 1rem 0',
-          }}
-          disableUnderline={false}
-          select
-        />
-        <TextFieldAtom
-          variant="standard"
-          size="medium"
-          label="Accomodation"
-          value={accomodation}
-          onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setAccomodation(e.target.value)
-          }
-          options={QUOIATIONS_ACCOMODATION_DATA}
-          adornmentposition="end"
-          style={{
-            ...libraryStyles.textField,
-            flex: 1,
-            width: width < 600 ? '100%' : 'auto',
-            margin: '0 1rem 1rem 0',
-          }}
-          disableUnderline={false}
-          select
-        />
-        <FormControlInput
-          margin="0 1rem 1rem 0"
-          flex={1}
-          label="Number of Days"
-          fullWidth
-          type="number"
-          multiline={false}
-          rows={1}
-          value={noOfDays}
-          setValue={setNoOfDays}
-          placeholder="Enter Number of Days"
-        />
-        <FormControlInput
-          margin="0 0 1rem 0"
-          flex={1}
-          label="Specification"
-          fullWidth
-          multiline={false}
-          rows={1}
-          value={specification}
-          setValue={setSpecification}
-          placeholder="Enter Specification"
-        />
-        <ButtonAtom
-          starticon={<AddCircleOutlineOutlinedIcon />}
-          text="Add Accomodation"
-          disabled={
-            specification.trim() === ''
-            || accomodation === ''
-            || location === ''
-          }
-          onClick={(event) => onCreateAccomodation(event)}
-          style={{
-            ...TableToolbarStyles.addBtn,
-            width: width < 900 ? '100%' : '13rem',
-            height: '3rem',
-            marginLeft: width < 900 ? '0px' : '1rem',
-            marginBottom: width < 900 ? '1rem' : '0',
-          }}
-          size="large"
-        />
-      </DivAtom>
-
+        text="Preset Quotes"
+      />
       <DivAtom style={quoteCreateQuoteStyles.tableContainer}>
-        {accomodationData.length > 0 && (
+        <DivAtom
+          style={{
+            ...quoteCreateQuoteStyles.btnMainContainer,
+            flexDirection: width < 768 ? 'column' : 'row',
+          }}
+        >
+          <ButtonAtom
+            text="Luxury"
+            style={{
+              ...quoteCreateQuoteStyles.btn,
+              marginRight: '16px',
+              marginBottom: width < 768 ? '1rem' : 0,
+              width: width < 768 ? '100%' : '11rem',
+            }}
+            onClick={() => null}
+            size="large"
+          />
+          <ButtonAtom
+            text="3 Star"
+            style={{
+              ...quoteCreateQuoteStyles.btn,
+              marginRight: '16px',
+              marginBottom: width < 768 ? '1rem' : 0,
+              width: width < 768 ? '100%' : '11rem',
+            }}
+            onClick={() => null}
+            size="large"
+          />
+          <ButtonAtom
+            text="Boutique"
+            style={{
+              ...quoteCreateQuoteStyles.btn,
+              marginBottom: width < 768 ? '1rem' : 0,
+              width: width < 768 ? '100%' : '11rem',
+            }}
+            onClick={() => null}
+            size="large"
+          />
+        </DivAtom>
+        <DivAtom style={quoteCreateQuoteStyles.searchContainer}>
+          <InputAtom
+            placeholder="Search"
+            adornmentposition="start"
+            fullWidth={width < 768}
+            value={search}
+            plain="false"
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
+            children={<SearchIcon />}
+            style={{ padding: '0.2rem' }}
+          />
+        </DivAtom>
+        {QUOTATIONS_ACCOMODATION_DATA.length > 0 && (
           <CreateQuotationTable
             columns={[
               'LOCATION',
+              'NIGHTS',
+              'CATEGORY',
               'ACCOMODATION',
-              'NO OF DAYS',
-              'SPECIFICATION',
+              'PAX',
+              'ROOM TYPE',
+              'MEAL PLAN',
+              'CITY',
+              '',
             ]}
-            data={accomodationData}
+            mealPlanOptions={mealPlanOptions}
+            roomTypes={roomTypes}
+            deleteAccomodation={deleteAccomodation}
+            data={QUOTATIONS_ACCOMODATION_DATA as QuotationAccomodation[]}
           />
         )}
       </DivAtom>
@@ -192,7 +152,7 @@ function Accomodation() {
         <ButtonAtom
           size="large"
           text="Continue"
-          disabled={accomodationData.length === 0}
+          disabled={QUOTATIONS_ACCOMODATION_DATA.length === 0}
           onClick={() => history.replace('/quote/quotations/create/costing')}
           style={{
             ...quoteCreateQuoteStyles.addBtn,

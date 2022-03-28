@@ -130,6 +130,11 @@ export const quotationsStyles = {
     justifyContent: 'flex-start',
     flex: 1,
   },
+  searchContainer: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    flex: 1,
+  },
   btn: {
     ...shadowButtonStyles,
     width: '11rem',
@@ -138,6 +143,7 @@ export const quotationsStyles = {
 
 export const quoteCreateQuoteStyles = {
   ...formCreateMemberStyles,
+  ...quotationsStyles,
 };
 
 export const summaryStyles = {
