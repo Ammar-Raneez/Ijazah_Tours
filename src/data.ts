@@ -84,6 +84,66 @@ export const QUOTATIONS_ACCOMODATION_DATA = [
   },
 ];
 
+export const QUOTATIONS_COSTING_ACCOMODATION_DATA = [
+  {
+    location: 'L1',
+    nights: '2',
+    category: 'Hotel',
+    accomodation: 'Hilton',
+    pax: 'Single',
+    roomType: 'Diluxe',
+    mealPlan: 'FB',
+    city: 'Colombo',
+    roomRate: '$70',
+    total: '$140',
+  },
+  {
+    location: 'L1',
+    nights: '2',
+    category: 'Hotel',
+    accomodation: 'Hilton',
+    pax: 'Single',
+    roomType: 'Mega',
+    mealPlan: 'FB',
+    city: 'Colombo',
+    roomRate: '$70',
+    total: '$140',
+  },
+  {
+    location: 'L1',
+    nights: '2',
+    category: 'Hotel',
+    accomodation: 'Hilton',
+    pax: 'Single',
+    roomType: 'Suite',
+    mealPlan: 'FB',
+    city: 'Colombo',
+    roomRate: '$70',
+    total: '$140',
+  },
+];
+
+export const QUOTATIONS_COSTING_RATE_DATA = [
+  {
+    date: 'L1',
+    accomodation: 'The Kingsbury Colombo',
+    bookingEngine: 'https://booking.com',
+    rate: '$90',
+  },
+  {
+    date: 'L1',
+    accomodation: 'The Kingsbury Colombo',
+    bookingEngine: 'https://booking.com',
+    rate: '$90',
+  },
+  {
+    date: 'L1',
+    accomodation: 'The Kingsbury Colombo',
+    bookingEngine: 'https://booking.com',
+    rate: '$90',
+  },
+];
+
 export const DASHBOARD_TASK_DATA = [
   {
     id: '1',

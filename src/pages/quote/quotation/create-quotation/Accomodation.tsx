@@ -6,7 +6,7 @@ import {
 import { useHistory } from 'react-router-dom';
 import SearchIcon from '@material-ui/icons/Search';
 
-import CreateQuotationTable from '../../../../organisms/quote/quotation/CreateQuotationTable';
+import ACreateQuotationTable from '../../../../organisms/quote/quotation/ACreateQuotationTable';
 import DivAtom from '../../../../atoms/DivAtom';
 import ButtonAtom from '../../../../atoms/ButtonAtom';
 import ParagraphAtom from '../../../../atoms/ParagraphAtom';
@@ -121,7 +121,7 @@ function Accomodation() {
           />
         </DivAtom>
         {QUOTATIONS_ACCOMODATION_DATA.length > 0 && (
-          <CreateQuotationTable
+          <ACreateQuotationTable
             columns={[
               'LOCATION',
               'NIGHTS',

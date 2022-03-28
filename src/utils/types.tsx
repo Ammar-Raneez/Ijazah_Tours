@@ -68,6 +68,18 @@ export interface QuotationAccomodation {
   city: string;
 }
 
+export interface QuotationCostingAccomodation extends QuotationAccomodation {
+  roomRate: string;
+  total: string;
+}
+
+export interface QuotationCostingRate {
+  date: string;
+  accomodation: string;
+  bookingEngine: string;
+  rate: string;
+}
+
 export interface LibraryHeadCell {
   id: string;
   label: string;

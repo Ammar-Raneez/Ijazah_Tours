@@ -7,16 +7,18 @@ import { libraryStyles } from '../styles';
 interface TableRowDropdownCellProps {
   value: string;
   options: any;
+  align: 'left' | 'center' | 'right';
   // setValue: any;
 }
 
 function TableRowDropdownCell({
   value,
   options,
+  align,
   // setValue,
 }: TableRowDropdownCellProps) {
   return (
-    <TableCell>
+    <TableCell align={align}>
       <TextFieldAtom
         variant="standard"
         size="medium"
