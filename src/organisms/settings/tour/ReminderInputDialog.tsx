@@ -8,8 +8,8 @@ import {
 
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import {
-  formCreateMemberStyles,
-  libraryTableToolbarStyles,
+  settingsStyles,
+  TableToolbarStyles,
 } from '../../../styles';
 import FormControlInput from '../../../molecules/FormControlInput';
 import CheckboxGroup from '../../../molecules/CheckboxGroup';
@@ -47,8 +47,8 @@ function ReminderInputDialog({
   return (
     <>
       <Dialog open={openDialog} onClose={setOpenDialog}>
-        <DialogTitle style={formCreateMemberStyles.title}>{title}</DialogTitle>
-        <DialogContent style={formCreateMemberStyles.multiFieldDialogContainer}>
+        <DialogTitle style={settingsStyles.title}>{title}</DialogTitle>
+        <DialogContent style={settingsStyles.multiFieldDialogContainer}>
           <CheckboxGroup
             grouptitle="Reminder Type"
             labels={['Creation of Customer', 'Creation of Quote']}
@@ -92,7 +92,7 @@ function ReminderInputDialog({
             text={title}
             onClick={onAddEdit}
             style={{
-              ...libraryTableToolbarStyles.addBtn,
+              ...TableToolbarStyles.addBtn,
               marginTop: '1rem',
             }}
           />

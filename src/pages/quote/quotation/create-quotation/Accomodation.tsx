@@ -15,9 +15,9 @@ import {
   QUOTATIONS_LOCATION_DATA,
 } from '../../../../data';
 import {
-  formCreateMemberStyles,
+  quoteCreateQuoteStyles,
   libraryStyles,
-  libraryTableToolbarStyles,
+  TableToolbarStyles,
 } from '../../../../styles';
 
 function Accomodation() {
@@ -78,13 +78,13 @@ function Accomodation() {
   return (
     <DivAtom style={{ height: `${containerHeight}px` }}>
       <DivAtom
-        style={{ ...formCreateMemberStyles.header, paddingLeft: '1rem' }}
+        style={{ ...quoteCreateQuoteStyles.header, paddingLeft: '1rem' }}
       >
-        <H2Atom style={formCreateMemberStyles.title} text="Add Accomodation" />
+        <H2Atom style={quoteCreateQuoteStyles.title} text="Add Accomodation" />
       </DivAtom>
       <DivAtom
         style={{
-          ...formCreateMemberStyles.multiFieldContainer,
+          ...quoteCreateQuoteStyles.multiFieldContainer,
           flexDirection: width < 900 ? 'column' : 'row',
           padding: '1rem',
         }}
@@ -157,7 +157,7 @@ function Accomodation() {
           }
           onClick={(event) => onCreateAccomodation(event)}
           style={{
-            ...libraryTableToolbarStyles.addBtn,
+            ...TableToolbarStyles.addBtn,
             width: width < 900 ? '100%' : '13rem',
             height: '3rem',
             marginLeft: width < 900 ? '0px' : '1rem',
@@ -167,7 +167,7 @@ function Accomodation() {
         />
       </DivAtom>
 
-      <DivAtom style={formCreateMemberStyles.tableContainer}>
+      <DivAtom style={quoteCreateQuoteStyles.tableContainer}>
         {accomodationData.length > 0 && (
           <CreateQuotationTable
             columns={[
@@ -183,10 +183,10 @@ function Accomodation() {
 
       <DivAtom
         style={{
-          ...formCreateMemberStyles.addBtnContainer,
+          ...quoteCreateQuoteStyles.addBtnContainer,
           padding: width < 768 ? '1rem' : '0px',
           margin:
-            width < 768 ? '0px' : formCreateMemberStyles.addBtnContainer.margin,
+            width < 768 ? '0px' : quoteCreateQuoteStyles.addBtnContainer.margin,
         }}
       >
         <ButtonAtom
@@ -195,7 +195,7 @@ function Accomodation() {
           disabled={accomodationData.length === 0}
           onClick={() => history.replace('/quote/quotations/create/costing')}
           style={{
-            ...formCreateMemberStyles.addBtn,
+            ...quoteCreateQuoteStyles.addBtn,
             width: width < 768 ? '100%' : '18%',
             margin: '0 0 1rem 0',
           }}

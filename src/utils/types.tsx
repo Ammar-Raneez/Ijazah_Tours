@@ -47,12 +47,17 @@ export interface AccomodationRate {
   newTriplePrice: string;
 }
 
-export interface LibraryHeadCell {
-  id: string;
+export interface RadioButtonOption {
+  value: string;
   label: string;
 }
 
 export interface QuoteHeadCell {
+  id: string;
+  label: string;
+}
+
+export interface LibraryHeadCell {
   id: string;
   label: string;
 }

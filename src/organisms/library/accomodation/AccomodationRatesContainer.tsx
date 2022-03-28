@@ -9,9 +9,9 @@ import H2Atom from '../../../atoms/H2Atom';
 import TextFieldAtom from '../../../atoms/TextFieldAtom';
 import { AccomodationRate } from '../../../utils/types';
 import {
-  formCreateMemberStyles,
+  libraryAccomodationStyles,
   libraryStyles,
-  libraryTableToolbarStyles,
+  TableToolbarStyles,
 } from '../../../styles';
 
 interface AccomodationRatesContainerProps {
@@ -53,10 +53,10 @@ function AccomodationRatesContainer({
 }: AccomodationRatesContainerProps) {
   return (
     <>
-      <H2Atom style={formCreateMemberStyles.title} text="Rates" />
+      <H2Atom style={libraryAccomodationStyles.title} text="Rates" />
       <DivAtom
         style={{
-          ...formCreateMemberStyles.multiFieldContainer,
+          ...libraryAccomodationStyles.multiFieldContainer,
           flexDirection: width < 1000 ? 'column' : 'row',
           marginTop: '1rem',
         }}
@@ -154,7 +154,7 @@ function AccomodationRatesContainer({
           }
           onClick={(event) => onCreateRate(event)}
           style={{
-            ...libraryTableToolbarStyles.addBtn,
+            ...TableToolbarStyles.addBtn,
             width: width < 1000 ? '100%' : 'auto',
             height: '3rem',
             marginLeft: width < 1000 ? '0px' : '1rem',
@@ -163,7 +163,7 @@ function AccomodationRatesContainer({
           size="large"
         />
       </DivAtom>
-      <DivAtom style={formCreateMemberStyles.tableContainer}>
+      <DivAtom style={libraryAccomodationStyles.tableContainer}>
         {rateData.length > 0 && (
           <AccomodationPriceTable
             columns={[

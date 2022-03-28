@@ -17,7 +17,7 @@ import clsx from 'clsx';
 import ButtonAtom from '../atoms/ButtonAtom';
 import DivAtom from '../atoms/DivAtom';
 import InputAtom from '../atoms/InputAtom';
-import { libraryTableToolbarStyles } from '../styles';
+import { TableToolbarStyles } from '../styles';
 
 const useToolbarStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -39,19 +39,19 @@ const useToolbarStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-interface LibraryTableToolbarProps {
+interface TableToolbarProps {
   search: string;
   addbtntext: string;
   numSelected: number;
   setSearch: (value: string) => void;
 }
 
-const LibraryTableToolbar = ({
+const TableToolbar = ({
   numSelected,
   search,
   addbtntext,
   setSearch,
-}: LibraryTableToolbarProps) => {
+}: TableToolbarProps) => {
   const classes = useToolbarStyles();
   const [width, setWidth] = useState(0);
 
@@ -85,13 +85,13 @@ const LibraryTableToolbar = ({
     >
       <DivAtom
         style={{
-          ...libraryTableToolbarStyles.container,
+          ...TableToolbarStyles.container,
           flexDirection: width < 540 ? 'column' : 'row',
         }}
       >
         <DivAtom
           style={{
-            ...libraryTableToolbarStyles.toolbarContainer,
+            ...TableToolbarStyles.toolbarContainer,
             width: width < 540 ? '100%' : 'auto',
           }}
         >
@@ -99,7 +99,7 @@ const LibraryTableToolbar = ({
             <Tooltip title="Delete">
               <IconButton
                 size="medium"
-                style={libraryTableToolbarStyles.deleteIcon}
+                style={TableToolbarStyles.deleteIcon}
                 onClick={() => null}
               >
                 <DeleteOutlinedIcon />
@@ -117,7 +117,7 @@ const LibraryTableToolbar = ({
             </Typography>
           ) : (
             <InputAtom
-              style={libraryTableToolbarStyles.search}
+              style={TableToolbarStyles.search}
               placeholder="Search"
               adornmentposition="start"
               fullWidth={width < 540}
@@ -143,7 +143,7 @@ const LibraryTableToolbar = ({
                 starticon={<AddCircleOutlineOutlinedIcon />}
                 text={addbtntext}
                 style={{
-                  ...libraryTableToolbarStyles.addBtn,
+                  ...TableToolbarStyles.addBtn,
                   width: addBtnTextWidth,
                 }}
                 size="large"
@@ -156,4 +156,4 @@ const LibraryTableToolbar = ({
   );
 };
 
-export default LibraryTableToolbar;
+export default TableToolbar;

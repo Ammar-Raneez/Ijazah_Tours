@@ -5,23 +5,38 @@ import { Link, useHistory } from 'react-router-dom';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 
+import RadioButtonGroup from '../../../../molecules/RadioButtonGroup';
 import FormControlInput from '../../../../molecules/FormControlInput';
 import DivAtom from '../../../../atoms/DivAtom';
 import H2Atom from '../../../../atoms/H2Atom';
 import ButtonAtom from '../../../../atoms/ButtonAtom';
 import IconAtom from '../../../../atoms/IconAtom';
-import {
-  formCreateMemberStyles,
-  libraryStyles,
-  libraryTableToolbarStyles,
-} from '../../../../styles';
 import TextFieldAtom from '../../../../atoms/TextFieldAtom';
+import ParagraphAtom from '../../../../atoms/ParagraphAtom';
+import CheckboxAtom from '../../../../atoms/CheckboxAtom';
 import { QUOTATIONS_REFERENCE_DATA } from '../../../../data';
+import {
+  libraryStyles,
+  TableToolbarStyles,
+  quoteCreateQuoteStyles,
+} from '../../../../styles';
 
-const options = [
+const holidayTypes = [
   { label: 'Hotel', value: 'Hotel' },
   { label: 'Villa', value: 'Villa' },
   { label: 'Appartment', value: 'Appartment' },
+];
+
+const holidayDestinations = [
+  { label: 'Hotel', value: 'Hotel' },
+  { label: 'Villa', value: 'Villa' },
+  { label: 'Appartment', value: 'Appartment' },
+];
+
+const mealPlanOptions = [
+  { label: 'BB', value: 'BB' },
+  { label: 'FB', value: 'FB' },
+  { label: 'HB', value: 'HB' },
 ];
 
 function Customer() {
@@ -29,15 +44,23 @@ function Customer() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [contactNumber, setContactNumber] = useState('');
+  const [email, setEmail] = useState('');
+  const [country, setCountry] = useState('');
+  const [city, setCity] = useState('');
+
+  const [destination, setDestination] = useState(holidayDestinations[0].value);
+  const [mealPlan, setMealPlan] = useState(mealPlanOptions[0].value);
+  const [additionalBed, setAdditionalBed] = useState(false);
+
   const [checkin, setCheckin] = useState('');
   const [checkout, setCheckout] = useState('');
-  const [adults, setAdults] = useState(0);
-  const [children, setChildren] = useState(0);
-  const [age, setAge] = useState(0);
+  // const [adults, setAdults] = useState(0);
+  // const [children, setChildren] = useState(0);
+  // const [age, setAge] = useState(0);
   const [width, setWidth] = useState(0);
   const [containerHeight, setContainerHeight] = useState(0);
   const [numberOfDays, setNumberOfDays] = useState(0);
-  const [holidayType, setHolidayType] = useState(options[0].value);
+  const [holidayType, setHolidayType] = useState(holidayTypes[0].value);
   const history = useHistory();
 
   useEffect(() => {
@@ -72,9 +95,9 @@ function Customer() {
           checkin,
           checkout,
           contactNumber,
-          adults,
-          children,
-          age,
+          // adults,
+          // children,
+          // age,
           numberOfDays,
         ]],
       }),
@@ -85,20 +108,27 @@ function Customer() {
 
   return (
     <DivAtom style={{ height: `${containerHeight}px` }}>
-      <DivAtom style={formCreateMemberStyles.header}>
+      <DivAtom style={quoteCreateQuoteStyles.header}>
         <IconAtom
           size="small"
           children={<ChevronLeftRoundedIcon />}
-          style={formCreateMemberStyles.backBtn}
+          style={quoteCreateQuoteStyles.backBtn}
           onClick={() => history.replace('/quote/quotations')}
         />
-        <H2Atom style={formCreateMemberStyles.title} text="Create Quotation" />
+        <H2Atom style={quoteCreateQuoteStyles.title} text="Create Quotation" />
       </DivAtom>
 
-      <DivAtom style={formCreateMemberStyles.formContainer}>
+      <DivAtom style={quoteCreateQuoteStyles.formContainer}>
+        <ParagraphAtom
+          style={{
+            ...quoteCreateQuoteStyles.title,
+            marginBottom: '1rem',
+          }}
+          text="Guest"
+        />
         <DivAtom
           style={{
-            ...formCreateMemberStyles.multiFieldContainer,
+            ...quoteCreateQuoteStyles.multiFieldContainer,
             flexDirection: width < 600 ? 'column' : 'row',
           }}
         >
@@ -124,7 +154,7 @@ function Customer() {
               starticon={<AddCircleOutlineOutlinedIcon />}
               text="Add New Guest"
               style={{
-                ...libraryTableToolbarStyles.addBtn,
+                ...TableToolbarStyles.addBtn,
                 width: width < 600 ? '100%' : '11rem',
                 marginTop: '1rem',
                 marginLeft: width < 600 ? '0px' : '1rem',
@@ -135,7 +165,7 @@ function Customer() {
         </DivAtom>
         <DivAtom
           style={{
-            ...formCreateMemberStyles.multiFieldContainer,
+            ...quoteCreateQuoteStyles.multiFieldContainer,
             flexDirection: width < 600 ? 'column' : 'row',
           }}
         >
@@ -162,19 +192,74 @@ function Customer() {
             placeholder="Enter Last Name"
           />
         </DivAtom>
-        <FormControlInput
-          margin="0 0 1rem 0"
-          label="Contact Number"
-          fullWidth
-          multiline={false}
-          rows={1}
-          value={contactNumber}
-          setValue={setContactNumber}
-          placeholder="Enter Contact Number"
-        />
         <DivAtom
           style={{
-            ...formCreateMemberStyles.multiFieldContainer,
+            ...quoteCreateQuoteStyles.multiFieldContainer,
+            flexDirection: width < 600 ? 'column' : 'row',
+          }}
+        >
+          <FormControlInput
+            margin="0 1rem 1rem 0"
+            label="Contact Number"
+            fullWidth
+            flex={1}
+            multiline={false}
+            rows={1}
+            value={contactNumber}
+            setValue={setContactNumber}
+            placeholder="Enter Contact Number"
+          />
+          <FormControlInput
+            margin="0 0 1rem 0"
+            label="Email"
+            fullWidth
+            flex={1}
+            multiline={false}
+            rows={1}
+            value={email}
+            setValue={setEmail}
+            placeholder="Enter Email"
+          />
+        </DivAtom>
+        <DivAtom
+          style={{
+            ...quoteCreateQuoteStyles.multiFieldContainer,
+            flexDirection: width < 600 ? 'column' : 'row',
+          }}
+        >
+          <FormControlInput
+            margin="0 1rem 1rem 0"
+            label="Country"
+            fullWidth
+            flex={1}
+            multiline={false}
+            rows={1}
+            value={country}
+            setValue={setCountry}
+            placeholder="Enter Country"
+          />
+          <FormControlInput
+            margin="0 0 1rem 0"
+            label="City"
+            fullWidth
+            flex={1}
+            multiline={false}
+            rows={1}
+            value={city}
+            setValue={setCity}
+            placeholder="Enter City"
+          />
+        </DivAtom>
+        <ParagraphAtom
+          style={{
+            ...quoteCreateQuoteStyles.title,
+            marginBottom: '1rem',
+          }}
+          text="Holiday"
+        />
+        {/* <DivAtom
+          style={{
+            ...quoteCreateQuoteStyles.multiFieldContainer,
             flexDirection: width < 600 ? 'column' : 'row',
           }}
         >
@@ -215,10 +300,10 @@ function Customer() {
             setValue={setAge}
             placeholder=""
           />
-        </DivAtom>
+        </DivAtom> */}
         <DivAtom
           style={{
-            ...formCreateMemberStyles.multiFieldContainer,
+            ...quoteCreateQuoteStyles.multiFieldContainer,
             flexDirection: width < 600 ? 'column' : 'row',
           }}
         >
@@ -241,7 +326,7 @@ function Customer() {
             value={holidayType}
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setHolidayType(e.target.value)
             }
-            options={options}
+            options={holidayTypes}
             adornmentposition="end"
             style={{
               ...libraryStyles.textField,
@@ -254,7 +339,48 @@ function Customer() {
         </DivAtom>
         <DivAtom
           style={{
-            ...formCreateMemberStyles.multiFieldContainer,
+            ...quoteCreateQuoteStyles.multiFieldContainer,
+            flexDirection: width < 600 ? 'column' : 'row',
+          }}
+        >
+          <TextFieldAtom
+            variant="standard"
+            size="medium"
+            label="Destination"
+            value={destination}
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setDestination(e.target.value)
+            }
+            options={holidayDestinations}
+            adornmentposition="end"
+            style={{
+              ...libraryStyles.textField,
+              flex: 1,
+              width: width < 600 ? '100%' : 'auto',
+            }}
+            disableUnderline={false}
+            select
+          />
+          <RadioButtonGroup
+            title="Meal Plan"
+            options={mealPlanOptions}
+            value={mealPlan}
+            radioGroupStyle={{
+              ...quoteCreateQuoteStyles.radioBtnContainer,
+              margin: width < 600 ? '0' : '0 1rem',
+            }}
+            onChange={(e) => setMealPlan(e.target.value)}
+          />
+          <CheckboxAtom
+            label="Additional Bed"
+            name="additional-bed"
+            checked={additionalBed}
+            style={quoteCreateQuoteStyles.singleCheckbox}
+            onChange={() => setAdditionalBed(!additionalBed)}
+          />
+        </DivAtom>
+        <DivAtom
+          style={{
+            ...quoteCreateQuoteStyles.multiFieldContainer,
             flexDirection: width < 600 ? 'column' : 'row',
           }}
         >
@@ -299,10 +425,10 @@ function Customer() {
       </DivAtom>
       <DivAtom
         style={{
-          ...formCreateMemberStyles.addBtnContainer,
+          ...quoteCreateQuoteStyles.addBtnContainer,
           padding: width < 768 ? '1rem' : '0px',
           margin:
-            width < 768 ? '0px' : formCreateMemberStyles.addBtnContainer.margin,
+            width < 768 ? '0px' : quoteCreateQuoteStyles.addBtnContainer.margin,
         }}
       >
         <ButtonAtom
@@ -310,7 +436,7 @@ function Customer() {
           text="Continue"
           onClick={(event) => onCreateCustomer(event)}
           style={{
-            ...formCreateMemberStyles.addBtn,
+            ...quoteCreateQuoteStyles.addBtn,
             width: width < 768 ? '100%' : '18%',
             margin: '0 0 1rem 0',
           }}

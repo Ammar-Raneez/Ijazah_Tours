@@ -2,7 +2,7 @@ import { ChangeEvent, MouseEvent } from 'react';
 import {
   Checkbox,
   TableCell,
-  TableHead,
+  TableHead as TH,
   TableRow,
   TableSortLabel,
 } from '@material-ui/core';
@@ -11,7 +11,7 @@ import { ClassNameMap } from '@material-ui/core/styles/withStyles';
 import TableColumnCell from './TableColumnCell';
 import { Order, LibraryHeadCell, QuoteHeadCell } from '../utils/types';
 
-interface LibraryTableHeadProps {
+interface TableHeadProps {
   orderBy: string;
   numSelected: number;
   rowCount: number;
@@ -25,7 +25,7 @@ interface LibraryTableHeadProps {
   ) => void;
 }
 
-function LibraryTableHead({
+function TableHead({
   classes,
   headCells,
   onSelectAllClick,
@@ -34,7 +34,7 @@ function LibraryTableHead({
   numSelected,
   rowCount,
   onRequestSort,
-}: LibraryTableHeadProps) {
+}: TableHeadProps) {
   const createSortHandler = (property: string) => (event: MouseEvent<HTMLSpanElement>) => {
     onRequestSort(event, property);
   };
@@ -42,7 +42,7 @@ function LibraryTableHead({
   const spanOrderText = order === 'desc' ? 'sorted descending' : 'sorted ascending';
 
   return (
-    <TableHead>
+    <TH>
       <TableRow>
         {onSelectAllClick && (
           <TableCell padding="checkbox">
@@ -73,8 +73,8 @@ function LibraryTableHead({
           </TableColumnCell>
         ))}
       </TableRow>
-    </TableHead>
+    </TH>
   );
 }
 
-export default LibraryTableHead;
+export default TableHead;

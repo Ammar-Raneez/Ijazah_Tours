@@ -9,7 +9,7 @@ import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
 import IconAtom from '../../../atoms/IconAtom';
 import { db } from '../../../firebase';
-import { formCreateMemberStyles } from '../../../styles';
+import { libraryDriverStyles } from '../../../styles';
 import { uploadImage } from '../../../utils/helpers';
 import { LibraryDriver } from '../../../utils/types';
 
@@ -127,14 +127,14 @@ function EditDriver({ row, isUpdating, setIsUpdating }: EditDriverProps) {
 
   return (
     <DivAtom>
-      <DivAtom style={formCreateMemberStyles.header}>
+      <DivAtom style={libraryDriverStyles.header}>
         <IconAtom
           size="small"
           children={<ChevronLeftRoundedIcon />}
-          style={formCreateMemberStyles.backBtn}
+          style={libraryDriverStyles.backBtn}
           onClick={() => history.replace('/library/driver')}
         />
-        <H2Atom style={formCreateMemberStyles.title} text="Edit Driver" />
+        <H2Atom style={libraryDriverStyles.title} text="Edit Driver" />
       </DivAtom>
 
       <CreateEditDriverForm

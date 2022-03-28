@@ -19,7 +19,7 @@ import ButtonAtom from '../../../atoms/ButtonAtom';
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
 import { auth, db } from '../../../firebase';
-import { formCreateMemberStyles, libraryTableToolbarStyles, settingsStyles } from '../../../styles';
+import { TableToolbarStyles, settingsStyles } from '../../../styles';
 import { SettingsTeamMember } from '../../../utils/types';
 
 function UserManagement() {
@@ -164,18 +164,18 @@ function UserManagement() {
       >
         <DivAtom
           style={{
-            ...formCreateMemberStyles.multiFieldContainer,
+            ...settingsStyles.multiFieldContainer,
             flexDirection: containerWidth < 1000 ? 'column' : 'row',
             marginTop: '1rem',
           }}
         >
-          <H2Atom style={formCreateMemberStyles.title} text="Team Members" />
+          <H2Atom style={settingsStyles.title} text="Team Members" />
           <ButtonAtom
             starticon={<AddCircleOutlineOutlinedIcon />}
             text="Add Team Member"
             onClick={() => setNewOpenDialog(true)}
             style={{
-              ...libraryTableToolbarStyles.addBtn,
+              ...TableToolbarStyles.addBtn,
               width: containerWidth < 1000 ? '100%' : 'auto',
               height: '3rem',
               marginLeft: containerWidth < 1000 ? '0px' : '1rem',

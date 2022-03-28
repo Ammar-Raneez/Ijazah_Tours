@@ -6,7 +6,7 @@ import ButtonAtom from '../../../../atoms/ButtonAtom';
 import DivAtom from '../../../../atoms/DivAtom';
 import H2Atom from '../../../../atoms/H2Atom';
 import ParagraphAtom from '../../../../atoms/ParagraphAtom';
-import { formCreateMemberStyles } from '../../../../styles';
+import { quoteCreateQuoteStyles } from '../../../../styles';
 
 function Costing() {
   const [width, setWidth] = useState(0);
@@ -48,22 +48,22 @@ function Costing() {
     <DivAtom style={{ height: `${containerHeight}px` }}>
       <DivAtom
         style={{
-          ...formCreateMemberStyles.header,
+          ...quoteCreateQuoteStyles.header,
           paddingLeft: '1rem',
           alignItems: 'flex-start',
           flexDirection: 'column',
         }}
       >
-        <H2Atom style={formCreateMemberStyles.title} text="Costing" />
+        <H2Atom style={quoteCreateQuoteStyles.title} text="Costing" />
         <ParagraphAtom
-          style={formCreateMemberStyles.subtitle}
+          style={quoteCreateQuoteStyles.subtitle}
           text="Accomodation Total"
         />
       </DivAtom>
 
       <DivAtom
         style={{
-          ...formCreateMemberStyles.tableContainer,
+          ...quoteCreateQuoteStyles.tableContainer,
           marginBottom: '1rem',
         }}
       >
@@ -84,17 +84,17 @@ function Costing() {
 
       <DivAtom
         style={{
-          ...formCreateMemberStyles.header,
+          ...quoteCreateQuoteStyles.header,
           paddingLeft: '1rem',
         }}
       >
         <ParagraphAtom
-          style={formCreateMemberStyles.subtitle}
+          style={quoteCreateQuoteStyles.subtitle}
           text="Overall Total"
         />
       </DivAtom>
 
-      <DivAtom style={formCreateMemberStyles.tableContainer}>
+      <DivAtom style={quoteCreateQuoteStyles.tableContainer}>
         {accomodationData?.data.length > 0 && (
           <CreateQuotationTable
             columns={[
@@ -112,10 +112,10 @@ function Costing() {
 
       <DivAtom
         style={{
-          ...formCreateMemberStyles.addBtnContainer,
+          ...quoteCreateQuoteStyles.addBtnContainer,
           padding: width < 768 ? '1rem' : '0px',
           margin:
-            width < 768 ? '0px' : formCreateMemberStyles.addBtnContainer.margin,
+            width < 768 ? '0px' : quoteCreateQuoteStyles.addBtnContainer.margin,
         }}
       >
         <ButtonAtom
@@ -123,7 +123,7 @@ function Costing() {
           text="Save"
           onClick={(event) => saveQuotation(event)}
           style={{
-            ...formCreateMemberStyles.addBtn,
+            ...quoteCreateQuoteStyles.addBtn,
             width: width < 768 ? '100%' : '18%',
             margin: '0 0 1rem 0',
           }}

@@ -23,104 +23,7 @@ const shadowButtonStyles = {
   filter: 'drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.25))',
 };
 
-// Quotations
-export const quotationsStyles = {
-  ...mainContainerStyles,
-  btnMainContainer: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    marginBottom: '2rem',
-  },
-  btnSubContainer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    marginBottom: '1rem',
-  },
-  dataCardContainer: {
-    display: 'flex',
-    marginBottom: '4rem',
-    justifyContent: 'space-between',
-    flexWrap: 'wrap' as const,
-  },
-  btnSubInnerContainer: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    flex: 1,
-  },
-  btn: {
-    ...shadowButtonStyles,
-    width: '11rem',
-  },
-};
-
-export const summaryStyles = {
-  ...mainContainerStyles,
-};
-
-export const voucherStyles = {
-  ...mainContainerStyles,
-};
-
-// Library
-export const libraryStyles = {
-  ...mainContainerStyles,
-  btn: {
-    ...shadowButtonStyles,
-    width: '11rem',
-  },
-  textField: {
-    width: '11rem',
-  },
-  btnContainer: {
-    justifyContent: 'flex-start',
-    marginBottom: '4rem',
-    display: 'flex',
-  },
-};
-
-export const libraryTableToolbarStyles = {
-  container: {
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  toolbarContainer: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  search: {
-    padding: '4px',
-  },
-  deleteIcon: {
-    padding: '0px 8px 0px 0px',
-    color: 'red',
-  },
-  filterIcon: {
-    padding: '0px 8px 0px 0px',
-    color: '#0A65FF',
-  },
-  addBtn: {
-    color: 'white',
-    backgroundColor: '#0A65FF',
-    borderRadius: '0.5rem',
-    margin: '0px',
-  },
-};
-
-export const libraryTableStyles = {
-  activeUsers: {
-    fontSize: '1rem',
-    color: '#606F89',
-    fontWeight: 600,
-  },
-  totalUsers: {
-    fontSize: '0.7rem',
-    color: '#606F89',
-  },
-};
-
-export const formCreateMemberStyles = {
+const formCreateMemberStyles = {
   header: {
     display: 'flex',
     alignItems: 'center',
@@ -162,7 +65,124 @@ export const formCreateMemberStyles = {
     color: '#0A65FF',
     padding: '1rem',
   },
+  radioBtnContainer: {
+    display: 'flex',
+    margin: '0 1rem',
+    flexDirection: 'row' as const,
+  },
+  singleCheckbox: {
+    marginTop: '1rem',
+  },
   addBtn: shadowButtonStyles,
+};
+
+export const TableToolbarStyles = {
+  container: {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  toolbarContainer: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  search: {
+    padding: '4px',
+  },
+  deleteIcon: {
+    padding: '0px 8px 0px 0px',
+    color: 'red',
+  },
+  filterIcon: {
+    padding: '0px 8px 0px 0px',
+    color: '#0A65FF',
+  },
+  addBtn: {
+    color: 'white',
+    backgroundColor: '#0A65FF',
+    borderRadius: '0.5rem',
+    margin: '0px',
+  },
+};
+
+// Quotations
+export const quotationsStyles = {
+  ...mainContainerStyles,
+  btnMainContainer: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    marginBottom: '2rem',
+  },
+  btnSubContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginBottom: '1rem',
+  },
+  dataCardContainer: {
+    display: 'flex',
+    marginBottom: '4rem',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap' as const,
+  },
+  btnSubInnerContainer: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    flex: 1,
+  },
+  btn: {
+    ...shadowButtonStyles,
+    width: '11rem',
+  },
+};
+
+export const quoteCreateQuoteStyles = {
+  ...formCreateMemberStyles,
+};
+
+export const summaryStyles = {
+  ...mainContainerStyles,
+};
+
+export const voucherStyles = {
+  ...mainContainerStyles,
+};
+
+// Library
+export const libraryStyles = {
+  ...mainContainerStyles,
+  btn: {
+    ...shadowButtonStyles,
+    width: '11rem',
+  },
+  textField: {
+    width: '11rem',
+  },
+  btnContainer: {
+    justifyContent: 'flex-start',
+    marginBottom: '4rem',
+    display: 'flex',
+  },
+};
+
+export const libraryTableStyles = {
+  activeUsers: {
+    fontSize: '1rem',
+    color: '#606F89',
+    fontWeight: 600,
+  },
+  totalUsers: {
+    fontSize: '0.7rem',
+    color: '#606F89',
+  },
+};
+
+export const libraryAccomodationStyles = {
+  ...formCreateMemberStyles,
+};
+
+export const libraryDriverStyles = {
+  ...formCreateMemberStyles,
 };
 
 export const libraryCreateGuestStyles = {
@@ -178,10 +198,6 @@ export const libraryCreateGuestStyles = {
   },
 };
 
-export const quoteCreateQuoteStyles = {
-  ...formCreateMemberStyles,
-};
-
 // Dashboard
 export const dashboardStyles = {
   ...quotationsStyles,
@@ -190,6 +206,7 @@ export const dashboardStyles = {
 // Settings
 export const settingsStyles = {
   ...quotationsStyles,
+  ...formCreateMemberStyles,
 };
 
 // Utilities

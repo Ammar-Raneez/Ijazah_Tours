@@ -8,7 +8,7 @@ import DivAtom from '../../../atoms/DivAtom';
 import ParagraphAtom from '../../../atoms/ParagraphAtom';
 import InputAtom from '../../../atoms/InputAtom';
 import ButtonAtom from '../../../atoms/ButtonAtom';
-import { formCreateMemberStyles } from '../../../styles';
+import { libraryAccomodationStyles } from '../../../styles';
 import { AccomodationRate, SettingsRoomProperties } from '../../../utils/types';
 
 interface CreateEditAccomodationFormProps {
@@ -114,10 +114,10 @@ function CreateEditAccomodationForm({
 }: CreateEditAccomodationFormProps) {
   return (
     <>
-      <DivAtom style={formCreateMemberStyles.formContainer}>
+      <DivAtom style={libraryAccomodationStyles.formContainer}>
         <DivAtom
           style={{
-            ...formCreateMemberStyles.multiFieldContainer,
+            ...libraryAccomodationStyles.multiFieldContainer,
             flexDirection: width < 600 ? 'column' : 'row',
           }}
         >
@@ -146,7 +146,7 @@ function CreateEditAccomodationForm({
         </DivAtom>
         <DivAtom
           style={{
-            ...formCreateMemberStyles.multiFieldContainer,
+            ...libraryAccomodationStyles.multiFieldContainer,
             flexDirection: width < 600 ? 'column' : 'row',
           }}
         >
@@ -175,7 +175,7 @@ function CreateEditAccomodationForm({
         </DivAtom>
         <DivAtom
           style={{
-            ...formCreateMemberStyles.multiFieldContainer,
+            ...libraryAccomodationStyles.multiFieldContainer,
             flexDirection: width < 600 ? 'column' : 'row',
           }}
         >
@@ -204,7 +204,7 @@ function CreateEditAccomodationForm({
         </DivAtom>
         <DivAtom
           style={{
-            ...formCreateMemberStyles.multiFieldContainer,
+            ...libraryAccomodationStyles.multiFieldContainer,
             flexDirection: width < 600 ? 'column' : 'row',
           }}
         >
@@ -234,7 +234,7 @@ function CreateEditAccomodationForm({
 
         <DivAtom
           style={{
-            ...formCreateMemberStyles.multiFieldContainer,
+            ...libraryAccomodationStyles.multiFieldContainer,
             flexDirection: width < 600 ? 'column' : 'row',
             justifyContent: 'flex-start',
             marginTop: '0.8rem',
@@ -291,7 +291,7 @@ function CreateEditAccomodationForm({
           <DivAtom
             key={ind}
             style={{
-              ...formCreateMemberStyles.multiFieldContainer,
+              ...libraryAccomodationStyles.multiFieldContainer,
               flexDirection: width < 600 ? 'column' : 'row',
               justifyContent: 'flex-start',
               marginTop: '0.8rem',
@@ -323,10 +323,10 @@ function CreateEditAccomodationForm({
 
       <DivAtom
         style={{
-          ...formCreateMemberStyles.addBtnContainer,
+          ...libraryAccomodationStyles.addBtnContainer,
           padding: width < 768 ? '1rem' : '0px',
           margin:
-            width < 768 ? '0px' : formCreateMemberStyles.addBtnContainer.margin,
+            width < 768 ? '0px' : libraryAccomodationStyles.addBtnContainer.margin,
         }}
       >
         <ButtonAtom
@@ -336,7 +336,7 @@ function CreateEditAccomodationForm({
           text={btnText}
           onClick={onAddEditAccomodation}
           style={{
-            ...formCreateMemberStyles.addBtn,
+            ...libraryAccomodationStyles.addBtn,
             width: width < 768 ? '100%' : '18%',
             margin: width < 768 ? '0 0 1rem 0' : '0px',
           }}

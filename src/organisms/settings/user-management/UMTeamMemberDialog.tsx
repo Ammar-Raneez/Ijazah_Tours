@@ -9,8 +9,8 @@ import {
 import FormControlInput from '../../../molecules/FormControlInput';
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import {
-  formCreateMemberStyles,
-  libraryTableToolbarStyles,
+  settingsStyles,
+  TableToolbarStyles,
 } from '../../../styles';
 import ParagraphAtom from '../../../atoms/ParagraphAtom';
 
@@ -54,9 +54,9 @@ function UMTeamMemberDialog({
   return (
     <>
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
-        <DialogTitle style={formCreateMemberStyles.title}>{btnText}</DialogTitle>
+        <DialogTitle style={settingsStyles.title}>{btnText}</DialogTitle>
         <DialogContent
-          style={formCreateMemberStyles.multiFieldDialogContainer}
+          style={settingsStyles.multiFieldDialogContainer}
         >
           <FormControlInput
             flex={1}
@@ -127,7 +127,7 @@ function UMTeamMemberDialog({
             disabled={isCreating}
             onClick={(event) => onEditCreateMember(event)}
             style={{
-              ...libraryTableToolbarStyles.addBtn,
+              ...TableToolbarStyles.addBtn,
               marginTop: '1rem',
             }}
           />

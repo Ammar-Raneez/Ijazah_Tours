@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, CSSProperties } from 'react';
 import {
   Checkbox,
   FormControlLabel,
@@ -22,16 +22,19 @@ interface CheckboxAtomProps {
   name: string;
   checked: boolean;
   onChange: ((event: ChangeEvent<HTMLInputElement>, index: number) => void);
+  style?: CSSProperties;
 }
 
 function CheckboxAtom({
   label,
   name,
   checked,
+  style,
   onChange,
 }: CheckboxAtomProps) {
   return (
     <StyledFormControlLabel
+      style={style}
       control={
         <GreenCheckbox
           checked={checked}

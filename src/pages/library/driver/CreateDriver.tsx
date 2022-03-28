@@ -9,7 +9,7 @@ import CreateEditDriverForm from '../../../organisms/library/driver/CreateEditDr
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
 import IconAtom from '../../../atoms/IconAtom';
-import { formCreateMemberStyles } from '../../../styles';
+import { libraryDriverStyles } from '../../../styles';
 import { db } from '../../../firebase';
 import { statusOptions, uploadImage, vehicleOptions } from '../../../utils/helpers';
 
@@ -136,14 +136,14 @@ function CreateDriver({
 
   return (
     <DivAtom>
-      <DivAtom style={formCreateMemberStyles.header}>
+      <DivAtom style={libraryDriverStyles.header}>
         <IconAtom
           size="small"
           children={<ChevronLeftRoundedIcon />}
-          style={formCreateMemberStyles.backBtn}
+          style={libraryDriverStyles.backBtn}
           onClick={() => history.replace('/library/driver')}
         />
-        <H2Atom style={formCreateMemberStyles.title} text="Create Driver" />
+        <H2Atom style={libraryDriverStyles.title} text="Create Driver" />
       </DivAtom>
 
       <CreateEditDriverForm

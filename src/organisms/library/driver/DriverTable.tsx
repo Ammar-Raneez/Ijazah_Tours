@@ -19,8 +19,8 @@ import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 
 import TableRowTextCell from '../../../molecules/TableRowTextCell';
-import LibraryTableToolbar from '../../../molecules/LibraryTableToolbar';
-import LibraryTableHead from '../../../molecules/LibraryTableHead';
+import TableToolbar from '../../../molecules/TableToolbar';
+import TableHead from '../../../molecules/TableHead';
 import TableRowIconCell from '../../../molecules/TableRowIconCell';
 import TablePaginationActions from '../../../molecules/TableBottomPagination';
 import { getComparator, stableSort } from '../../../utils/helpers';
@@ -139,7 +139,7 @@ export default function DriverTable({
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <LibraryTableToolbar
+        <TableToolbar
           search={search}
           setSearch={setSearch}
           numSelected={selected.length}
@@ -153,7 +153,7 @@ export default function DriverTable({
             size="medium"
             aria-label="Library table"
           >
-            <LibraryTableHead
+            <TableHead
               classes={classes}
               headCells={headCells}
               numSelected={selected.length}

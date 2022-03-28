@@ -18,7 +18,7 @@ import TableRowTextCell from '../../../molecules/TableRowTextCell';
 import TablePaginationActions from '../../../molecules/TableBottomPagination';
 import { Order } from '../../../utils/types';
 import { getComparator, stableSort } from '../../../utils/helpers';
-import LibraryTableHead from '../../../molecules/LibraryTableHead';
+import TableHead from '../../../molecules/TableHead';
 
 const headCells = [
   { id: 'guest', label: 'GUEST' },
@@ -92,7 +92,7 @@ function QuotationsTable({ rowdata }: QuotationsTableProps) {
             size="medium"
             aria-label="Library table"
           >
-            <LibraryTableHead
+            <TableHead
               classes={classes}
               headCells={headCells}
               numSelected={0}

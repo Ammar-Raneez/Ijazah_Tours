@@ -5,7 +5,7 @@ import FormControlInput from '../../../molecules/FormControlInput';
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import DivAtom from '../../../atoms/DivAtom';
 import TextFieldAtom from '../../../atoms/TextFieldAtom';
-import { formCreateMemberStyles, libraryStyles } from '../../../styles';
+import { libraryDriverStyles, libraryStyles } from '../../../styles';
 import ImageUploader from './ImageUploader';
 import CheckboxGroup from '../../../molecules/CheckboxGroup';
 import { statusOptions, vehicleOptions } from '../../../utils/helpers';
@@ -88,10 +88,10 @@ function CreateEditDriverForm({
 }: CreateEditDriverFormProps) {
   return (
     <>
-      <DivAtom style={formCreateMemberStyles.formContainer}>
+      <DivAtom style={libraryDriverStyles.formContainer}>
         <DivAtom
           style={{
-            ...formCreateMemberStyles.multiFieldContainer,
+            ...libraryDriverStyles.multiFieldContainer,
             flexDirection: width < 600 ? 'column' : 'row',
           }}
         >
@@ -120,7 +120,7 @@ function CreateEditDriverForm({
         </DivAtom>
         <DivAtom
           style={{
-            ...formCreateMemberStyles.multiFieldContainer,
+            ...libraryDriverStyles.multiFieldContainer,
             justifyContent: 'space-between',
             flexDirection: width < 600 ? 'column' : 'row',
           }}
@@ -150,7 +150,7 @@ function CreateEditDriverForm({
         </DivAtom>
         <DivAtom
           style={{
-            ...formCreateMemberStyles.multiFieldContainer,
+            ...libraryDriverStyles.multiFieldContainer,
             flexDirection: width < 600 ? 'column' : 'row',
           }}
         >
@@ -221,7 +221,7 @@ function CreateEditDriverForm({
         />
         <DivAtom
           style={{
-            ...formCreateMemberStyles.multiFieldContainer,
+            ...libraryDriverStyles.multiFieldContainer,
             justifyContent: 'space-between',
             flexDirection: width < 600 ? 'column' : 'row',
           }}
@@ -252,7 +252,7 @@ function CreateEditDriverForm({
         </DivAtom>
         <DivAtom
           style={{
-            ...formCreateMemberStyles.multiFieldContainer,
+            ...libraryDriverStyles.multiFieldContainer,
             flexDirection: width < 600 ? 'column' : 'row',
           }}
         >
@@ -290,10 +290,10 @@ function CreateEditDriverForm({
 
       <DivAtom
         style={{
-          ...formCreateMemberStyles.addBtnContainer,
+          ...libraryDriverStyles.addBtnContainer,
           padding: width < 768 ? '1rem' : '0px',
           margin:
-            width < 768 ? '0px' : formCreateMemberStyles.addBtnContainer.margin,
+            width < 768 ? '0px' : libraryDriverStyles.addBtnContainer.margin,
         }}
       >
         <ButtonAtom
@@ -302,7 +302,7 @@ function CreateEditDriverForm({
           onClick={onAddEditDriver}
           disabled={isCreating}
           style={{
-            ...formCreateMemberStyles.addBtn,
+            ...libraryDriverStyles.addBtn,
             width: width < 768 ? '100%' : '18%',
             margin: width < 768 ? '0 0 1rem 0' : '0px',
           }}

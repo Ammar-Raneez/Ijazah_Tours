@@ -10,8 +10,8 @@ import {
 
 import ButtonAtom from '../../atoms/ButtonAtom';
 import {
-  formCreateMemberStyles,
-  libraryTableToolbarStyles,
+  settingsStyles,
+  TableToolbarStyles,
 } from '../../styles';
 import InputAtom from '../../atoms/InputAtom';
 import ParagraphAtom from '../../atoms/ParagraphAtom';
@@ -40,8 +40,8 @@ function SingleInputDialog({
   return (
     <>
       <Dialog open={openDialog} onClose={setOpenDialog}>
-        <DialogTitle style={formCreateMemberStyles.title}>{title}</DialogTitle>
-        <DialogContent style={formCreateMemberStyles.multiFieldDialogContainer}>
+        <DialogTitle style={settingsStyles.title}>{title}</DialogTitle>
+        <DialogContent style={settingsStyles.multiFieldDialogContainer}>
           <FormControl>
             <InputLabel>{title.substring(4, title.length)}</InputLabel>
             <InputAtom
@@ -67,7 +67,7 @@ function SingleInputDialog({
             disabled={isCreating}
             onClick={onEditCreate}
             style={{
-              ...libraryTableToolbarStyles.addBtn,
+              ...TableToolbarStyles.addBtn,
               marginTop: '1rem',
             }}
           />

@@ -3,7 +3,7 @@ import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOut
 import ButtonAtom from '../../atoms/ButtonAtom';
 import DivAtom from '../../atoms/DivAtom';
 import H2Atom from '../../atoms/H2Atom';
-import { formCreateMemberStyles, libraryTableToolbarStyles } from '../../styles';
+import { settingsStyles, TableToolbarStyles } from '../../styles';
 
 interface SectionContainerProps {
   containerWidth: number;
@@ -21,18 +21,18 @@ function SectionContainer({
   return (
     <DivAtom
       style={{
-        ...formCreateMemberStyles.multiFieldContainer,
+        ...settingsStyles.multiFieldContainer,
         flexDirection: containerWidth < 1000 ? 'column' : 'row',
         marginTop: '1rem',
       }}
     >
-      <H2Atom style={{ ...formCreateMemberStyles.title, fontSize: '1.2rem' }} text={h2Text} />
+      <H2Atom style={{ ...settingsStyles.title, fontSize: '1.2rem' }} text={h2Text} />
       <ButtonAtom
         starticon={<AddCircleOutlineOutlinedIcon />}
         text={btnText}
         onClick={setOpenDialog}
         style={{
-          ...libraryTableToolbarStyles.addBtn,
+          ...TableToolbarStyles.addBtn,
           width: containerWidth < 1000 ? '100%' : '16rem',
           height: '3rem',
           marginLeft: containerWidth < 1000 ? '0px' : '1rem',

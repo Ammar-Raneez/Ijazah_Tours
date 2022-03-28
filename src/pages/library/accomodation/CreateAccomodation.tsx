@@ -17,7 +17,7 @@ import H2Atom from '../../../atoms/H2Atom';
 import IconAtom from '../../../atoms/IconAtom';
 import { db } from '../../../firebase';
 import { AccomodationRate, SettingsRoomProperties } from '../../../utils/types';
-import { formCreateMemberStyles } from '../../../styles';
+import { libraryAccomodationStyles } from '../../../styles';
 import CreateEditAccomodationForm from '../../../organisms/library/accomodation/CreateEditAccomodationForm';
 
 interface CreateAccomodationProps {
@@ -198,15 +198,15 @@ function CreateAccomodation({
 
   return (
     <DivAtom>
-      <DivAtom style={formCreateMemberStyles.header}>
+      <DivAtom style={libraryAccomodationStyles.header}>
         <IconAtom
           size="small"
           children={<ChevronLeftRoundedIcon />}
-          style={formCreateMemberStyles.backBtn}
+          style={libraryAccomodationStyles.backBtn}
           onClick={() => history.replace('/library/accomodation')}
         />
         <H2Atom
-          style={formCreateMemberStyles.title}
+          style={libraryAccomodationStyles.title}
           text="Create Accomodation"
         />
       </DivAtom>

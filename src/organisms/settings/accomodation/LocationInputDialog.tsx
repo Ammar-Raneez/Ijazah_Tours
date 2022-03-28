@@ -8,8 +8,8 @@ import {
 
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import {
-  formCreateMemberStyles,
-  libraryTableToolbarStyles,
+  settingsStyles,
+  TableToolbarStyles,
 } from '../../../styles';
 import FormControlInput from '../../../molecules/FormControlInput';
 import ParagraphAtom from '../../../atoms/ParagraphAtom';
@@ -42,8 +42,8 @@ function LocationInputDialog({
   return (
     <>
       <Dialog open={openDialog} onClose={setOpenDialog}>
-        <DialogTitle style={formCreateMemberStyles.title}>{title}</DialogTitle>
-        <DialogContent style={formCreateMemberStyles.multiFieldDialogContainer}>
+        <DialogTitle style={settingsStyles.title}>{title}</DialogTitle>
+        <DialogContent style={settingsStyles.multiFieldDialogContainer}>
           <FormControlInput
             label="Location"
             fullWidth
@@ -79,7 +79,7 @@ function LocationInputDialog({
             disabled={isCreating}
             onClick={onCreate}
             style={{
-              ...libraryTableToolbarStyles.addBtn,
+              ...TableToolbarStyles.addBtn,
               marginTop: '1rem',
             }}
           />
