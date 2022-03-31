@@ -49,7 +49,7 @@ function TextFieldAtom({
   ...props
 }: TextFieldAtomProps) {
   const removeBgSelect = disableUnderline === false ? 'true' : 'false';
-  const removeBgTextField = type === 'date' ? 'true' : 'false';
+  const removeBgTextField = type === 'date' || type === 'month' ? 'true' : 'false';
 
   const inputProps = adornmentposition === 'start'
     ? {
@@ -58,7 +58,7 @@ function TextFieldAtom({
           {props.children}
         </InputAdornment>
       ),
-      disableUnderline: type !== 'date',
+      disableUnderline: type !== 'date' && type !== 'month',
     }
     : {
       endAdornment: (
@@ -66,7 +66,7 @@ function TextFieldAtom({
           {props.children}
         </InputAdornment>
       ),
-      disableUnderline: type !== 'date',
+      disableUnderline: type !== 'date' && type !== 'month',
     };
 
   return !select ? (

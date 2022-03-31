@@ -39,6 +39,11 @@ const mealPlanOptions = [
   { label: 'HB', value: 'HB' },
 ];
 
+const dateTypeOptions = [
+  { label: 'Specific Dates', value: 'specific-dates' },
+  { label: 'Not Specific', value: 'not-specific' },
+];
+
 function Customer() {
   const [refNum, setRefNum] = useState(QUOTATIONS_REFERENCE_DATA[0].value);
   const [firstName, setFirstName] = useState('');
@@ -52,6 +57,7 @@ function Customer() {
   const [mealPlan, setMealPlan] = useState(mealPlanOptions[0].value);
   const [additionalBed, setAdditionalBed] = useState(false);
 
+  const [dateType, setDateType] = useState(dateTypeOptions[0].value);
   const [checkin, setCheckin] = useState('');
   const [checkout, setCheckout] = useState('');
   // const [adults, setAdults] = useState(0);
@@ -381,46 +387,100 @@ function Customer() {
         <DivAtom
           style={{
             ...quoteCreateQuoteStyles.multiFieldContainer,
-            flexDirection: width < 600 ? 'column' : 'row',
+            flexDirection: 'column',
           }}
         >
-          <TextFieldAtom
-            variant="standard"
-            size="medium"
-            label="Check-in"
-            value={checkin}
-            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCheckin(e.target.value)
-            }
-            adornmentposition="end"
-            style={{
-              ...libraryStyles.textField,
-              flex: 1,
-              width: width < 600 ? '100%' : 'auto',
-              margin: width < 600 ? '0 0 1rem 0' : '0 1rem 0 0',
+          <RadioButtonGroup
+            title="Date Type"
+            options={dateTypeOptions}
+            value={dateType}
+            radioGroupStyle={{
+              ...quoteCreateQuoteStyles.radioBtnContainer,
+              margin: width < 600 ? '0' : '0 1rem',
             }}
-            disableUnderline={false}
-            select={false}
-            focused
-            type="date"
+            onChange={(e) => setDateType(e.target.value)}
           />
-          <TextFieldAtom
-            variant="standard"
-            size="medium"
-            label="Checkout"
-            value={checkout}
-            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCheckout(e.target.value)
-            }
-            adornmentposition="end"
-            style={{
-              ...libraryStyles.textField,
-              flex: 1,
-              width: width < 600 ? '100%' : 'auto',
-            }}
-            disableUnderline={false}
-            select={false}
-            focused
-            type="date"
-          />
+          {dateType === dateTypeOptions[0].value ? (
+            <DivAtom>
+              <TextFieldAtom
+                variant="standard"
+                size="medium"
+                label="Check-in"
+                value={checkin}
+                onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCheckin(e.target.value)
+                }
+                adornmentposition="end"
+                style={{
+                  ...libraryStyles.textField,
+                  flex: 1,
+                  width: width < 600 ? '100%' : 'auto',
+                  margin: width < 600 ? '0 0 1rem 0' : '0 1rem 0 0',
+                }}
+                disableUnderline={false}
+                select={false}
+                focused
+                type="date"
+              />
+              <TextFieldAtom
+                variant="standard"
+                size="medium"
+                label="Checkout"
+                value={checkout}
+                onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCheckout(e.target.value)
+                }
+                adornmentposition="end"
+                style={{
+                  ...libraryStyles.textField,
+                  flex: 1,
+                  width: width < 600 ? '100%' : 'auto',
+                }}
+                disableUnderline={false}
+                select={false}
+                focused
+                type="date"
+              />
+            </DivAtom>
+          ) : (
+            <DivAtom>
+              <TextFieldAtom
+                variant="standard"
+                size="medium"
+                label="Check-in"
+                value={checkin}
+                onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCheckin(e.target.value)
+                }
+                adornmentposition="end"
+                style={{
+                  ...libraryStyles.textField,
+                  flex: 1,
+                  width: width < 600 ? '100%' : 'auto',
+                  margin: width < 600 ? '0 0 1rem 0' : '0 1rem 0 0',
+                }}
+                disableUnderline={false}
+                select={false}
+                focused
+                type="month"
+              />
+              <TextFieldAtom
+                variant="standard"
+                size="medium"
+                label="Checkout"
+                value={checkout}
+                onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCheckout(e.target.value)
+                }
+                adornmentposition="end"
+                style={{
+                  ...libraryStyles.textField,
+                  flex: 1,
+                  width: width < 600 ? '100%' : 'auto',
+                }}
+                disableUnderline={false}
+                select={false}
+                focused
+                type="month"
+              />
+            </DivAtom>
+          )}
         </DivAtom>
       </DivAtom>
       <DivAtom
