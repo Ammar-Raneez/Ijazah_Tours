@@ -176,7 +176,7 @@ function Customer() {
           }}
         >
           <FormControlInput
-            margin="0 1rem 1rem 0"
+            margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
             flex={1}
             label="First Name"
             fullWidth
@@ -205,7 +205,7 @@ function Customer() {
           }}
         >
           <FormControlInput
-            margin="0 1rem 1rem 0"
+            margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
             label="Contact Number"
             fullWidth
             flex={1}
@@ -234,7 +234,7 @@ function Customer() {
           }}
         >
           <FormControlInput
-            margin="0 1rem 1rem 0"
+            margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
             label="Country"
             fullWidth
             flex={1}
@@ -314,7 +314,7 @@ function Customer() {
           }}
         >
           <FormControlInput
-            margin="0 1rem 1rem 0"
+            margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
             type="number"
             flex={1}
             label="No. of Days"
@@ -338,6 +338,7 @@ function Customer() {
               ...libraryStyles.textField,
               flex: 1,
               width: width < 600 ? '100%' : 'auto',
+              margin: width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0',
             }}
             disableUnderline={false}
             select
@@ -362,6 +363,7 @@ function Customer() {
               ...libraryStyles.textField,
               flex: 1,
               width: width < 600 ? '100%' : 'auto',
+              margin: width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0',
             }}
             disableUnderline={false}
             select
