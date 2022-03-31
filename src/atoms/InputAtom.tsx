@@ -41,7 +41,7 @@ function InputAtom({
       rows={rows}
       plain={plain}
       type={type}
-      style={style}
+      style={{ ...style, color: 'black' }}
       value={value}
       onChange={onChange}
       required={required}

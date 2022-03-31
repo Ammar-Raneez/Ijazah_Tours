@@ -42,7 +42,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'import/extensions': ['off'],
     'linebreak-style': 'off',
-    'max-len': ['error', { code: 120 }],
+    'max-len': ['error', { code: 120, ignorePattern: '^import .*' }],
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error', { ignoreTypeValueShadow: true }],
     'no-unused-vars': 'off',

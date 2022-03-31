@@ -8,14 +8,12 @@ import {
   TableRow,
   Theme,
 } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
 import { v4 as uuid } from 'uuid';
 
-import TableColumnCell from '../../../molecules/TableColumnCell';
-import TableRowDropdownCell from '../../../molecules/TableRowDropdownCell';
-import TableRowIconCell from '../../../molecules/TableRowIconCell';
-import TableRowTextCell from '../../../molecules/TableRowTextCell';
-import { QuotationAccomodation } from '../../../utils/types';
+import TableColumnCell from '../../../../../molecules/TableColumnCell';
+import TableRowDropdownCell from '../../../../../molecules/TableRowDropdownCell';
+import TableRowTextCell from '../../../../../molecules/TableRowTextCell';
+import { QuotationCostingAccomodation } from '../../../../../utils/types';
 
 const useStyles = makeStyles((theme: Theme) => ({
   table: {
@@ -27,21 +25,21 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-interface ACreateQuotationTableProps {
-  data: QuotationAccomodation[];
+interface CostingAccomodationTableProps {
+  data: QuotationCostingAccomodation[];
   columns: string[];
+  accTotal: string;
   mealPlanOptions: any;
   roomTypes: any;
-  deleteAccomodation: (row: QuotationAccomodation) => void;
 }
 
-function ACreateQuotationTable({
+function CostingAccomodationTable({
   data,
   columns,
+  accTotal,
   mealPlanOptions,
   roomTypes,
-  deleteAccomodation,
-}: ACreateQuotationTableProps) {
+}: CostingAccomodationTableProps) {
   const classes = useStyles();
 
   return (
@@ -84,15 +82,6 @@ function ACreateQuotationTable({
                 key={uuid()}
                 cell={{
                   align: 'center',
-                  title: row.category,
-                  colors: ['#464E5F'],
-                  weight: 400,
-                }}
-              />
-              <TableRowTextCell
-                key={uuid()}
-                cell={{
-                  align: 'center',
                   title: row.accomodation,
                   colors: ['#464E5F'],
                   weight: 400,
@@ -113,6 +102,15 @@ function ACreateQuotationTable({
                 options={roomTypes}
                 align="center"
               />
+              <TableRowTextCell
+                key={uuid()}
+                cell={{
+                  align: 'center',
+                  title: row.roomRate,
+                  colors: ['#464E5F'],
+                  weight: 400,
+                }}
+              />
               <TableRowDropdownCell
                 key={uuid()}
                 value={row.mealPlan}
@@ -123,25 +121,39 @@ function ACreateQuotationTable({
                 key={uuid()}
                 cell={{
                   align: 'center',
-                  title: row.city,
+                  title: row.total,
                   colors: ['#464E5F'],
                   weight: 400,
                 }}
               />
-              <TableRowIconCell
-                align="center"
-                onClick={() => deleteAccomodation(row)}
-                textcolor="#B5B5C3"
-                size="small"
-                padding="8px"
-                children={<CloseIcon style={{ color: 'black' }} />}
-              />
             </TableRow>
           ))}
+          <TableRow>
+            {[0, 0, 0, 0, 0, 0, 0].map(() => (
+              <TableRowTextCell
+                key={uuid()}
+                cell={{
+                  align: 'center',
+                  title: '',
+                  colors: ['#464E5F'],
+                  weight: 400,
+                }}
+              />
+            ))}
+            <TableRowTextCell
+              key={uuid()}
+              cell={{
+                align: 'center',
+                title: accTotal,
+                colors: ['#464E5F'],
+                weight: 600,
+              }}
+            />
+          </TableRow>
         </TableBody>
       </Table>
     </TableContainer>
   );
 }
 
-export default ACreateQuotationTable;
+export default CostingAccomodationTable;

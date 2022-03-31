@@ -10,9 +10,9 @@ import {
 } from '@material-ui/core';
 import { v4 as uuid } from 'uuid';
 
-import TableColumnCell from '../../../molecules/TableColumnCell';
-import TableRowTextCell from '../../../molecules/TableRowTextCell';
-import { QuotationCostingRate } from '../../../utils/types';
+import TableColumnCell from '../../../../../molecules/TableColumnCell';
+import TableRowTextCell from '../../../../../molecules/TableRowTextCell';
+import { QuotationCostingRate } from '../../../../../utils/types';
 
 const useStyles = makeStyles((theme: Theme) => ({
   table: {
