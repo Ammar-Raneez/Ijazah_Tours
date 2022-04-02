@@ -26,18 +26,6 @@ import {
   quoteCreateQuoteStyles,
 } from '../../../../styles';
 
-const holidayTypes = [
-  { label: 'Hotel', value: 'Hotel' },
-  { label: 'Villa', value: 'Villa' },
-  { label: 'Appartment', value: 'Appartment' },
-];
-
-const holidayDestinations = [
-  { label: 'Hotel', value: 'Hotel' },
-  { label: 'Villa', value: 'Villa' },
-  { label: 'Appartment', value: 'Appartment' },
-];
-
 const mealPlanOptions = [
   { label: 'BB', value: 'BB' },
   { label: 'FB', value: 'FB' },
@@ -52,6 +40,8 @@ const dateTypeOptions = [
 function Customer() {
   const [customerData, setCustomerData] = useState<LibraryGuest[]>([]);
   const [refData, setRefData] = useState<DropdownOption[]>([]);
+  const [holidayTypeData, setHolidayTypeData] = useState<DropdownOption[]>([]);
+  const [destinationData, setDestinationData] = useState<DropdownOption[]>([]);
 
   const [refNum, setRefNum] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -61,17 +51,18 @@ function Customer() {
   const [country, setCountry] = useState('');
   const [city, setCity] = useState('');
 
-  const [destination, setDestination] = useState(holidayDestinations[0].value);
-  const [mealPlan, setMealPlan] = useState(mealPlanOptions[0].value);
+  const [destination, setDestination] = useState('');
   const [additionalBed, setAdditionalBed] = useState(false);
+  const [mealPlan, setMealPlan] = useState(mealPlanOptions[0].value);
 
-  const [dateType, setDateType] = useState(dateTypeOptions[0].value);
+  const [holidayType, setHolidayType] = useState('');
   const [checkin, setCheckin] = useState('');
   const [checkout, setCheckout] = useState('');
+  const [numberOfDays, setNumberOfDays] = useState(0);
+  const [dateType, setDateType] = useState(dateTypeOptions[0].value);
+
   const [width, setWidth] = useState(0);
   const [containerHeight, setContainerHeight] = useState(0);
-  const [numberOfDays, setNumberOfDays] = useState(0);
-  const [holidayType, setHolidayType] = useState(holidayTypes[0].value);
   const history = useHistory();
 
   useEffect(() => {
@@ -95,21 +86,50 @@ function Customer() {
   useEffect(() => {
     const getInitialData = async () => {
       const rData = (await getDocs(collection(db, `Library Guests`))).docs;
-      const data = rData.map((dc) => dc.data());
-      const ids = rData.map((dc) => dc.id);
-      ids.forEach((id, i) => {
-        data[i].id = id;
+      const hData = (await getDocs(collection(db, `Settings Holiday Types`))).docs;
+      const dData = (await getDocs(collection(db, `Library Accomodation`))).docs;
+
+      const rfData = rData.map((dc) => dc.data());
+      const htData = hData.map((dc) => dc.data());
+      const deData = dData.map((dc) => dc.data());
+
+      const rfIds = rfData.map((dc) => dc.id);
+      const htIds = htData.map((dc) => dc.id);
+      const deIds = deData.map((dc) => dc.id);
+
+      rfIds.forEach((id, i) => {
+        rfData[i].id = id;
+      });
+      htIds.forEach((id, i) => {
+        htData[i].id = id;
+      });
+      deIds.forEach((id, i) => {
+        deData[i].id = id;
       });
 
-      const refNums = data.map((cus) => ({
+      const refNums = rfData.map((cus) => ({
         value: cus.refNum,
         label: cus.refNum,
       }));
+      const holidays = htData.map((hol) => ({
+        value: hol.val,
+        label: hol.val,
+      }));
+      const destinations = deData.map((des) => ({
+        value: des.name,
+        label: des.name,
+      }));
 
-      setCustomerData(data as LibraryGuest[]);
-      onRefNumChange(data as LibraryGuest[], refNums[0].value);
+      setCustomerData(rfData as LibraryGuest[]);
+      onRefNumChange(rfData as LibraryGuest[], refNums[0].value);
+
       setRefNum(refNums[0].value);
+      setHolidayType(holidays[0].value);
+      setDestination(destinations[0].value);
+
       setRefData(refNums);
+      setHolidayTypeData(holidays);
+      setDestinationData(destinations);
     };
 
     getInitialData();
@@ -142,9 +162,6 @@ function Customer() {
           checkin,
           checkout,
           contactNumber,
-          // adults,
-          // children,
-          // age,
           numberOfDays,
         ]],
       }),
@@ -334,7 +351,7 @@ function Customer() {
             value={holidayType}
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setHolidayType(e.target.value)
             }
-            options={holidayTypes}
+            options={holidayTypeData}
             adornmentposition="end"
             style={{
               ...libraryStyles.textField,
@@ -359,7 +376,7 @@ function Customer() {
             value={destination}
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setDestination(e.target.value)
             }
-            options={holidayDestinations}
+            options={destinationData}
             adornmentposition="end"
             style={{
               ...libraryStyles.textField,
