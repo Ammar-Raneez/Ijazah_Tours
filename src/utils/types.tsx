@@ -48,7 +48,6 @@ export interface AccomodationRate {
   newTriplePrice: string;
 }
 
-
 // Quotations
 export interface QuotationAccomodation {
   location: string;
@@ -73,12 +72,12 @@ export interface QuotationCostingRate {
   rate: string;
 }
 
-
 // Library
 export interface LibraryAccomodation {
   id: string;
   name: string;
   tel: string;
+  accomodationType: string;
   city: string;
   country: string;
   group: string;
@@ -125,7 +124,6 @@ export interface LibraryGuest {
   passport: any;
 }
 
-
 // Utilities
 interface Option {
   value: string;
@@ -134,7 +132,7 @@ interface Option {
 
 interface TableHeadCell {
   id: string;
-  label: string; 
+  label: string;
 }
 
 export interface RadioButtonOption extends Option {}

@@ -8,10 +8,12 @@ import DivAtom from '../../../atoms/DivAtom';
 import ParagraphAtom from '../../../atoms/ParagraphAtom';
 import InputAtom from '../../../atoms/InputAtom';
 import ButtonAtom from '../../../atoms/ButtonAtom';
-import { libraryAccomodationStyles } from '../../../styles';
-import { AccomodationRate, SettingsRoomProperties } from '../../../utils/types';
+import { libraryAccomodationStyles, libraryStyles } from '../../../styles';
+import { AccomodationRate, DropdownOption, SettingsRoomProperties } from '../../../utils/types';
+import TextFieldAtom from '../../../atoms/TextFieldAtom';
 
 interface CreateEditAccomodationFormProps {
+  accomodationTypeData: DropdownOption[];
   rateData: AccomodationRate[];
   allRoomTypes: SettingsRoomProperties[];
   allRoomViews: SettingsRoomProperties[];
@@ -19,6 +21,7 @@ interface CreateEditAccomodationFormProps {
   width: number;
   showValidationErrorMessage: boolean;
   btnText: string;
+  accomodationType: string;
   location: string;
   city: string;
   group: string;
@@ -46,6 +49,7 @@ interface CreateEditAccomodationFormProps {
   onCreateRate: (event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => void;
   deleteRate: ((row: AccomodationRate) => Promise<void>) | ((row: AccomodationRate) => void);
   onAddEditAccomodation: () => Promise<void>;
+  setAccomodationType: any;
   setLocation: any;
   setCity: any;
   setGroup: any;
@@ -63,12 +67,14 @@ interface CreateEditAccomodationFormProps {
 }
 
 function CreateEditAccomodationForm({
+  accomodationTypeData,
   rateData,
   allRoomTypes,
   allRoomViews,
   allRoomGradings,
   width,
   btnText,
+  accomodationType,
   showValidationErrorMessage,
   location,
   city,
@@ -97,6 +103,7 @@ function CreateEditAccomodationForm({
   onCreateRate,
   onAddEditAccomodation,
   deleteRate,
+  setAccomodationType,
   setLocation,
   setCity,
   setGroup,
@@ -121,6 +128,23 @@ function CreateEditAccomodationForm({
             flexDirection: width < 600 ? 'column' : 'row',
           }}
         >
+          <TextFieldAtom
+            variant="standard"
+            size="medium"
+            label="Accomodation Type"
+            value={accomodationType}
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setAccomodationType(e.target.value)}
+            options={accomodationTypeData}
+            adornmentposition="end"
+            style={{
+              ...libraryStyles.textField,
+              flex: 1,
+              width: width < 600 ? '100%' : 'auto',
+              margin: width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0',
+            }}
+            disableUnderline={false}
+            select
+          />
           <FormControlInput
             margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
             flex={1}

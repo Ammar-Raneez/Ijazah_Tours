@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   MouseEvent,
   useEffect,
@@ -14,12 +13,18 @@ import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
 import IconAtom from '../../../atoms/IconAtom';
 import { db } from '../../../firebase';
-import { AccomodationRate, LibraryAccomodation, SettingsRoomProperties } from '../../../utils/types';
+import {
+  AccomodationRate,
+  DropdownOption,
+  LibraryAccomodation,
+  SettingsRoomProperties,
+} from '../../../utils/types';
 import { libraryAccomodationStyles } from '../../../styles';
 
 interface EditAccomodationProps {
   row: LibraryAccomodation;
   isUpdating: boolean;
+  accomodationTypeData: DropdownOption[],
   roomViewData: SettingsRoomProperties[];
   roomCategoriesData: SettingsRoomProperties[];
   roomGradingsData: SettingsRoomProperties[];
@@ -29,6 +34,7 @@ interface EditAccomodationProps {
 function EditAccomodation({
   row,
   isUpdating,
+  accomodationTypeData,
   roomViewData,
   roomCategoriesData,
   roomGradingsData,
@@ -36,6 +42,7 @@ function EditAccomodation({
 }: EditAccomodationProps) {
   const [name, setName] = useState(row.name);
   const [group, setGroup] = useState(row.group);
+  const [accomodationType, setAccomodationType] = useState(row.accomodationType);
   const [location, setLocation] = useState(row.country);
   const [city, setCity] = useState(row.city);
   const [contactNumber, setContactNumber] = useState(row.tel);
@@ -189,6 +196,7 @@ function EditAccomodation({
 
       <CreateEditAccomodationForm
         isCreating={isUpdating}
+        accomodationTypeData={accomodationTypeData}
         allRoomTypes={roomCategoriesData}
         allRoomViews={roomViewData}
         allRoomGradings={roomGradingsData}
@@ -198,6 +206,7 @@ function EditAccomodation({
         btnText="Update"
         showValidationErrorMessage={showValidationErrorMessage}
         location={location}
+        accomodationType={accomodationType}
         city={city}
         group={group}
         name={name}
@@ -222,6 +231,7 @@ function EditAccomodation({
         onSetSelectedTypeValue={onSetSelectedTypeValue}
         onCreateRate={onCreateRate}
         onAddEditAccomodation={onEditAccomodation}
+        setAccomodationType={setAccomodationType}
         setLocation={setLocation}
         setCity={setCity}
         setGroup={setGroup}

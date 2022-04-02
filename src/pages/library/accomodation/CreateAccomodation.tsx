@@ -6,7 +6,9 @@ import {
 import { useHistory } from 'react-router-dom';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
 import {
+  collection,
   doc,
+  getDocs,
   serverTimestamp,
   setDoc,
 } from 'firebase/firestore';
@@ -16,7 +18,7 @@ import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
 import IconAtom from '../../../atoms/IconAtom';
 import { db } from '../../../firebase';
-import { AccomodationRate, SettingsRoomProperties } from '../../../utils/types';
+import { AccomodationRate, SettingsRoomProperties, DropdownOption } from '../../../utils/types';
 import { libraryAccomodationStyles } from '../../../styles';
 import CreateEditAccomodationForm from '../../../organisms/library/accomodation/CreateEditAccomodationForm';
 
@@ -35,6 +37,8 @@ function CreateAccomodation({
   roomGradingsData,
   setIsCreating,
 }: CreateAccomodationProps) {
+  const [accomodationTypeData, setAccomodationTypeData] = useState<DropdownOption[]>([]);
+  const [accomodationType, setAccomodationType] = useState('');
   const [name, setName] = useState('');
   const [group, setGroup] = useState('');
   const [location, setLocation] = useState('');
@@ -71,6 +75,27 @@ function CreateAccomodation({
 
   const [width, setWidth] = useState(0);
   const history = useHistory();
+
+  useEffect(() => {
+    const getInitialData = async () => {
+      const aData = (await getDocs(collection(db, `Settings Accomodation Types`))).docs;
+      const accData = aData.map((dc) => dc.data());
+      const accIds = accData.map((dc) => dc.id);
+
+      accIds.forEach((id, i) => {
+        accData[i].id = id;
+      });
+      const types = accData.map((acc) => ({
+        value: acc.val,
+        label: acc.val,
+      }));
+
+      setAccomodationTypeData(types);
+      setAccomodationType(types[0].value);
+    };
+
+    getInitialData();
+  }, []);
 
   useEffect(() => {
     setWidth(window.innerWidth);
@@ -113,6 +138,7 @@ function CreateAccomodation({
       ijazahLink,
       views,
       gradings,
+      accomodationType,
       country: location,
       categoryValues: selectedTypeValues,
       tel: contactNumber,
@@ -213,6 +239,7 @@ function CreateAccomodation({
 
       <CreateEditAccomodationForm
         rateData={rateData}
+        accomodationTypeData={accomodationTypeData}
         allRoomTypes={roomCategoriesData}
         allRoomViews={roomViewData}
         allRoomGradings={roomGradingsData}
@@ -221,6 +248,7 @@ function CreateAccomodation({
         showValidationErrorMessage={showValidationErrorMessage}
         width={width}
         btnText="Create"
+        accomodationType={accomodationType}
         location={location}
         city={city}
         group={group}
@@ -246,6 +274,7 @@ function CreateAccomodation({
         onSetSelectedTypeValue={onSetSelectedTypeValue}
         onCreateRate={onCreateRate}
         onAddEditAccomodation={onAddAccomodation}
+        setAccomodationType={setAccomodationType}
         setLocation={setLocation}
         setCity={setCity}
         setGroup={setGroup}

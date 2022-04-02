@@ -13,7 +13,7 @@ import AccomodationTable from '../../../organisms/library/accomodation/Accomodat
 import DivAtom from '../../../atoms/DivAtom';
 import { db } from '../../../firebase';
 import { libraryStyles } from '../../../styles';
-import { LibraryAccomodation, SettingsRoomProperties } from '../../../utils/types';
+import { DropdownOption, LibraryAccomodation, SettingsRoomProperties } from '../../../utils/types';
 import EditAccomodation from './EditAccomodation';
 import { searchData } from '../../../utils/helpers';
 
@@ -23,6 +23,7 @@ function Accomodation() {
   const [roomViewData, setRoomViewData] = useState<SettingsRoomProperties[]>([]);
   const [roomCategoriesData, setRoomCategoriesData] = useState<SettingsRoomProperties[]>([]);
   const [roomGradingsData, setRoomGradingsData] = useState<SettingsRoomProperties[]>([]);
+  const [accomodationTypeData, setAccomodationTypeData] = useState<DropdownOption[]>([]);
   const [initialAccomodationSearchData, setInitialAccomodationSearchData] = useState<DocumentData[]>([]);
   const [search, setSearch] = useState('');
 
@@ -70,12 +71,15 @@ function Accomodation() {
       const vData = (await getDocs(collection(db, 'Settings Room Views'))).docs;
       const tData = (await getDocs(collection(db, 'Settings Room Types'))).docs;
       const gData = (await getDocs(collection(db, 'Settings Room Gradings'))).docs;
+      const aData = (await getDocs(collection(db, `Settings Accomodation Types`))).docs;
       const views = vData.map((dc) => dc.data());
       const types = tData.map((dc) => dc.data());
       const gradings = gData.map((dc) => dc.data());
+      const accomodationTypes = aData.map((dc) => dc.data());
       const viewIds = vData.map((dc) => dc.id);
       const typeIds = tData.map((dc) => dc.id);
       const gradingIds = gData.map((dc) => dc.id);
+      const accomodationTypeIds = aData.map((dc) => dc.id);
       viewIds.forEach((id, i) => {
         views[i].id = id;
       });
@@ -85,10 +89,17 @@ function Accomodation() {
       gradingIds.forEach((id, i) => {
         gradings[i].id = id;
       });
+      accomodationTypeIds.forEach((id, i) => {
+        accomodationTypes[i].id = id;
+      });
 
       setRoomGradingsData(gradings as SettingsRoomProperties[]);
       setRoomViewData(views as SettingsRoomProperties[]);
       setRoomCategoriesData(types as SettingsRoomProperties[]);
+      setAccomodationTypeData(accomodationTypes.map((acc) => ({
+        value: acc.val,
+        label: acc.val,
+      })));
     };
 
     getIntialRoomData();
@@ -128,6 +139,7 @@ function Accomodation() {
         </Route>
         <Route path="/library/accomodation/edit/:id">
           <EditAccomodation
+            accomodationTypeData={accomodationTypeData}
             roomViewData={roomViewData}
             roomCategoriesData={roomCategoriesData}
             roomGradingsData={roomGradingsData}
