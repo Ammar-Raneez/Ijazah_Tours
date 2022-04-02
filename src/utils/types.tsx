@@ -3,6 +3,7 @@ import { Timestamp } from 'firebase/firestore';
 export type Order = 'asc' | 'desc';
 export type Status = 'ACTIVE' | 'INACTIVE';
 
+// Settings
 export interface SettingsRoomProperties {
   val: string;
   checked?: boolean;
@@ -47,16 +48,8 @@ export interface AccomodationRate {
   newTriplePrice: string;
 }
 
-export interface RadioButtonOption {
-  value: string;
-  label: string;
-}
 
-export interface QuoteHeadCell {
-  id: string;
-  label: string;
-}
-
+// Quotations
 export interface QuotationAccomodation {
   location: string;
   nights: string;
@@ -80,11 +73,8 @@ export interface QuotationCostingRate {
   rate: string;
 }
 
-export interface LibraryHeadCell {
-  id: string;
-  label: string;
-}
 
+// Library
 export interface LibraryAccomodation {
   id: string;
   name: string;
@@ -134,3 +124,20 @@ export interface LibraryGuest {
   childrenAges: number[];
   passport: any;
 }
+
+
+// Utilities
+interface Option {
+  value: string;
+  label: string;
+}
+
+interface TableHeadCell {
+  id: string;
+  label: string; 
+}
+
+export interface RadioButtonOption extends Option {}
+export interface DropdownOption extends Option {}
+export interface QuoteHeadCell extends TableHeadCell {}
+export interface LibraryHeadCell extends TableHeadCell {}

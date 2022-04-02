@@ -4,6 +4,10 @@ import {
 import { Link, useHistory } from 'react-router-dom';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
+import {
+  collection,
+  getDocs,
+} from 'firebase/firestore';
 
 import RadioButtonGroup from '../../../../molecules/RadioButtonGroup';
 import FormControlInput from '../../../../molecules/FormControlInput';
@@ -14,7 +18,8 @@ import IconAtom from '../../../../atoms/IconAtom';
 import TextFieldAtom from '../../../../atoms/TextFieldAtom';
 import ParagraphAtom from '../../../../atoms/ParagraphAtom';
 import CheckboxAtom from '../../../../atoms/CheckboxAtom';
-import { QUOTATIONS_REFERENCE_DATA } from '../../../../data';
+import { db } from '../../../../firebase';
+import { DropdownOption, LibraryGuest } from '../../../../utils/types';
 import {
   libraryStyles,
   TableToolbarStyles,
@@ -45,7 +50,10 @@ const dateTypeOptions = [
 ];
 
 function Customer() {
-  const [refNum, setRefNum] = useState(QUOTATIONS_REFERENCE_DATA[0].value);
+  const [customerData, setCustomerData] = useState<LibraryGuest[]>([]);
+  const [refData, setRefData] = useState<DropdownOption[]>([]);
+
+  const [refNum, setRefNum] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [contactNumber, setContactNumber] = useState('');
@@ -86,6 +94,42 @@ function Customer() {
 
     return removeEventListeners();
   }, [width, containerHeight]);
+
+  useEffect(() => {
+    const getInitialData = async () => {
+      const rData = (await getDocs(collection(db, `Library Guests`))).docs;
+      const data = rData.map((dc) => dc.data());
+      const ids = rData.map((dc) => dc.id);
+      ids.forEach((id, i) => {
+        data[i].id = id;
+      });
+
+      const refNums = data.map((cus) => ({
+        value: cus.refNum,
+        label: cus.refNum,
+      }));
+
+      setCustomerData(data as LibraryGuest[]);
+      onRefNumChange(data as LibraryGuest[], refNums[0].value);
+      setRefNum(refNums[0].value);
+      setRefData(refNums);
+    };
+
+    getInitialData();
+  }, []);
+
+  const onRefNumChange = (data: LibraryGuest[], rf: string) => {
+    setRefNum(rf);
+    const customer = data.find((cus) => cus.refNum === rf);
+    if (customer) {
+      setFirstName(customer.name.split(' ')[0]);
+      setLastName(customer.name.split(' ')[1]);
+      setContactNumber(customer.tel);
+      setEmail(customer.email);
+      setCountry(customer.country);
+      setCity(customer.city);
+    }
+  };
 
   const onCreateCustomer = (
     event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
@@ -143,9 +187,8 @@ function Customer() {
             size="medium"
             label="Reference Number"
             value={refNum}
-            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setRefNum(e.target.value)
-            }
-            options={QUOTATIONS_REFERENCE_DATA}
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => onRefNumChange(customerData, e.target.value)}
+            options={refData}
             adornmentposition="end"
             style={{
               ...libraryStyles.textField,
@@ -180,6 +223,7 @@ function Customer() {
             flex={1}
             label="First Name"
             fullWidth
+            disabled
             multiline={false}
             rows={1}
             value={firstName}
@@ -191,6 +235,7 @@ function Customer() {
             flex={1}
             label="Last Name"
             fullWidth
+            disabled
             multiline={false}
             rows={1}
             value={lastName}
@@ -208,6 +253,7 @@ function Customer() {
             margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
             label="Contact Number"
             fullWidth
+            disabled
             flex={1}
             multiline={false}
             rows={1}
@@ -219,6 +265,7 @@ function Customer() {
             margin="0 0 1rem 0"
             label="Email"
             fullWidth
+            disabled
             flex={1}
             multiline={false}
             rows={1}
@@ -237,6 +284,7 @@ function Customer() {
             margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
             label="Country"
             fullWidth
+            disabled
             flex={1}
             multiline={false}
             rows={1}
@@ -248,6 +296,7 @@ function Customer() {
             margin="0 0 1rem 0"
             label="City"
             fullWidth
+            disabled
             flex={1}
             multiline={false}
             rows={1}
