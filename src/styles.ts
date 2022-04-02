@@ -106,6 +106,43 @@ export const TableToolbarStyles = {
   },
 };
 
+// Login
+export const loginStyles = {
+  ...formCreateMemberStyles,
+  title: {
+    fontWeight: 'bolder',
+    fontSize: '2rem',
+    marginBottom: '0rem',
+  },
+  subtitle: {
+    ...formCreateMemberStyles.subtitle,
+    fontweight: 'lighter',
+    marginBottom: '1rem',
+  },
+  formContainer: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    padding: '1rem 2rem',
+    backgroundColor: 'white',
+    boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
+    borderRadius: '0.5rem',
+  },
+  inputs: {
+    padding: '0.7rem 0.5rem',
+  },
+  loginBtn: {
+    ...formCreateMemberStyles.addBtn,
+    marginTop: '1rem',
+  },
+  wrapper: {
+    backgroundColor: 'lightblue',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100vh',
+  },
+};
+
 // Quotations
 export const quotationsStyles = {
   ...mainContainerStyles,

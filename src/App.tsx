@@ -22,6 +22,7 @@ import Sidebar from './organisms/Sidebar';
 import Navbar from './organisms/Navbar';
 import GlobalStyle from './globalStyle';
 import General from './pages/settings/general/General';
+import Login from './pages/login/Login';
 
 function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -31,77 +32,111 @@ function App() {
   };
 
   return (
-    <Router>
-      <GlobalStyle />
-      <Header handleDrawerToggle={handleDrawerToggle} />
-      <Root>
-        <Sidebar
-          mobileOpen={mobileOpen}
-          handleDrawerToggle={handleDrawerToggle}
-        />
+    <>
+      <Router>
+        <GlobalStyle />
         <Switch>
           <Route path="/dashboard">
-            <StyledDivAtom>
-              <Dashboard />
-            </StyledDivAtom>
+            <Header handleDrawerToggle={handleDrawerToggle} />
+            <Root>
+              <Sidebar
+                mobileOpen={mobileOpen}
+                handleDrawerToggle={handleDrawerToggle}
+              />
+              <StyledDivAtom>
+                <Dashboard />
+              </StyledDivAtom>
+            </Root>
           </Route>
           <Route path="/quote">
-            <StyledDivAtom>
-              <Navbar type="quote" />
-              <Route path="/quote/quotations">
-                <Quotations />
-              </Route>
-              <Route path="/quote/voucher">
-                <Voucher />
-              </Route>
-              <Route path="/quote/summary">
-                <Summary />
-              </Route>
-              <Route exact path="/quote">
-                <Redirect to="/quote/quotations" />
-              </Route>
-            </StyledDivAtom>
+            <Header handleDrawerToggle={handleDrawerToggle} />
+            <Root>
+              <Sidebar
+                mobileOpen={mobileOpen}
+                handleDrawerToggle={handleDrawerToggle}
+              />
+              <StyledDivAtom>
+                <Navbar type="quote" />
+                <Route path="/quote/quotations">
+                  <Quotations />
+                </Route>
+                <Route path="/quote/voucher">
+                  <Voucher />
+                </Route>
+                <Route path="/quote/summary">
+                  <Summary />
+                </Route>
+                <Route exact path="/quote">
+                  <Redirect to="/quote/quotations" />
+                </Route>
+              </StyledDivAtom>
+            </Root>
           </Route>
           <Route path="/library">
-            <StyledDivAtom>
-              <Navbar type="library" />
-              <Route path="/library/accomodation">
-                <Accomodation />
-              </Route>
-              <Route path="/library/driver">
-                <Driver />
-              </Route>
-              <Route path="/library/guest">
-                <Guest />
-              </Route>
-              <Route exact path="/library">
-                <Redirect to="/library/accomodation" />
-              </Route>
-            </StyledDivAtom>
+            <Header handleDrawerToggle={handleDrawerToggle} />
+            <Root>
+              <Sidebar
+                mobileOpen={mobileOpen}
+                handleDrawerToggle={handleDrawerToggle}
+              />
+              <StyledDivAtom>
+                <Navbar type="library" />
+                <Route path="/library/accomodation">
+                  <Accomodation />
+                </Route>
+                <Route path="/library/driver">
+                  <Driver />
+                </Route>
+                <Route path="/library/guest">
+                  <Guest />
+                </Route>
+                <Route exact path="/library">
+                  <Redirect to="/library/accomodation" />
+                </Route>
+              </StyledDivAtom>
+            </Root>
           </Route>
           <Route path="/settings">
+            <Header handleDrawerToggle={handleDrawerToggle} />
+            <Root>
+              <Sidebar
+                mobileOpen={mobileOpen}
+                handleDrawerToggle={handleDrawerToggle}
+              />
+              <StyledDivAtom>
+                <Navbar type="settings" />
+                <Route path="/settings/accomodation">
+                  <SettingsAccomodation />
+                </Route>
+                <Route path="/settings/tour">
+                  <Tour />
+                </Route>
+                <Route path="/settings/user-management">
+                  <UserManagement />
+                </Route>
+                <Route path="/settings/general">
+                  <General />
+                </Route>
+                <Route exact path="/settings">
+                  <Redirect to="/settings/user-management" />
+                </Route>
+              </StyledDivAtom>
+            </Root>
+          </Route>
+
+          <Route path="/login">
             <StyledDivAtom>
-              <Navbar type="settings" />
-              <Route path="/settings/accomodation">
-                <SettingsAccomodation />
-              </Route>
-              <Route path="/settings/tour">
-                <Tour />
-              </Route>
-              <Route path="/settings/user-management">
-                <UserManagement />
-              </Route>
-              <Route path="/settings/general">
-                <General />
-              </Route>
-              <Route exact path="/settings">
-                <Redirect to="/settings/user-management" />
-              </Route>
+              <Login />
+            </StyledDivAtom>
+          </Route>
+          <Route exact path="/">
+            <StyledDivAtom>
+              <Login />
             </StyledDivAtom>
           </Route>
         </Switch>
-      </Root>
-    </Router>
+      </Router>
+    </>
   );
 }
 
