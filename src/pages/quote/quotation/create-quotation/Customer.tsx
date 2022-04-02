@@ -68,9 +68,6 @@ function Customer() {
   const [dateType, setDateType] = useState(dateTypeOptions[0].value);
   const [checkin, setCheckin] = useState('');
   const [checkout, setCheckout] = useState('');
-  // const [adults, setAdults] = useState(0);
-  // const [children, setChildren] = useState(0);
-  // const [age, setAge] = useState(0);
   const [width, setWidth] = useState(0);
   const [containerHeight, setContainerHeight] = useState(0);
   const [numberOfDays, setNumberOfDays] = useState(0);
@@ -312,50 +309,6 @@ function Customer() {
           }}
           text="Holiday"
         />
-        {/* <DivAtom
-          style={{
-            ...quoteCreateQuoteStyles.multiFieldContainer,
-            flexDirection: width < 600 ? 'column' : 'row',
-          }}
-        >
-          <FormControlInput
-            type="number"
-            margin="0 1rem 1rem 0"
-            flex={1}
-            label="No. of Adults"
-            fullWidth
-            multiline={false}
-            rows={1}
-            value={adults}
-            setValue={setAdults}
-            placeholder="Enter No. of Adults"
-          />
-          <FormControlInput
-            type="number"
-            margin="0 1rem 1rem 0"
-            flex={1}
-            label="No. of Children"
-            fullWidth
-            multiline={false}
-            rows={1}
-            value={children}
-            setValue={setChildren}
-            placeholder="Enter No. of Children"
-          />
-          <FormControlInput
-            type="number"
-            margin="0 0 1rem 0"
-            flex={1}
-            label="Total Age"
-            disabled
-            fullWidth
-            multiline={false}
-            rows={1}
-            value={age}
-            setValue={setAge}
-            placeholder=""
-          />
-        </DivAtom> */}
         <DivAtom
           style={{
             ...quoteCreateQuoteStyles.multiFieldContainer,
