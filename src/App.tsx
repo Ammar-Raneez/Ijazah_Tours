@@ -125,12 +125,12 @@ function App() {
           </Route>
 
           <Route path="/login">
-            <StyledDivAtom>
+            <StyledDivAtom isFullScreen>
               <Login />
             </StyledDivAtom>
           </Route>
           <Route exact path="/">
-            <StyledDivAtom>
+            <StyledDivAtom isFullScreen>
               <Login />
             </StyledDivAtom>
           </Route>
@@ -142,18 +142,28 @@ function App() {
 
 export default App;
 
+interface StyledDivProps {
+  isFullScreen?: boolean;
+}
+
 const Root = styled.div`
   display: flex;
   flex: 1;
 `;
 
-const StyledDivAtom = styled.div`
+const StyledDivAtom = styled.div<StyledDivProps>`
   display: flex;
   width: 100%;
   flex-direction: column;
   overflow-x: scroll;
 
+  ${({ isFullScreen }) => isFullScreen && fullScreenOverflowStyle}
+
   > div:nth-child(2) {
     flex: 1;
   }
+`;
+
+const fullScreenOverflowStyle = `
+  overflow: visible;
 `;
