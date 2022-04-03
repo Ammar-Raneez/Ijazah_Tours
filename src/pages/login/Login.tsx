@@ -1,22 +1,16 @@
 import {
-  ChangeEvent,
   FormEvent,
   useEffect,
   useState,
 } from 'react';
 import { useDispatch } from 'react-redux';
-import { CircularProgress } from '@material-ui/core';
-import MailOutlineIcon from '@material-ui/icons/MailOutline';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { collection, getDocs } from 'firebase/firestore';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
+import LoginForm from '../../organisms/login/LoginForm';
 import DivAtom from '../../atoms/DivAtom';
 import H2Atom from '../../atoms/H2Atom';
-import InputAtom from '../../atoms/InputAtom';
 import ParagraphAtom from '../../atoms/ParagraphAtom';
-import ButtonAtom from '../../atoms/ButtonAtom';
-import CheckboxAtom from '../../atoms/CheckboxAtom';
 import { login } from '../../redux/userSlice';
 import { db } from '../../firebase';
 import { loginStyles } from '../../styles';
@@ -82,47 +76,19 @@ function Login() {
           text="Login to your account"
           style={loginStyles.subtitle}
         />
-        <form onSubmit={(e) => onLogin(e)} style={loginStyles.form}>
-          <InputAtom
-            placeholder="Email"
-            adornmentPosition="start"
-            type="email"
-            fullWidth={width < 768}
-            value={email}
-            plain="false"
-            onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
-            children={<MailOutlineIcon />}
-            style={{ ...loginStyles.inputs, margin: '1rem 0' }}
-          />
-          <InputAtom
-            placeholder="Password"
-            adornmentPosition="start"
-            type="password"
-            fullWidth={width < 768}
-            value={password}
-            plain="false"
-            onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
-            children={<LockOutlinedIcon />}
-            style={{ ...loginStyles.inputs, marginBottom: '2rem' }}
-          />
-          <CheckboxAtom
-            label="Remember Me"
-            name="remember-me"
-            checked={rememberMe}
-            onChange={() => setRememberMe(!rememberMe)}
-          />
-          {invalidLoginMessage !== '' && (
-            <ParagraphAtom style={loginStyles.errorMsg} text={invalidLoginMessage} />
-          )}
-          <ButtonAtom
-            size="large"
-            endIcon={isLoggingIn && <CircularProgress size={20} color="inherit" />}
-            disabled={isLoggingIn}
-            style={loginStyles.loginBtn}
-            type="submit"
-            text="Sign In"
-          />
-        </form>
+
+        <LoginForm
+          width={width}
+          email={email}
+          password={password}
+          invalidLoginMessage={invalidLoginMessage}
+          rememberMe={rememberMe}
+          isLoggingIn={isLoggingIn}
+          onLogin={onLogin}
+          setEmail={setEmail}
+          setPassword={setPassword}
+          setRememberMe={setRememberMe}
+        />
       </DivAtom>
     </DivAtom>
   );
