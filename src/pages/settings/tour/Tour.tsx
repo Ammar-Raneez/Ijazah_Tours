@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import {
   collection,
   deleteDoc,
@@ -17,9 +18,10 @@ import UnorderedListAtom from '../../../atoms/UnorderedListAtom';
 import SingleInputDialog from '../../../organisms/settings/SingleInputDialog';
 import ReminderInputDialog from '../../../organisms/settings/tour/ReminderInputDialog';
 import DivAtom from '../../../atoms/DivAtom';
+import { selectHeight, selectWidth } from '../../../redux/containerSizeSlice';
 import { db } from '../../../firebase';
-import { settingsStyles } from '../../../styles';
 import { SettingsReminder, SettingsSingleInput } from '../../../utils/types';
+import { settingsStyles } from '../../../styles';
 
 const INPUT_TYPES = [
   {
@@ -52,8 +54,8 @@ function listRender(data: DocumentData[][], index: number) {
 }
 
 function Tour() {
-  const [height, setHeight] = useState(0);
-  const [width, setWidth] = useState(0);
+  const height = useSelector(selectHeight);
+  const width = useSelector(selectWidth);
 
   const [singleInputsData, setSingleInputsData] = useState<DocumentData[][]>([]);
   const [newSingleInput, setNewSingleInput] = useState('');
@@ -106,25 +108,6 @@ function Tour() {
 
     getInitialData();
   }, [isCreating, isDeleting, isUpdating]);
-
-  useEffect(() => {
-    setHeight(window.innerHeight - 180);
-    setWidth(window.innerWidth);
-
-    const widthListener = window.addEventListener('resize', () => {
-      setWidth(window.innerWidth);
-    });
-    const heightListener = window.addEventListener('resize', () => {
-      setHeight(window.innerHeight - 180);
-    });
-
-    const removeEventListeners = () => {
-      window.removeEventListener('resize', heightListener as any);
-      window.removeEventListener('resize', widthListener as any);
-    };
-
-    return removeEventListeners();
-  }, [width, height]);
 
   const onCreateSingleInput = async (type: string, i: number) => {
     setShowValidationErrorMessage(false);

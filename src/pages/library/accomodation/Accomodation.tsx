@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Route, useHistory } from 'react-router-dom';
 import {
   collection,
@@ -9,16 +10,18 @@ import {
 } from 'firebase/firestore';
 
 import CreateAccomodation from './CreateAccomodation';
+import EditAccomodation from './EditAccomodation';
 import AccomodationTable from '../../../organisms/library/accomodation/AccomodationTable';
 import DivAtom from '../../../atoms/DivAtom';
+import { selectHeight } from '../../../redux/containerSizeSlice';
 import { db } from '../../../firebase';
-import { libraryStyles } from '../../../styles';
 import { DropdownOption, LibraryAccomodation, SettingsRoomProperties } from '../../../utils/types';
-import EditAccomodation from './EditAccomodation';
 import { searchData } from '../../../utils/helpers';
+import { libraryStyles } from '../../../styles';
 
 function Accomodation() {
-  const [height, setHeight] = useState(0);
+  const height = useSelector(selectHeight);
+
   const [accomodationData, setAccomodationData] = useState<DocumentData[]>([]);
   const [roomViewData, setRoomViewData] = useState<SettingsRoomProperties[]>([]);
   const [roomCategoriesData, setRoomCategoriesData] = useState<SettingsRoomProperties[]>([]);
@@ -32,19 +35,6 @@ function Accomodation() {
   const [isUpdating, setIsUpdating] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const history = useHistory();
-
-  useEffect(() => {
-    setHeight(window.innerHeight - 180);
-    const heightListener = window.addEventListener('resize', () => {
-      setHeight(window.innerHeight - 180);
-    });
-
-    const removeEventListeners = () => {
-      window.removeEventListener('resize', heightListener as any);
-    };
-
-    return removeEventListeners();
-  }, [height]);
 
   useEffect(() => {
     searchData(search, initialAccomodationSearchData, setAccomodationData);

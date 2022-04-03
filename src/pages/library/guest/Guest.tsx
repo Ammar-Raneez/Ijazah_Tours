@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Route, useHistory } from 'react-router-dom';
 import {
   collection,
@@ -12,13 +13,14 @@ import CreateGuest from './CreateGuest';
 import EditGuest from './EditGuest';
 import GuestTable from '../../../organisms/library/guest/GuestTable';
 import DivAtom from '../../../atoms/DivAtom';
+import { selectHeight } from '../../../redux/containerSizeSlice';
 import { db } from '../../../firebase';
 import { LibraryGuest } from '../../../utils/types';
-import { libraryStyles } from '../../../styles';
 import { searchData } from '../../../utils/helpers';
+import { libraryStyles } from '../../../styles';
 
 function Guest() {
-  const [height, setHeight] = useState(0);
+  const height = useSelector(selectHeight);
   const [guestData, setGuestData] = useState<DocumentData[]>([]);
   const [initialGuestSearchData, setInitialGuestSearchData] = useState<DocumentData[]>([]);
   const [search, setSearch] = useState('');
@@ -28,19 +30,6 @@ function Guest() {
   const [isUpdating, setIsUpdating] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const history = useHistory();
-
-  useEffect(() => {
-    setHeight(window.innerHeight - 180);
-    const heightListener = window.addEventListener('resize', () => {
-      setHeight(window.innerHeight - 180);
-    });
-
-    const removeEventListeners = () => {
-      window.removeEventListener('resize', heightListener as any);
-    };
-
-    return removeEventListeners();
-  }, [height]);
 
   useEffect(() => {
     searchData(search, initialGuestSearchData, setGuestData);

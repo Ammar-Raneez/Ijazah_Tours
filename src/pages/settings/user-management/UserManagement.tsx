@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import {
   collection,
@@ -18,12 +19,16 @@ import UMTeamMemberDialog from '../../../organisms/settings/user-management/UMTe
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
+import { selectHeight, selectWidth } from '../../../redux/containerSizeSlice';
 import { auth, db } from '../../../firebase';
 import { FlexDirection, SettingsTeamMember } from '../../../utils/types';
 import { widthHeightDynamicStyle } from '../../../utils/helpers';
 import { TableToolbarStyles, settingsStyles } from '../../../styles';
 
 function UserManagement() {
+  const height = useSelector(selectHeight);
+  const width = useSelector(selectWidth);
+
   const [newFirstName, setNewFirstName] = useState('');
   const [newLastName, setNewLastName] = useState('');
   const [newEmail, setNewEmail] = useState('');
@@ -46,9 +51,6 @@ function UserManagement() {
   const [openNewDialog, setNewOpenDialog] = useState(false);
   const [openEditDialog, setEditOpenDialog] = useState(false);
 
-  const [height, setHeight] = useState(0);
-  const [width, setWidth] = useState(0);
-
   useEffect(() => {
     const getInitialTeamData = async () => {
       const data = (await getDocs(collection(db, 'Team Members'))).docs;
@@ -63,25 +65,6 @@ function UserManagement() {
 
     getInitialTeamData();
   }, [isDeleting, isUpdating, isCreating]);
-
-  useEffect(() => {
-    setHeight(window.innerHeight - 180);
-    setWidth(window.innerWidth);
-
-    const widthListener = window.addEventListener('resize', () => {
-      setWidth(window.innerWidth);
-    });
-    const heightListener = window.addEventListener('resize', () => {
-      setHeight(window.innerHeight - 180);
-    });
-
-    const removeEventListeners = () => {
-      window.removeEventListener('resize', heightListener as any);
-      window.removeEventListener('resize', widthListener as any);
-    };
-
-    return removeEventListeners();
-  }, [width, height]);
 
   const onCreateMember = async () => {
     setShowValidationErrorMessage(false);

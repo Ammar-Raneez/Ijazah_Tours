@@ -1,8 +1,8 @@
 import {
   MouseEvent,
-  useEffect,
   useState,
 } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
 import { doc, serverTimestamp, updateDoc } from 'firebase/firestore';
@@ -12,6 +12,7 @@ import CreateEditAccomodationForm from '../../../organisms/library/accomodation/
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
 import IconAtom from '../../../atoms/IconAtom';
+import { selectWidth } from '../../../redux/containerSizeSlice';
 import { db } from '../../../firebase';
 import {
   AccomodationRate,
@@ -40,6 +41,8 @@ function EditAccomodation({
   roomGradingsData,
   setIsUpdating,
 }: EditAccomodationProps) {
+  const width = useSelector(selectWidth);
+
   const [name, setName] = useState(row.name);
   const [group, setGroup] = useState(row.group);
   const [accomodationType, setAccomodationType] = useState(row.accomodationType);
@@ -74,21 +77,7 @@ function EditAccomodation({
 
   const [showValidationErrorMessage, setShowValidationErrorMessage] = useState(false);
 
-  const [width, setWidth] = useState(0);
   const history = useHistory();
-
-  useEffect(() => {
-    setWidth(window.innerWidth);
-    const widthListener = window.addEventListener('resize', () => {
-      setWidth(window.innerWidth);
-    });
-
-    const removeEventListeners = () => {
-      window.removeEventListener('resize', widthListener as any);
-    };
-
-    return removeEventListeners();
-  }, [width]);
 
   const onEditAccomodation = async () => {
     setShowValidationErrorMessage(false);

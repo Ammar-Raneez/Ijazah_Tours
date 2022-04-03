@@ -1,4 +1,5 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
   IconButton,
@@ -17,6 +18,7 @@ import clsx from 'clsx';
 import ButtonAtom from '../atoms/ButtonAtom';
 import DivAtom from '../atoms/DivAtom';
 import InputAtom from '../atoms/InputAtom';
+import { selectWidth } from '../redux/containerSizeSlice';
 import { FlexDirection } from '../utils/types';
 import { widthHeightDynamicStyle } from '../utils/helpers';
 import { TableToolbarStyles } from '../styles';
@@ -55,20 +57,7 @@ const TableToolbar = ({
   setSearch,
 }: TableToolbarProps) => {
   const classes = useToolbarStyles();
-  const [width, setWidth] = useState(0);
-
-  useEffect(() => {
-    setWidth(window.innerWidth);
-    const widthListener = window.addEventListener('resize', () => {
-      setWidth(window.innerWidth);
-    });
-
-    const removeEventListeners = () => {
-      window.removeEventListener('resize', widthListener as any);
-    };
-
-    return removeEventListeners();
-  }, [width]);
+  const width = useSelector(selectWidth);
 
   let addBtnTextWidth;
   if (width < 540) {

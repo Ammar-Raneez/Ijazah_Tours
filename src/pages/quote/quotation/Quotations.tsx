@@ -1,4 +1,5 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link, Route } from 'react-router-dom';
 import SearchIcon from '@material-ui/icons/Search';
 
@@ -12,33 +13,17 @@ import DataCard from '../../../molecules/DataCard';
 import DivAtom from '../../../atoms/DivAtom';
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import InputAtom from '../../../atoms/InputAtom';
+import { selectHeight, selectWidth } from '../../../redux/containerSizeSlice';
 import { FlexDirection, JustifyContent } from '../../../utils/types';
 import { widthHeightDynamicStyle } from '../../../utils/helpers';
 import { QUOTATIONS_DATA } from '../../../data';
 import { quotationsStyles } from '../../../styles';
 
 function Quotations() {
+  const height = useSelector(selectHeight);
+  const width = useSelector(selectWidth);
+
   const [search, setSearch] = useState('');
-  const [width, setWidth] = useState(0);
-  const [height, setHeight] = useState(0);
-
-  useEffect(() => {
-    setWidth(window.innerWidth);
-    setHeight(window.innerHeight - 180);
-    const widthListener = window.addEventListener('resize', () => {
-      setWidth(window.innerWidth);
-    });
-    const heightListener = window.addEventListener('resize', () => {
-      setHeight(window.innerHeight - 180);
-    });
-
-    const removeEventListeners = () => {
-      window.removeEventListener('resize', widthListener as any);
-      window.removeEventListener('resize', heightListener as any);
-    };
-
-    return removeEventListeners();
-  }, [width, height]);
 
   return (
     <>

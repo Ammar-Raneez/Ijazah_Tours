@@ -1,9 +1,8 @@
 import {
   Fragment,
   MouseEvent,
-  useEffect,
-  useState,
 } from 'react';
+import { useSelector } from 'react-redux';
 import {
   createStyles,
   IconButton,
@@ -13,7 +12,9 @@ import {
 } from '@material-ui/core';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+
 import SpanAtom from '../atoms/SpanAtom';
+import { selectWidth } from '../redux/containerSizeSlice';
 import { libraryTableStyles } from '../styles';
 
 const tablePaginationActionsStyle = makeStyles((theme: Theme) => createStyles({
@@ -50,22 +51,10 @@ function TablePaginationActions({
   rowsPerPage,
   onPageChange,
 }: TablePaginationActionsProps) {
+  const width = useSelector(selectWidth);
+
   const classes = tablePaginationActionsStyle();
   const theme = useTheme();
-  const [width, setWidth] = useState(0);
-
-  useEffect(() => {
-    setWidth(window.innerWidth);
-    const widthListener = window.addEventListener('resize', () => {
-      setWidth(window.innerWidth);
-    });
-
-    const removeEventListeners = () => {
-      window.removeEventListener('resize', widthListener as any);
-    };
-
-    return removeEventListeners();
-  }, [width]);
 
   const handleBackButtonClick = (
     event: MouseEvent<HTMLButtonElement>,

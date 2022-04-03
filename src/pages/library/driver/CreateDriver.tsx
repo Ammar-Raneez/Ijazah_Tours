@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
 import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
@@ -9,9 +10,10 @@ import CreateEditDriverForm from '../../../organisms/library/driver/CreateEditDr
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
 import IconAtom from '../../../atoms/IconAtom';
-import { libraryDriverStyles } from '../../../styles';
+import { selectWidth } from '../../../redux/containerSizeSlice';
 import { db } from '../../../firebase';
 import { statusOptions, uploadImage, vehicleOptions } from '../../../utils/helpers';
+import { libraryDriverStyles } from '../../../styles';
 
 const storage = getStorage();
 
@@ -24,6 +26,8 @@ function CreateDriver({
   isCreating,
   setIsCreating,
 }: CreateDriverProps) {
+  const width = useSelector(selectWidth);
+
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [contactNumber, setContactNumber] = useState('');
@@ -42,21 +46,7 @@ function CreateDriver({
 
   const [showValidationErrorMessage, setShowValidationErrorMessage] = useState(false);
 
-  const [width, setWidth] = useState(0);
   const history = useHistory();
-
-  useEffect(() => {
-    setWidth(window.innerWidth);
-    const widthListener = window.addEventListener('resize', () => {
-      setWidth(window.innerWidth);
-    });
-
-    const removeEventListeners = () => {
-      window.removeEventListener('resize', widthListener as any);
-    };
-
-    return removeEventListeners();
-  }, [width]);
 
   const onAddDriver = async () => {
     setShowValidationErrorMessage(false);

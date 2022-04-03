@@ -3,6 +3,7 @@ import {
   useEffect,
   useState,
 } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
 import {
@@ -14,13 +15,14 @@ import {
 } from 'firebase/firestore';
 import { v4 as uuid } from 'uuid';
 
+import CreateEditAccomodationForm from '../../../organisms/library/accomodation/CreateEditAccomodationForm';
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
 import IconAtom from '../../../atoms/IconAtom';
 import { db } from '../../../firebase';
+import { selectWidth } from '../../../redux/containerSizeSlice';
 import { AccomodationRate, SettingsRoomProperties, DropdownOption } from '../../../utils/types';
 import { libraryAccomodationStyles } from '../../../styles';
-import CreateEditAccomodationForm from '../../../organisms/library/accomodation/CreateEditAccomodationForm';
 
 interface CreateAccomodationProps {
   isCreating: boolean;
@@ -37,6 +39,8 @@ function CreateAccomodation({
   roomGradingsData,
   setIsCreating,
 }: CreateAccomodationProps) {
+  const width = useSelector(selectWidth);
+
   const [accomodationTypeData, setAccomodationTypeData] = useState<DropdownOption[]>([]);
   const [accomodationType, setAccomodationType] = useState('');
   const [name, setName] = useState('');
@@ -73,7 +77,6 @@ function CreateAccomodation({
 
   const [showValidationErrorMessage, setShowValidationErrorMessage] = useState(false);
 
-  const [width, setWidth] = useState(0);
   const history = useHistory();
 
   useEffect(() => {
@@ -96,19 +99,6 @@ function CreateAccomodation({
 
     getInitialData();
   }, []);
-
-  useEffect(() => {
-    setWidth(window.innerWidth);
-    const widthListener = window.addEventListener('resize', () => {
-      setWidth(window.innerWidth);
-    });
-
-    const removeEventListeners = () => {
-      window.removeEventListener('resize', widthListener as any);
-    };
-
-    return removeEventListeners();
-  }, [width]);
 
   const onAddAccomodation = async () => {
     setShowValidationErrorMessage(false);

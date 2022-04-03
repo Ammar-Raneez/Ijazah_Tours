@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import {
   BrowserRouter as Router,
   Redirect,
@@ -17,15 +18,57 @@ import Dashboard from './pages/dashboard/Dashboard';
 import SettingsAccomodation from './pages/settings/accomodation/SettingsAccomodation';
 import Tour from './pages/settings/tour/Tour';
 import UserManagement from './pages/settings/user-management/UserManagement';
+import General from './pages/settings/general/General';
+import Login from './pages/login/Login';
 import Header from './organisms/Header';
 import Sidebar from './organisms/Sidebar';
 import Navbar from './organisms/Navbar';
+import { onSizeChange } from './redux/containerSizeSlice';
 import GlobalStyle from './globalStyle';
-import General from './pages/settings/general/General';
-import Login from './pages/login/Login';
 
 function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const [height, setHeight] = useState(0);
+  const [width, setWidth] = useState(0);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setHeight(window.innerHeight - 180);
+    setWidth(window.innerWidth);
+    dispatch(
+      onSizeChange({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      }),
+    );
+
+    const widthListener = window.addEventListener('resize', () => {
+      setWidth(window.innerWidth);
+      dispatch(
+        onSizeChange({
+          width: window.innerWidth,
+          height: window.innerHeight,
+        }),
+      );
+    });
+    const heightListener = window.addEventListener('resize', () => {
+      setHeight(window.innerHeight - 180);
+      dispatch(
+        onSizeChange({
+          width: window.innerWidth,
+          height: window.innerHeight,
+        }),
+      );
+    });
+
+    const removeEventListeners = () => {
+      window.removeEventListener('resize', heightListener as any);
+      window.removeEventListener('resize', widthListener as any);
+    };
+
+    return removeEventListeners();
+  }, [width, height]);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);

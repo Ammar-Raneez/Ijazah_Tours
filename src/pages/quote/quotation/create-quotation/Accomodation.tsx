@@ -3,6 +3,7 @@ import {
   useEffect,
   useState,
 } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import SearchIcon from '@material-ui/icons/Search';
 
@@ -11,6 +12,7 @@ import DivAtom from '../../../../atoms/DivAtom';
 import ButtonAtom from '../../../../atoms/ButtonAtom';
 import ParagraphAtom from '../../../../atoms/ParagraphAtom';
 import InputAtom from '../../../../atoms/InputAtom';
+import { selectHeight, selectWidth } from '../../../../redux/containerSizeSlice';
 import { FlexDirection, QuotationAccomodation } from '../../../../utils/types';
 import { mealPlanOptions, roomTypes, widthHeightDynamicStyle } from '../../../../utils/helpers';
 import { QUOTATIONS_ACCOMODATION_DATA } from '../../../../data';
@@ -19,35 +21,18 @@ import {
 } from '../../../../styles';
 
 function Accomodation() {
+  const height = useSelector(selectHeight);
+  const width = useSelector(selectWidth);
+
   const [accomodationData, setAccomodationData] = useState<QuotationAccomodation[]>([]);
 
   const [search, setSearch] = useState('');
 
-  const [width, setWidth] = useState(0);
-  const [height, setHeight] = useState(0);
   const history = useHistory();
 
   useEffect(() => {
     setAccomodationData(QUOTATIONS_ACCOMODATION_DATA);
   }, []);
-
-  useEffect(() => {
-    setWidth(window.innerWidth);
-    setHeight(window.innerHeight - 220);
-    const widthListener = window.addEventListener('resize', () => {
-      setWidth(window.innerWidth);
-    });
-    const heightListener = window.addEventListener('resize', () => {
-      setHeight(window.innerHeight - 220);
-    });
-
-    const removeEventListeners = () => {
-      window.removeEventListener('resize', widthListener as any);
-      window.removeEventListener('resize', heightListener as any);
-    };
-
-    return removeEventListeners();
-  }, [width, height]);
 
   const deleteAccomodation = (acc: QuotationAccomodation) => {
     const removeIndex = accomodationData.findIndex((ac) => ac.id === acc.id);

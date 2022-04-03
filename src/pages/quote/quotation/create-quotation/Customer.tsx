@@ -1,6 +1,7 @@
 import {
   ChangeEvent, useEffect, useState, MouseEvent,
 } from 'react';
+import { useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { CircularProgress } from '@material-ui/core';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
@@ -20,6 +21,7 @@ import TextFieldAtom from '../../../../atoms/TextFieldAtom';
 import ParagraphAtom from '../../../../atoms/ParagraphAtom';
 import CheckboxAtom from '../../../../atoms/CheckboxAtom';
 import { db } from '../../../../firebase';
+import { selectHeight, selectWidth } from '../../../../redux/containerSizeSlice';
 import { DropdownOption, FlexDirection, LibraryGuest } from '../../../../utils/types';
 import { dateTypeOptions, mealPlanOptions, widthHeightDynamicStyle } from '../../../../utils/helpers';
 import {
@@ -30,6 +32,9 @@ import {
 } from '../../../../styles';
 
 function Customer() {
+  const height = useSelector(selectHeight);
+  const width = useSelector(selectWidth);
+
   const [customerData, setCustomerData] = useState<LibraryGuest[]>();
   const [refData, setRefData] = useState<DropdownOption[]>();
   const [holidayTypeData, setHolidayTypeData] = useState<DropdownOption[]>();
@@ -53,27 +58,7 @@ function Customer() {
   const [numberOfDays, setNumberOfDays] = useState(0);
   const [dateType, setDateType] = useState(dateTypeOptions[0].value);
 
-  const [width, setWidth] = useState(0);
-  const [height, setHeight] = useState(0);
   const history = useHistory();
-
-  useEffect(() => {
-    setWidth(window.innerWidth);
-    setHeight(window.innerHeight - 220);
-    const widthListener = window.addEventListener('resize', () => {
-      setWidth(window.innerWidth);
-    });
-    const heightListener = window.addEventListener('resize', () => {
-      setHeight(window.innerHeight - 220);
-    });
-
-    const removeEventListeners = () => {
-      window.removeEventListener('resize', widthListener as any);
-      window.removeEventListener('resize', heightListener as any);
-    };
-
-    return removeEventListeners();
-  }, [width, height]);
 
   useEffect(() => {
     const getInitialData = async () => {

@@ -1,27 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import TaskTable from '../../organisms/dashboard/TaskTable';
 import ButtonAtom from '../../atoms/ButtonAtom';
 import DivAtom from '../../atoms/DivAtom';
+import { selectHeight } from '../../redux/containerSizeSlice';
 import { DASHBOARD_TASK_DATA } from '../../data';
 import { dashboardStyles } from '../../styles';
 
 function Dashboard() {
-  const [height, setHeight] = useState(0);
-
-  useEffect(() => {
-    setHeight(window.innerHeight - 125);
-    const heightListener = window.addEventListener('resize', () => {
-      setHeight(window.innerHeight - 125);
-    });
-
-    const removeEventListeners = () => {
-      window.removeEventListener('resize', heightListener as any);
-    };
-
-    return removeEventListeners();
-  }, [height]);
+  const height = useSelector(selectHeight);
 
   return (
     <DivAtom style={dashboardStyles.container}>
@@ -29,6 +17,7 @@ function Dashboard() {
         style={{
           ...dashboardStyles.innerContainer,
           height: `${height}px`,
+          overflow: 'scroll',
         }}
       >
         <DivAtom style={dashboardStyles.btnMainContainer}>

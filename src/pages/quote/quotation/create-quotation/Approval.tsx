@@ -1,28 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import DivAtom from '../../../../atoms/DivAtom';
+import { selectHeight } from '../../../../redux/containerSizeSlice';
 
 function Approval() {
-  const [width, setWidth] = useState(0);
-  const [height, setHeight] = useState(0);
-
-  useEffect(() => {
-    setWidth(window.innerWidth);
-    setHeight(window.innerHeight - 220);
-    const widthListener = window.addEventListener('resize', () => {
-      setWidth(window.innerWidth);
-    });
-    const heightListener = window.addEventListener('resize', () => {
-      setHeight(window.innerHeight - 220);
-    });
-
-    const removeEventListeners = () => {
-      window.removeEventListener('resize', widthListener as any);
-      window.removeEventListener('resize', heightListener as any);
-    };
-
-    return removeEventListeners();
-  }, [width, height]);
+  const height = useSelector(selectHeight);
 
   return (
     <DivAtom style={{ height: `${height}px` }}>

@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import {
   Divider,
   Drawer,
@@ -14,6 +15,7 @@ import clsx from 'clsx';
 import LinkAtom from '../atoms/LinkAtom';
 import LinkTextAtom from '../atoms/LinkTextAtom';
 import DivAtom from '../atoms/DivAtom';
+import { selectWidth } from '../redux/containerSizeSlice';
 import { widthHeightDynamicStyle } from '../utils/helpers';
 import { sidebarStyles } from '../styles';
 
@@ -63,23 +65,11 @@ interface SidebarProps {
 }
 
 function Sidebar({ wind, handleDrawerToggle, mobileOpen }: SidebarProps) {
+  const width = useSelector(selectWidth);
+
   const container = wind !== undefined ? () => wind().document.body : undefined;
   const classes = useStyles();
   const [open] = useState(true);
-  const [width, setWidth] = useState(0);
-
-  useEffect(() => {
-    setWidth(window.innerWidth);
-    const widthListener = window.addEventListener('resize', () => {
-      setWidth(window.innerWidth);
-    });
-
-    const removeEventListeners = () => {
-      window.removeEventListener('resize', widthListener as any);
-    };
-
-    return removeEventListeners();
-  }, [width]);
 
   const drawer = (
     <>

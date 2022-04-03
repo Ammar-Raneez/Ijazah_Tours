@@ -1,9 +1,8 @@
 import {
   FormEvent,
-  useEffect,
   useState,
 } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { collection, getDocs } from 'firebase/firestore';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
@@ -12,11 +11,14 @@ import DivAtom from '../../atoms/DivAtom';
 import H2Atom from '../../atoms/H2Atom';
 import ParagraphAtom from '../../atoms/ParagraphAtom';
 import { login } from '../../redux/userSlice';
+import { selectWidth } from '../../redux/containerSizeSlice';
 import { db } from '../../firebase';
 import { widthHeightDynamicStyle } from '../../utils/helpers';
 import { loginStyles } from '../../styles';
 
 function Login() {
+  const width = useSelector(selectWidth);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
@@ -25,20 +27,6 @@ function Login() {
   const [invalidLoginMessage, setInvalidLoginMessage] = useState('');
 
   const dispatch = useDispatch();
-  const [width, setWidth] = useState(0);
-
-  useEffect(() => {
-    setWidth(window.innerWidth);
-    const widthListener = window.addEventListener('resize', () => {
-      setWidth(window.innerWidth);
-    });
-
-    const removeEventListeners = () => {
-      window.removeEventListener('resize', widthListener as any);
-    };
-
-    return removeEventListeners();
-  }, [width]);
 
   const onLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

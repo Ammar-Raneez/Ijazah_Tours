@@ -1,30 +1,23 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import CostingRateComparisonTable from '../../../../organisms/quote/quotation/create-quotation/costing/CostingRateComparisonTable';
 import CostingAccomodationTable from '../../../../organisms/quote/quotation/create-quotation/costing/CostingAccomodationTable';
 import CostingTransport from '../../../../organisms/quote/quotation/create-quotation/costing/CostingTransport';
+import CostingOverallCost from '../../../../organisms/quote/quotation/create-quotation/costing/CostingOverallCost';
 import DivAtom from '../../../../atoms/DivAtom';
 import ParagraphAtom from '../../../../atoms/ParagraphAtom';
+import ButtonAtom from '../../../../atoms/ButtonAtom';
+import { selectHeight, selectWidth } from '../../../../redux/containerSizeSlice';
+import { QuotationCostingAccomodation, QuotationCostingRate } from '../../../../utils/types';
+import { mealPlanOptions, roomTypes, widthHeightDynamicStyle } from '../../../../utils/helpers';
 import { QUOTATIONS_COSTING_ACCOMODATION_DATA, QUOTATIONS_COSTING_RATE_DATA } from '../../../../data';
 import { quoteCreateQuoteStyles } from '../../../../styles';
-import { QuotationCostingAccomodation, QuotationCostingRate } from '../../../../utils/types';
-import CostingOverallCost from '../../../../organisms/quote/quotation/create-quotation/costing/CostingOverallCost';
-import ButtonAtom from '../../../../atoms/ButtonAtom';
-import { widthHeightDynamicStyle } from '../../../../utils/helpers';
-
-const roomTypes = [
-  { label: 'Diluxe', value: 'Diluxe' },
-  { label: 'Mega', value: 'Mega' },
-  { label: 'Suite', value: 'Suite' },
-];
-
-const mealPlanOptions = [
-  { label: 'BB', value: 'BB' },
-  { label: 'FB', value: 'FB' },
-  { label: 'HB', value: 'HB' },
-];
 
 function Costing() {
+  const height = useSelector(selectHeight);
+  const width = useSelector(selectWidth);
+
   // Overall cost
   const [totalExpense, setTotalExpense] = useState('');
   const [commission, setCommission] = useState('30%');
@@ -40,9 +33,6 @@ function Costing() {
 
   // accomodation
   const [accomodationTotal, setAccomodationTotal] = useState('0');
-
-  const [width, setWidth] = useState(0);
-  const [height, setHeight] = useState(0);
 
   useEffect(() => {
     let accTotal = 0;
@@ -64,24 +54,6 @@ function Costing() {
       - Number(discount.slice(1, discount.length));
     setNetPrice(`$${netTotal}`);
   }, [rate, commission, sellingPrice, discount]);
-
-  useEffect(() => {
-    setWidth(window.innerWidth);
-    setHeight(window.innerHeight - 220);
-    const widthListener = window.addEventListener('resize', () => {
-      setWidth(window.innerWidth);
-    });
-    const heightListener = window.addEventListener('resize', () => {
-      setHeight(window.innerHeight - 220);
-    });
-
-    const removeEventListeners = () => {
-      window.removeEventListener('resize', widthListener as any);
-      window.removeEventListener('resize', heightListener as any);
-    };
-
-    return removeEventListeners();
-  }, [width, height]);
 
   return (
     <DivAtom style={{ height: `${height}px` }}>

@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
 import { doc, serverTimestamp, updateDoc } from 'firebase/firestore';
@@ -8,10 +9,11 @@ import CreateEditDriverForm from '../../../organisms/library/driver/CreateEditDr
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
 import IconAtom from '../../../atoms/IconAtom';
+import { selectWidth } from '../../../redux/containerSizeSlice';
 import { db } from '../../../firebase';
-import { libraryDriverStyles } from '../../../styles';
-import { uploadImage } from '../../../utils/helpers';
 import { LibraryDriver } from '../../../utils/types';
+import { uploadImage } from '../../../utils/helpers';
+import { libraryDriverStyles } from '../../../styles';
 
 const storage = getStorage();
 
@@ -22,6 +24,8 @@ interface EditDriverProps {
 }
 
 function EditDriver({ row, isUpdating, setIsUpdating }: EditDriverProps) {
+  const width = useSelector(selectWidth);
+
   const [firstName, setFirstName] = useState(row.name.split(' ')[0]);
   const [lastName, setLastName] = useState(row.name.split(' ')[1]);
   const [contactNumber, setContactNumber] = useState(row.tel);
@@ -40,21 +44,7 @@ function EditDriver({ row, isUpdating, setIsUpdating }: EditDriverProps) {
 
   const [showValidationErrorMessage, setShowValidationErrorMessage] = useState(false);
 
-  const [width, setWidth] = useState(0);
   const history = useHistory();
-
-  useEffect(() => {
-    setWidth(window.innerWidth);
-    const widthListener = window.addEventListener('resize', () => {
-      setWidth(window.innerWidth);
-    });
-
-    const removeEventListeners = () => {
-      window.removeEventListener('resize', widthListener as any);
-    };
-
-    return removeEventListeners();
-  }, [width]);
 
   const onEditDriver = async () => {
     setShowValidationErrorMessage(false);

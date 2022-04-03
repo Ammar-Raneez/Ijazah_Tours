@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -6,6 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import ParagraphAtom from '../atoms/ParagraphAtom';
 import { widthHeightDynamicStyle } from '../utils/helpers';
 import { DataCardStyles } from '../styles';
+import { selectWidth } from '../redux/containerSizeSlice';
 
 const useStyles = makeStyles({
   root: {
@@ -20,21 +21,9 @@ interface DataCardProps {
 }
 
 export default function DataCard({ title, total }: DataCardProps) {
+  const width = useSelector(selectWidth);
+
   const classes = useStyles();
-  const [width, setWidth] = useState(0);
-
-  useEffect(() => {
-    setWidth(window.innerWidth);
-    const widthListener = window.addEventListener('resize', () => {
-      setWidth(window.innerWidth);
-    });
-
-    const removeEventListeners = () => {
-      window.removeEventListener('resize', widthListener as any);
-    };
-
-    return removeEventListeners();
-  }, [width]);
 
   return (
     <Card

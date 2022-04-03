@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Route, useHistory } from 'react-router-dom';
 import {
   collection,
@@ -12,13 +13,15 @@ import CreateDriver from './CreateDriver';
 import EditDriver from './EditDriver';
 import DriverTable from '../../../organisms/library/driver/DriverTable';
 import DivAtom from '../../../atoms/DivAtom';
+import { selectHeight } from '../../../redux/containerSizeSlice';
 import { db } from '../../../firebase';
-import { libraryStyles } from '../../../styles';
 import { LibraryDriver } from '../../../utils/types';
 import { searchData } from '../../../utils/helpers';
+import { libraryStyles } from '../../../styles';
 
 function Driver() {
-  const [height, setHeight] = useState(0);
+  const height = useSelector(selectHeight);
+
   const [driverData, setDriverData] = useState<DocumentData[]>([]);
   const [initialDriverSearchData, setInitialDriverSearchData] = useState<DocumentData[]>([]);
   const [search, setSearch] = useState('');
@@ -28,19 +31,6 @@ function Driver() {
   const [isUpdating, setIsUpdating] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const history = useHistory();
-
-  useEffect(() => {
-    setHeight(window.innerHeight - 180);
-    const heightListener = window.addEventListener('resize', () => {
-      setHeight(window.innerHeight - 180);
-    });
-
-    const removeEventListeners = () => {
-      window.removeEventListener('resize', heightListener as any);
-    };
-
-    return removeEventListeners();
-  }, [height]);
 
   useEffect(() => {
     searchData(search, initialDriverSearchData, setDriverData);
