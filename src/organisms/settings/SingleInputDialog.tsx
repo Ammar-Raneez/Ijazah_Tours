@@ -62,7 +62,7 @@ function SingleInputDialog({
           )}
           <ButtonAtom
             text={title}
-            endicon={isCreating && <CircularProgress size={20} color="inherit" />}
+            endIcon={isCreating && <CircularProgress size={20} color="inherit" />}
             size="large"
             disabled={isCreating}
             onClick={onEditCreate}

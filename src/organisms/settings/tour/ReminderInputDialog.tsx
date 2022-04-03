@@ -50,7 +50,7 @@ function ReminderInputDialog({
         <DialogTitle style={settingsStyles.title}>{title}</DialogTitle>
         <DialogContent style={settingsStyles.multiFieldDialogContainer}>
           <CheckboxGroup
-            grouptitle="Reminder Type"
+            groupTitle="Reminder Type"
             labels={['Creation of Customer', 'Creation of Quote']}
             names={['customer', 'quote']}
             checked={reminderTypes}
@@ -86,7 +86,7 @@ function ReminderInputDialog({
             />
           )}
           <ButtonAtom
-            endicon={isCreating && <CircularProgress size={20} color="inherit" />}
+            endIcon={isCreating && <CircularProgress size={20} color="inherit" />}
             size="large"
             disabled={isCreating}
             text={title}

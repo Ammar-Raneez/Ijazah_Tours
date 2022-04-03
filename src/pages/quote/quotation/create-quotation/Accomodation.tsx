@@ -120,7 +120,7 @@ function Accomodation() {
         <DivAtom style={quoteCreateQuoteStyles.searchContainer}>
           <InputAtom
             placeholder="Search"
-            adornmentposition="start"
+            adornmentPosition="start"
             fullWidth={width < 768}
             value={search}
             plain="false"

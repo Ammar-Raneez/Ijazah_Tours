@@ -12,7 +12,7 @@ import {
 import { v4 as uuid } from 'uuid';
 
 import LocationInputDialog from '../../../organisms/settings/accomodation/LocationInputDialog';
-import LocationTable from '../../../organisms/settings/accomodation/Locationtable';
+import LocationTable from '../../../organisms/settings/accomodation/LocationTable';
 import SectionContainer from '../../../organisms/settings/SectionContainer';
 import SingleInputDialog from '../../../organisms/settings/SingleInputDialog';
 import DivAtom from '../../../atoms/DivAtom';

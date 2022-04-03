@@ -161,7 +161,7 @@ function CreateEditDriverForm({
             value={vehicleType}
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setVehicleType(e.target.value)}
             options={vehicleOptions}
-            adornmentposition="end"
+            adornmentPosition="end"
             style={{
               ...libraryStyles.textField,
               flex: 1,
@@ -178,7 +178,7 @@ function CreateEditDriverForm({
             value={status}
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setStatus(e.target.value)}
             options={statusOptions}
-            adornmentposition="end"
+            adornmentPosition="end"
             style={{
               ...libraryStyles.textField,
               flex: 1,
@@ -200,7 +200,7 @@ function CreateEditDriverForm({
             placeholder="Enter Rate"
           />
           <CheckboxGroup
-            grouptitle="Language"
+            groupTitle="Language"
             labels={['English', 'Arabic']}
             names={['english', 'arabic']}
             checked={languages}
@@ -298,7 +298,7 @@ function CreateEditDriverForm({
       >
         <ButtonAtom
           size="large"
-          endicon={isCreating && <CircularProgress size={20} color="inherit" />}
+          endIcon={isCreating && <CircularProgress size={20} color="inherit" />}
           onClick={onAddEditDriver}
           disabled={isCreating}
           style={{

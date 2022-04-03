@@ -26,7 +26,7 @@ function TableRowDropdownCell({
         value={value}
         onChange={() => null}
         options={options}
-        adornmentposition="end"
+        adornmentPosition="end"
         style={{
           ...libraryStyles.textField,
           flex: 1,

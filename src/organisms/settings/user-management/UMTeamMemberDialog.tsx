@@ -122,7 +122,7 @@ function UMTeamMemberDialog({
           )}
           <ButtonAtom
             text={btnText}
-            endicon={isCreating && <CircularProgress size={20} color="inherit" />}
+            endIcon={isCreating && <CircularProgress size={20} color="inherit" />}
             size="large"
             disabled={isCreating}
             onClick={(event) => onEditCreateMember(event)}

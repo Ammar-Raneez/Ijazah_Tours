@@ -12,7 +12,7 @@ interface TableRowTextCellProps {
     colors: string[];
     align: 'left' | 'center' | 'right';
     subtitle?: string;
-    marktitle?: boolean;
+    markTitle?: boolean;
     isLink?: boolean;
   };
 }
@@ -51,7 +51,7 @@ function TableRowTextCell({ cell }: TableRowTextCellProps) {
         />
       </TableCell>
     );
-  } else if (cell.marktitle) {
+  } else if (cell.markTitle) {
     cellData = (
       <TableCell align={cell.align}>
         <ParagraphAtom
@@ -62,7 +62,7 @@ function TableRowTextCell({ cell }: TableRowTextCellProps) {
             fontWeight: cell.weight,
             color: cell.colors[0],
           }}
-          markstyle={{
+          markStyle={{
             border:
               cell.title === 'ACTIVE' ? '1px solid #0A65FF' : '1px solid #B5B5C3',
             borderRadius: '11px',

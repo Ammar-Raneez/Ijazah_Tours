@@ -67,7 +67,7 @@ function AccomodationRatesContainer({
           label="Start Date"
           value={newRateStart}
           onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setNewRateStart(e.target.value)}
-          adornmentposition="end"
+          adornmentPosition="end"
           style={{
             ...libraryStyles.textField,
             flex: 1,
@@ -85,7 +85,7 @@ function AccomodationRatesContainer({
           label="End Date"
           value={newRateEnd}
           onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setNewRateEnd(e.target.value)}
-          adornmentposition="end"
+          adornmentPosition="end"
           style={{
             ...libraryStyles.textField,
             flex: 1,
@@ -142,7 +142,7 @@ function AccomodationRatesContainer({
           placeholder="Enter Triple Price"
         />
         <ButtonAtom
-          starticon={<AddCircleOutlineOutlinedIcon />}
+          startIcon={<AddCircleOutlineOutlinedIcon />}
           text={width < 1000 ? 'Add Rate' : 'Add'}
           disabled={
             newRateStart === ''

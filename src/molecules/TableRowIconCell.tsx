@@ -5,7 +5,7 @@ import IconAtom from '../atoms/IconAtom';
 
 interface TableRowIconCellProps {
   padding: string;
-  textcolor: string;
+  textColor: string;
   align: 'left' | 'center' | 'right';
   size: 'small' | 'medium';
   onClick: MouseEventHandler<HTMLButtonElement>;
@@ -14,7 +14,7 @@ interface TableRowIconCellProps {
 
 function TableRowIconCell({
   onClick,
-  textcolor,
+  textColor,
   align,
   size,
   padding,
@@ -24,7 +24,7 @@ function TableRowIconCell({
     <TableCell align={align}>
       <IconAtom
         onClick={onClick}
-        style={{ color: textcolor, padding }}
+        style={{ color: textColor, padding }}
         size={size}
         children={props.children}
       />

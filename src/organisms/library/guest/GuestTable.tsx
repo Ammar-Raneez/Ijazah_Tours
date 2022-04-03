@@ -139,7 +139,7 @@ export default function GuestTable({
           search={search}
           setSearch={setSearch}
           numSelected={selected.length}
-          addbtntext="Add Guest"
+          addBtnText="Add Guest"
         />
         <TableContainer>
           <Table
@@ -218,7 +218,7 @@ export default function GuestTable({
                         cell={{
                           align: 'left',
                           title: row.status,
-                          marktitle:
+                          markTitle:
                             row.status === 'ACTIVE' || row.status === 'INACTIVE',
                           colors: [
                             row.status === 'ACTIVE' ? '#0A65FF' : '#B5B5C3',
@@ -229,7 +229,7 @@ export default function GuestTable({
                       <TableRowIconCell
                         align="center"
                         onClick={() => onEditGuestClick(row)}
-                        textcolor="#B5B5C3"
+                        textColor="#B5B5C3"
                         size="small"
                         padding="8px"
                         children={<EditOutlinedIcon style={{ color: 'green' }} />}
@@ -237,7 +237,7 @@ export default function GuestTable({
                       <TableRowIconCell
                         align="center"
                         onClick={() => deleteGuest(row)}
-                        textcolor="#B5B5C3"
+                        textColor="#B5B5C3"
                         size="small"
                         padding="8px"
                         children={<DeleteOutlinedIcon style={{ color: 'red' }} />}

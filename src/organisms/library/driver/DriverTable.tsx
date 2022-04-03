@@ -143,7 +143,7 @@ export default function DriverTable({
           search={search}
           setSearch={setSearch}
           numSelected={selected.length}
-          addbtntext="Add Driver"
+          addBtnText="Add Driver"
         />
         <TableContainer>
           <Table
@@ -238,7 +238,7 @@ export default function DriverTable({
                         cell={{
                           align: 'left',
                           title: row.status,
-                          marktitle:
+                          markTitle:
                             row.status === 'ACTIVE' || row.status === 'INACTIVE',
                           colors: [
                             row.status === 'ACTIVE' ? '#0A65FF' : '#B5B5C3',
@@ -249,7 +249,7 @@ export default function DriverTable({
                       <TableRowIconCell
                         align="center"
                         onClick={() => onEditDriverClick(row)}
-                        textcolor="#B5B5C3"
+                        textColor="#B5B5C3"
                         size="small"
                         padding="8px"
                         children={<EditOutlinedIcon style={{ color: 'green' }} />}
@@ -257,7 +257,7 @@ export default function DriverTable({
                       <TableRowIconCell
                         align="center"
                         onClick={() => deleteDriver(row)}
-                        textcolor="#B5B5C3"
+                        textColor="#B5B5C3"
                         size="small"
                         padding="8px"
                         children={<DeleteOutlinedIcon style={{ color: 'red' }} />}

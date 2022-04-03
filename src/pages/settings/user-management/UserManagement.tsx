@@ -171,7 +171,7 @@ function UserManagement() {
         >
           <H2Atom style={settingsStyles.title} text="Team Members" />
           <ButtonAtom
-            starticon={<AddCircleOutlineOutlinedIcon />}
+            startIcon={<AddCircleOutlineOutlinedIcon />}
             text="Add Team Member"
             onClick={() => setNewOpenDialog(true)}
             style={{

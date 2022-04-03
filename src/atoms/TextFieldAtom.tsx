@@ -13,9 +13,9 @@ interface TextFieldAtomProps {
   label: string;
   select: boolean;
   size: 'small' | 'medium';
-  adornmentposition: 'start' | 'end';
+  adornmentPosition: 'start' | 'end';
   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
-  helpertext?: string;
+  helperText?: string;
   type?: string;
   placeholder?: string;
   required?: boolean;
@@ -31,7 +31,7 @@ interface TextFieldAtomProps {
 function TextFieldAtom({
   variant,
   size,
-  adornmentposition,
+  adornmentPosition,
   label,
   required,
   disabled,
@@ -39,7 +39,7 @@ function TextFieldAtom({
   focused,
   select,
   error,
-  helpertext,
+  helperText,
   type,
   placeholder,
   value,
@@ -51,10 +51,10 @@ function TextFieldAtom({
   const removeBgSelect = disableUnderline === false ? 'true' : 'false';
   const removeBgTextField = type === 'date' || type === 'month' ? 'true' : 'false';
 
-  const inputProps = adornmentposition === 'start'
+  const inputProps = adornmentPosition === 'start'
     ? {
       startAdornment: (
-        <InputAdornment position={adornmentposition}>
+        <InputAdornment position={adornmentPosition}>
           {props.children}
         </InputAdornment>
       ),
@@ -62,7 +62,7 @@ function TextFieldAtom({
     }
     : {
       endAdornment: (
-        <InputAdornment position={adornmentposition}>
+        <InputAdornment position={adornmentPosition}>
           {props.children}
         </InputAdornment>
       ),
@@ -82,7 +82,7 @@ function TextFieldAtom({
       disabled={disabled}
       focused={focused}
       error={error}
-      helperText={helpertext}
+      helperText={helperText}
       placeholder={placeholder}
       removebg={removeBgTextField}
       InputProps={inputProps}

@@ -7,15 +7,15 @@ interface ButtonAtomProps {
   onClick?: MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
   type?: 'submit';
-  starticon?: ReactNode;
-  endicon?: ReactNode;
+  startIcon?: ReactNode;
+  endIcon?: ReactNode;
   style?: CSSProperties;
 }
 
 function ButtonAtom({
   text,
-  starticon,
-  endicon,
+  startIcon,
+  endIcon,
   disabled,
   onClick,
   style,
@@ -26,8 +26,8 @@ function ButtonAtom({
     <Button
       onClick={onClick}
       style={{ ...style, textTransform: 'none' }}
-      startIcon={starticon}
-      endIcon={endicon}
+      startIcon={startIcon}
+      endIcon={endIcon}
       disabled={disabled}
       size={size}
       type={type}

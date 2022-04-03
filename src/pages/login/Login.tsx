@@ -85,7 +85,7 @@ function Login() {
         <form onSubmit={(e) => onLogin(e)} style={loginStyles.form}>
           <InputAtom
             placeholder="Email"
-            adornmentposition="start"
+            adornmentPosition="start"
             type="email"
             fullWidth={width < 768}
             value={email}
@@ -96,7 +96,7 @@ function Login() {
           />
           <InputAtom
             placeholder="Password"
-            adornmentposition="start"
+            adornmentPosition="start"
             type="password"
             fullWidth={width < 768}
             value={password}
@@ -116,7 +116,7 @@ function Login() {
           )}
           <ButtonAtom
             size="large"
-            endicon={isLoggingIn && <CircularProgress size={20} color="inherit" />}
+            endIcon={isLoggingIn && <CircularProgress size={20} color="inherit" />}
             disabled={isLoggingIn}
             style={loginStyles.loginBtn}
             type="submit"

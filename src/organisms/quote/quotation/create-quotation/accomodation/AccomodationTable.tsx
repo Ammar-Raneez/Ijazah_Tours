@@ -131,7 +131,7 @@ function AccomodationTable({
               <TableRowIconCell
                 align="center"
                 onClick={() => deleteAccomodation(row)}
-                textcolor="#B5B5C3"
+                textColor="#B5B5C3"
                 size="small"
                 padding="8px"
                 children={<CloseIcon style={{ color: 'black' }} />}

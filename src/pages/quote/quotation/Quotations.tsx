@@ -165,7 +165,7 @@ function Quotations() {
               >
                 <InputAtom
                   placeholder="Search"
-                  adornmentposition="start"
+                  adornmentPosition="start"
                   fullWidth={width < 768}
                   value={search}
                   plain="false"

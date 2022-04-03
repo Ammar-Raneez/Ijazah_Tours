@@ -4,18 +4,18 @@ interface ParaAtomProps {
   text: string | number;
   mark?: boolean;
   style?: CSSProperties;
-  markstyle?: CSSProperties;
+  markStyle?: CSSProperties;
 }
 
 function ParagraphAtom({
   text,
   style,
   mark,
-  markstyle,
+  markStyle,
 }: ParaAtomProps) {
   return mark ? (
     <p style={style}>
-      <mark style={markstyle}>{text}</mark>
+      <mark style={markStyle}>{text}</mark>
     </p>
   ) : (
     <p style={style}>{text}</p>

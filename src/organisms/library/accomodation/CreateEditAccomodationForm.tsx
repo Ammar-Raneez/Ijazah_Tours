@@ -135,7 +135,7 @@ function CreateEditAccomodationForm({
             value={accomodationType}
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setAccomodationType(e.target.value)}
             options={accomodationTypeData}
-            adornmentposition="end"
+            adornmentPosition="end"
             style={{
               ...libraryStyles.textField,
               flex: 1,
@@ -265,7 +265,7 @@ function CreateEditAccomodationForm({
           }}
         >
           <CheckboxGroup
-            grouptitle="Room Categories"
+            groupTitle="Room Categories"
             labels={allRoomTypes.map((type) => type.val)}
             names={allRoomTypes.map((type) => type.val)}
             checked={roomCategories}
@@ -273,7 +273,7 @@ function CreateEditAccomodationForm({
             style={{ flexDirection: 'column', marginBottom: '1rem' }}
           />
           <CheckboxGroup
-            grouptitle="Room View"
+            groupTitle="Room View"
             labels={allRoomViews.map((type) => type.val)}
             names={allRoomViews.map((type) => type.val)}
             checked={roomViews}
@@ -281,7 +281,7 @@ function CreateEditAccomodationForm({
             style={{ flexDirection: 'column', marginBottom: '1rem' }}
           />
           <CheckboxGroup
-            grouptitle="Gradings"
+            groupTitle="Gradings"
             labels={allRoomGradings.map((type) => type.val)}
             names={allRoomGradings.map((type) => type.val)}
             checked={roomGradings}
@@ -354,7 +354,7 @@ function CreateEditAccomodationForm({
         }}
       >
         <ButtonAtom
-          endicon={isCreating && <CircularProgress size={20} color="inherit" />}
+          endIcon={isCreating && <CircularProgress size={20} color="inherit" />}
           size="large"
           disabled={isCreating}
           text={btnText}

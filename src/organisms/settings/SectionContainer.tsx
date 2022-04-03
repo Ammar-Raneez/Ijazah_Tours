@@ -28,7 +28,7 @@ function SectionContainer({
     >
       <H2Atom style={{ ...settingsStyles.title, fontSize: '1.2rem' }} text={h2Text} />
       <ButtonAtom
-        starticon={<AddCircleOutlineOutlinedIcon />}
+        startIcon={<AddCircleOutlineOutlinedIcon />}
         text={btnText}
         onClick={setOpenDialog}
         style={{

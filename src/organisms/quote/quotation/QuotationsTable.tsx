@@ -139,21 +139,21 @@ function QuotationsTable({ rowdata }: QuotationsTableProps) {
                     <TableRowButtonCell
                       onClick={() => null}
                       align="right"
-                      btnwidth="8rem"
-                      btnsize="medium"
-                      btnborderradius="0.5rem"
+                      btnWidth="8rem"
+                      btnSize="medium"
+                      btnBorderRadius="0.5rem"
                       cell={row}
                       key={uuid()}
-                      btndisabled
+                      btnDisabled
                     />
                     <TableRowButtonCell
                       onClick={() => null}
                       align="right"
-                      btnwidth="8rem"
-                      btnsize="medium"
-                      btnborderradius="0.5rem"
-                      btntext="View Quote"
-                      btncolors={['#C9F7F5', '#1BC5BD']}
+                      btnWidth="8rem"
+                      btnSize="medium"
+                      btnBorderRadius="0.5rem"
+                      btnText="View Quote"
+                      btnColors={['#C9F7F5', '#1BC5BD']}
                       key={uuid()}
                     />
                   </TableRow>

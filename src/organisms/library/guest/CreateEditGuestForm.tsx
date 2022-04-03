@@ -136,7 +136,7 @@ function CreateEditGuestForm({
             value={status}
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setStatus(e.target.value)}
             options={statusOptions}
-            adornmentposition="end"
+            adornmentPosition="end"
             style={{
               ...libraryStyles.textField,
               flex: 1,
@@ -316,7 +316,7 @@ function CreateEditGuestForm({
       >
         <ButtonAtom
           size="large"
-          endicon={isCreating && <CircularProgress size={20} color="inherit" />}
+          endIcon={isCreating && <CircularProgress size={20} color="inherit" />}
           onClick={onAddEditGuest}
           disabled={isCreating}
           style={{

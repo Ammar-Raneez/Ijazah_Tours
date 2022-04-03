@@ -64,19 +64,19 @@ function Row({ row }: any) {
           key={uuid()}
           onClick={() => null}
           align="left"
-          btnwidth="8rem"
-          btnsize="medium"
-          btnborderradius="0.5rem"
-          btntext={rowChecked ? 'A' : row.status}
-          btncolors={['#29CC97', '#ffffff']}
-          btndisabled
+          btnWidth="8rem"
+          btnSize="medium"
+          btnBorderRadius="0.5rem"
+          btnText={rowChecked ? 'A' : row.status}
+          btnColors={['#29CC97', '#ffffff']}
+          btnDisabled
         />
         {row.subtasks ? (
           <TableRowIconCell
             align="left"
             size="small"
             onClick={() => setOpen(!open)}
-            textcolor="#5344C2"
+            textColor="#5344C2"
             padding="0"
           >
             {keyboardIcon}
@@ -104,16 +104,16 @@ function Row({ row }: any) {
                           key={uuid()}
                           onClick={() => null}
                           align="left"
-                          btnwidth="8rem"
-                          btnsize="medium"
-                          btnborderradius="0.5rem"
-                          btntext={subTasksChecked[index] ? 'COMPLETE' : 'TODO'}
-                          btncolors={
+                          btnWidth="8rem"
+                          btnSize="medium"
+                          btnBorderRadius="0.5rem"
+                          btnText={subTasksChecked[index] ? 'COMPLETE' : 'TODO'}
+                          btnColors={
                             subTasksChecked[index]
                               ? ['#29CC97', '#ffffff']
                               : ['#7879F1', '#ffffff']
                           }
-                          btndisabled
+                          btnDisabled
                         />
                       </TableRow>
                     ))}

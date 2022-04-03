@@ -110,7 +110,7 @@ function AccomodationPriceTable({
               <TableRowIconCell
                 align="center"
                 onClick={() => deleteRate(row)}
-                textcolor="#B5B5C3"
+                textColor="#B5B5C3"
                 size="small"
                 padding="8px"
                 children={<DeleteOutlinedIcon style={{ color: 'red' }} />}

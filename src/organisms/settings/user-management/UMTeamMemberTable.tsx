@@ -114,7 +114,7 @@ function UMTeamMemberTable({
                 key={uuid()}
                 align="center"
                 onClick={() => onEditTeamMemberClick(row)}
-                textcolor="#B5B5C3"
+                textColor="#B5B5C3"
                 size="small"
                 padding="8px"
                 children={<EditOutlinedIcon style={{ color: 'green' }} />}
@@ -123,7 +123,7 @@ function UMTeamMemberTable({
                 key={uuid()}
                 align="center"
                 onClick={() => deleteTeamMember(row)}
-                textcolor="#B5B5C3"
+                textColor="#B5B5C3"
                 size="small"
                 padding="8px"
                 children={<DeleteOutlinedIcon style={{ color: 'red' }} />}

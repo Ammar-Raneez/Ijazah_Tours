@@ -203,7 +203,7 @@ function Customer() {
             value={refNum}
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => onRefNumChange(customerData, e.target.value)}
             options={refData}
-            adornmentposition="end"
+            adornmentPosition="end"
             style={{
               ...libraryStyles.textField,
               flex: 1,
@@ -214,7 +214,7 @@ function Customer() {
           />
           <Link to={`/library/guest/create`}>
             <ButtonAtom
-              starticon={<AddCircleOutlineOutlinedIcon />}
+              startIcon={<AddCircleOutlineOutlinedIcon />}
               text="Add New Guest"
               style={{
                 ...TableToolbarStyles.addBtn,
@@ -352,7 +352,7 @@ function Customer() {
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setHolidayType(e.target.value)
             }
             options={holidayTypeData}
-            adornmentposition="end"
+            adornmentPosition="end"
             style={{
               ...libraryStyles.textField,
               flex: 1,
@@ -377,7 +377,7 @@ function Customer() {
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setDestination(e.target.value)
             }
             options={destinationData}
-            adornmentposition="end"
+            adornmentPosition="end"
             style={{
               ...libraryStyles.textField,
               flex: 1,
@@ -430,7 +430,7 @@ function Customer() {
                 value={checkin}
                 onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCheckin(e.target.value)
                 }
-                adornmentposition="end"
+                adornmentPosition="end"
                 style={{
                   ...libraryStyles.textField,
                   flex: 1,
@@ -449,7 +449,7 @@ function Customer() {
                 value={checkout}
                 onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCheckout(e.target.value)
                 }
-                adornmentposition="end"
+                adornmentPosition="end"
                 style={{
                   ...libraryStyles.textField,
                   flex: 1,
@@ -470,7 +470,7 @@ function Customer() {
                 value={checkin}
                 onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCheckin(e.target.value)
                 }
-                adornmentposition="end"
+                adornmentPosition="end"
                 style={{
                   ...libraryStyles.textField,
                   flex: 1,
@@ -489,7 +489,7 @@ function Customer() {
                 value={checkout}
                 onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCheckout(e.target.value)
                 }
-                adornmentposition="end"
+                adornmentPosition="end"
                 style={{
                   ...libraryStyles.textField,
                   flex: 1,

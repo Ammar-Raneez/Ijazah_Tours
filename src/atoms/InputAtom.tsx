@@ -14,13 +14,13 @@ interface InputAtomProps {
   multiline?: boolean;
   error?: boolean;
   rows?: number;
-  adornmentposition?: 'start' | 'end';
+  adornmentPosition?: 'start' | 'end';
   children?: ReactNode;
   style?: CSSProperties;
 }
 
 function InputAtom({
-  adornmentposition,
+  adornmentPosition,
   plain,
   type,
   required,
@@ -51,8 +51,8 @@ function InputAtom({
       fullWidth={fullWidth}
       disableUnderline={plain === 'false'}
       startAdornment={
-        adornmentposition && (
-          <InputAdornment position={adornmentposition}>
+        adornmentPosition && (
+          <InputAdornment position={adornmentPosition}>
             {props.children}
           </InputAdornment>
         )

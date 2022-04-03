@@ -41,7 +41,7 @@ const useToolbarStyles = makeStyles((theme: Theme) => ({
 
 interface TableToolbarProps {
   search: string;
-  addbtntext: string;
+  addBtnText: string;
   numSelected: number;
   setSearch: (value: string) => void;
 }
@@ -49,7 +49,7 @@ interface TableToolbarProps {
 const TableToolbar = ({
   numSelected,
   search,
-  addbtntext,
+  addBtnText,
   setSearch,
 }: TableToolbarProps) => {
   const classes = useToolbarStyles();
@@ -71,7 +71,7 @@ const TableToolbar = ({
   let addBtnTextWidth;
   if (width < 540) {
     addBtnTextWidth = '100%';
-  } else if (addbtntext.includes('Accomodation')) {
+  } else if (addBtnText.includes('Accomodation')) {
     addBtnTextWidth = '14rem';
   } else {
     addBtnTextWidth = '11rem';
@@ -119,7 +119,7 @@ const TableToolbar = ({
             <InputAtom
               style={TableToolbarStyles.search}
               placeholder="Search"
-              adornmentposition="start"
+              adornmentPosition="start"
               fullWidth={width < 540}
               value={search}
               plain="false"
@@ -137,11 +137,11 @@ const TableToolbar = ({
             }}
           >
             <Link
-              to={`/library/${addbtntext.split(' ')[1].toLowerCase()}/create`}
+              to={`/library/${addBtnText.split(' ')[1].toLowerCase()}/create`}
             >
               <ButtonAtom
-                starticon={<AddCircleOutlineOutlinedIcon />}
-                text={addbtntext}
+                startIcon={<AddCircleOutlineOutlinedIcon />}
+                text={addBtnText}
                 style={{
                   ...TableToolbarStyles.addBtn,
                   width: addBtnTextWidth,

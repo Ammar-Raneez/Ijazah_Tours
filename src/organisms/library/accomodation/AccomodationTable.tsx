@@ -141,7 +141,7 @@ function AccomodationTable({
           search={search}
           setSearch={setSearch}
           numSelected={selected.length}
-          addbtntext="Add Accomodation"
+          addBtnText="Add Accomodation"
         />
         <TableContainer>
           <Table
@@ -227,7 +227,7 @@ function AccomodationTable({
                       <TableRowIconCell
                         align="center"
                         onClick={() => onEditAccomodationClick(row)}
-                        textcolor="#B5B5C3"
+                        textColor="#B5B5C3"
                         size="small"
                         padding="8px"
                         children={<EditOutlinedIcon style={{ color: 'green' }} />}
@@ -235,7 +235,7 @@ function AccomodationTable({
                       <TableRowIconCell
                         align="center"
                         onClick={() => deleteAccomodation(row)}
-                        textcolor="#B5B5C3"
+                        textColor="#B5B5C3"
                         size="small"
                         padding="8px"
                         children={<DeleteOutlinedIcon style={{ color: 'red' }} />}

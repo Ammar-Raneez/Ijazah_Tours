@@ -77,7 +77,7 @@ function LocationTable({
               <TableRowIconCell
                 align="center"
                 onClick={() => onEditLocationClick(row)}
-                textcolor="#B5B5C3"
+                textColor="#B5B5C3"
                 size="small"
                 padding="8px"
                 children={<EditOutlinedIcon style={{ color: 'green' }} />}
@@ -85,7 +85,7 @@ function LocationTable({
               <TableRowIconCell
                 align="center"
                 onClick={() => deleteLocation(row)}
-                textcolor="#B5B5C3"
+                textColor="#B5B5C3"
                 size="small"
                 padding="8px"
                 children={<DeleteOutlinedIcon style={{ color: 'red' }} />}

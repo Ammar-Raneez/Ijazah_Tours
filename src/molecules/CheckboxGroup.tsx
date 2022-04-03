@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 }));
 
 interface CheckboxGroupProps {
-  grouptitle: string;
+  groupTitle: string;
   labels: string[];
   names: string[];
   checked: boolean[];
@@ -29,7 +29,7 @@ interface CheckboxGroupProps {
 }
 
 function CheckboxGroup({
-  grouptitle,
+  groupTitle,
   labels,
   names,
   checked,
@@ -40,7 +40,7 @@ function CheckboxGroup({
 
   return (
     <FormControl component="fieldset" className={classes.formControl}>
-      <FormLabel component="legend">{grouptitle}</FormLabel>
+      <FormLabel component="legend">{groupTitle}</FormLabel>
       <FormGroup style={style} className={classes.root}>
         {labels.map((lb, index) => (
           <CheckboxAtom
