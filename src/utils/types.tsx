@@ -57,6 +57,7 @@ export interface AccomodationRate {
 
 // Quotations
 export interface QuotationAccomodation {
+  id: string;
   location: string;
   nights: string;
   category: string;

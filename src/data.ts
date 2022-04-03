@@ -45,6 +45,7 @@ export const QUOTATIONS_DATA = [
 
 export const QUOTATIONS_ACCOMODATION_DATA = [
   {
+    id: '1',
     location: 'L1',
     nights: '2',
     category: 'Hotel',
@@ -55,6 +56,7 @@ export const QUOTATIONS_ACCOMODATION_DATA = [
     city: 'Colombo',
   },
   {
+    id: '2',
     location: 'L1',
     nights: '2',
     category: 'Hotel',
@@ -65,6 +67,7 @@ export const QUOTATIONS_ACCOMODATION_DATA = [
     city: 'Colombo',
   },
   {
+    id: '3',
     location: 'L1',
     nights: '2',
     category: 'Hotel',

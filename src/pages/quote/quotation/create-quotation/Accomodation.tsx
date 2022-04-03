@@ -30,11 +30,17 @@ const mealPlanOptions = [
 ];
 
 function Accomodation() {
+  const [accomodationData, setAccomodationData] = useState<QuotationAccomodation[]>([]);
+
   const [search, setSearch] = useState('');
 
   const [width, setWidth] = useState(0);
   const [containerHeight, setContainerHeight] = useState(0);
   const history = useHistory();
+
+  useEffect(() => {
+    setAccomodationData(QUOTATIONS_ACCOMODATION_DATA);
+  }, []);
 
   useEffect(() => {
     setWidth(window.innerWidth);
@@ -55,7 +61,10 @@ function Accomodation() {
   }, [width, containerHeight]);
 
   const deleteAccomodation = (acc: QuotationAccomodation) => {
-    console.log(acc);
+    const removeIndex = accomodationData.findIndex((ac) => ac.id === acc.id);
+    const tempAccomodation = [...accomodationData];
+    tempAccomodation.splice(removeIndex, 1);
+    setAccomodationData(tempAccomodation);
   };
 
   return (
@@ -120,7 +129,7 @@ function Accomodation() {
             style={{ padding: '0.2rem' }}
           />
         </DivAtom>
-        {QUOTATIONS_ACCOMODATION_DATA.length > 0 && (
+        {accomodationData.length > 0 && (
           <AccomodationTable
             columns={[
               'LOCATION',
@@ -136,7 +145,7 @@ function Accomodation() {
             mealPlanOptions={mealPlanOptions}
             roomTypes={roomTypes}
             deleteAccomodation={deleteAccomodation}
-            data={QUOTATIONS_ACCOMODATION_DATA as QuotationAccomodation[]}
+            data={accomodationData}
           />
         )}
       </DivAtom>
@@ -152,7 +161,7 @@ function Accomodation() {
         <ButtonAtom
           size="large"
           text="Continue"
-          disabled={QUOTATIONS_ACCOMODATION_DATA.length === 0}
+          disabled={accomodationData.length === 0}
           onClick={() => history.replace('/quote/quotations/create/costing')}
           style={{
             ...quoteCreateQuoteStyles.addBtn,
