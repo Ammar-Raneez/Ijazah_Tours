@@ -1,5 +1,6 @@
-import DivAtom from '../../../../../atoms/DivAtom';
 import FormControlInput from '../../../../../molecules/FormControlInput';
+import DivAtom from '../../../../../atoms/DivAtom';
+import { widthHeightDynamicStyle } from '../../../../../utils/helpers';
 
 interface CostingOverallCostProps {
   width: number;
@@ -47,7 +48,7 @@ function CostingOverallCost({
         multiline={false}
         rows={1}
         value={totalExpense}
-        flex={width < 600 ? 1 : undefined}
+        flex={widthHeightDynamicStyle(width, 600, 1, undefined) as number | undefined}
         setValue={setTotalExpense}
         placeholder="Enter Total Expense"
         margin="0 0 1rem 0"
@@ -58,7 +59,7 @@ function CostingOverallCost({
         multiline={false}
         rows={1}
         value={commission}
-        flex={width < 600 ? 1 : undefined}
+        flex={widthHeightDynamicStyle(width, 600, 1, undefined) as number | undefined}
         setValue={setCommission}
         placeholder="Enter Commission"
         margin="0 0 1rem 0"
@@ -70,7 +71,7 @@ function CostingOverallCost({
         multiline={false}
         rows={1}
         value={totalPrice}
-        flex={width < 600 ? 1 : undefined}
+        flex={widthHeightDynamicStyle(width, 600, 1, undefined) as number | undefined}
         setValue={setTotalPrice}
         placeholder="Enter Total Price"
         margin="0 0 1rem 0"
@@ -81,7 +82,7 @@ function CostingOverallCost({
         multiline={false}
         rows={1}
         value={sellingPrice}
-        flex={width < 600 ? 1 : undefined}
+        flex={widthHeightDynamicStyle(width, 600, 1, undefined) as number | undefined}
         setValue={setSellingPrice}
         placeholder="Enter Selling Price"
         margin="0 0 1rem 0"
@@ -92,7 +93,7 @@ function CostingOverallCost({
         multiline={false}
         rows={1}
         value={discount}
-        flex={width < 600 ? 1 : undefined}
+        flex={widthHeightDynamicStyle(width, 600, 1, undefined) as number | undefined}
         setValue={setDiscount}
         placeholder="Enter Discount"
         margin="0 0 1rem 0"
@@ -104,7 +105,7 @@ function CostingOverallCost({
         multiline={false}
         rows={1}
         value={netPrice}
-        flex={width < 600 ? 1 : undefined}
+        flex={widthHeightDynamicStyle(width, 600, 1, undefined) as number | undefined}
         setValue={setNetPrice}
         placeholder="Enter Net Price"
         margin="0 0 1rem 0"

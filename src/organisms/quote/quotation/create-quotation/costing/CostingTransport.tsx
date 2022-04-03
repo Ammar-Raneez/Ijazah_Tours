@@ -1,5 +1,7 @@
 import DivAtom from '../../../../../atoms/DivAtom';
 import FormControlInput from '../../../../../molecules/FormControlInput';
+import { FlexDirection } from '../../../../../utils/types';
+import { widthHeightDynamicStyle } from '../../../../../utils/helpers';
 import { quoteCreateQuoteStyles } from '../../../../../styles';
 
 interface CostingTransportProps {
@@ -26,13 +28,13 @@ function CostingTransport({
       style={{
         ...quoteCreateQuoteStyles.multiFieldContainer,
         ...quoteCreateQuoteStyles.tableContainer,
-        flexDirection: width < 600 ? 'column' : 'row',
+        flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
       }}
     >
       <DivAtom
         style={{
           display: 'flex',
-          flexDirection: width < 600 ? 'column' : 'row',
+          flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
         }}
       >
         <FormControlInput
@@ -43,8 +45,8 @@ function CostingTransport({
           value={rate}
           setValue={setRate}
           placeholder="Enter Rate"
-          flex={width < 600 ? 1 : undefined}
-          margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
+          flex={widthHeightDynamicStyle(width, 600, 1, undefined) as number | undefined}
+          margin={widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0') as string}
         />
         <FormControlInput
           label="Days"
@@ -53,16 +55,16 @@ function CostingTransport({
           multiline={false}
           rows={1}
           value={days}
-          flex={width < 600 ? 1 : undefined}
+          flex={widthHeightDynamicStyle(width, 600, 1, undefined) as number | undefined}
           setValue={setDays}
           placeholder="Enter Days"
-          margin={width < 600 ? '0 0 1rem 0' : '0'}
+          margin={widthHeightDynamicStyle(width, 600, '0 0 1rem 0', 0) as string}
         />
       </DivAtom>
       <DivAtom
         style={{
           display: 'flex',
-          flexDirection: width < 600 ? 'column' : 'row',
+          flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
         }}
       >
         <FormControlInput
@@ -72,7 +74,7 @@ function CostingTransport({
           rows={1}
           value={transport}
           setValue={setTransport}
-          flex={width < 600 ? 1 : undefined}
+          flex={widthHeightDynamicStyle(width, 600, 1, undefined) as number | undefined}
           placeholder="Enter Transport"
         />
       </DivAtom>

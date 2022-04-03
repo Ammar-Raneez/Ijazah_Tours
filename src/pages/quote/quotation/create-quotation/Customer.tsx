@@ -20,24 +20,14 @@ import TextFieldAtom from '../../../../atoms/TextFieldAtom';
 import ParagraphAtom from '../../../../atoms/ParagraphAtom';
 import CheckboxAtom from '../../../../atoms/CheckboxAtom';
 import { db } from '../../../../firebase';
-import { DropdownOption, LibraryGuest } from '../../../../utils/types';
+import { DropdownOption, FlexDirection, LibraryGuest } from '../../../../utils/types';
+import { dateTypeOptions, mealPlanOptions, widthHeightDynamicStyle } from '../../../../utils/helpers';
 import {
   libraryStyles,
   TableToolbarStyles,
   quoteCreateQuoteStyles,
   fetchingDataIndicatorStyles,
 } from '../../../../styles';
-
-const mealPlanOptions = [
-  { label: 'BB', value: 'BB' },
-  { label: 'FB', value: 'FB' },
-  { label: 'HB', value: 'HB' },
-];
-
-const dateTypeOptions = [
-  { label: 'Specific Dates', value: 'specific-dates' },
-  { label: 'Not Specific', value: 'not-specific' },
-];
 
 function Customer() {
   const [customerData, setCustomerData] = useState<LibraryGuest[]>();
@@ -180,14 +170,13 @@ function Customer() {
           size="medium"
           label="Check-in"
           value={checkin}
-          onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCheckin(e.target.value)
-          }
+          onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCheckin(e.target.value)}
           adornmentPosition="end"
           style={{
             ...libraryStyles.textField,
             flex: 1,
-            width: width < 600 ? '100%' : 'auto',
-            margin: width < 600 ? '0 0 1rem 0' : '0 1rem 0 0',
+            width: widthHeightDynamicStyle(width, 600, '100%', 'auto'),
+            margin: widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 0 0'),
           }}
           disableUnderline={false}
           select={false}
@@ -199,13 +188,12 @@ function Customer() {
           size="medium"
           label="Checkout"
           value={checkout}
-          onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCheckout(e.target.value)
-          }
+          onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCheckout(e.target.value)}
           adornmentPosition="end"
           style={{
             ...libraryStyles.textField,
             flex: 1,
-            width: width < 600 ? '100%' : 'auto',
+            width: widthHeightDynamicStyle(width, 600, '100%', 'auto'),
           }}
           disableUnderline={false}
           select={false}
@@ -220,14 +208,13 @@ function Customer() {
           size="medium"
           label="Check-in"
           value={checkin}
-          onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCheckin(e.target.value)
-          }
+          onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCheckin(e.target.value)}
           adornmentPosition="end"
           style={{
             ...libraryStyles.textField,
             flex: 1,
-            width: width < 600 ? '100%' : 'auto',
-            margin: width < 600 ? '0 0 1rem 0' : '0 1rem 0 0',
+            width: widthHeightDynamicStyle(width, 600, '100%', 'auto'),
+            margin: widthHeightDynamicStyle(width, 600, '100%', 'auto'),
           }}
           disableUnderline={false}
           select={false}
@@ -239,13 +226,12 @@ function Customer() {
           size="medium"
           label="Checkout"
           value={checkout}
-          onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCheckout(e.target.value)
-          }
+          onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCheckout(e.target.value)}
           adornmentPosition="end"
           style={{
             ...libraryStyles.textField,
             flex: 1,
-            width: width < 600 ? '100%' : 'auto',
+            width: widthHeightDynamicStyle(width, 600, '100%', 'auto'),
           }}
           disableUnderline={false}
           select={false}
@@ -255,8 +241,6 @@ function Customer() {
       </DivAtom>
     )
   );
-
-  const dynamicMargin = () => (width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0');
 
   return (
     <DivAtom style={{ height: `${containerHeight}px` }}>
@@ -283,7 +267,7 @@ function Customer() {
             <DivAtom
               style={{
                 ...quoteCreateQuoteStyles.multiFieldContainer,
-                flexDirection: width < 600 ? 'column' : 'row',
+                flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
               }}
             >
               <TextFieldAtom
@@ -297,7 +281,7 @@ function Customer() {
                 style={{
                   ...libraryStyles.textField,
                   flex: 1,
-                  width: width < 600 ? '100%' : 'auto',
+                  width: widthHeightDynamicStyle(width, 600, '100%', 'auto'),
                 }}
                 disableUnderline={false}
                 select
@@ -308,9 +292,9 @@ function Customer() {
                   text="Add New Guest"
                   style={{
                     ...TableToolbarStyles.addBtn,
-                    width: width < 600 ? '100%' : '11rem',
+                    width: widthHeightDynamicStyle(width, 600, '100%', '11rem'),
                     marginTop: '1rem',
-                    marginLeft: width < 600 ? '0px' : '1rem',
+                    marginLeft: widthHeightDynamicStyle(width, 600, 0, '1rem'),
                   }}
                   size="large"
                 />
@@ -319,11 +303,11 @@ function Customer() {
             <DivAtom
               style={{
                 ...quoteCreateQuoteStyles.multiFieldContainer,
-                flexDirection: width < 600 ? 'column' : 'row',
+                flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
               }}
             >
               <FormControlInput
-                margin={dynamicMargin()}
+                margin={widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0') as string}
                 flex={1}
                 label="First Name"
                 fullWidth
@@ -350,11 +334,11 @@ function Customer() {
             <DivAtom
               style={{
                 ...quoteCreateQuoteStyles.multiFieldContainer,
-                flexDirection: width < 600 ? 'column' : 'row',
+                flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
               }}
             >
               <FormControlInput
-                margin={dynamicMargin()}
+                margin={widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0') as string}
                 label="Contact Number"
                 fullWidth
                 disabled
@@ -381,11 +365,11 @@ function Customer() {
             <DivAtom
               style={{
                 ...quoteCreateQuoteStyles.multiFieldContainer,
-                flexDirection: width < 600 ? 'column' : 'row',
+                flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
               }}
             >
               <FormControlInput
-                margin={dynamicMargin()}
+                margin={widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0') as string}
                 label="Country"
                 fullWidth
                 disabled
@@ -419,11 +403,11 @@ function Customer() {
             <DivAtom
               style={{
                 ...quoteCreateQuoteStyles.multiFieldContainer,
-                flexDirection: width < 600 ? 'column' : 'row',
+                flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
               }}
             >
               <FormControlInput
-                margin={dynamicMargin()}
+                margin={widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0') as string}
                 type="number"
                 flex={1}
                 label="No. of Days"
@@ -446,8 +430,8 @@ function Customer() {
                 style={{
                   ...libraryStyles.textField,
                   flex: 1,
-                  width: width < 600 ? '100%' : 'auto',
-                  margin: width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0',
+                  width: widthHeightDynamicStyle(width, 600, '100%', 'auto'),
+                  margin: widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0'),
                 }}
                 disableUnderline={false}
                 select
@@ -456,7 +440,7 @@ function Customer() {
             <DivAtom
               style={{
                 ...quoteCreateQuoteStyles.multiFieldContainer,
-                flexDirection: width < 600 ? 'column' : 'row',
+                flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
               }}
             >
               <TextFieldAtom
@@ -471,8 +455,8 @@ function Customer() {
                 style={{
                   ...libraryStyles.textField,
                   flex: 1,
-                  width: width < 600 ? '100%' : 'auto',
-                  margin: width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0',
+                  width: widthHeightDynamicStyle(width, 600, '100%', 'auto'),
+                  margin: widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0'),
                 }}
                 disableUnderline={false}
                 select
@@ -483,7 +467,7 @@ function Customer() {
                 value={mealPlan}
                 radioGroupStyle={{
                   ...quoteCreateQuoteStyles.radioBtnContainer,
-                  margin: width < 600 ? '0' : '0 1rem',
+                  margin: widthHeightDynamicStyle(width, 600, 0, '0 1rem'),
                 }}
                 onChange={(e) => setMealPlan(e.target.value)}
               />
@@ -507,7 +491,7 @@ function Customer() {
                 value={dateType}
                 radioGroupStyle={{
                   ...quoteCreateQuoteStyles.radioBtnContainer,
-                  margin: width < 600 ? '0' : '0 1rem',
+                  margin: widthHeightDynamicStyle(width, 600, 0, '0 1rem'),
                 }}
                 onChange={(e) => setDateType(e.target.value)}
               />
@@ -517,9 +501,8 @@ function Customer() {
           <DivAtom
             style={{
               ...quoteCreateQuoteStyles.addBtnContainer,
-              padding: width < 768 ? '1rem' : '0px',
-              margin:
-                width < 768 ? '0px' : quoteCreateQuoteStyles.addBtnContainer.margin,
+              padding: widthHeightDynamicStyle(width, 768, '1rem', 0),
+              margin: widthHeightDynamicStyle(width, 768, 0, quoteCreateQuoteStyles.addBtnContainer.margin),
             }}
           >
             <ButtonAtom
@@ -528,7 +511,7 @@ function Customer() {
               onClick={(event) => onCreateCustomer(event)}
               style={{
                 ...quoteCreateQuoteStyles.addBtn,
-                width: width < 768 ? '100%' : '18%',
+                width: widthHeightDynamicStyle(width, 768, '100%', '18%'),
                 margin: '0 0 1rem 0',
               }}
             />

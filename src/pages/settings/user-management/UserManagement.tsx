@@ -19,8 +19,9 @@ import ButtonAtom from '../../../atoms/ButtonAtom';
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
 import { auth, db } from '../../../firebase';
+import { FlexDirection, SettingsTeamMember } from '../../../utils/types';
+import { widthHeightDynamicStyle } from '../../../utils/helpers';
 import { TableToolbarStyles, settingsStyles } from '../../../styles';
-import { SettingsTeamMember } from '../../../utils/types';
 
 function UserManagement() {
   const [newFirstName, setNewFirstName] = useState('');
@@ -46,7 +47,7 @@ function UserManagement() {
   const [openEditDialog, setEditOpenDialog] = useState(false);
 
   const [containerHeight, setContainerHeight] = useState(0);
-  const [containerWidth, setContainerWidth] = useState(0);
+  const [width, setWidth] = useState(0);
 
   useEffect(() => {
     const getInitialTeamData = async () => {
@@ -65,10 +66,10 @@ function UserManagement() {
 
   useEffect(() => {
     setContainerHeight(window.innerHeight - 180);
-    setContainerWidth(window.innerWidth);
+    setWidth(window.innerWidth);
 
     const widthListener = window.addEventListener('resize', () => {
-      setContainerWidth(window.innerWidth);
+      setWidth(window.innerWidth);
     });
     const heightListener = window.addEventListener('resize', () => {
       setContainerHeight(window.innerHeight - 180);
@@ -80,7 +81,7 @@ function UserManagement() {
     };
 
     return removeEventListeners();
-  }, [containerWidth, containerHeight]);
+  }, [width, containerHeight]);
 
   const onCreateMember = async () => {
     setShowValidationErrorMessage(false);
@@ -165,7 +166,7 @@ function UserManagement() {
         <DivAtom
           style={{
             ...settingsStyles.multiFieldContainer,
-            flexDirection: containerWidth < 1000 ? 'column' : 'row',
+            flexDirection: widthHeightDynamicStyle(width, 1000, 'column', 'row') as FlexDirection,
             marginTop: '1rem',
           }}
         >
@@ -176,10 +177,10 @@ function UserManagement() {
             onClick={() => setNewOpenDialog(true)}
             style={{
               ...TableToolbarStyles.addBtn,
-              width: containerWidth < 1000 ? '100%' : 'auto',
+              width: widthHeightDynamicStyle(width, 1000, '100%', 'auto'),
               height: '3rem',
-              marginLeft: containerWidth < 1000 ? '0px' : '1rem',
-              marginBottom: containerWidth < 1000 ? '1rem' : '0',
+              marginLeft: widthHeightDynamicStyle(width, 1000, 0, '1rem'),
+              marginBottom: widthHeightDynamicStyle(width, 1000, '1rem', 0),
             }}
             size="large"
           />

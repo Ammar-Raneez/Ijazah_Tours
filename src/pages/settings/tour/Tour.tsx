@@ -276,7 +276,7 @@ function Tour() {
         {singleInputsData[0] !== undefined && INPUT_TYPES.map((type, index) => (
           <DivAtom key={index} style={{ marginBottom: '3rem' }}>
             <SectionContainer
-              containerWidth={containerWidth}
+              width={containerWidth}
               h2Text={type.h2Text}
               btnText={type.btnNewText}
               setOpenDialog={() => onOpenNewDialog(index)}
@@ -314,7 +314,7 @@ function Tour() {
 
         <DivAtom style={{ marginBottom: '3rem' }}>
           <SectionContainer
-            containerWidth={containerWidth}
+            width={containerWidth}
             h2Text="Auto Generated Reminders"
             btnText="Add Reminder"
             setOpenDialog={() => setOpenNewReminderDialog(true)}

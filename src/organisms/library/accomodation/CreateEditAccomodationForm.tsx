@@ -8,9 +8,15 @@ import DivAtom from '../../../atoms/DivAtom';
 import ParagraphAtom from '../../../atoms/ParagraphAtom';
 import InputAtom from '../../../atoms/InputAtom';
 import ButtonAtom from '../../../atoms/ButtonAtom';
-import { libraryAccomodationStyles, libraryStyles } from '../../../styles';
-import { AccomodationRate, DropdownOption, SettingsRoomProperties } from '../../../utils/types';
 import TextFieldAtom from '../../../atoms/TextFieldAtom';
+import {
+  AccomodationRate,
+  DropdownOption,
+  FlexDirection,
+  SettingsRoomProperties,
+} from '../../../utils/types';
+import { widthHeightDynamicStyle } from '../../../utils/helpers';
+import { libraryAccomodationStyles, libraryStyles } from '../../../styles';
 
 interface CreateEditAccomodationFormProps {
   accomodationTypeData: DropdownOption[];
@@ -125,7 +131,7 @@ function CreateEditAccomodationForm({
         <DivAtom
           style={{
             ...libraryAccomodationStyles.multiFieldContainer,
-            flexDirection: width < 600 ? 'column' : 'row',
+            flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
           }}
         >
           <TextFieldAtom
@@ -139,14 +145,14 @@ function CreateEditAccomodationForm({
             style={{
               ...libraryStyles.textField,
               flex: 1,
-              width: width < 600 ? '100%' : 'auto',
-              margin: width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0',
+              width: widthHeightDynamicStyle(width, 600, '100%', 'auto'),
+              margin: widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0'),
             }}
             disableUnderline={false}
             select
           />
           <FormControlInput
-            margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
+            margin={widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0') as string}
             flex={1}
             label="Location"
             fullWidth
@@ -171,11 +177,11 @@ function CreateEditAccomodationForm({
         <DivAtom
           style={{
             ...libraryAccomodationStyles.multiFieldContainer,
-            flexDirection: width < 600 ? 'column' : 'row',
+            flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
           }}
         >
           <FormControlInput
-            margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
+            margin={widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0') as string}
             flex={1}
             label="Group"
             fullWidth
@@ -200,11 +206,11 @@ function CreateEditAccomodationForm({
         <DivAtom
           style={{
             ...libraryAccomodationStyles.multiFieldContainer,
-            flexDirection: width < 600 ? 'column' : 'row',
+            flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
           }}
         >
           <FormControlInput
-            margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
+            margin={widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0') as string}
             flex={1}
             label="Contact Number"
             fullWidth
@@ -229,11 +235,11 @@ function CreateEditAccomodationForm({
         <DivAtom
           style={{
             ...libraryAccomodationStyles.multiFieldContainer,
-            flexDirection: width < 600 ? 'column' : 'row',
+            flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
           }}
         >
           <FormControlInput
-            margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
+            margin={widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0') as string}
             flex={1}
             label="Web Link"
             fullWidth
@@ -259,7 +265,7 @@ function CreateEditAccomodationForm({
         <DivAtom
           style={{
             ...libraryAccomodationStyles.multiFieldContainer,
-            flexDirection: width < 600 ? 'column' : 'row',
+            flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
             justifyContent: 'flex-start',
             marginTop: '0.8rem',
           }}
@@ -316,7 +322,7 @@ function CreateEditAccomodationForm({
             key={ind}
             style={{
               ...libraryAccomodationStyles.multiFieldContainer,
-              flexDirection: width < 600 ? 'column' : 'row',
+              flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
               justifyContent: 'flex-start',
               marginTop: '0.8rem',
             }}
@@ -341,16 +347,15 @@ function CreateEditAccomodationForm({
       {showValidationErrorMessage && (
         <ParagraphAtom
           text="Please fill in all the fields"
-          style={{ color: 'red', textAlign: 'center' }}
+          style={libraryAccomodationStyles.errorMsg}
         />
       )}
 
       <DivAtom
         style={{
           ...libraryAccomodationStyles.addBtnContainer,
-          padding: width < 768 ? '1rem' : '0px',
-          margin:
-            width < 768 ? '0px' : libraryAccomodationStyles.addBtnContainer.margin,
+          padding: widthHeightDynamicStyle(width, 768, '1rem', 0),
+          margin: widthHeightDynamicStyle(width, 768, 0, libraryAccomodationStyles.addBtnContainer.margin),
         }}
       >
         <ButtonAtom
@@ -361,8 +366,8 @@ function CreateEditAccomodationForm({
           onClick={onAddEditAccomodation}
           style={{
             ...libraryAccomodationStyles.addBtn,
-            width: width < 768 ? '100%' : '18%',
-            margin: width < 768 ? '0 0 1rem 0' : '0px',
+            width: widthHeightDynamicStyle(width, 768, '100%', '18%'),
+            margin: widthHeightDynamicStyle(width, 768, '0 0 1rem 0', 0),
           }}
         />
       </DivAtom>

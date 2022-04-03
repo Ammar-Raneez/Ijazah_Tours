@@ -4,6 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 
 import ParagraphAtom from '../atoms/ParagraphAtom';
+import { widthHeightDynamicStyle } from '../utils/helpers';
 import { DataCardStyles } from '../styles';
 
 const useStyles = makeStyles({
@@ -38,7 +39,7 @@ export default function DataCard({ title, total }: DataCardProps) {
   return (
     <Card
       className={classes.root}
-      style={{ marginBottom: width < 768 ? '1rem' : '0' }}
+      style={{ marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0) }}
       variant="outlined"
     >
       <CardContent>

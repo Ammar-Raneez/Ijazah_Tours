@@ -11,23 +11,12 @@ import DivAtom from '../../../../atoms/DivAtom';
 import ButtonAtom from '../../../../atoms/ButtonAtom';
 import ParagraphAtom from '../../../../atoms/ParagraphAtom';
 import InputAtom from '../../../../atoms/InputAtom';
-import { QuotationAccomodation } from '../../../../utils/types';
+import { FlexDirection, QuotationAccomodation } from '../../../../utils/types';
+import { mealPlanOptions, roomTypes, widthHeightDynamicStyle } from '../../../../utils/helpers';
 import { QUOTATIONS_ACCOMODATION_DATA } from '../../../../data';
 import {
   quoteCreateQuoteStyles,
 } from '../../../../styles';
-
-const roomTypes = [
-  { label: 'Diluxe', value: 'Diluxe' },
-  { label: 'Mega', value: 'Mega' },
-  { label: 'Suite', value: 'Suite' },
-];
-
-const mealPlanOptions = [
-  { label: 'BB', value: 'BB' },
-  { label: 'FB', value: 'FB' },
-  { label: 'HB', value: 'HB' },
-];
 
 function Accomodation() {
   const [accomodationData, setAccomodationData] = useState<QuotationAccomodation[]>([]);
@@ -81,7 +70,7 @@ function Accomodation() {
         <DivAtom
           style={{
             ...quoteCreateQuoteStyles.btnMainContainer,
-            flexDirection: width < 768 ? 'column' : 'row',
+            flexDirection: widthHeightDynamicStyle(width, 768, 'column', 'row') as FlexDirection,
           }}
         >
           <ButtonAtom
@@ -89,8 +78,8 @@ function Accomodation() {
             style={{
               ...quoteCreateQuoteStyles.btn,
               marginRight: '16px',
-              marginBottom: width < 768 ? '1rem' : 0,
-              width: width < 768 ? '100%' : '11rem',
+              marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
+              width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
             }}
             onClick={() => null}
             size="large"
@@ -100,8 +89,8 @@ function Accomodation() {
             style={{
               ...quoteCreateQuoteStyles.btn,
               marginRight: '16px',
-              marginBottom: width < 768 ? '1rem' : 0,
-              width: width < 768 ? '100%' : '11rem',
+              marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
+              width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
             }}
             onClick={() => null}
             size="large"
@@ -110,8 +99,8 @@ function Accomodation() {
             text="Boutique"
             style={{
               ...quoteCreateQuoteStyles.btn,
-              marginBottom: width < 768 ? '1rem' : 0,
-              width: width < 768 ? '100%' : '11rem',
+              marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
+              width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
             }}
             onClick={() => null}
             size="large"
@@ -153,9 +142,8 @@ function Accomodation() {
       <DivAtom
         style={{
           ...quoteCreateQuoteStyles.addBtnContainer,
-          padding: width < 768 ? '1rem' : '0px',
-          margin:
-            width < 768 ? '0px' : quoteCreateQuoteStyles.addBtnContainer.margin,
+          padding: widthHeightDynamicStyle(width, 768, '1rem', 0),
+          margin: widthHeightDynamicStyle(width, 768, 0, quoteCreateQuoteStyles.addBtnContainer.margin),
         }}
       >
         <ButtonAtom
@@ -165,7 +153,7 @@ function Accomodation() {
           onClick={() => history.replace('/quote/quotations/create/costing')}
           style={{
             ...quoteCreateQuoteStyles.addBtn,
-            width: width < 768 ? '100%' : '18%',
+            width: widthHeightDynamicStyle(width, 768, '100%', '18%'),
             margin: '0 0 1rem 0',
           }}
         />

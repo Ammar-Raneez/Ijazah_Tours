@@ -14,6 +14,7 @@ import clsx from 'clsx';
 import LinkAtom from '../atoms/LinkAtom';
 import LinkTextAtom from '../atoms/LinkTextAtom';
 import DivAtom from '../atoms/DivAtom';
+import { widthHeightDynamicStyle } from '../utils/helpers';
 import { sidebarStyles } from '../styles';
 
 const drawerWidth = 240;
@@ -94,7 +95,7 @@ function Sidebar({ wind, handleDrawerToggle, mobileOpen }: SidebarProps) {
         <DivAtom
           style={{
             ...sidebarStyles.bottomContainer,
-            flex: width < 1280 ? 1 : 0.93,
+            flex: widthHeightDynamicStyle(width, 1280, 1, 0.93),
           }}
         >
           <ListItem button key="Profile">

@@ -7,7 +7,8 @@ import ButtonAtom from '../../../atoms/ButtonAtom';
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
 import TextFieldAtom from '../../../atoms/TextFieldAtom';
-import { AccomodationRate } from '../../../utils/types';
+import { AccomodationRate, FlexDirection } from '../../../utils/types';
+import { widthHeightDynamicStyle } from '../../../utils/helpers';
 import {
   libraryAccomodationStyles,
   libraryStyles,
@@ -57,7 +58,7 @@ function AccomodationRatesContainer({
       <DivAtom
         style={{
           ...libraryAccomodationStyles.multiFieldContainer,
-          flexDirection: width < 1000 ? 'column' : 'row',
+          flexDirection: widthHeightDynamicStyle(width, 1000, 'column', 'row') as FlexDirection,
           marginTop: '1rem',
         }}
       >
@@ -71,8 +72,8 @@ function AccomodationRatesContainer({
           style={{
             ...libraryStyles.textField,
             flex: 1,
-            width: width < 1000 ? '100%' : 'auto',
-            margin: width < 1000 ? '0 0 1rem 0' : '0 1rem 0 0',
+            width: widthHeightDynamicStyle(width, 1000, '100%', 'auto'),
+            margin: widthHeightDynamicStyle(width, 1000, '0 0 1rem 0', '0 1rem 0 0'),
           }}
           disableUnderline={false}
           select={false}
@@ -89,8 +90,8 @@ function AccomodationRatesContainer({
           style={{
             ...libraryStyles.textField,
             flex: 1,
-            width: width < 1000 ? '100%' : 'auto',
-            margin: width < 1000 ? '0 0 1rem 0' : '0 1rem 1rem 0',
+            width: widthHeightDynamicStyle(width, 540, '100%', 'auto'),
+            margin: widthHeightDynamicStyle(width, 1000, '0 0 1rem 0', '0 1rem 1rem 0'),
           }}
           disableUnderline={false}
           select={false}
@@ -98,7 +99,7 @@ function AccomodationRatesContainer({
           type="date"
         />
         <FormControlInput
-          margin={width < 1000 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
+          margin={widthHeightDynamicStyle(width, 1000, '0 0 1rem 0', '0 1rem 1rem 0') as string}
           flex={1}
           label="Meal Plan"
           fullWidth
@@ -109,7 +110,7 @@ function AccomodationRatesContainer({
           placeholder="Enter Meal Plan"
         />
         <FormControlInput
-          margin={width < 1000 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
+          margin={widthHeightDynamicStyle(width, 1000, '0 0 1rem 0', '0 1rem 1rem 0') as string}
           flex={1}
           label="Single Price"
           fullWidth
@@ -120,7 +121,7 @@ function AccomodationRatesContainer({
           placeholder="Enter Single Price"
         />
         <FormControlInput
-          margin={width < 1000 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
+          margin={widthHeightDynamicStyle(width, 1000, '0 0 1rem 0', '0 1rem 1rem 0') as string}
           flex={1}
           label="Double Price"
           fullWidth
@@ -143,7 +144,7 @@ function AccomodationRatesContainer({
         />
         <ButtonAtom
           startIcon={<AddCircleOutlineOutlinedIcon />}
-          text={width < 1000 ? 'Add Rate' : 'Add'}
+          text={widthHeightDynamicStyle(width, 1000, 'Add Rate', 'Add') as string}
           disabled={
             newRateStart === ''
             || newRateEnd === ''
@@ -155,15 +156,15 @@ function AccomodationRatesContainer({
           onClick={(event) => onCreateRate(event)}
           style={{
             ...TableToolbarStyles.addBtn,
-            width: width < 1000 ? '100%' : 'auto',
+            width: widthHeightDynamicStyle(width, 540, '100%', 'auto'),
             height: '3rem',
-            marginLeft: width < 1000 ? '0px' : '1rem',
-            marginBottom: width < 1000 ? '1rem' : '0',
+            marginLeft: widthHeightDynamicStyle(width, 1000, 0, '1rem') as string,
+            marginBottom: widthHeightDynamicStyle(width, 1000, '1rem', 0) as string,
           }}
           size="large"
         />
       </DivAtom>
-      <DivAtom style={libraryAccomodationStyles.tableContainer}>
+      <DivAtom>
         {rateData.length > 0 && (
           <AccomodationPriceTable
             columns={[

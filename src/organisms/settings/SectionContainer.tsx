@@ -3,17 +3,19 @@ import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOut
 import ButtonAtom from '../../atoms/ButtonAtom';
 import DivAtom from '../../atoms/DivAtom';
 import H2Atom from '../../atoms/H2Atom';
+import { FlexDirection } from '../../utils/types';
+import { widthHeightDynamicStyle } from '../../utils/helpers';
 import { settingsStyles, TableToolbarStyles } from '../../styles';
 
 interface SectionContainerProps {
-  containerWidth: number;
+  width: number;
   h2Text: string;
   btnText: string;
   setOpenDialog: any;
 }
 
 function SectionContainer({
-  containerWidth,
+  width,
   h2Text,
   btnText,
   setOpenDialog,
@@ -22,7 +24,7 @@ function SectionContainer({
     <DivAtom
       style={{
         ...settingsStyles.multiFieldContainer,
-        flexDirection: containerWidth < 1000 ? 'column' : 'row',
+        flexDirection: widthHeightDynamicStyle(width, 1000, 'column', 'row') as FlexDirection,
         marginTop: '1rem',
       }}
     >
@@ -33,10 +35,10 @@ function SectionContainer({
         onClick={setOpenDialog}
         style={{
           ...TableToolbarStyles.addBtn,
-          width: containerWidth < 1000 ? '100%' : '16rem',
+          width: widthHeightDynamicStyle(width, 1000, '100%', '16rem'),
           height: '3rem',
-          marginLeft: containerWidth < 1000 ? '0px' : '1rem',
-          marginBottom: containerWidth < 1000 ? '1rem' : '0',
+          marginLeft: widthHeightDynamicStyle(width, 1000, 0, '1rem'),
+          marginBottom: widthHeightDynamicStyle(width, 1000, '1rem', 0),
         }}
         size="large"
       />

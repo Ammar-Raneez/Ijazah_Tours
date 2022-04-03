@@ -36,16 +36,12 @@ export function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-export const statusOptions = [
-  { label: 'ACTIVE', value: 'ACTIVE' },
-  { label: 'INACTIVE', value: 'INACTIVE' },
-];
-
-export const vehicleOptions = [
-  { label: 'Nissan', value: 'Nissan' },
-  { label: 'Suzuki', value: 'Suzuki' },
-  { label: 'BMW', value: 'BMW' },
-];
+export const widthHeightDynamicStyle = (
+  value: number,
+  threshold: number,
+  ifTrue: string | number | undefined,
+  ifFalse: string | number | undefined,
+) => (value < threshold ? ifTrue : ifFalse);
 
 export const uploadImage = async (storage: FirebaseStorage, container: string, pic: string, filepath: string) => {
   const randomString = uuid();
@@ -69,3 +65,31 @@ export const searchData = (search: string, initialData: any, setter: any) => {
     setter(initialData);
   }
 };
+
+export const statusOptions = [
+  { label: 'ACTIVE', value: 'ACTIVE' },
+  { label: 'INACTIVE', value: 'INACTIVE' },
+];
+
+export const vehicleOptions = [
+  { label: 'Nissan', value: 'Nissan' },
+  { label: 'Suzuki', value: 'Suzuki' },
+  { label: 'BMW', value: 'BMW' },
+];
+
+export const roomTypes = [
+  { label: 'Diluxe', value: 'Diluxe' },
+  { label: 'Mega', value: 'Mega' },
+  { label: 'Suite', value: 'Suite' },
+];
+
+export const mealPlanOptions = [
+  { label: 'BB', value: 'BB' },
+  { label: 'FB', value: 'FB' },
+  { label: 'HB', value: 'HB' },
+];
+
+export const dateTypeOptions = [
+  { label: 'Specific Dates', value: 'specific-dates' },
+  { label: 'Not Specific', value: 'not-specific' },
+];

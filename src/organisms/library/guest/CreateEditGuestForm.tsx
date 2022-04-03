@@ -1,15 +1,16 @@
 import { ChangeEvent } from 'react';
 import { CircularProgress } from '@material-ui/core';
 
+import ImageUploader from './ImageUploader';
 import FormControlInput from '../../../molecules/FormControlInput';
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import DivAtom from '../../../atoms/DivAtom';
 import TextFieldAtom from '../../../atoms/TextFieldAtom';
-import { libraryCreateGuestStyles, libraryStyles } from '../../../styles';
-import ImageUploader from './ImageUploader';
-import { statusOptions } from '../../../utils/helpers';
-import H2Atom from '../../../atoms/H2Atom';
 import ParagraphAtom from '../../../atoms/ParagraphAtom';
+import H2Atom from '../../../atoms/H2Atom';
+import { FlexDirection } from '../../../utils/types';
+import { statusOptions, widthHeightDynamicStyle } from '../../../utils/helpers';
+import { libraryCreateGuestStyles, libraryStyles } from '../../../styles';
 
 interface CreateEditGuestFormProps {
   width: number;
@@ -93,11 +94,11 @@ function CreateEditGuestForm({
           style={{
             ...libraryCreateGuestStyles.multiFieldContainer,
             justifyContent: 'space-between',
-            flexDirection: width < 600 ? 'column' : 'row',
+            flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
           }}
         >
           <FormControlInput
-            margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
+            margin={widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0') as string}
             flex={1}
             label="Reference Number"
             fullWidth
@@ -108,7 +109,7 @@ function CreateEditGuestForm({
             placeholder="Enter Reference Number"
           />
           <FormControlInput
-            margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
+            margin={widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0') as string}
             flex={1}
             label="First Name"
             fullWidth
@@ -119,7 +120,7 @@ function CreateEditGuestForm({
             placeholder="Enter First Name"
           />
           <FormControlInput
-            margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
+            margin={widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0') as string}
             flex={1}
             label="Last Name"
             fullWidth
@@ -140,7 +141,7 @@ function CreateEditGuestForm({
             style={{
               ...libraryStyles.textField,
               flex: 1,
-              width: width < 600 ? '100%' : 'auto',
+              width: widthHeightDynamicStyle(width, 600, '100%', 'auto'),
             }}
             disableUnderline={false}
             select
@@ -150,11 +151,11 @@ function CreateEditGuestForm({
           style={{
             ...libraryCreateGuestStyles.multiFieldContainer,
             justifyContent: 'space-between',
-            flexDirection: width < 600 ? 'column' : 'row',
+            flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
           }}
         >
           <FormControlInput
-            margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
+            margin={widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0') as string}
             flex={1}
             label="Country"
             fullWidth
@@ -180,11 +181,11 @@ function CreateEditGuestForm({
           style={{
             ...libraryCreateGuestStyles.multiFieldContainer,
             justifyContent: 'space-between',
-            flexDirection: width < 600 ? 'column' : 'row',
+            flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
           }}
         >
           <FormControlInput
-            margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
+            margin={widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0') as string}
             flex={1}
             label="Contact Number"
             fullWidth
@@ -221,11 +222,11 @@ function CreateEditGuestForm({
           style={{
             ...libraryCreateGuestStyles.multiFieldContainer,
             justifyContent: 'space-between',
-            flexDirection: width < 600 ? 'column' : 'row',
+            flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
           }}
         >
           <FormControlInput
-            margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
+            margin={widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0') as string}
             flex={1}
             type="number"
             label="Adults"
@@ -254,11 +255,11 @@ function CreateEditGuestForm({
             style={{
               ...libraryCreateGuestStyles.multiFieldContainer,
               justifyContent: 'flex-start',
-              flexDirection: width < 768 ? 'column' : 'row',
+              flexDirection: widthHeightDynamicStyle(width, 768, 'column', 'row') as FlexDirection,
             }}
           >
             <FormControlInput
-              margin={width < 768 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
+              margin={widthHeightDynamicStyle(width, 768, '0 0 1rem 0', '0 1rem 1rem 0') as string}
               type="number"
               label="Childs Age"
               fullWidth
@@ -273,9 +274,9 @@ function CreateEditGuestForm({
               onClick={() => setChildrenAges([...childrenAges, childAge])}
               style={{
                 ...libraryCreateGuestStyles.addBtn,
-                width: width < 768 ? '100%' : '18%',
+                width: widthHeightDynamicStyle(width, 768, '100%', '18%'),
                 height: '100%',
-                margin: width < 768 ? '0 0 1rem 0' : '0.5rem 0 0 1rem',
+                margin: widthHeightDynamicStyle(width, 768, '0 0 1rem 0', '0.5rem 0 0 1rem'),
               }}
               text="Add Child"
             />
@@ -299,19 +300,16 @@ function CreateEditGuestForm({
       {showValidationErrorMessage && (
         <ParagraphAtom
           text="Please fill in all the fields"
-          style={{ color: 'red', textAlign: 'center' }}
+          style={libraryCreateGuestStyles.errorMsg}
         />
       )}
 
       <DivAtom
         style={{
           ...libraryCreateGuestStyles.addBtnContainer,
-          flexDirection: width < 768 ? 'column' : 'row',
-          padding: width < 768 ? '1rem' : '0px',
-          margin:
-            width < 768
-              ? '0px'
-              : libraryCreateGuestStyles.addBtnContainer.margin,
+          flexDirection: widthHeightDynamicStyle(width, 768, 'column', 'row') as FlexDirection,
+          padding: widthHeightDynamicStyle(width, 768, '1rem', 0),
+          margin: widthHeightDynamicStyle(width, 768, 0, libraryCreateGuestStyles.addBtnContainer.margin),
         }}
       >
         <ButtonAtom
@@ -321,8 +319,8 @@ function CreateEditGuestForm({
           disabled={isCreating}
           style={{
             ...libraryCreateGuestStyles.addBtn,
-            width: width < 768 ? '100%' : '18%',
-            margin: width < 768 ? '0 0 1rem 0' : '0 0 0 1rem',
+            width: widthHeightDynamicStyle(width, 768, '100%', '18%'),
+            margin: widthHeightDynamicStyle(width, 768, '0 0 1rem 0', ' 0 0 0 1rem'),
           }}
           text={btnText}
         />
@@ -332,7 +330,7 @@ function CreateEditGuestForm({
             onClick={onAddReminder}
             style={{
               ...libraryCreateGuestStyles.addBtn,
-              width: width < 768 ? '100%' : '18%',
+              width: widthHeightDynamicStyle(width, 768, '100%', '18%'),
             }}
             text="Add Reminder"
           />

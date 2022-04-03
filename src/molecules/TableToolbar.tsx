@@ -17,6 +17,8 @@ import clsx from 'clsx';
 import ButtonAtom from '../atoms/ButtonAtom';
 import DivAtom from '../atoms/DivAtom';
 import InputAtom from '../atoms/InputAtom';
+import { FlexDirection } from '../utils/types';
+import { widthHeightDynamicStyle } from '../utils/helpers';
 import { TableToolbarStyles } from '../styles';
 
 const useToolbarStyles = makeStyles((theme: Theme) => ({
@@ -86,13 +88,13 @@ const TableToolbar = ({
       <DivAtom
         style={{
           ...TableToolbarStyles.container,
-          flexDirection: width < 540 ? 'column' : 'row',
+          flexDirection: widthHeightDynamicStyle(width, 540, 'column', 'row') as FlexDirection,
         }}
       >
         <DivAtom
           style={{
             ...TableToolbarStyles.toolbarContainer,
-            width: width < 540 ? '100%' : 'auto',
+            width: widthHeightDynamicStyle(width, 540, '100%', 'auto'),
           }}
         >
           {numSelected > 0 && (
@@ -132,8 +134,8 @@ const TableToolbar = ({
         {numSelected <= 0 && (
           <DivAtom
             style={{
-              margin: width < 540 ? '16px 0 0 0' : '0px',
-              width: width < 540 ? '100%' : 'auto',
+              margin: widthHeightDynamicStyle(width, 540, '16px 0 0 0', 0),
+              width: widthHeightDynamicStyle(width, 540, '100%', 'auto'),
             }}
           >
             <Link

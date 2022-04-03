@@ -258,7 +258,7 @@ function SettingsAccomodation() {
         {singleInputsData[0] !== undefined && INPUT_TYPES.map((type, index) => (
           <DivAtom key={index} style={{ marginBottom: '3rem' }}>
             <SectionContainer
-              containerWidth={containerWidth}
+              width={containerWidth}
               h2Text={type.h2Text}
               btnText={type.btnText}
               setOpenDialog={() => onOpenNewDialog(index)}
@@ -296,7 +296,7 @@ function SettingsAccomodation() {
 
         <DivAtom style={{ marginBottom: '3rem' }}>
           <SectionContainer
-            containerWidth={containerWidth}
+            width={containerWidth}
             h2Text="Locations"
             btnText="Add Location"
             setOpenDialog={() => setOpenNewLocationDialog(true)}

@@ -12,6 +12,8 @@ import DataCard from '../../../molecules/DataCard';
 import DivAtom from '../../../atoms/DivAtom';
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import InputAtom from '../../../atoms/InputAtom';
+import { FlexDirection, JustifyContent } from '../../../utils/types';
+import { widthHeightDynamicStyle } from '../../../utils/helpers';
 import { QUOTATIONS_DATA } from '../../../data';
 import { quotationsStyles } from '../../../styles';
 
@@ -80,7 +82,7 @@ function Quotations() {
             <DivAtom
               style={{
                 ...quotationsStyles.btnMainContainer,
-                flexDirection: width < 768 ? 'column' : 'row',
+                flexDirection: widthHeightDynamicStyle(width, 768, 'column', 'row') as FlexDirection,
               }}
             >
               <Link to="/quote/quotations/create/customer">
@@ -89,8 +91,8 @@ function Quotations() {
                   style={{
                     ...quotationsStyles.btn,
                     marginRight: '16px',
-                    marginBottom: width < 768 ? '1rem' : 0,
-                    width: width < 768 ? '100%' : '11rem',
+                    marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
+                    width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
                   }}
                   onClick={() => null}
                   size="large"
@@ -101,8 +103,8 @@ function Quotations() {
                 style={{
                   ...quotationsStyles.btn,
                   marginRight: '16px',
-                  marginBottom: width < 768 ? '1rem' : 0,
-                  width: width < 768 ? '100%' : '11rem',
+                  marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
+                  width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
                 }}
                 onClick={() => null}
                 size="large"
@@ -111,8 +113,8 @@ function Quotations() {
                 text="Preset Quotes"
                 style={{
                   ...quotationsStyles.btn,
-                  marginBottom: width < 768 ? '1rem' : 0,
-                  width: width < 768 ? '100%' : '11rem',
+                  marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
+                  width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
                 }}
                 onClick={() => null}
                 size="large"
@@ -121,7 +123,7 @@ function Quotations() {
             <DivAtom
               style={{
                 ...quotationsStyles.dataCardContainer,
-                flexDirection: width < 768 ? 'column' : 'row',
+                flexDirection: widthHeightDynamicStyle(width, 768, 'column', 'row') as FlexDirection,
               }}
             >
               <DataCard title="Total" total={60} />
@@ -132,13 +134,13 @@ function Quotations() {
             <DivAtom
               style={{
                 ...quotationsStyles.btnSubContainer,
-                flexDirection: width < 768 ? 'column' : 'row',
+                flexDirection: widthHeightDynamicStyle(width, 768, 'column', 'row') as FlexDirection,
               }}
             >
               <DivAtom
                 style={{
                   ...quotationsStyles.btnSubInnerContainer,
-                  margin: width < 768 ? '0 0 16px 0' : '0',
+                  margin: widthHeightDynamicStyle(width, 768, '0 0 1rem 0', 0),
                 }}
               >
                 <ButtonAtom
@@ -160,7 +162,7 @@ function Quotations() {
               <DivAtom
                 style={{
                   ...quotationsStyles.searchContainer,
-                  justifyContent: width < 768 ? 'flex-start' : 'flex-end',
+                  justifyContent: widthHeightDynamicStyle(width, 768, 'flex-start', 'flex-end') as JustifyContent,
                 }}
               >
                 <InputAtom

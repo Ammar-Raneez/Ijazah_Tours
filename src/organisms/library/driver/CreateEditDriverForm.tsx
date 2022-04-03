@@ -1,15 +1,16 @@
 import { ChangeEvent } from 'react';
 import { CircularProgress } from '@material-ui/core';
 
+import ImageUploader from './ImageUploader';
 import FormControlInput from '../../../molecules/FormControlInput';
+import CheckboxGroup from '../../../molecules/CheckboxGroup';
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import DivAtom from '../../../atoms/DivAtom';
 import TextFieldAtom from '../../../atoms/TextFieldAtom';
-import { libraryDriverStyles, libraryStyles } from '../../../styles';
-import ImageUploader from './ImageUploader';
-import CheckboxGroup from '../../../molecules/CheckboxGroup';
-import { statusOptions, vehicleOptions } from '../../../utils/helpers';
 import ParagraphAtom from '../../../atoms/ParagraphAtom';
+import { FlexDirection } from '../../../utils/types';
+import { statusOptions, vehicleOptions, widthHeightDynamicStyle } from '../../../utils/helpers';
+import { libraryDriverStyles, libraryStyles } from '../../../styles';
 
 interface CreateEditDriverFormProps {
   width: number;
@@ -92,11 +93,11 @@ function CreateEditDriverForm({
         <DivAtom
           style={{
             ...libraryDriverStyles.multiFieldContainer,
-            flexDirection: width < 600 ? 'column' : 'row',
+            flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
           }}
         >
           <FormControlInput
-            margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
+            margin={widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0') as string}
             flex={1}
             label="First Name"
             fullWidth
@@ -122,11 +123,11 @@ function CreateEditDriverForm({
           style={{
             ...libraryDriverStyles.multiFieldContainer,
             justifyContent: 'space-between',
-            flexDirection: width < 600 ? 'column' : 'row',
+            flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
           }}
         >
           <FormControlInput
-            margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
+            margin={widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0') as string}
             flex={1}
             label="NIC"
             fullWidth
@@ -151,7 +152,7 @@ function CreateEditDriverForm({
         <DivAtom
           style={{
             ...libraryDriverStyles.multiFieldContainer,
-            flexDirection: width < 600 ? 'column' : 'row',
+            flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
           }}
         >
           <TextFieldAtom
@@ -165,7 +166,7 @@ function CreateEditDriverForm({
             style={{
               ...libraryStyles.textField,
               flex: 1,
-              width: width < 600 ? '100%' : 'auto',
+              width: widthHeightDynamicStyle(width, 600, '100%', 'auto'),
               margin: '0 1rem 1rem 0',
             }}
             disableUnderline={false}
@@ -182,7 +183,7 @@ function CreateEditDriverForm({
             style={{
               ...libraryStyles.textField,
               flex: 1,
-              width: width < 600 ? '100%' : 'auto',
+              width: widthHeightDynamicStyle(width, 600, '100%', 'auto'),
               margin: '0 1rem 1rem 0',
             }}
             disableUnderline={false}
@@ -223,11 +224,11 @@ function CreateEditDriverForm({
           style={{
             ...libraryDriverStyles.multiFieldContainer,
             justifyContent: 'space-between',
-            flexDirection: width < 600 ? 'column' : 'row',
+            flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
           }}
         >
           <FormControlInput
-            margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
+            margin={widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0') as string}
             flex={1}
             label="Contact Number"
             fullWidth
@@ -253,7 +254,7 @@ function CreateEditDriverForm({
         <DivAtom
           style={{
             ...libraryDriverStyles.multiFieldContainer,
-            flexDirection: width < 600 ? 'column' : 'row',
+            flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
           }}
         >
           <FormControlInput
@@ -284,16 +285,15 @@ function CreateEditDriverForm({
       {showValidationErrorMessage && (
         <ParagraphAtom
           text="Please fill in all the fields"
-          style={{ color: 'red', textAlign: 'center' }}
+          style={libraryDriverStyles.errorMsg}
         />
       )}
 
       <DivAtom
         style={{
           ...libraryDriverStyles.addBtnContainer,
-          padding: width < 768 ? '1rem' : '0px',
-          margin:
-            width < 768 ? '0px' : libraryDriverStyles.addBtnContainer.margin,
+          padding: widthHeightDynamicStyle(width, 768, '1rem', 0),
+          margin: widthHeightDynamicStyle(width, 768, '0px', libraryDriverStyles.addBtnContainer.margin),
         }}
       >
         <ButtonAtom
@@ -303,8 +303,8 @@ function CreateEditDriverForm({
           disabled={isCreating}
           style={{
             ...libraryDriverStyles.addBtn,
-            width: width < 768 ? '100%' : '18%',
-            margin: width < 768 ? '0 0 1rem 0' : '0px',
+            width: widthHeightDynamicStyle(width, 768, '100%', '18%'),
+            margin: widthHeightDynamicStyle(width, 768, '0 0 1rem 0', 0),
           }}
           text={btnText}
         />

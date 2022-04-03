@@ -13,6 +13,7 @@ import H2Atom from '../../atoms/H2Atom';
 import ParagraphAtom from '../../atoms/ParagraphAtom';
 import { login } from '../../redux/userSlice';
 import { db } from '../../firebase';
+import { widthHeightDynamicStyle } from '../../utils/helpers';
 import { loginStyles } from '../../styles';
 
 function Login() {
@@ -64,7 +65,7 @@ function Login() {
       <DivAtom
         style={{
           ...loginStyles.formContainer,
-          width: width < 1100 ? '80%' : '25%',
+          width: widthHeightDynamicStyle(width, 1000, '80%%', '25%'),
           height: 'auto',
         }}
       >

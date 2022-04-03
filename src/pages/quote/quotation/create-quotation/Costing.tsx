@@ -10,6 +10,7 @@ import { quoteCreateQuoteStyles } from '../../../../styles';
 import { QuotationCostingAccomodation, QuotationCostingRate } from '../../../../utils/types';
 import CostingOverallCost from '../../../../organisms/quote/quotation/create-quotation/costing/CostingOverallCost';
 import ButtonAtom from '../../../../atoms/ButtonAtom';
+import { widthHeightDynamicStyle } from '../../../../utils/helpers';
 
 const roomTypes = [
   { label: 'Diluxe', value: 'Diluxe' },
@@ -171,9 +172,8 @@ function Costing() {
       <DivAtom
         style={{
           ...quoteCreateQuoteStyles.addBtnContainer,
-          padding: width < 768 ? '1rem' : '0px',
-          margin:
-            width < 768 ? '0px' : quoteCreateQuoteStyles.addBtnContainer.margin,
+          padding: widthHeightDynamicStyle(width, 768, '1rem', 0),
+          margin: widthHeightDynamicStyle(width, 768, 0, quoteCreateQuoteStyles.addBtnContainer.margin),
         }}
       >
         <ButtonAtom
@@ -182,7 +182,7 @@ function Costing() {
           onClick={() => null}
           style={{
             ...quoteCreateQuoteStyles.addBtn,
-            width: width < 768 ? '100%' : '12%',
+            width: widthHeightDynamicStyle(width, 768, '100%', '12%'),
             margin: '0 0 1rem 0',
           }}
         />
