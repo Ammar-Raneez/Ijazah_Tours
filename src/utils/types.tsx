@@ -2,6 +2,13 @@ import { Timestamp } from 'firebase/firestore';
 
 export type Order = 'asc' | 'desc';
 export type Status = 'ACTIVE' | 'INACTIVE';
+export type NavbarType = 'quote' | 'library' | 'settings';
+
+export interface User {
+  _id: string;
+  name: string;
+  email: string;
+}
 
 // Settings
 export interface SettingsRoomProperties {

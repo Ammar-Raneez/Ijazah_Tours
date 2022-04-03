@@ -1,6 +1,7 @@
 import DivAtom from '../atoms/DivAtom';
 import LinkAtom from '../atoms/LinkAtom';
 import LinkTextAtom from '../atoms/LinkTextAtom';
+import { NavbarType } from '../utils/types';
 import { navbarStyles } from '../styles';
 
 const LINKS = [
@@ -40,7 +41,7 @@ const LINKS = [
 ];
 
 interface NavbarProps {
-  type: 'quote' | 'library' | 'settings';
+  type: NavbarType;
 }
 
 function Navbar({ type }: NavbarProps) {

@@ -2,12 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 // eslint-disable-next-line import/no-cycle
 import { RootState } from './root';
-
-declare type User = {
-  _id: string;
-  name: string;
-  email: string;
-};
+import { User } from '../utils/types';
 
 interface UserState {
   user: User;

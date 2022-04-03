@@ -110,7 +110,7 @@ function QuotationsTable({ rowdata }: QuotationsTableProps) {
                     tabIndex={-1}
                     key={row.id}
                   >
-                    <TableCell align="left">
+                    <TableCell key={uuid()} align="left">
                       <GuestProfile
                         image={row.image}
                         title={row.title}
@@ -125,6 +125,7 @@ function QuotationsTable({ rowdata }: QuotationsTableProps) {
                         colors: ['#464E5F', '#B5B5C3'],
                         weight: 300,
                       }}
+                      key={uuid()}
                     />
                     <TableRowTextCell
                       cell={{
@@ -133,6 +134,7 @@ function QuotationsTable({ rowdata }: QuotationsTableProps) {
                         colors: ['#464E5F', '#B5B5C3'],
                         weight: 300,
                       }}
+                      key={uuid()}
                     />
                     <TableRowButtonCell
                       onClick={() => null}
@@ -141,6 +143,7 @@ function QuotationsTable({ rowdata }: QuotationsTableProps) {
                       btnsize="medium"
                       btnborderradius="0.5rem"
                       cell={row}
+                      key={uuid()}
                       btndisabled
                     />
                     <TableRowButtonCell
@@ -151,6 +154,7 @@ function QuotationsTable({ rowdata }: QuotationsTableProps) {
                       btnborderradius="0.5rem"
                       btntext="View Quote"
                       btncolors={['#C9F7F5', '#1BC5BD']}
+                      key={uuid()}
                     />
                   </TableRow>
                 ))}
