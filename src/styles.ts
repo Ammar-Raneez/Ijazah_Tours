@@ -73,6 +73,10 @@ const formCreateMemberStyles = {
   singleCheckbox: {
     marginTop: '1rem',
   },
+  errorMsg: {
+    color: 'red',
+    textAlign: 'center' as const,
+  },
   addBtn: shadowButtonStyles,
 };
 
@@ -113,6 +117,7 @@ export const loginStyles = {
     fontWeight: 'bolder',
     fontSize: '2rem',
     marginBottom: '0rem',
+    marginTop: '0rem',
   },
   subtitle: {
     ...formCreateMemberStyles.subtitle,
@@ -122,10 +127,14 @@ export const loginStyles = {
   formContainer: {
     display: 'flex',
     flexDirection: 'column' as const,
-    padding: '1rem 2rem',
+    padding: '2rem 2rem',
     backgroundColor: 'white',
     boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
     borderRadius: '0.5rem',
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column' as const,
   },
   inputs: {
     padding: '0.7rem 0.5rem',
@@ -135,7 +144,7 @@ export const loginStyles = {
     marginTop: '1rem',
   },
   wrapper: {
-    backgroundColor: 'lightblue',
+    backgroundColor: '#A0C6F4',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
