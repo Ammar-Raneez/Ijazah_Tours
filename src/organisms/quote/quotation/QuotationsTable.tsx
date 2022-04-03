@@ -10,7 +10,6 @@ import {
   TableRow,
   Theme,
 } from '@material-ui/core';
-import { v4 as uuid } from 'uuid';
 
 import GuestProfile from '../../../molecules/GuestProfile';
 import TableRowButtonCell from '../../../molecules/TableRowButtonCell';
@@ -110,12 +109,11 @@ function QuotationsTable({ rowdata }: QuotationsTableProps) {
                     tabIndex={-1}
                     key={row.id}
                   >
-                    <TableCell key={uuid()} align="left">
+                    <TableCell align="left">
                       <GuestProfile
                         image={row.image}
                         title={row.title}
-                        titleweight={300}
-                        key={uuid()}
+                        titleWeight={300}
                       />
                     </TableCell>
                     <TableRowTextCell
@@ -125,7 +123,6 @@ function QuotationsTable({ rowdata }: QuotationsTableProps) {
                         colors: ['#464E5F', '#B5B5C3'],
                         weight: 300,
                       }}
-                      key={uuid()}
                     />
                     <TableRowTextCell
                       cell={{
@@ -134,7 +131,6 @@ function QuotationsTable({ rowdata }: QuotationsTableProps) {
                         colors: ['#464E5F', '#B5B5C3'],
                         weight: 300,
                       }}
-                      key={uuid()}
                     />
                     <TableRowButtonCell
                       onClick={() => null}
@@ -143,7 +139,6 @@ function QuotationsTable({ rowdata }: QuotationsTableProps) {
                       btnSize="medium"
                       btnBorderRadius="0.5rem"
                       cell={row}
-                      key={uuid()}
                       btnDisabled
                     />
                     <TableRowButtonCell
@@ -154,7 +149,6 @@ function QuotationsTable({ rowdata }: QuotationsTableProps) {
                       btnBorderRadius="0.5rem"
                       btnText="View Quote"
                       btnColors={['#C9F7F5', '#1BC5BD']}
-                      key={uuid()}
                     />
                   </TableRow>
                 ))}

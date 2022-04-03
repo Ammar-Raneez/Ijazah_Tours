@@ -1,5 +1,6 @@
 export const QUOTATIONS_DATA = [
   {
+    id: 1,
     image: require('./assets/logo.png'),
     title: 'Brad Simmons',
     earning: '$2500',
@@ -7,6 +8,7 @@ export const QUOTATIONS_DATA = [
     status: 'Approved',
   },
   {
+    id: 2,
     image: require('./assets/logo.png'),
     title: 'Grad Simmons',
     earning: '$250',
@@ -14,6 +16,7 @@ export const QUOTATIONS_DATA = [
     status: 'In Progress',
   },
   {
+    id: 3,
     image: require('./assets/logo.png'),
     title: 'Ab Simmons',
     earning: '$25000',
@@ -21,6 +24,7 @@ export const QUOTATIONS_DATA = [
     status: 'Approved',
   },
   {
+    id: 4,
     image: require('./assets/logo.png'),
     title: 'Bret Simmons',
     earning: '$2500',
@@ -28,6 +32,7 @@ export const QUOTATIONS_DATA = [
     status: 'Approved',
   },
   {
+    id: 5,
     image: require('./assets/logo.png'),
     title: 'Craig Simmons',
     earning: '$2500',
@@ -35,6 +40,7 @@ export const QUOTATIONS_DATA = [
     status: 'Approved',
   },
   {
+    id: 6,
     image: require('./assets/logo.png'),
     title: 'Me Simmons',
     earning: '$2500',

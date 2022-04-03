@@ -7,14 +7,14 @@ interface GuestProfileProps {
   image: string;
   title: string;
   subtitle?: string;
-  titleweight?: number;
+  titleWeight?: number;
 }
 
 function GuestProfile({
   image,
   title,
   subtitle,
-  titleweight,
+  titleWeight,
 }: GuestProfileProps) {
   return (
     <DivAtom style={guestProfileStyles.container}>
@@ -26,7 +26,7 @@ function GuestProfile({
       />
       <DivAtom style={guestProfileStyles.innerContainer}>
         <ParagraphAtom
-          style={{ ...guestProfileStyles.paragraph, fontWeight: titleweight }}
+          style={{ ...guestProfileStyles.paragraph, fontWeight: titleWeight }}
           text={title}
         />
         {subtitle && (
