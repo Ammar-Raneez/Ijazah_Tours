@@ -24,7 +24,7 @@ function Accomodation() {
   const [search, setSearch] = useState('');
 
   const [width, setWidth] = useState(0);
-  const [containerHeight, setContainerHeight] = useState(0);
+  const [height, setHeight] = useState(0);
   const history = useHistory();
 
   useEffect(() => {
@@ -33,12 +33,12 @@ function Accomodation() {
 
   useEffect(() => {
     setWidth(window.innerWidth);
-    setContainerHeight(window.innerHeight - 220);
+    setHeight(window.innerHeight - 220);
     const widthListener = window.addEventListener('resize', () => {
       setWidth(window.innerWidth);
     });
     const heightListener = window.addEventListener('resize', () => {
-      setContainerHeight(window.innerHeight - 220);
+      setHeight(window.innerHeight - 220);
     });
 
     const removeEventListeners = () => {
@@ -47,7 +47,7 @@ function Accomodation() {
     };
 
     return removeEventListeners();
-  }, [width, containerHeight]);
+  }, [width, height]);
 
   const deleteAccomodation = (acc: QuotationAccomodation) => {
     const removeIndex = accomodationData.findIndex((ac) => ac.id === acc.id);
@@ -57,7 +57,7 @@ function Accomodation() {
   };
 
   return (
-    <DivAtom style={{ height: `${containerHeight}px` }}>
+    <DivAtom style={{ height: `${height}px` }}>
       <ParagraphAtom
         style={{
           ...quoteCreateQuoteStyles.title,

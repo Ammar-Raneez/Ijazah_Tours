@@ -42,7 +42,7 @@ function Costing() {
   const [accomodationTotal, setAccomodationTotal] = useState('0');
 
   const [width, setWidth] = useState(0);
-  const [containerHeight, setContainerHeight] = useState(0);
+  const [height, setHeight] = useState(0);
 
   useEffect(() => {
     let accTotal = 0;
@@ -67,12 +67,12 @@ function Costing() {
 
   useEffect(() => {
     setWidth(window.innerWidth);
-    setContainerHeight(window.innerHeight - 220);
+    setHeight(window.innerHeight - 220);
     const widthListener = window.addEventListener('resize', () => {
       setWidth(window.innerWidth);
     });
     const heightListener = window.addEventListener('resize', () => {
-      setContainerHeight(window.innerHeight - 220);
+      setHeight(window.innerHeight - 220);
     });
 
     const removeEventListeners = () => {
@@ -81,10 +81,10 @@ function Costing() {
     };
 
     return removeEventListeners();
-  }, [width, containerHeight]);
+  }, [width, height]);
 
   return (
-    <DivAtom style={{ height: `${containerHeight}px` }}>
+    <DivAtom style={{ height: `${height}px` }}>
       <ParagraphAtom
         style={{
           ...quoteCreateQuoteStyles.title,

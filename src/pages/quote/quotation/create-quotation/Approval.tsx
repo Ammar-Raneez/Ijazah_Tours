@@ -4,16 +4,16 @@ import DivAtom from '../../../../atoms/DivAtom';
 
 function Approval() {
   const [width, setWidth] = useState(0);
-  const [containerHeight, setContainerHeight] = useState(0);
+  const [height, setHeight] = useState(0);
 
   useEffect(() => {
     setWidth(window.innerWidth);
-    setContainerHeight(window.innerHeight - 220);
+    setHeight(window.innerHeight - 220);
     const widthListener = window.addEventListener('resize', () => {
       setWidth(window.innerWidth);
     });
     const heightListener = window.addEventListener('resize', () => {
-      setContainerHeight(window.innerHeight - 220);
+      setHeight(window.innerHeight - 220);
     });
 
     const removeEventListeners = () => {
@@ -22,10 +22,10 @@ function Approval() {
     };
 
     return removeEventListeners();
-  }, [width, containerHeight]);
+  }, [width, height]);
 
   return (
-    <DivAtom style={{ height: `${containerHeight}px` }}>
+    <DivAtom style={{ height: `${height}px` }}>
       Approval
     </DivAtom>
   );

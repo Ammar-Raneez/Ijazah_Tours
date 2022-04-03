@@ -4,12 +4,12 @@ import DivAtom from '../../../atoms/DivAtom';
 import { settingsStyles } from '../../../styles';
 
 function General() {
-  const [containerHeight, setContainerHeight] = useState(0);
+  const [height, setHeight] = useState(0);
 
   useEffect(() => {
-    setContainerHeight(window.innerHeight - 180);
+    setHeight(window.innerHeight - 180);
     const heightListener = window.addEventListener('resize', () => {
-      setContainerHeight(window.innerHeight - 180);
+      setHeight(window.innerHeight - 180);
     });
 
     const removeEventListeners = () => {
@@ -17,14 +17,14 @@ function General() {
     };
 
     return removeEventListeners();
-  }, [containerHeight]);
+  }, [height]);
 
   return (
     <DivAtom style={settingsStyles.container}>
       <DivAtom
         style={{
           ...settingsStyles.innerContainer,
-          height: `${containerHeight}px`,
+          height: `${height}px`,
         }}
       >
         Settings General

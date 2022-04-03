@@ -8,12 +8,12 @@ import { DASHBOARD_TASK_DATA } from '../../data';
 import { dashboardStyles } from '../../styles';
 
 function Dashboard() {
-  const [containerHeight, setContainerHeight] = useState(0);
+  const [height, setHeight] = useState(0);
 
   useEffect(() => {
-    setContainerHeight(window.innerHeight - 125);
+    setHeight(window.innerHeight - 125);
     const heightListener = window.addEventListener('resize', () => {
-      setContainerHeight(window.innerHeight - 125);
+      setHeight(window.innerHeight - 125);
     });
 
     const removeEventListeners = () => {
@@ -21,14 +21,14 @@ function Dashboard() {
     };
 
     return removeEventListeners();
-  }, [containerHeight]);
+  }, [height]);
 
   return (
     <DivAtom style={dashboardStyles.container}>
       <DivAtom
         style={{
           ...dashboardStyles.innerContainer,
-          height: `${containerHeight}px`,
+          height: `${height}px`,
         }}
       >
         <DivAtom style={dashboardStyles.btnMainContainer}>

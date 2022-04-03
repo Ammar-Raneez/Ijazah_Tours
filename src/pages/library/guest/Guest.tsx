@@ -18,7 +18,7 @@ import { libraryStyles } from '../../../styles';
 import { searchData } from '../../../utils/helpers';
 
 function Guest() {
-  const [containerHeight, setContainerHeight] = useState(0);
+  const [height, setHeight] = useState(0);
   const [guestData, setGuestData] = useState<DocumentData[]>([]);
   const [initialGuestSearchData, setInitialGuestSearchData] = useState<DocumentData[]>([]);
   const [search, setSearch] = useState('');
@@ -30,9 +30,9 @@ function Guest() {
   const history = useHistory();
 
   useEffect(() => {
-    setContainerHeight(window.innerHeight - 180);
+    setHeight(window.innerHeight - 180);
     const heightListener = window.addEventListener('resize', () => {
-      setContainerHeight(window.innerHeight - 180);
+      setHeight(window.innerHeight - 180);
     });
 
     const removeEventListeners = () => {
@@ -40,7 +40,7 @@ function Guest() {
     };
 
     return removeEventListeners();
-  }, [containerHeight]);
+  }, [height]);
 
   useEffect(() => {
     searchData(search, initialGuestSearchData, setGuestData);
@@ -82,7 +82,7 @@ function Guest() {
       <DivAtom
         style={{
           ...libraryStyles.innerContainer,
-          height: `${containerHeight}px`,
+          height: `${height}px`,
         }}
       >
         <DivAtom>

@@ -20,16 +20,16 @@ import { quotationsStyles } from '../../../styles';
 function Quotations() {
   const [search, setSearch] = useState('');
   const [width, setWidth] = useState(0);
-  const [containerHeight, setContainerHeight] = useState(0);
+  const [height, setHeight] = useState(0);
 
   useEffect(() => {
     setWidth(window.innerWidth);
-    setContainerHeight(window.innerHeight - 180);
+    setHeight(window.innerHeight - 180);
     const widthListener = window.addEventListener('resize', () => {
       setWidth(window.innerWidth);
     });
     const heightListener = window.addEventListener('resize', () => {
-      setContainerHeight(window.innerHeight - 180);
+      setHeight(window.innerHeight - 180);
     });
 
     const removeEventListeners = () => {
@@ -38,7 +38,7 @@ function Quotations() {
     };
 
     return removeEventListeners();
-  }, [width, containerHeight]);
+  }, [width, height]);
 
   return (
     <>
@@ -52,7 +52,7 @@ function Quotations() {
           <DivAtom
             style={{
               ...quotationsStyles.innerContainer,
-              height: `${containerHeight}px`,
+              height: `${height}px`,
             }}
           >
             <Route path="/quote/quotations/create/customer">
@@ -76,7 +76,7 @@ function Quotations() {
           <DivAtom
             style={{
               ...quotationsStyles.innerContainer,
-              height: `${containerHeight}px`,
+              height: `${height}px`,
             }}
           >
             <DivAtom

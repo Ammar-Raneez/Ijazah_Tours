@@ -52,8 +52,8 @@ function listRender(data: DocumentData[][], index: number) {
 }
 
 function SettingsAccomodation() {
-  const [containerHeight, setContainerHeight] = useState(0);
-  const [containerWidth, setContainerWidth] = useState(0);
+  const [height, setHeight] = useState(0);
+  const [width, setWidth] = useState(0);
 
   const [singleInputsData, setSingleInputsData] = useState<DocumentData[][]>([]);
   const [newSingleInput, setNewSingleInput] = useState('');
@@ -106,14 +106,14 @@ function SettingsAccomodation() {
   }, [isCreating, isDeleting, isUpdating]);
 
   useEffect(() => {
-    setContainerHeight(window.innerHeight - 180);
-    setContainerWidth(window.innerWidth);
+    setHeight(window.innerHeight - 180);
+    setWidth(window.innerWidth);
 
     const widthListener = window.addEventListener('resize', () => {
-      setContainerWidth(window.innerWidth);
+      setWidth(window.innerWidth);
     });
     const heightListener = window.addEventListener('resize', () => {
-      setContainerHeight(window.innerHeight - 180);
+      setHeight(window.innerHeight - 180);
     });
 
     const removeEventListeners = () => {
@@ -122,7 +122,7 @@ function SettingsAccomodation() {
     };
 
     return removeEventListeners();
-  }, [containerWidth, containerHeight]);
+  }, [width, height]);
 
   const onCreateSingleInput = async (type: string, i: number) => {
     setShowValidationErrorMessage(false);
@@ -252,13 +252,13 @@ function SettingsAccomodation() {
       <DivAtom
         style={{
           ...settingsStyles.innerContainer,
-          height: `${containerHeight}px`,
+          height: `${height}px`,
         }}
       >
         {singleInputsData[0] !== undefined && INPUT_TYPES.map((type, index) => (
           <DivAtom key={index} style={{ marginBottom: '3rem' }}>
             <SectionContainer
-              width={containerWidth}
+              width={width}
               h2Text={type.h2Text}
               btnText={type.btnText}
               setOpenDialog={() => onOpenNewDialog(index)}
@@ -296,7 +296,7 @@ function SettingsAccomodation() {
 
         <DivAtom style={{ marginBottom: '3rem' }}>
           <SectionContainer
-            width={containerWidth}
+            width={width}
             h2Text="Locations"
             btnText="Add Location"
             setOpenDialog={() => setOpenNewLocationDialog(true)}

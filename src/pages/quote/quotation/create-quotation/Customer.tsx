@@ -54,17 +54,17 @@ function Customer() {
   const [dateType, setDateType] = useState(dateTypeOptions[0].value);
 
   const [width, setWidth] = useState(0);
-  const [containerHeight, setContainerHeight] = useState(0);
+  const [height, setHeight] = useState(0);
   const history = useHistory();
 
   useEffect(() => {
     setWidth(window.innerWidth);
-    setContainerHeight(window.innerHeight - 220);
+    setHeight(window.innerHeight - 220);
     const widthListener = window.addEventListener('resize', () => {
       setWidth(window.innerWidth);
     });
     const heightListener = window.addEventListener('resize', () => {
-      setContainerHeight(window.innerHeight - 220);
+      setHeight(window.innerHeight - 220);
     });
 
     const removeEventListeners = () => {
@@ -73,7 +73,7 @@ function Customer() {
     };
 
     return removeEventListeners();
-  }, [width, containerHeight]);
+  }, [width, height]);
 
   useEffect(() => {
     const getInitialData = async () => {
@@ -243,7 +243,7 @@ function Customer() {
   );
 
   return (
-    <DivAtom style={{ height: `${containerHeight}px` }}>
+    <DivAtom style={{ height: `${height}px` }}>
       <DivAtom style={quoteCreateQuoteStyles.header}>
         <IconAtom
           size="small"

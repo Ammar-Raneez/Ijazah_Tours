@@ -18,7 +18,7 @@ import { LibraryDriver } from '../../../utils/types';
 import { searchData } from '../../../utils/helpers';
 
 function Driver() {
-  const [containerHeight, setContainerHeight] = useState(0);
+  const [height, setHeight] = useState(0);
   const [driverData, setDriverData] = useState<DocumentData[]>([]);
   const [initialDriverSearchData, setInitialDriverSearchData] = useState<DocumentData[]>([]);
   const [search, setSearch] = useState('');
@@ -30,9 +30,9 @@ function Driver() {
   const history = useHistory();
 
   useEffect(() => {
-    setContainerHeight(window.innerHeight - 180);
+    setHeight(window.innerHeight - 180);
     const heightListener = window.addEventListener('resize', () => {
-      setContainerHeight(window.innerHeight - 180);
+      setHeight(window.innerHeight - 180);
     });
 
     const removeEventListeners = () => {
@@ -40,7 +40,7 @@ function Driver() {
     };
 
     return removeEventListeners();
-  }, [containerHeight]);
+  }, [height]);
 
   useEffect(() => {
     searchData(search, initialDriverSearchData, setDriverData);
@@ -82,7 +82,7 @@ function Driver() {
       <DivAtom
         style={{
           ...libraryStyles.innerContainer,
-          height: `${containerHeight}px`,
+          height: `${height}px`,
         }}
       >
         <DivAtom>

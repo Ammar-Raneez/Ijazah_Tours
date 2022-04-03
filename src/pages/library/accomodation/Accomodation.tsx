@@ -18,7 +18,7 @@ import EditAccomodation from './EditAccomodation';
 import { searchData } from '../../../utils/helpers';
 
 function Accomodation() {
-  const [containerHeight, setContainerHeight] = useState(0);
+  const [height, setHeight] = useState(0);
   const [accomodationData, setAccomodationData] = useState<DocumentData[]>([]);
   const [roomViewData, setRoomViewData] = useState<SettingsRoomProperties[]>([]);
   const [roomCategoriesData, setRoomCategoriesData] = useState<SettingsRoomProperties[]>([]);
@@ -34,9 +34,9 @@ function Accomodation() {
   const history = useHistory();
 
   useEffect(() => {
-    setContainerHeight(window.innerHeight - 180);
+    setHeight(window.innerHeight - 180);
     const heightListener = window.addEventListener('resize', () => {
-      setContainerHeight(window.innerHeight - 180);
+      setHeight(window.innerHeight - 180);
     });
 
     const removeEventListeners = () => {
@@ -44,7 +44,7 @@ function Accomodation() {
     };
 
     return removeEventListeners();
-  }, [containerHeight]);
+  }, [height]);
 
   useEffect(() => {
     searchData(search, initialAccomodationSearchData, setAccomodationData);
@@ -125,7 +125,7 @@ function Accomodation() {
       <DivAtom
         style={{
           ...libraryStyles.innerContainer,
-          height: `${containerHeight}px`,
+          height: `${height}px`,
         }}
       >
         <Route path="/library/accomodation/create">

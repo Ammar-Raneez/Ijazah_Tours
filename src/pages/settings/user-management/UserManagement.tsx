@@ -46,7 +46,7 @@ function UserManagement() {
   const [openNewDialog, setNewOpenDialog] = useState(false);
   const [openEditDialog, setEditOpenDialog] = useState(false);
 
-  const [containerHeight, setContainerHeight] = useState(0);
+  const [height, setHeight] = useState(0);
   const [width, setWidth] = useState(0);
 
   useEffect(() => {
@@ -65,14 +65,14 @@ function UserManagement() {
   }, [isDeleting, isUpdating, isCreating]);
 
   useEffect(() => {
-    setContainerHeight(window.innerHeight - 180);
+    setHeight(window.innerHeight - 180);
     setWidth(window.innerWidth);
 
     const widthListener = window.addEventListener('resize', () => {
       setWidth(window.innerWidth);
     });
     const heightListener = window.addEventListener('resize', () => {
-      setContainerHeight(window.innerHeight - 180);
+      setHeight(window.innerHeight - 180);
     });
 
     const removeEventListeners = () => {
@@ -81,7 +81,7 @@ function UserManagement() {
     };
 
     return removeEventListeners();
-  }, [width, containerHeight]);
+  }, [width, height]);
 
   const onCreateMember = async () => {
     setShowValidationErrorMessage(false);
@@ -160,7 +160,7 @@ function UserManagement() {
       <DivAtom
         style={{
           ...settingsStyles.innerContainer,
-          height: `${containerHeight}px`,
+          height: `${height}px`,
         }}
       >
         <DivAtom
