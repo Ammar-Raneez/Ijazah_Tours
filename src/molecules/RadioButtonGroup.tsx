@@ -6,6 +6,7 @@ import {
   Radio,
   RadioGroup,
 } from '@material-ui/core';
+import { v4 as uuid } from 'uuid';
 
 import { RadioButtonOption } from '../utils/types';
 
@@ -35,7 +36,7 @@ function RadioButtonGroup({
         style={radioGroupStyle}
       >
         {options.map((option) => (
-          <FormControlLabel value={option.value} control={<Radio />} label={option.label} />
+          <FormControlLabel key={uuid()} value={option.value} control={<Radio />} label={option.label} />
         ))}
       </RadioGroup>
     </FormControl>

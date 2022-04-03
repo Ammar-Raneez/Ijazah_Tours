@@ -110,6 +110,14 @@ export const TableToolbarStyles = {
   },
 };
 
+export const fetchingDataIndicatorStyles = {
+  container: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+};
+
 // Login
 export const loginStyles = {
   ...formCreateMemberStyles,

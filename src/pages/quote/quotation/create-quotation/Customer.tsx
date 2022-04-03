@@ -2,6 +2,7 @@ import {
   ChangeEvent, useEffect, useState, MouseEvent,
 } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { CircularProgress } from '@material-ui/core';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import {
@@ -24,6 +25,7 @@ import {
   libraryStyles,
   TableToolbarStyles,
   quoteCreateQuoteStyles,
+  fetchingDataIndicatorStyles,
 } from '../../../../styles';
 
 const mealPlanOptions = [
@@ -38,10 +40,10 @@ const dateTypeOptions = [
 ];
 
 function Customer() {
-  const [customerData, setCustomerData] = useState<LibraryGuest[]>([]);
-  const [refData, setRefData] = useState<DropdownOption[]>([]);
-  const [holidayTypeData, setHolidayTypeData] = useState<DropdownOption[]>([]);
-  const [destinationData, setDestinationData] = useState<DropdownOption[]>([]);
+  const [customerData, setCustomerData] = useState<LibraryGuest[]>();
+  const [refData, setRefData] = useState<DropdownOption[]>();
+  const [holidayTypeData, setHolidayTypeData] = useState<DropdownOption[]>();
+  const [destinationData, setDestinationData] = useState<DropdownOption[]>();
 
   const [refNum, setRefNum] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -170,6 +172,92 @@ function Customer() {
     history.replace('/quote/quotations/create/accomodation');
   };
 
+  const RenderDatePicker = () => (
+    dateType === dateTypeOptions[0].value ? (
+      <DivAtom>
+        <TextFieldAtom
+          variant="standard"
+          size="medium"
+          label="Check-in"
+          value={checkin}
+          onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCheckin(e.target.value)
+          }
+          adornmentPosition="end"
+          style={{
+            ...libraryStyles.textField,
+            flex: 1,
+            width: width < 600 ? '100%' : 'auto',
+            margin: width < 600 ? '0 0 1rem 0' : '0 1rem 0 0',
+          }}
+          disableUnderline={false}
+          select={false}
+          focused
+          type="date"
+        />
+        <TextFieldAtom
+          variant="standard"
+          size="medium"
+          label="Checkout"
+          value={checkout}
+          onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCheckout(e.target.value)
+          }
+          adornmentPosition="end"
+          style={{
+            ...libraryStyles.textField,
+            flex: 1,
+            width: width < 600 ? '100%' : 'auto',
+          }}
+          disableUnderline={false}
+          select={false}
+          focused
+          type="date"
+        />
+      </DivAtom>
+    ) : (
+      <DivAtom>
+        <TextFieldAtom
+          variant="standard"
+          size="medium"
+          label="Check-in"
+          value={checkin}
+          onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCheckin(e.target.value)
+          }
+          adornmentPosition="end"
+          style={{
+            ...libraryStyles.textField,
+            flex: 1,
+            width: width < 600 ? '100%' : 'auto',
+            margin: width < 600 ? '0 0 1rem 0' : '0 1rem 0 0',
+          }}
+          disableUnderline={false}
+          select={false}
+          focused
+          type="month"
+        />
+        <TextFieldAtom
+          variant="standard"
+          size="medium"
+          label="Checkout"
+          value={checkout}
+          onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCheckout(e.target.value)
+          }
+          adornmentPosition="end"
+          style={{
+            ...libraryStyles.textField,
+            flex: 1,
+            width: width < 600 ? '100%' : 'auto',
+          }}
+          disableUnderline={false}
+          select={false}
+          focused
+          type="month"
+        />
+      </DivAtom>
+    )
+  );
+
+  const dynamicMargin = () => (width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0');
+
   return (
     <DivAtom style={{ height: `${containerHeight}px` }}>
       <DivAtom style={quoteCreateQuoteStyles.header}>
@@ -182,347 +270,275 @@ function Customer() {
         <H2Atom style={quoteCreateQuoteStyles.title} text="Create Quotation" />
       </DivAtom>
 
-      <DivAtom style={quoteCreateQuoteStyles.formContainer}>
-        <ParagraphAtom
-          style={{
-            ...quoteCreateQuoteStyles.title,
-            marginBottom: '1rem',
-          }}
-          text="Guest"
-        />
-        <DivAtom
-          style={{
-            ...quoteCreateQuoteStyles.multiFieldContainer,
-            flexDirection: width < 600 ? 'column' : 'row',
-          }}
-        >
-          <TextFieldAtom
-            variant="standard"
-            size="medium"
-            label="Reference Number"
-            value={refNum}
-            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => onRefNumChange(customerData, e.target.value)}
-            options={refData}
-            adornmentPosition="end"
-            style={{
-              ...libraryStyles.textField,
-              flex: 1,
-              width: width < 600 ? '100%' : 'auto',
-            }}
-            disableUnderline={false}
-            select
-          />
-          <Link to={`/library/guest/create`}>
-            <ButtonAtom
-              startIcon={<AddCircleOutlineOutlinedIcon />}
-              text="Add New Guest"
+      {customerData && refData && holidayTypeData && destinationData ? (
+        <>
+          <DivAtom style={quoteCreateQuoteStyles.formContainer}>
+            <ParagraphAtom
               style={{
-                ...TableToolbarStyles.addBtn,
-                width: width < 600 ? '100%' : '11rem',
-                marginTop: '1rem',
-                marginLeft: width < 600 ? '0px' : '1rem',
+                ...quoteCreateQuoteStyles.title,
+                marginBottom: '1rem',
               }}
-              size="large"
+              text="Guest"
             />
-          </Link>
-        </DivAtom>
-        <DivAtom
-          style={{
-            ...quoteCreateQuoteStyles.multiFieldContainer,
-            flexDirection: width < 600 ? 'column' : 'row',
-          }}
-        >
-          <FormControlInput
-            margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
-            flex={1}
-            label="First Name"
-            fullWidth
-            disabled
-            multiline={false}
-            rows={1}
-            value={firstName}
-            setValue={setFirstName}
-            placeholder="Enter First Name"
-          />
-          <FormControlInput
-            margin="0 0 1rem 0"
-            flex={1}
-            label="Last Name"
-            fullWidth
-            disabled
-            multiline={false}
-            rows={1}
-            value={lastName}
-            setValue={setLastName}
-            placeholder="Enter Last Name"
-          />
-        </DivAtom>
-        <DivAtom
-          style={{
-            ...quoteCreateQuoteStyles.multiFieldContainer,
-            flexDirection: width < 600 ? 'column' : 'row',
-          }}
-        >
-          <FormControlInput
-            margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
-            label="Contact Number"
-            fullWidth
-            disabled
-            flex={1}
-            multiline={false}
-            rows={1}
-            value={contactNumber}
-            setValue={setContactNumber}
-            placeholder="Enter Contact Number"
-          />
-          <FormControlInput
-            margin="0 0 1rem 0"
-            label="Email"
-            fullWidth
-            disabled
-            flex={1}
-            multiline={false}
-            rows={1}
-            value={email}
-            setValue={setEmail}
-            placeholder="Enter Email"
-          />
-        </DivAtom>
-        <DivAtom
-          style={{
-            ...quoteCreateQuoteStyles.multiFieldContainer,
-            flexDirection: width < 600 ? 'column' : 'row',
-          }}
-        >
-          <FormControlInput
-            margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
-            label="Country"
-            fullWidth
-            disabled
-            flex={1}
-            multiline={false}
-            rows={1}
-            value={country}
-            setValue={setCountry}
-            placeholder="Enter Country"
-          />
-          <FormControlInput
-            margin="0 0 1rem 0"
-            label="City"
-            fullWidth
-            disabled
-            flex={1}
-            multiline={false}
-            rows={1}
-            value={city}
-            setValue={setCity}
-            placeholder="Enter City"
-          />
-        </DivAtom>
-        <ParagraphAtom
-          style={{
-            ...quoteCreateQuoteStyles.title,
-            marginBottom: '1rem',
-          }}
-          text="Holiday"
-        />
-        <DivAtom
-          style={{
-            ...quoteCreateQuoteStyles.multiFieldContainer,
-            flexDirection: width < 600 ? 'column' : 'row',
-          }}
-        >
-          <FormControlInput
-            margin={width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0'}
-            type="number"
-            flex={1}
-            label="No. of Days"
-            fullWidth
-            multiline={false}
-            rows={1}
-            value={numberOfDays}
-            setValue={setNumberOfDays}
-            placeholder=""
-          />
-          <TextFieldAtom
-            variant="standard"
-            size="medium"
-            label="Holiday Type"
-            value={holidayType}
-            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setHolidayType(e.target.value)
-            }
-            options={holidayTypeData}
-            adornmentPosition="end"
-            style={{
-              ...libraryStyles.textField,
-              flex: 1,
-              width: width < 600 ? '100%' : 'auto',
-              margin: width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0',
-            }}
-            disableUnderline={false}
-            select
-          />
-        </DivAtom>
-        <DivAtom
-          style={{
-            ...quoteCreateQuoteStyles.multiFieldContainer,
-            flexDirection: width < 600 ? 'column' : 'row',
-          }}
-        >
-          <TextFieldAtom
-            variant="standard"
-            size="medium"
-            label="Destination"
-            value={destination}
-            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setDestination(e.target.value)
-            }
-            options={destinationData}
-            adornmentPosition="end"
-            style={{
-              ...libraryStyles.textField,
-              flex: 1,
-              width: width < 600 ? '100%' : 'auto',
-              margin: width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0',
-            }}
-            disableUnderline={false}
-            select
-          />
-          <RadioButtonGroup
-            title="Meal Plan"
-            options={mealPlanOptions}
-            value={mealPlan}
-            radioGroupStyle={{
-              ...quoteCreateQuoteStyles.radioBtnContainer,
-              margin: width < 600 ? '0' : '0 1rem',
-            }}
-            onChange={(e) => setMealPlan(e.target.value)}
-          />
-          <CheckboxAtom
-            label="Additional Bed"
-            name="additional-bed"
-            checked={additionalBed}
-            style={quoteCreateQuoteStyles.singleCheckbox}
-            onChange={() => setAdditionalBed(!additionalBed)}
-          />
-        </DivAtom>
-        <DivAtom
-          style={{
-            ...quoteCreateQuoteStyles.multiFieldContainer,
-            flexDirection: 'column',
-          }}
-        >
-          <RadioButtonGroup
-            title="Date Type"
-            options={dateTypeOptions}
-            value={dateType}
-            radioGroupStyle={{
-              ...quoteCreateQuoteStyles.radioBtnContainer,
-              margin: width < 600 ? '0' : '0 1rem',
-            }}
-            onChange={(e) => setDateType(e.target.value)}
-          />
-          {dateType === dateTypeOptions[0].value ? (
-            <DivAtom>
+            <DivAtom
+              style={{
+                ...quoteCreateQuoteStyles.multiFieldContainer,
+                flexDirection: width < 600 ? 'column' : 'row',
+              }}
+            >
               <TextFieldAtom
                 variant="standard"
                 size="medium"
-                label="Check-in"
-                value={checkin}
-                onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCheckin(e.target.value)
-                }
+                label="Reference Number"
+                value={refNum}
+                onChange={(e: ChangeEvent<HTMLTextAreaElement>) => onRefNumChange(customerData, e.target.value)}
+                options={refData}
                 adornmentPosition="end"
                 style={{
                   ...libraryStyles.textField,
                   flex: 1,
                   width: width < 600 ? '100%' : 'auto',
-                  margin: width < 600 ? '0 0 1rem 0' : '0 1rem 0 0',
                 }}
                 disableUnderline={false}
-                select={false}
-                focused
-                type="date"
+                select
               />
-              <TextFieldAtom
-                variant="standard"
-                size="medium"
-                label="Checkout"
-                value={checkout}
-                onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCheckout(e.target.value)
-                }
-                adornmentPosition="end"
-                style={{
-                  ...libraryStyles.textField,
-                  flex: 1,
-                  width: width < 600 ? '100%' : 'auto',
-                }}
-                disableUnderline={false}
-                select={false}
-                focused
-                type="date"
+              <Link to={`/library/guest/create`}>
+                <ButtonAtom
+                  startIcon={<AddCircleOutlineOutlinedIcon />}
+                  text="Add New Guest"
+                  style={{
+                    ...TableToolbarStyles.addBtn,
+                    width: width < 600 ? '100%' : '11rem',
+                    marginTop: '1rem',
+                    marginLeft: width < 600 ? '0px' : '1rem',
+                  }}
+                  size="large"
+                />
+              </Link>
+            </DivAtom>
+            <DivAtom
+              style={{
+                ...quoteCreateQuoteStyles.multiFieldContainer,
+                flexDirection: width < 600 ? 'column' : 'row',
+              }}
+            >
+              <FormControlInput
+                margin={dynamicMargin()}
+                flex={1}
+                label="First Name"
+                fullWidth
+                disabled
+                multiline={false}
+                rows={1}
+                value={firstName}
+                setValue={setFirstName}
+                placeholder="Enter First Name"
+              />
+              <FormControlInput
+                margin="0 0 1rem 0"
+                flex={1}
+                label="Last Name"
+                fullWidth
+                disabled
+                multiline={false}
+                rows={1}
+                value={lastName}
+                setValue={setLastName}
+                placeholder="Enter Last Name"
               />
             </DivAtom>
-          ) : (
-            <DivAtom>
-              <TextFieldAtom
-                variant="standard"
-                size="medium"
-                label="Check-in"
-                value={checkin}
-                onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCheckin(e.target.value)
-                }
-                adornmentPosition="end"
-                style={{
-                  ...libraryStyles.textField,
-                  flex: 1,
-                  width: width < 600 ? '100%' : 'auto',
-                  margin: width < 600 ? '0 0 1rem 0' : '0 1rem 0 0',
-                }}
-                disableUnderline={false}
-                select={false}
-                focused
-                type="month"
+            <DivAtom
+              style={{
+                ...quoteCreateQuoteStyles.multiFieldContainer,
+                flexDirection: width < 600 ? 'column' : 'row',
+              }}
+            >
+              <FormControlInput
+                margin={dynamicMargin()}
+                label="Contact Number"
+                fullWidth
+                disabled
+                flex={1}
+                multiline={false}
+                rows={1}
+                value={contactNumber}
+                setValue={setContactNumber}
+                placeholder="Enter Contact Number"
               />
-              <TextFieldAtom
-                variant="standard"
-                size="medium"
-                label="Checkout"
-                value={checkout}
-                onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCheckout(e.target.value)
-                }
-                adornmentPosition="end"
-                style={{
-                  ...libraryStyles.textField,
-                  flex: 1,
-                  width: width < 600 ? '100%' : 'auto',
-                }}
-                disableUnderline={false}
-                select={false}
-                focused
-                type="month"
+              <FormControlInput
+                margin="0 0 1rem 0"
+                label="Email"
+                fullWidth
+                disabled
+                flex={1}
+                multiline={false}
+                rows={1}
+                value={email}
+                setValue={setEmail}
+                placeholder="Enter Email"
               />
             </DivAtom>
-          )}
+            <DivAtom
+              style={{
+                ...quoteCreateQuoteStyles.multiFieldContainer,
+                flexDirection: width < 600 ? 'column' : 'row',
+              }}
+            >
+              <FormControlInput
+                margin={dynamicMargin()}
+                label="Country"
+                fullWidth
+                disabled
+                flex={1}
+                multiline={false}
+                rows={1}
+                value={country}
+                setValue={setCountry}
+                placeholder="Enter Country"
+              />
+              <FormControlInput
+                margin="0 0 1rem 0"
+                label="City"
+                fullWidth
+                disabled
+                flex={1}
+                multiline={false}
+                rows={1}
+                value={city}
+                setValue={setCity}
+                placeholder="Enter City"
+              />
+            </DivAtom>
+            <ParagraphAtom
+              style={{
+                ...quoteCreateQuoteStyles.title,
+                marginBottom: '1rem',
+              }}
+              text="Holiday"
+            />
+            <DivAtom
+              style={{
+                ...quoteCreateQuoteStyles.multiFieldContainer,
+                flexDirection: width < 600 ? 'column' : 'row',
+              }}
+            >
+              <FormControlInput
+                margin={dynamicMargin()}
+                type="number"
+                flex={1}
+                label="No. of Days"
+                fullWidth
+                multiline={false}
+                rows={1}
+                value={numberOfDays}
+                setValue={setNumberOfDays}
+                placeholder=""
+              />
+              <TextFieldAtom
+                variant="standard"
+                size="medium"
+                label="Holiday Type"
+                value={holidayType}
+                onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setHolidayType(e.target.value)
+                }
+                options={holidayTypeData}
+                adornmentPosition="end"
+                style={{
+                  ...libraryStyles.textField,
+                  flex: 1,
+                  width: width < 600 ? '100%' : 'auto',
+                  margin: width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0',
+                }}
+                disableUnderline={false}
+                select
+              />
+            </DivAtom>
+            <DivAtom
+              style={{
+                ...quoteCreateQuoteStyles.multiFieldContainer,
+                flexDirection: width < 600 ? 'column' : 'row',
+              }}
+            >
+              <TextFieldAtom
+                variant="standard"
+                size="medium"
+                label="Destination"
+                value={destination}
+                onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setDestination(e.target.value)
+                }
+                options={destinationData}
+                adornmentPosition="end"
+                style={{
+                  ...libraryStyles.textField,
+                  flex: 1,
+                  width: width < 600 ? '100%' : 'auto',
+                  margin: width < 600 ? '0 0 1rem 0' : '0 1rem 1rem 0',
+                }}
+                disableUnderline={false}
+                select
+              />
+              <RadioButtonGroup
+                title="Meal Plan"
+                options={mealPlanOptions}
+                value={mealPlan}
+                radioGroupStyle={{
+                  ...quoteCreateQuoteStyles.radioBtnContainer,
+                  margin: width < 600 ? '0' : '0 1rem',
+                }}
+                onChange={(e) => setMealPlan(e.target.value)}
+              />
+              <CheckboxAtom
+                label="Additional Bed"
+                name="additional-bed"
+                checked={additionalBed}
+                style={quoteCreateQuoteStyles.singleCheckbox}
+                onChange={() => setAdditionalBed(!additionalBed)}
+              />
+            </DivAtom>
+            <DivAtom
+              style={{
+                ...quoteCreateQuoteStyles.multiFieldContainer,
+                flexDirection: 'column',
+              }}
+            >
+              <RadioButtonGroup
+                title="Date Type"
+                options={dateTypeOptions}
+                value={dateType}
+                radioGroupStyle={{
+                  ...quoteCreateQuoteStyles.radioBtnContainer,
+                  margin: width < 600 ? '0' : '0 1rem',
+                }}
+                onChange={(e) => setDateType(e.target.value)}
+              />
+              <RenderDatePicker />
+            </DivAtom>
+          </DivAtom>
+          <DivAtom
+            style={{
+              ...quoteCreateQuoteStyles.addBtnContainer,
+              padding: width < 768 ? '1rem' : '0px',
+              margin:
+                width < 768 ? '0px' : quoteCreateQuoteStyles.addBtnContainer.margin,
+            }}
+          >
+            <ButtonAtom
+              size="large"
+              text="Continue"
+              onClick={(event) => onCreateCustomer(event)}
+              style={{
+                ...quoteCreateQuoteStyles.addBtn,
+                width: width < 768 ? '100%' : '18%',
+                margin: '0 0 1rem 0',
+              }}
+            />
+          </DivAtom>
+        </>
+      ) : (
+        <DivAtom style={fetchingDataIndicatorStyles.container}>
+          <CircularProgress size={20} color="primary" />
         </DivAtom>
-      </DivAtom>
-      <DivAtom
-        style={{
-          ...quoteCreateQuoteStyles.addBtnContainer,
-          padding: width < 768 ? '1rem' : '0px',
-          margin:
-            width < 768 ? '0px' : quoteCreateQuoteStyles.addBtnContainer.margin,
-        }}
-      >
-        <ButtonAtom
-          size="large"
-          text="Continue"
-          onClick={(event) => onCreateCustomer(event)}
-          style={{
-            ...quoteCreateQuoteStyles.addBtn,
-            width: width < 768 ? '100%' : '18%',
-            margin: '0 0 1rem 0',
-          }}
-        />
-      </DivAtom>
+      )}
     </DivAtom>
   );
 }
