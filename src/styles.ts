@@ -339,6 +339,12 @@ export const navbarStyles = {
     padding: '0px 10px',
     margin: '0px 10px',
   },
+  logoutBtn: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: '1rem',
+    padding: 0,
+  },
 };
 
 export const tableRowTextCellStyles = {

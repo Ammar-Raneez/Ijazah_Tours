@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import {
   Divider,
   Drawer,
@@ -9,10 +10,14 @@ import {
   Theme,
 } from '@material-ui/core';
 import styled from 'styled-components';
+import { getAuth, signOut } from 'firebase/auth';
 import clsx from 'clsx';
 
 import LinkAtom from '../atoms/LinkAtom';
 import LinkTextAtom from '../atoms/LinkTextAtom';
+import ButtonAtom from '../atoms/ButtonAtom';
+import { logout } from '../redux/userSlice';
+import { navbarStyles } from '../styles';
 
 const drawerWidth = 240;
 
@@ -46,11 +51,19 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const links = [
+const permLinks = [
   { key: '1', text: 'Dashboard', link: '/dashboard' },
   { key: '2', text: 'Quote', link: '/quote' },
   { key: '3', text: 'Library', link: '/library' },
   { key: '4', text: 'Settings', link: '/settings' },
+];
+
+const tempLinks = [
+  { key: '1', text: 'Dashboard', link: '/dashboard' },
+  { key: '2', text: 'Quote', link: '/quote' },
+  { key: '3', text: 'Library', link: '/library' },
+  { key: '4', text: 'Settings', link: '/settings' },
+  { key: '5', text: 'View Profile', link: '/view-profile' },
 ];
 
 interface SidebarProps {
@@ -61,23 +74,44 @@ interface SidebarProps {
 
 function Sidebar({ wind, handleDrawerToggle, mobileOpen }: SidebarProps) {
   const container = wind !== undefined ? () => wind().document.body : undefined;
-  const classes = useStyles();
   const [open] = useState(true);
 
-  const drawer = (
-    <>
-      <Divider />
-      <StyledList>
-        {links.map((link) => (
-          <LinkAtom key={link.key} to={`${link.link}`}>
+  const dispatch = useDispatch();
+  const classes = useStyles();
+
+  const onLogout = async () => {
+    await signOut(getAuth());
+    dispatch(logout());
+  };
+
+  const DrawerList = ({ type }: { type: string }) => {
+    const links = type === 'perm' ? permLinks : tempLinks;
+
+    return (
+      <>
+        <Divider />
+        <StyledList>
+          {links.map((link) => (
+            <LinkAtom key={link.key} to={`${link.link}`}>
+              <ListItem button>
+                <LinkTextAtom text={link.text} />
+              </ListItem>
+            </LinkAtom>
+          ))}
+          {type === 'temp' && (
             <ListItem button>
-              <LinkTextAtom text={link.text} />
+              <ButtonAtom
+                style={navbarStyles.logoutBtn}
+                text="Sign Out"
+                size="small"
+                onClick={onLogout}
+              />
             </ListItem>
-          </LinkAtom>
-        ))}
-      </StyledList>
-    </>
-  );
+          )}
+        </StyledList>
+      </>
+    );
+  };
 
   return (
     <nav className={classes.drawer} aria-label="mailbox folders">
@@ -101,7 +135,7 @@ function Sidebar({ wind, handleDrawerToggle, mobileOpen }: SidebarProps) {
             keepMounted: true,
           }}
         >
-          {drawer}
+          <DrawerList type="temp" />
         </StyledDrawer>
       </Hidden>
       <Hidden mdDown implementation="css">
@@ -112,7 +146,7 @@ function Sidebar({ wind, handleDrawerToggle, mobileOpen }: SidebarProps) {
           variant="permanent"
           open
         >
-          {drawer}
+          <DrawerList type="perm" />
         </StyledDrawer>
       </Hidden>
     </nav>
