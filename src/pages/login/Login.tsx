@@ -30,6 +30,8 @@ function Login() {
   const dispatch = useDispatch();
 
   const onLogin = async (e: FormEvent<HTMLFormElement>) => {
+    localStorage.setItem('Ijazah Remember Me', String(rememberMe));
+
     e.preventDefault();
     setInvalidLoginMessage('');
     const auth = getAuth();

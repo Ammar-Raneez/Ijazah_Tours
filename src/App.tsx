@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 import { CircularProgress } from '@material-ui/core';
 import styled from 'styled-components';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 
 import Quotations from './pages/quote/quotation/Quotations';
 import Voucher from './pages/quote/voucher/Voucher';
@@ -33,6 +33,8 @@ import { getUserOnLogin, widthHeightDynamicStyle } from './utils/helpers';
 import GlobalStyle from './globalStyle';
 import { fetchingDataIndicatorStyles } from './styles';
 
+const rememberMe = localStorage.getItem('Ijazah Remember Me') !== 'false';
+
 function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [getInitialUser, setGetInitialUser] = useState(false);
@@ -40,18 +42,29 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    onAuthStateChanged(getAuth(), async (usr) => {
-      if (usr) {
+    if (rememberMe) {
+      onAuthStateChanged(getAuth(), async (usr) => {
+        if (usr) {
+          setGetInitialUser(false);
+          const userData = await getUserOnLogin(usr);
+          dispatch(login(userData));
+          setGetInitialUser(true);
+        } else {
+          setGetInitialUser(false);
+          dispatch(logout());
+          setGetInitialUser(true);
+        }
+      });
+    } else {
+      const onLogout = async () => {
         setGetInitialUser(false);
-        const userData = await getUserOnLogin(usr);
-        dispatch(login(userData));
-        setGetInitialUser(true);
-      } else {
-        setGetInitialUser(false);
+        await signOut(getAuth());
         dispatch(logout());
         setGetInitialUser(true);
-      }
-    });
+      };
+
+      onLogout();
+    }
   }, []);
 
   useLayoutEffect(() => {
