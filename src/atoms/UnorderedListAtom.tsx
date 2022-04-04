@@ -20,8 +20,8 @@ function UnorderedListAtom({
   return (
     <ul>
       {allChildren.map((val) => (
-        <DivAtom style={{ display: 'flex', alignItems: 'center' }}>
-          <li style={{ width: '150px' }} key={val.id}>{val.val}</li>
+        <DivAtom key={val.id} style={{ display: 'flex', alignItems: 'center' }}>
+          <li style={{ width: '150px' }}>{val.val}</li>
           <IconAtom size="small" onClick={() => onEditItem(type, val.id)} style={{ color: 'green' }}>
             <EditOutlinedIcon />
           </IconAtom>
