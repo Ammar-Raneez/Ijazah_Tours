@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
 import {
   Divider,
   Drawer,
@@ -14,10 +13,6 @@ import clsx from 'clsx';
 
 import LinkAtom from '../atoms/LinkAtom';
 import LinkTextAtom from '../atoms/LinkTextAtom';
-import DivAtom from '../atoms/DivAtom';
-import { selectWidth } from '../redux/containerSizeSlice';
-import { widthHeightDynamicStyle } from '../utils/helpers';
-import { sidebarStyles } from '../styles';
 
 const drawerWidth = 240;
 
@@ -65,8 +60,6 @@ interface SidebarProps {
 }
 
 function Sidebar({ wind, handleDrawerToggle, mobileOpen }: SidebarProps) {
-  const width = useSelector(selectWidth);
-
   const container = wind !== undefined ? () => wind().document.body : undefined;
   const classes = useStyles();
   const [open] = useState(true);
@@ -82,19 +75,6 @@ function Sidebar({ wind, handleDrawerToggle, mobileOpen }: SidebarProps) {
             </ListItem>
           </LinkAtom>
         ))}
-        <DivAtom
-          style={{
-            ...sidebarStyles.bottomContainer,
-            flex: widthHeightDynamicStyle(width, 1280, 1, 0.93),
-          }}
-        >
-          <ListItem button key="Profile">
-            <LinkTextAtom text="Profile" />
-          </ListItem>
-          <ListItem button key="Sign Out">
-            <LinkTextAtom text="Sign Out" />
-          </ListItem>
-        </DivAtom>
       </StyledList>
     </>
   );

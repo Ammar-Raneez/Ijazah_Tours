@@ -6,6 +6,7 @@ import {
   Route,
   Switch,
 } from 'react-router-dom';
+import { CircularProgress } from '@material-ui/core';
 import styled from 'styled-components';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
@@ -24,14 +25,17 @@ import Login from './pages/login/Login';
 import Header from './organisms/Header';
 import Sidebar from './organisms/Sidebar';
 import Navbar from './organisms/Navbar';
+import DivAtom from './atoms/DivAtom';
 import { onSizeChange } from './redux/containerSizeSlice';
 import { login, logout } from './redux/userSlice';
 import ProtectedRoute from './utils/ProtectedRoute';
 import { getUserOnLogin } from './utils/helpers';
 import GlobalStyle from './globalStyle';
+import { fetchingDataIndicatorStyles } from './styles';
 
 function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [getInitialUser, setGetInitialUser] = useState(false);
 
   const [height, setHeight] = useState(0);
   const [width, setWidth] = useState(0);
@@ -40,10 +44,14 @@ function App() {
   useEffect(() => {
     onAuthStateChanged(getAuth(), async (usr) => {
       if (usr) {
+        setGetInitialUser(false);
         const userData = await getUserOnLogin(usr);
         dispatch(login(userData));
+        setGetInitialUser(true);
       } else {
+        setGetInitialUser(false);
         dispatch(logout());
+        setGetInitialUser(true);
       }
     });
   }, []);
@@ -93,9 +101,23 @@ function App() {
     <>
       <Router>
         <GlobalStyle />
-        <Switch>
-          <ProtectedRoute path="/dashboard">
-            <>
+        {getInitialUser ? (
+          <Switch>
+            <ProtectedRoute path="/dashboard">
+              <>
+                <Header handleDrawerToggle={handleDrawerToggle} />
+                <Root>
+                  <Sidebar
+                    mobileOpen={mobileOpen}
+                    handleDrawerToggle={handleDrawerToggle}
+                  />
+                  <StyledDivAtom>
+                    <Dashboard />
+                  </StyledDivAtom>
+                </Root>
+              </>
+            </ProtectedRoute>
+            <ProtectedRoute path="/quote">
               <Header handleDrawerToggle={handleDrawerToggle} />
               <Root>
                 <Sidebar
@@ -103,98 +125,95 @@ function App() {
                   handleDrawerToggle={handleDrawerToggle}
                 />
                 <StyledDivAtom>
-                  <Dashboard />
+                  <Navbar type="quote" />
+                  <ProtectedRoute path="/quote/quotations">
+                    <Quotations />
+                  </ProtectedRoute>
+                  <ProtectedRoute path="/quote/voucher">
+                    <Voucher />
+                  </ProtectedRoute>
+                  <ProtectedRoute path="/quote/summary">
+                    <Summary />
+                  </ProtectedRoute>
+                  <ProtectedRoute exact path="/quote">
+                    <Redirect to="/quote/quotations" />
+                  </ProtectedRoute>
                 </StyledDivAtom>
               </Root>
-            </>
-          </ProtectedRoute>
-          <ProtectedRoute path="/quote">
-            <Header handleDrawerToggle={handleDrawerToggle} />
-            <Root>
-              <Sidebar
-                mobileOpen={mobileOpen}
-                handleDrawerToggle={handleDrawerToggle}
-              />
-              <StyledDivAtom>
-                <Navbar type="quote" />
-                <ProtectedRoute path="/quote/quotations">
-                  <Quotations />
-                </ProtectedRoute>
-                <ProtectedRoute path="/quote/voucher">
-                  <Voucher />
-                </ProtectedRoute>
-                <ProtectedRoute path="/quote/summary">
-                  <Summary />
-                </ProtectedRoute>
-                <ProtectedRoute exact path="/quote">
-                  <Redirect to="/quote/quotations" />
-                </ProtectedRoute>
-              </StyledDivAtom>
-            </Root>
-          </ProtectedRoute>
-          <ProtectedRoute path="/library">
-            <Header handleDrawerToggle={handleDrawerToggle} />
-            <Root>
-              <Sidebar
-                mobileOpen={mobileOpen}
-                handleDrawerToggle={handleDrawerToggle}
-              />
-              <StyledDivAtom>
-                <Navbar type="library" />
-                <ProtectedRoute path="/library/accomodation">
-                  <Accomodation />
-                </ProtectedRoute>
-                <ProtectedRoute path="/library/driver">
-                  <Driver />
-                </ProtectedRoute>
-                <ProtectedRoute path="/library/guest">
-                  <Guest />
-                </ProtectedRoute>
-                <ProtectedRoute exact path="/library">
-                  <Redirect to="/library/accomodation" />
-                </ProtectedRoute>
-              </StyledDivAtom>
-            </Root>
-          </ProtectedRoute>
-          <ProtectedRoute path="/settings">
-            <Header handleDrawerToggle={handleDrawerToggle} />
-            <Root>
-              <Sidebar
-                mobileOpen={mobileOpen}
-                handleDrawerToggle={handleDrawerToggle}
-              />
-              <StyledDivAtom>
-                <Navbar type="settings" />
-                <ProtectedRoute path="/settings/accomodation">
-                  <SettingsAccomodation />
-                </ProtectedRoute>
-                <ProtectedRoute path="/settings/tour">
-                  <Tour />
-                </ProtectedRoute>
-                <ProtectedRoute path="/settings/user-management">
-                  <UserManagement />
-                </ProtectedRoute>
-                <ProtectedRoute path="/settings/general">
-                  <General />
-                </ProtectedRoute>
-                <Route exact path="/settings">
-                  <Redirect to="/settings/user-management" />
-                </Route>
-              </StyledDivAtom>
-            </Root>
-          </ProtectedRoute>
+            </ProtectedRoute>
+            <ProtectedRoute path="/library">
+              <Header handleDrawerToggle={handleDrawerToggle} />
+              <Root>
+                <Sidebar
+                  mobileOpen={mobileOpen}
+                  handleDrawerToggle={handleDrawerToggle}
+                />
+                <StyledDivAtom>
+                  <Navbar type="library" />
+                  <ProtectedRoute path="/library/accomodation">
+                    <Accomodation />
+                  </ProtectedRoute>
+                  <ProtectedRoute path="/library/driver">
+                    <Driver />
+                  </ProtectedRoute>
+                  <ProtectedRoute path="/library/guest">
+                    <Guest />
+                  </ProtectedRoute>
+                  <ProtectedRoute exact path="/library">
+                    <Redirect to="/library/accomodation" />
+                  </ProtectedRoute>
+                </StyledDivAtom>
+              </Root>
+            </ProtectedRoute>
+            <ProtectedRoute path="/settings">
+              <Header handleDrawerToggle={handleDrawerToggle} />
+              <Root>
+                <Sidebar
+                  mobileOpen={mobileOpen}
+                  handleDrawerToggle={handleDrawerToggle}
+                />
+                <StyledDivAtom>
+                  <Navbar type="settings" />
+                  <ProtectedRoute path="/settings/accomodation">
+                    <SettingsAccomodation />
+                  </ProtectedRoute>
+                  <ProtectedRoute path="/settings/tour">
+                    <Tour />
+                  </ProtectedRoute>
+                  <ProtectedRoute path="/settings/user-management">
+                    <UserManagement />
+                  </ProtectedRoute>
+                  <ProtectedRoute path="/settings/general">
+                    <General />
+                  </ProtectedRoute>
+                  <Route exact path="/settings">
+                    <Redirect to="/settings/user-management" />
+                  </Route>
+                </StyledDivAtom>
+              </Root>
+            </ProtectedRoute>
 
-          <Route path="/login">
-            <StyledDivAtom isFullScreen>
-              <Login />
-            </StyledDivAtom>
-          </Route>
-          <Route exact path="/">
-            <StyledDivAtom isFullScreen>
-              <Login />
-            </StyledDivAtom>
-          </Route>
-        </Switch>
+            <Route path="/login">
+              <StyledDivAtom isFullScreen>
+                <Login />
+              </StyledDivAtom>
+            </Route>
+            <Route exact path="/">
+              <StyledDivAtom isFullScreen>
+                <Login />
+              </StyledDivAtom>
+            </Route>
+          </Switch>
+        ) : (
+          <DivAtom
+            style={{
+              ...fetchingDataIndicatorStyles.container,
+              height: '100vh',
+            }}
+          >
+            <CircularProgress size={50} color="primary" />
+          </DivAtom>
+        )}
       </Router>
     </>
   );

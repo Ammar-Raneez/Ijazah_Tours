@@ -335,14 +335,6 @@ export const navbarStyles = {
   },
 };
 
-export const sidebarStyles = {
-  bottomContainer: {
-    display: 'flex',
-    flexDirection: 'column' as const,
-    justifyContent: 'flex-end',
-  },
-};
-
 export const tableRowTextCellStyles = {
   paragraph: {
     margin: '0px',
