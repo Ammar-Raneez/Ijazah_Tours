@@ -1,11 +1,11 @@
 import { useSelector } from 'react-redux';
 
 import DivAtom from '../../../atoms/DivAtom';
-import { selectHeight } from '../../../redux/containerSizeSlice';
+import { selectWithNavbarHeight } from '../../../redux/containerSizeSlice';
 import { settingsStyles } from '../../../styles';
 
 function General() {
-  const height = useSelector(selectHeight);
+  const height = useSelector(selectWithNavbarHeight);
 
   return (
     <DivAtom style={settingsStyles.container}>

@@ -13,14 +13,14 @@ import CreateDriver from './CreateDriver';
 import EditDriver from './EditDriver';
 import DriverTable from '../../../organisms/library/driver/DriverTable';
 import DivAtom from '../../../atoms/DivAtom';
-import { selectHeight } from '../../../redux/containerSizeSlice';
+import { selectWithNavbarHeight } from '../../../redux/containerSizeSlice';
 import { db } from '../../../firebase';
 import { LibraryDriver } from '../../../utils/types';
 import { searchData } from '../../../utils/helpers';
 import { libraryStyles } from '../../../styles';
 
 function Driver() {
-  const height = useSelector(selectHeight);
+  const height = useSelector(selectWithNavbarHeight);
 
   const [driverData, setDriverData] = useState<DocumentData[]>([]);
   const [initialDriverSearchData, setInitialDriverSearchData] = useState<DocumentData[]>([]);

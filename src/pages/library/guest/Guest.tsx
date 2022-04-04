@@ -13,14 +13,14 @@ import CreateGuest from './CreateGuest';
 import EditGuest from './EditGuest';
 import GuestTable from '../../../organisms/library/guest/GuestTable';
 import DivAtom from '../../../atoms/DivAtom';
-import { selectHeight } from '../../../redux/containerSizeSlice';
+import { selectWithNavbarHeight } from '../../../redux/containerSizeSlice';
 import { db } from '../../../firebase';
 import { LibraryGuest } from '../../../utils/types';
 import { searchData } from '../../../utils/helpers';
 import { libraryStyles } from '../../../styles';
 
 function Guest() {
-  const height = useSelector(selectHeight);
+  const height = useSelector(selectWithNavbarHeight);
   const [guestData, setGuestData] = useState<DocumentData[]>([]);
   const [initialGuestSearchData, setInitialGuestSearchData] = useState<DocumentData[]>([]);
   const [search, setSearch] = useState('');

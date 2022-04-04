@@ -19,15 +19,15 @@ import UMTeamMemberDialog from '../../../organisms/settings/user-management/UMTe
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
-import { selectHeight, selectWidth } from '../../../redux/containerSizeSlice';
+import { selectWithNavbarHeight, selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
 import { auth, db } from '../../../firebase';
 import { FlexDirection, SettingsTeamMember } from '../../../utils/types';
 import { widthHeightDynamicStyle } from '../../../utils/helpers';
 import { TableToolbarStyles, settingsStyles } from '../../../styles';
 
 function UserManagement() {
-  const height = useSelector(selectHeight);
-  const width = useSelector(selectWidth);
+  const height = useSelector(selectWithNavbarHeight);
+  const width = useSelector(selectWithNavbarWidth);
 
   const [newFirstName, setNewFirstName] = useState('');
   const [newLastName, setNewLastName] = useState('');

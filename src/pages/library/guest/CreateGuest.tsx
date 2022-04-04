@@ -10,7 +10,7 @@ import CreateEditGuestForm from '../../../organisms/library/guest/CreateEditGues
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
 import IconAtom from '../../../atoms/IconAtom';
-import { selectWidth } from '../../../redux/containerSizeSlice';
+import { selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
 import { db } from '../../../firebase';
 import { statusOptions, uploadImage } from '../../../utils/helpers';
 import { libraryCreateGuestStyles } from '../../../styles';
@@ -26,7 +26,7 @@ function CreateGuest({
   isCreating,
   setIsCreating,
 }: CreateGuestProps) {
-  const width = useSelector(selectWidth);
+  const width = useSelector(selectWithNavbarWidth);
 
   const [refNum, setRefNum] = useState('');
   const [firstName, setFirstName] = useState('');

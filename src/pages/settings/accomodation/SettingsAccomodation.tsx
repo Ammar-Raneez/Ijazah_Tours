@@ -18,7 +18,7 @@ import SectionContainer from '../../../organisms/settings/SectionContainer';
 import SingleInputDialog from '../../../organisms/settings/SingleInputDialog';
 import DivAtom from '../../../atoms/DivAtom';
 import UnorderedListAtom from '../../../atoms/UnorderedListAtom';
-import { selectHeight, selectWidth } from '../../../redux/containerSizeSlice';
+import { selectWithNavbarHeight, selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
 import { db } from '../../../firebase';
 import { SettingsLocation, SettingsSingleInput } from '../../../utils/types';
 import { settingsStyles } from '../../../styles';
@@ -54,8 +54,8 @@ function listRender(data: DocumentData[][], index: number) {
 }
 
 function SettingsAccomodation() {
-  const height = useSelector(selectHeight);
-  const width = useSelector(selectWidth);
+  const height = useSelector(selectWithNavbarHeight);
+  const width = useSelector(selectWithNavbarWidth);
 
   const [singleInputsData, setSingleInputsData] = useState<DocumentData[][]>([]);
   const [newSingleInput, setNewSingleInput] = useState('');

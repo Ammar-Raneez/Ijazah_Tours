@@ -9,7 +9,7 @@ import CreateEditDriverForm from '../../../organisms/library/driver/CreateEditDr
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
 import IconAtom from '../../../atoms/IconAtom';
-import { selectWidth } from '../../../redux/containerSizeSlice';
+import { selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
 import { db } from '../../../firebase';
 import { LibraryDriver } from '../../../utils/types';
 import { uploadImage } from '../../../utils/helpers';
@@ -24,7 +24,7 @@ interface EditDriverProps {
 }
 
 function EditDriver({ row, isUpdating, setIsUpdating }: EditDriverProps) {
-  const width = useSelector(selectWidth);
+  const width = useSelector(selectWithNavbarWidth);
 
   const [firstName, setFirstName] = useState(row.name.split(' ')[0]);
   const [lastName, setLastName] = useState(row.name.split(' ')[1]);

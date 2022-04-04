@@ -14,7 +14,7 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
 import SpanAtom from '../atoms/SpanAtom';
-import { selectWidth } from '../redux/containerSizeSlice';
+import { selectWithNavbarWidth } from '../redux/containerSizeSlice';
 import { libraryTableStyles } from '../styles';
 
 const tablePaginationActionsStyle = makeStyles((theme: Theme) => createStyles({
@@ -51,7 +51,7 @@ function TablePaginationActions({
   rowsPerPage,
   onPageChange,
 }: TablePaginationActionsProps) {
-  const width = useSelector(selectWidth);
+  const width = useSelector(selectWithNavbarWidth);
 
   const classes = tablePaginationActionsStyle();
   const theme = useTheme();

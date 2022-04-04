@@ -11,12 +11,12 @@ import DivAtom from '../../atoms/DivAtom';
 import H2Atom from '../../atoms/H2Atom';
 import ParagraphAtom from '../../atoms/ParagraphAtom';
 import { login } from '../../redux/userSlice';
-import { selectWidth } from '../../redux/containerSizeSlice';
+import { selectWithNavbarWidth } from '../../redux/containerSizeSlice';
 import { getUserOnLogin, widthHeightDynamicStyle } from '../../utils/helpers';
 import { loginStyles } from '../../styles';
 
 function Login() {
-  const width = useSelector(selectWidth);
+  const width = useSelector(selectWithNavbarWidth);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

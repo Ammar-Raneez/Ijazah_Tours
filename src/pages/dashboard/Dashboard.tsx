@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 import TaskTable from '../../organisms/dashboard/TaskTable';
 import ButtonAtom from '../../atoms/ButtonAtom';
 import DivAtom from '../../atoms/DivAtom';
-import { selectHeight } from '../../redux/containerSizeSlice';
+import { selectWithoutNavbarHeight } from '../../redux/containerSizeSlice';
 import { DASHBOARD_TASK_DATA } from '../../data';
 import { dashboardStyles } from '../../styles';
 
 function Dashboard() {
-  const height = useSelector(selectHeight);
+  const height = useSelector(selectWithoutNavbarHeight);
 
   return (
     <DivAtom style={dashboardStyles.container}>

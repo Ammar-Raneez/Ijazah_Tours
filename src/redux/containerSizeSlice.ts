@@ -4,13 +4,17 @@ import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from './root';
 
 interface ContainerSizeState {
-  width: 0,
-  height: 0,
+  withNavbarWidth: 0,
+  withNavbarHeight: 0,
+  withoutNavbarWidth: 0,
+  withoutNavbarHeight: 0,
 }
 
 const initialState: ContainerSizeState = {
-  width: 0,
-  height: 0,
+  withNavbarWidth: 0,
+  withNavbarHeight: 0,
+  withoutNavbarWidth: 0,
+  withoutNavbarHeight: 0,
 };
 
 export const containerSizeSlice = createSlice({
@@ -18,13 +22,17 @@ export const containerSizeSlice = createSlice({
   initialState,
   reducers: {
     onSizeChange: (state, action) => {
-      state.height = action.payload.height;
-      state.width = action.payload.width;
+      state.withNavbarWidth = action.payload.withNavbarWidth;
+      state.withNavbarHeight = action.payload.withNavbarHeight;
+      state.withoutNavbarWidth = action.payload.withoutNavbarWidth;
+      state.withoutNavbarHeight = action.payload.withoutNavbarHeight;
     },
   },
 });
 
 export const { onSizeChange } = containerSizeSlice.actions;
-export const selectWidth = (state: RootState) => state.containerSize.width;
-export const selectHeight = (state: RootState) => state.containerSize.height;
+export const selectWithNavbarWidth = (state: RootState) => state.containerSize.withNavbarWidth;
+export const selectWithNavbarHeight = (state: RootState) => state.containerSize.withNavbarHeight;
+export const selectWithoutNavbarWidth = (state: RootState) => state.containerSize.withoutNavbarWidth;
+export const selectWithoutNavbarHeight = (state: RootState) => state.containerSize.withoutNavbarHeight;
 export default containerSizeSlice.reducer;

@@ -13,15 +13,15 @@ import DataCard from '../../../molecules/DataCard';
 import DivAtom from '../../../atoms/DivAtom';
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import InputAtom from '../../../atoms/InputAtom';
-import { selectHeight, selectWidth } from '../../../redux/containerSizeSlice';
+import { selectWithNavbarHeight, selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
 import { FlexDirection, JustifyContent } from '../../../utils/types';
 import { widthHeightDynamicStyle } from '../../../utils/helpers';
 import { QUOTATIONS_DATA } from '../../../data';
 import { quotationsStyles } from '../../../styles';
 
 function Quotations() {
-  const height = useSelector(selectHeight);
-  const width = useSelector(selectWidth);
+  const height = useSelector(selectWithNavbarHeight);
+  const width = useSelector(selectWithNavbarWidth);
 
   const [search, setSearch] = useState('');
 

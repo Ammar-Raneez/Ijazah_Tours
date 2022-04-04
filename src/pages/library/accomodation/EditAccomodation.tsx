@@ -12,7 +12,7 @@ import CreateEditAccomodationForm from '../../../organisms/library/accomodation/
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
 import IconAtom from '../../../atoms/IconAtom';
-import { selectWidth } from '../../../redux/containerSizeSlice';
+import { selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
 import { db } from '../../../firebase';
 import {
   AccomodationRate,
@@ -41,7 +41,7 @@ function EditAccomodation({
   roomGradingsData,
   setIsUpdating,
 }: EditAccomodationProps) {
-  const width = useSelector(selectWidth);
+  const width = useSelector(selectWithNavbarWidth);
 
   const [name, setName] = useState(row.name);
   const [group, setGroup] = useState(row.group);

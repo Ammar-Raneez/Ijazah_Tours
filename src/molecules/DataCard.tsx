@@ -6,7 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import ParagraphAtom from '../atoms/ParagraphAtom';
 import { widthHeightDynamicStyle } from '../utils/helpers';
 import { DataCardStyles } from '../styles';
-import { selectWidth } from '../redux/containerSizeSlice';
+import { selectWithNavbarWidth } from '../redux/containerSizeSlice';
 
 const useStyles = makeStyles({
   root: {
@@ -21,7 +21,7 @@ interface DataCardProps {
 }
 
 export default function DataCard({ title, total }: DataCardProps) {
-  const width = useSelector(selectWidth);
+  const width = useSelector(selectWithNavbarWidth);
 
   const classes = useStyles();
 

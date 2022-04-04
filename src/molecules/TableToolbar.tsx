@@ -18,7 +18,7 @@ import clsx from 'clsx';
 import ButtonAtom from '../atoms/ButtonAtom';
 import DivAtom from '../atoms/DivAtom';
 import InputAtom from '../atoms/InputAtom';
-import { selectWidth } from '../redux/containerSizeSlice';
+import { selectWithNavbarWidth } from '../redux/containerSizeSlice';
 import { FlexDirection } from '../utils/types';
 import { widthHeightDynamicStyle } from '../utils/helpers';
 import { TableToolbarStyles } from '../styles';
@@ -57,7 +57,7 @@ const TableToolbar = ({
   setSearch,
 }: TableToolbarProps) => {
   const classes = useToolbarStyles();
-  const width = useSelector(selectWidth);
+  const width = useSelector(selectWithNavbarWidth);
 
   let addBtnTextWidth;
   if (width < 540) {

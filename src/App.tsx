@@ -37,8 +37,10 @@ function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [getInitialUser, setGetInitialUser] = useState(false);
 
-  const [height, setHeight] = useState(0);
-  const [width, setWidth] = useState(0);
+  const [withNavbarHeight, setWithNavbarHeight] = useState(0);
+  const [withNavbarWidth, setWithNavbarWidth] = useState(0);
+  const [withoutNavbarHeight, setWithoutNavbarHeight] = useState(0);
+  const [withoutNavbarWidth, setWithoutNavbarWidth] = useState(0);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -57,32 +59,19 @@ function App() {
   }, []);
 
   useEffect(() => {
-    setHeight(window.innerHeight - 180);
-    setWidth(window.innerWidth);
-    dispatch(
-      onSizeChange({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      }),
-    );
+    setWithNavbarHeight(window.innerHeight - 160);
+    setWithoutNavbarHeight(window.innerHeight - 110);
+    setWithNavbarWidth(window.innerWidth);
+    setWithoutNavbarWidth(window.innerWidth);
+    dispatchContainerSize();
 
     const widthListener = window.addEventListener('resize', () => {
-      setWidth(window.innerWidth);
-      dispatch(
-        onSizeChange({
-          width: window.innerWidth,
-          height: window.innerHeight,
-        }),
-      );
+      setWithNavbarWidth(window.innerWidth);
+      dispatchContainerSize();
     });
     const heightListener = window.addEventListener('resize', () => {
-      setHeight(window.innerHeight - 180);
-      dispatch(
-        onSizeChange({
-          width: window.innerWidth,
-          height: window.innerHeight,
-        }),
-      );
+      setWithNavbarHeight(window.innerHeight - 160);
+      dispatchContainerSize();
     });
 
     const removeEventListeners = () => {
@@ -91,10 +80,21 @@ function App() {
     };
 
     return removeEventListeners();
-  }, [width, height]);
+  }, [withNavbarWidth, withoutNavbarWidth, withNavbarHeight, withoutNavbarHeight]);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  const dispatchContainerSize = () => {
+    dispatch(
+      onSizeChange({
+        withNavbarWidth: window.innerWidth,
+        withNavbarHeight: window.innerHeight - 160,
+        withoutNavbarWidth: window.innerWidth,
+        withoutNavbarHeight: window.innerHeight - 110,
+      }),
+    );
   };
 
   return (

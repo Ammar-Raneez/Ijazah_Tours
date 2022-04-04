@@ -8,15 +8,15 @@ import CostingOverallCost from '../../../../organisms/quote/quotation/create-quo
 import DivAtom from '../../../../atoms/DivAtom';
 import ParagraphAtom from '../../../../atoms/ParagraphAtom';
 import ButtonAtom from '../../../../atoms/ButtonAtom';
-import { selectHeight, selectWidth } from '../../../../redux/containerSizeSlice';
+import { selectWithNavbarHeight, selectWithNavbarWidth } from '../../../../redux/containerSizeSlice';
 import { QuotationCostingAccomodation, QuotationCostingRate } from '../../../../utils/types';
 import { mealPlanOptions, roomTypes, widthHeightDynamicStyle } from '../../../../utils/helpers';
 import { QUOTATIONS_COSTING_ACCOMODATION_DATA, QUOTATIONS_COSTING_RATE_DATA } from '../../../../data';
 import { quoteCreateQuoteStyles } from '../../../../styles';
 
 function Costing() {
-  const height = useSelector(selectHeight);
-  const width = useSelector(selectWidth);
+  const height = useSelector(selectWithNavbarHeight);
+  const width = useSelector(selectWithNavbarWidth);
 
   // Overall cost
   const [totalExpense, setTotalExpense] = useState('');

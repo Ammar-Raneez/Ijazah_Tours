@@ -10,7 +10,7 @@ import CreateEditDriverForm from '../../../organisms/library/driver/CreateEditDr
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
 import IconAtom from '../../../atoms/IconAtom';
-import { selectWidth } from '../../../redux/containerSizeSlice';
+import { selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
 import { db } from '../../../firebase';
 import { statusOptions, uploadImage, vehicleOptions } from '../../../utils/helpers';
 import { libraryDriverStyles } from '../../../styles';
@@ -26,7 +26,7 @@ function CreateDriver({
   isCreating,
   setIsCreating,
 }: CreateDriverProps) {
-  const width = useSelector(selectWidth);
+  const width = useSelector(selectWithNavbarWidth);
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');

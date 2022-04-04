@@ -20,7 +20,7 @@ import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
 import IconAtom from '../../../atoms/IconAtom';
 import { db } from '../../../firebase';
-import { selectWidth } from '../../../redux/containerSizeSlice';
+import { selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
 import { AccomodationRate, SettingsRoomProperties, DropdownOption } from '../../../utils/types';
 import { libraryAccomodationStyles } from '../../../styles';
 
@@ -39,7 +39,7 @@ function CreateAccomodation({
   roomGradingsData,
   setIsCreating,
 }: CreateAccomodationProps) {
-  const width = useSelector(selectWidth);
+  const width = useSelector(selectWithNavbarWidth);
 
   const [accomodationTypeData, setAccomodationTypeData] = useState<DropdownOption[]>([]);
   const [accomodationType, setAccomodationType] = useState('');

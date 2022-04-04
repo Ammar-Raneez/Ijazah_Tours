@@ -13,14 +13,14 @@ import CreateAccomodation from './CreateAccomodation';
 import EditAccomodation from './EditAccomodation';
 import AccomodationTable from '../../../organisms/library/accomodation/AccomodationTable';
 import DivAtom from '../../../atoms/DivAtom';
-import { selectHeight } from '../../../redux/containerSizeSlice';
+import { selectWithNavbarHeight } from '../../../redux/containerSizeSlice';
 import { db } from '../../../firebase';
 import { DropdownOption, LibraryAccomodation, SettingsRoomProperties } from '../../../utils/types';
 import { searchData } from '../../../utils/helpers';
 import { libraryStyles } from '../../../styles';
 
 function Accomodation() {
-  const height = useSelector(selectHeight);
+  const height = useSelector(selectWithNavbarHeight);
 
   const [accomodationData, setAccomodationData] = useState<DocumentData[]>([]);
   const [roomViewData, setRoomViewData] = useState<SettingsRoomProperties[]>([]);
