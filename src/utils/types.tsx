@@ -10,6 +10,7 @@ export interface User {
   _id: string;
   firstName: string;
   lastName: string;
+  profileImg: string;
   role: string;
   email: string;
   status: string;

@@ -80,6 +80,7 @@ function UserManagement() {
       lastName: newLastName,
       email: newEmail,
       role: newRole,
+      profileImg: null,
       status: 'ACTIVE',
       createdAt: serverTimestamp(),
     });

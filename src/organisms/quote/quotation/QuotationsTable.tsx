@@ -114,6 +114,7 @@ function QuotationsTable({ rowdata }: QuotationsTableProps) {
                         image={row.image}
                         title={row.title}
                         titleWeight={300}
+                        paraColor="#464E5F"
                       />
                     </TableCell>
                     <TableRowTextCell

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
   BrowserRouter as Router,
@@ -37,10 +37,6 @@ function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [getInitialUser, setGetInitialUser] = useState(false);
 
-  const [withNavbarHeight, setWithNavbarHeight] = useState(0);
-  const [withNavbarWidth, setWithNavbarWidth] = useState(0);
-  const [withoutNavbarHeight, setWithoutNavbarHeight] = useState(0);
-  const [withoutNavbarWidth, setWithoutNavbarWidth] = useState(0);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -58,34 +54,13 @@ function App() {
     });
   }, []);
 
-  useEffect(() => {
-    setWithNavbarHeight(
-      widthHeightDynamicStyle(
-        window.innerWidth,
-        1400,
-        window.innerHeight - 170,
-        window.innerHeight - 160,
-      ) as number,
-    );
-    setWithoutNavbarHeight(
-      widthHeightDynamicStyle(
-        window.innerWidth,
-        1400,
-        window.innerHeight - 120,
-        window.innerHeight - 110,
-      ) as number,
-    );
-
-    setWithNavbarWidth(window.innerWidth);
-    setWithoutNavbarWidth(window.innerWidth);
+  useLayoutEffect(() => {
     dispatchContainerSize();
 
     const widthListener = window.addEventListener('resize', () => {
-      setWithNavbarWidth(window.innerWidth);
       dispatchContainerSize();
     });
     const heightListener = window.addEventListener('resize', () => {
-      setWithNavbarHeight(window.innerHeight - 160);
       dispatchContainerSize();
     });
 
@@ -95,7 +70,7 @@ function App() {
     };
 
     return removeEventListeners();
-  }, [withNavbarWidth, withoutNavbarWidth, withNavbarHeight, withoutNavbarHeight]);
+  }, []);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);

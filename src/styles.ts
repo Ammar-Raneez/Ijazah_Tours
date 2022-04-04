@@ -286,7 +286,6 @@ export const guestProfileStyles = {
   },
   paragraph: {
     margin: '0px',
-    color: '#464E5F',
     fontSize: '0.875rem',
   },
 };
@@ -302,6 +301,13 @@ export const headerStyles = {
   logoContainer: {
     display: 'flex',
     alignItems: 'center',
+    flex: 1,
+  },
+  userProfile: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    flex: 1,
+    paddingRight: '1rem',
   },
   avatar: {
     marginRight: '20px',
