@@ -1,27 +1,22 @@
-import { ElementType } from 'react';
+import { ReactNode } from 'react';
+import { useSelector } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
 
-import { User } from './types';
+import { selectUser } from '../redux/userSlice';
 
 interface ProtectedRouteProps {
-  user: User;
-  Component: ElementType;
+  path: string;
+  children: ReactNode;
+  exact?: boolean;
 }
 
-function ProtectedRoute({ user, Component, ...rest }: ProtectedRouteProps) {
+function ProtectedRoute({ path, exact, children }: ProtectedRouteProps) {
+  const user = useSelector(selectUser);
+
   return (
-    <Route
-      {...rest}
-      render={
-        (props) => (
-          user ? (
-            <Component {...props} />
-          ) : (
-            <Redirect to='/login' />
-          )
-        )
-      }
-    />
+    <Route exact={exact} path={path}>
+      { user.email !== '' ? children : <Redirect to="/login" />}
+    </Route>
   );
 }
 

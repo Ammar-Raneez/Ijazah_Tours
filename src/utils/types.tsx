@@ -8,8 +8,11 @@ export type JustifyContent = 'flex-start' | 'flex-end' | 'center' | 'space-betwe
 
 export interface User {
   _id: string;
-  name: string;
+  firstName: string;
+  lastName: string;
+  role: string;
   email: string;
+  status: string;
 }
 
 // Settings

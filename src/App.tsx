@@ -7,6 +7,7 @@ import {
   Switch,
 } from 'react-router-dom';
 import styled from 'styled-components';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 import Quotations from './pages/quote/quotation/Quotations';
 import Voucher from './pages/quote/voucher/Voucher';
@@ -24,6 +25,9 @@ import Header from './organisms/Header';
 import Sidebar from './organisms/Sidebar';
 import Navbar from './organisms/Navbar';
 import { onSizeChange } from './redux/containerSizeSlice';
+import { login, logout } from './redux/userSlice';
+import ProtectedRoute from './utils/ProtectedRoute';
+import { getUserOnLogin } from './utils/helpers';
 import GlobalStyle from './globalStyle';
 
 function App() {
@@ -32,6 +36,17 @@ function App() {
   const [height, setHeight] = useState(0);
   const [width, setWidth] = useState(0);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    onAuthStateChanged(getAuth(), async (usr) => {
+      if (usr) {
+        const userData = await getUserOnLogin(usr);
+        dispatch(login(userData));
+      } else {
+        dispatch(logout());
+      }
+    });
+  }, []);
 
   useEffect(() => {
     setHeight(window.innerHeight - 180);
@@ -79,19 +94,21 @@ function App() {
       <Router>
         <GlobalStyle />
         <Switch>
-          <Route path="/dashboard">
-            <Header handleDrawerToggle={handleDrawerToggle} />
-            <Root>
-              <Sidebar
-                mobileOpen={mobileOpen}
-                handleDrawerToggle={handleDrawerToggle}
-              />
-              <StyledDivAtom>
-                <Dashboard />
-              </StyledDivAtom>
-            </Root>
-          </Route>
-          <Route path="/quote">
+          <ProtectedRoute path="/dashboard">
+            <>
+              <Header handleDrawerToggle={handleDrawerToggle} />
+              <Root>
+                <Sidebar
+                  mobileOpen={mobileOpen}
+                  handleDrawerToggle={handleDrawerToggle}
+                />
+                <StyledDivAtom>
+                  <Dashboard />
+                </StyledDivAtom>
+              </Root>
+            </>
+          </ProtectedRoute>
+          <ProtectedRoute path="/quote">
             <Header handleDrawerToggle={handleDrawerToggle} />
             <Root>
               <Sidebar
@@ -100,22 +117,22 @@ function App() {
               />
               <StyledDivAtom>
                 <Navbar type="quote" />
-                <Route path="/quote/quotations">
+                <ProtectedRoute path="/quote/quotations">
                   <Quotations />
-                </Route>
-                <Route path="/quote/voucher">
+                </ProtectedRoute>
+                <ProtectedRoute path="/quote/voucher">
                   <Voucher />
-                </Route>
-                <Route path="/quote/summary">
+                </ProtectedRoute>
+                <ProtectedRoute path="/quote/summary">
                   <Summary />
-                </Route>
-                <Route exact path="/quote">
+                </ProtectedRoute>
+                <ProtectedRoute exact path="/quote">
                   <Redirect to="/quote/quotations" />
-                </Route>
+                </ProtectedRoute>
               </StyledDivAtom>
             </Root>
-          </Route>
-          <Route path="/library">
+          </ProtectedRoute>
+          <ProtectedRoute path="/library">
             <Header handleDrawerToggle={handleDrawerToggle} />
             <Root>
               <Sidebar
@@ -124,22 +141,22 @@ function App() {
               />
               <StyledDivAtom>
                 <Navbar type="library" />
-                <Route path="/library/accomodation">
+                <ProtectedRoute path="/library/accomodation">
                   <Accomodation />
-                </Route>
-                <Route path="/library/driver">
+                </ProtectedRoute>
+                <ProtectedRoute path="/library/driver">
                   <Driver />
-                </Route>
-                <Route path="/library/guest">
+                </ProtectedRoute>
+                <ProtectedRoute path="/library/guest">
                   <Guest />
-                </Route>
-                <Route exact path="/library">
+                </ProtectedRoute>
+                <ProtectedRoute exact path="/library">
                   <Redirect to="/library/accomodation" />
-                </Route>
+                </ProtectedRoute>
               </StyledDivAtom>
             </Root>
-          </Route>
-          <Route path="/settings">
+          </ProtectedRoute>
+          <ProtectedRoute path="/settings">
             <Header handleDrawerToggle={handleDrawerToggle} />
             <Root>
               <Sidebar
@@ -148,24 +165,24 @@ function App() {
               />
               <StyledDivAtom>
                 <Navbar type="settings" />
-                <Route path="/settings/accomodation">
+                <ProtectedRoute path="/settings/accomodation">
                   <SettingsAccomodation />
-                </Route>
-                <Route path="/settings/tour">
+                </ProtectedRoute>
+                <ProtectedRoute path="/settings/tour">
                   <Tour />
-                </Route>
-                <Route path="/settings/user-management">
+                </ProtectedRoute>
+                <ProtectedRoute path="/settings/user-management">
                   <UserManagement />
-                </Route>
-                <Route path="/settings/general">
+                </ProtectedRoute>
+                <ProtectedRoute path="/settings/general">
                   <General />
-                </Route>
+                </ProtectedRoute>
                 <Route exact path="/settings">
                   <Redirect to="/settings/user-management" />
                 </Route>
               </StyledDivAtom>
             </Root>
-          </Route>
+          </ProtectedRoute>
 
           <Route path="/login">
             <StyledDivAtom isFullScreen>

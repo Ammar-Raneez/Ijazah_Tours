@@ -1,3 +1,5 @@
+import { User } from 'firebase/auth';
+import { collection, getDocs } from 'firebase/firestore';
 import {
   FirebaseStorage,
   getDownloadURL,
@@ -5,6 +7,8 @@ import {
   uploadString,
 } from 'firebase/storage';
 import { v4 as uuid } from 'uuid';
+
+import { db } from '../firebase';
 import { Order } from './types';
 
 export function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -48,6 +52,15 @@ export const uploadImage = async (storage: FirebaseStorage, container: string, p
   const storageRef = ref(storage, `${container}/${randomString + filepath}`);
   await uploadString(storageRef, pic, 'data_url');
   return getDownloadURL(storageRef);
+};
+
+export const getUserOnLogin = async (user: User) => {
+  const userData = (await getDocs(collection(db, `Team Members`)))
+    .docs.find((doc) => doc.get('email') === user.email);
+  const data = userData!.data();
+  const { id } = userData!;
+  data.id = id;
+  return data;
 };
 
 export const searchData = (search: string, initialData: any, setter: any) => {

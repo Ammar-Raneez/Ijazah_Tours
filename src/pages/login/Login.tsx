@@ -2,8 +2,8 @@ import {
   FormEvent,
   useState,
 } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { collection, getDocs } from 'firebase/firestore';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 import LoginForm from '../../organisms/login/LoginForm';
@@ -12,8 +12,7 @@ import H2Atom from '../../atoms/H2Atom';
 import ParagraphAtom from '../../atoms/ParagraphAtom';
 import { login } from '../../redux/userSlice';
 import { selectWidth } from '../../redux/containerSizeSlice';
-import { db } from '../../firebase';
-import { widthHeightDynamicStyle } from '../../utils/helpers';
+import { getUserOnLogin, widthHeightDynamicStyle } from '../../utils/helpers';
 import { loginStyles } from '../../styles';
 
 function Login() {
@@ -26,6 +25,8 @@ function Login() {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [invalidLoginMessage, setInvalidLoginMessage] = useState('');
 
+  const history = useHistory();
+
   const dispatch = useDispatch();
 
   const onLogin = async (e: FormEvent<HTMLFormElement>) => {
@@ -36,11 +37,9 @@ function Login() {
 
     try {
       const { user } = await signInWithEmailAndPassword(auth, email, password);
-      const userData = (await getDocs(collection(db, `Team Members`)))
-        .docs.find((doc) => doc.get('email') === user.email)?.data();
-      dispatch(
-        login(userData),
-      );
+      const userData = await getUserOnLogin(user);
+      dispatch(login(userData));
+      history.replace('/dashboard');
     } catch (err) {
       setInvalidLoginMessage('Invalid Credentials');
     } finally {
