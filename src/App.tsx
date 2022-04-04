@@ -29,7 +29,7 @@ import DivAtom from './atoms/DivAtom';
 import { onSizeChange } from './redux/containerSizeSlice';
 import { login, logout } from './redux/userSlice';
 import ProtectedRoute from './utils/ProtectedRoute';
-import { getUserOnLogin } from './utils/helpers';
+import { getUserOnLogin, widthHeightDynamicStyle } from './utils/helpers';
 import GlobalStyle from './globalStyle';
 import { fetchingDataIndicatorStyles } from './styles';
 
@@ -59,8 +59,23 @@ function App() {
   }, []);
 
   useEffect(() => {
-    setWithNavbarHeight(window.innerHeight - 160);
-    setWithoutNavbarHeight(window.innerHeight - 110);
+    setWithNavbarHeight(
+      widthHeightDynamicStyle(
+        window.innerWidth,
+        1400,
+        window.innerHeight - 170,
+        window.innerHeight - 160,
+      ) as number,
+    );
+    setWithoutNavbarHeight(
+      widthHeightDynamicStyle(
+        window.innerWidth,
+        1400,
+        window.innerHeight - 120,
+        window.innerHeight - 110,
+      ) as number,
+    );
+
     setWithNavbarWidth(window.innerWidth);
     setWithoutNavbarWidth(window.innerWidth);
     dispatchContainerSize();
@@ -90,9 +105,19 @@ function App() {
     dispatch(
       onSizeChange({
         withNavbarWidth: window.innerWidth,
-        withNavbarHeight: window.innerHeight - 160,
         withoutNavbarWidth: window.innerWidth,
-        withoutNavbarHeight: window.innerHeight - 110,
+        withNavbarHeight: widthHeightDynamicStyle(
+          window.innerWidth,
+          1400,
+          window.innerHeight - 170,
+          window.innerHeight - 160,
+        ) as number,
+        withoutNavbarHeight: widthHeightDynamicStyle(
+          window.innerWidth,
+          1400,
+          window.innerHeight - 120,
+          window.innerHeight - 110,
+        ) as number,
       }),
     );
   };
