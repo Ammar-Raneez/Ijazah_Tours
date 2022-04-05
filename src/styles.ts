@@ -160,6 +160,11 @@ export const loginStyles = {
   },
 };
 
+export const userProfileStyles = {
+  ...formCreateMemberStyles,
+  ...mainContainerStyles,
+};
+
 // Quotations
 export const quotationsStyles = {
   ...mainContainerStyles,
@@ -261,6 +266,9 @@ export const libraryCreateGuestStyles = {
 // Dashboard
 export const dashboardStyles = {
   ...quotationsStyles,
+  mainContainer: {
+    overflow: 'scroll',
+  },
 };
 
 // Settings

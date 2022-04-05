@@ -1,5 +1,6 @@
 import { MouseEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import {
   createStyles,
   Hidden,
@@ -39,6 +40,7 @@ function Header({ handleDrawerToggle }: HeaderProps) {
   const [openProfileMenu, setOpenProfileMenu] = useState<null | HTMLElement>(null);
 
   const dispatch = useDispatch();
+  const history = useHistory();
   const classes = useStyles();
 
   const handleClickProfileMenu = (event: MouseEvent<HTMLButtonElement>) => {
@@ -48,6 +50,11 @@ function Header({ handleDrawerToggle }: HeaderProps) {
   const onLogout = async () => {
     await signOut(getAuth());
     dispatch(logout());
+    handleCloseProfileMenu();
+  };
+
+  const navigateToProfile = () => {
+    history.replace('/user-profile');
     handleCloseProfileMenu();
   };
 
@@ -91,7 +98,7 @@ function Header({ handleDrawerToggle }: HeaderProps) {
               open={Boolean(openProfileMenu)}
               onClose={handleCloseProfileMenu}
             >
-              <MenuItem onClick={handleCloseProfileMenu}>View Profile</MenuItem>
+              <MenuItem onClick={navigateToProfile}>View Profile</MenuItem>
               <MenuItem onClick={onLogout}>Logout</MenuItem>
             </Menu>
           </DivAtom>

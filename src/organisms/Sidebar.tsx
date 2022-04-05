@@ -63,7 +63,7 @@ const tempLinks = [
   { key: '2', text: 'Quote', link: '/quote' },
   { key: '3', text: 'Library', link: '/library' },
   { key: '4', text: 'Settings', link: '/settings' },
-  { key: '5', text: 'View Profile', link: '/view-profile' },
+  { key: '5', text: 'View Profile', link: '/user-profile' },
 ];
 
 interface SidebarProps {

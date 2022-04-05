@@ -17,6 +17,7 @@ import Accomodation from './pages/library/accomodation/Accomodation';
 import Driver from './pages/library/driver/Driver';
 import Guest from './pages/library/guest/Guest';
 import Dashboard from './pages/dashboard/Dashboard';
+import UserProfile from './pages/profile/UserProfile';
 import SettingsAccomodation from './pages/settings/accomodation/SettingsAccomodation';
 import Tour from './pages/settings/tour/Tour';
 import UserManagement from './pages/settings/user-management/UserManagement';
@@ -126,6 +127,20 @@ function App() {
                   />
                   <StyledDivAtom>
                     <Dashboard />
+                  </StyledDivAtom>
+                </Root>
+              </>
+            </ProtectedRoute>
+            <ProtectedRoute path="/user-profile">
+              <>
+                <Header handleDrawerToggle={handleDrawerToggle} />
+                <Root>
+                  <Sidebar
+                    mobileOpen={mobileOpen}
+                    handleDrawerToggle={handleDrawerToggle}
+                  />
+                  <StyledDivAtom>
+                    <UserProfile />
                   </StyledDivAtom>
                 </Root>
               </>

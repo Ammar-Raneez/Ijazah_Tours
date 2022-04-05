@@ -16,8 +16,8 @@ function Dashboard() {
       <DivAtom
         style={{
           ...dashboardStyles.innerContainer,
+          ...dashboardStyles.mainContainer,
           height: `${height}px`,
-          overflow: 'scroll',
         }}
       >
         <DivAtom style={dashboardStyles.btnMainContainer}>
