@@ -14,6 +14,9 @@ import { libraryCreateGuestStyles, libraryStyles } from '../../../styles';
 
 interface CreateEditGuestFormProps {
   width: number;
+  adults: number;
+  rooms: number;
+  childAge: number;
   isCreating: boolean;
   showValidationErrorMessage: boolean;
   btnText: string;
@@ -26,9 +29,7 @@ interface CreateEditGuestFormProps {
   contactNumber: string;
   email: string;
   occupation: string;
-  adults: number;
-  rooms: number;
-  childAge: number;
+  onAddEditGuest: () => Promise<void>;
   childrenAges: number[];
   passport: any[];
   setRefNum: any;
@@ -45,12 +46,14 @@ interface CreateEditGuestFormProps {
   setChildAge: any;
   setChildrenAges: any;
   setPassport: any;
-  onAddEditGuest: () => Promise<void>;
   onAddReminder?: () => void;
 }
 
 function CreateEditGuestForm({
   width,
+  adults,
+  rooms,
+  childAge,
   isCreating,
   showValidationErrorMessage,
   btnText,
@@ -63,9 +66,7 @@ function CreateEditGuestForm({
   contactNumber,
   email,
   occupation,
-  adults,
-  rooms,
-  childAge,
+  onAddEditGuest,
   childrenAges,
   passport,
   setRefNum,
@@ -82,7 +83,6 @@ function CreateEditGuestForm({
   setChildAge,
   setChildrenAges,
   setPassport,
-  onAddEditGuest,
   onAddReminder,
 }: CreateEditGuestFormProps) {
   const getAgeString = (age: number) => (age === 1 ? `${age} year old` : `${age} years old`);

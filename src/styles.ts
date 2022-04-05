@@ -160,6 +160,7 @@ export const loginStyles = {
   },
 };
 
+// User Profile
 export const userProfileStyles = {
   ...formCreateMemberStyles,
   ...mainContainerStyles,

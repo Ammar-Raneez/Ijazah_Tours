@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import {
   collection,
@@ -20,12 +20,14 @@ import ButtonAtom from '../../../atoms/ButtonAtom';
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
 import { selectWithNavbarHeight, selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
+import { selectUser, login } from '../../../redux/userSlice';
 import { auth, db } from '../../../firebase';
 import { FlexDirection, SettingsTeamMember } from '../../../utils/types';
 import { widthHeightDynamicStyle } from '../../../utils/helpers';
 import { TableToolbarStyles, settingsStyles } from '../../../styles';
 
 function UserManagement() {
+  const user = useSelector(selectUser);
   const height = useSelector(selectWithNavbarHeight);
   const width = useSelector(selectWithNavbarWidth);
 
@@ -50,6 +52,8 @@ function UserManagement() {
 
   const [openNewDialog, setNewOpenDialog] = useState(false);
   const [openEditDialog, setEditOpenDialog] = useState(false);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const getInitialTeamData = async () => {
@@ -83,6 +87,9 @@ function UserManagement() {
       profileImg: null,
       status: 'ACTIVE',
       createdAt: serverTimestamp(),
+      contactNumber: '',
+      whatsApp: '',
+      title: '',
     });
 
     await createUserWithEmailAndPassword(auth, newEmail, newPassword);
@@ -116,6 +123,19 @@ function UserManagement() {
       role: editRole,
       updatedAt: serverTimestamp(),
     });
+
+    dispatch(login({
+      id: editId,
+      firstName: editFirstName,
+      lastName: editLastName,
+      role: editRole,
+      email: user.email,
+      title: user.title,
+      contactNumber: user.contactNumber,
+      whatsApp: user.whatsApp,
+      profileImg: user.profileImg,
+      status: user.status,
+    }));
 
     setIsUpdating(false);
     setEditOpenDialog(false);

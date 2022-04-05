@@ -7,10 +7,13 @@ export type FlexDirection = 'column' | 'row' | 'row-reverse' | 'column-reverse';
 export type JustifyContent = 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around';
 
 export interface User {
-  _id: string;
+  id: string;
   firstName: string;
   lastName: string;
   profileImg: string;
+  contactNumber: string,
+  whatsApp: string,
+  title: string,
   role: string;
   email: string;
   status: string;

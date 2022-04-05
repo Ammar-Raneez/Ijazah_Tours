@@ -10,10 +10,13 @@ interface UserState {
 
 const initialState: UserState = {
   user: {
-    _id: '',
+    id: '',
     firstName: '',
     lastName: '',
     profileImg: '',
+    contactNumber: '',
+    whatsApp: '',
+    title: '',
     role: '',
     email: '',
     status: '',
@@ -29,10 +32,13 @@ export const userSlice = createSlice({
     },
     logout: (state) => {
       state.user = {
-        _id: '',
+        id: '',
         firstName: '',
         lastName: '',
         profileImg: '',
+        contactNumber: '',
+        whatsApp: '',
+        title: '',
         role: '',
         email: '',
         status: '',
