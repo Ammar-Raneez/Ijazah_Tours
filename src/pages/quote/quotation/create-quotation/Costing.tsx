@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import CostingRateComparisonTable from '../../../../organisms/quote/quotation/create-quotation/costing/CostingRateComparisonTable';
 import CostingAccomodationTable from '../../../../organisms/quote/quotation/create-quotation/costing/CostingAccomodationTable';
@@ -34,6 +35,8 @@ function Costing() {
   // accomodation
   const [accomodationTotal, setAccomodationTotal] = useState('0');
 
+  const history = useHistory();
+
   useEffect(() => {
     let accTotal = 0;
     QUOTATIONS_COSTING_ACCOMODATION_DATA.forEach((rt) => {
@@ -54,6 +57,10 @@ function Costing() {
       - Number(discount.slice(1, discount.length));
     setNetPrice(`$${netTotal}`);
   }, [rate, commission, sellingPrice, discount]);
+
+  const saveCost = () => {
+    history.replace('/quote/quotations/create/approval');
+  };
 
   return (
     <DivAtom style={{ height: `${height}px` }}>
@@ -151,7 +158,7 @@ function Costing() {
         <ButtonAtom
           size="large"
           text="Save"
-          onClick={() => null}
+          onClick={saveCost}
           style={{
             ...quoteCreateQuoteStyles.addBtn,
             width: widthHeightDynamicStyle(width, 768, '100%', '12%'),

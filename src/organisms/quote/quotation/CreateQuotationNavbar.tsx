@@ -14,7 +14,7 @@ function CreateQuotationNavbar() {
   return (
     <DivAtom style={navbarStyles.container}>
       {LINKS.map((link) => (
-        <LinkAtom style={navbarStyles.link} key={link.key} to={link.link}>
+        <LinkAtom disabled style={navbarStyles.link} key={link.key} to={link.link}>
           <LinkTextAtom text={link.text} />
         </LinkAtom>
       ))}
