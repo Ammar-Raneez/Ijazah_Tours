@@ -83,6 +83,7 @@ export interface QuotationCostingAccomodation extends QuotationAccomodation {
 }
 
 export interface QuotationCostingRate {
+  id: string;
   date: string;
   accomodation: string;
   bookingEngine: string;

@@ -51,7 +51,7 @@ function CostingAccomodationTable({
               <TableColumnCell
                 key={uuid()}
                 align="center"
-                color="b5b5c3"
+                color="black"
                 column={column}
               />
             ))}

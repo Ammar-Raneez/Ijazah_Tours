@@ -236,6 +236,50 @@ export const approvalStyles = {
       display: 'flex',
     },
   },
+  rates: {
+    titleText: {
+      color: '#1C5BBA',
+      margin: 0,
+      fontWeight: 'bold',
+    },
+    titleContainer: {
+      display: 'flex',
+      alignItems: 'center',
+      marginTop: '2rem',
+    },
+  },
+  overallCost: {
+    container: {
+      marginTop: '1rem',
+      display: 'flex',
+      flexDirection: 'column' as const,
+      alignItems: 'flex-end',
+      padding: '0 1rem',
+      borderBottom: '2px solid #41E93E',
+    },
+    costContainer: {
+      container: {
+        width: '200px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        margin: 0,
+      },
+      netPriceContainer: {
+        width: '200px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        borderTop: '1px solid #41E93E',
+        borderBottom: '1px solid #41E93E',
+        padding: '0.5rem 0',
+      },
+      label: {
+        color: '#1C5BBA',
+      },
+      cost: {
+        fontWeight: 'bold',
+      },
+    },
+  },
 };
 
 // Library

@@ -7,6 +7,7 @@ import { Order } from '../utils/types';
 interface TableColumnCellProps {
   color: string;
   column?: string;
+  greenBorder?: boolean;
   align?: 'left' | 'center' | 'right' | 'justify' | 'inherit';
   sortDirection?: Order | false;
   children?: ReactNode;
@@ -14,18 +15,30 @@ interface TableColumnCellProps {
 
 function TableColumnCell({
   column,
+  greenBorder,
   align,
   color,
   sortDirection,
   ...props
 }: TableColumnCellProps) {
+  let cellStyle = {};
+  if (greenBorder) {
+    cellStyle = {
+      color,
+      fontWeight: 'bold',
+      borderBottom: '1px solid #41E93E',
+    };
+  } else if (props.children) {
+    cellStyle = { color, fontWeight: 'bold' };
+  }
+
   return (
     <TableCell
       sortDirection={sortDirection}
       key={uuid()}
       color={color}
       align={align}
-      style={props.children ? { color, fontWeight: 'bold' } : {}}
+      style={cellStyle}
     >
       {!props.children ? (
         <strong style={{ color }} key={uuid()}>{column}</strong>

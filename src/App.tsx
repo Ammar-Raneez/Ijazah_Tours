@@ -94,12 +94,19 @@ function App() {
     dispatch(
       onSizeChange({
         withNavbarWidth: window.innerWidth,
+        with2NavbarWidth: window.innerWidth,
         withoutNavbarWidth: window.innerWidth,
         withNavbarHeight: widthHeightDynamicStyle(
           window.innerWidth,
           1400,
           window.innerHeight - 170,
           window.innerHeight - 160,
+        ) as number,
+        with2NavbarHeight: widthHeightDynamicStyle(
+          window.innerWidth,
+          1400,
+          window.innerHeight - 220,
+          window.innerHeight - 210,
         ) as number,
         withoutNavbarHeight: widthHeightDynamicStyle(
           window.innerWidth,

@@ -8,11 +8,13 @@ import {
   TableRow,
   Theme,
 } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 
 import TableColumnCell from '../../../../../molecules/TableColumnCell';
 import TableRowTextCell from '../../../../../molecules/TableRowTextCell';
-import { QuotationCostingRate } from '../../../../../utils/types';
+import { selectWith2NavbarWidth } from '../../../../../redux/containerSizeSlice';
+import { QuotationCostingAccomodation } from '../../../../../utils/types';
 
 const useStyles = makeStyles((theme: Theme) => ({
   table: {
@@ -21,30 +23,34 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   paper: {
     marginTop: theme.spacing(2),
+    width: '60%',
   },
 }));
 
-interface CostingRateComparisonTableProps {
-  data: QuotationCostingRate[];
+interface ApprovalAccomodationTableProps {
+  data: QuotationCostingAccomodation[];
   columns: string[];
 }
 
-function CostingRateComparisonTable({
+function ApprovalAccomodationTable({
   data,
   columns,
-}: CostingRateComparisonTableProps) {
+}: ApprovalAccomodationTableProps) {
+  const width = useSelector(selectWith2NavbarWidth);
+
   const classes = useStyles();
 
   return (
-    <TableContainer className={classes.paper} component={Paper}>
+    <TableContainer style={width < 768 ? { width: '100%' } : {}} className={classes.paper} component={Paper}>
       <Table className={classes.table} aria-label="quotations table">
         <TableHead>
-          <TableRow>
+          <TableRow style={{ borderTop: '1px solid #41E93E' }}>
             {columns.map((column) => (
               <TableColumnCell
+                greenBorder
                 key={uuid()}
                 align="center"
-                color="black"
+                color="#1C5BBA"
                 column={column}
               />
             ))}
@@ -57,7 +63,7 @@ function CostingRateComparisonTable({
                 key={uuid()}
                 cell={{
                   align: 'center',
-                  title: row.date,
+                  title: row.nights,
                   colors: ['#464E5F'],
                   weight: 400,
                 }}
@@ -75,17 +81,7 @@ function CostingRateComparisonTable({
                 key={uuid()}
                 cell={{
                   align: 'center',
-                  title: row.bookingEngine,
-                  colors: ['#464E5F'],
-                  weight: 400,
-                  isLink: true,
-                }}
-              />
-              <TableRowTextCell
-                key={uuid()}
-                cell={{
-                  align: 'center',
-                  title: row.rate,
+                  title: row.roomType,
                   colors: ['#464E5F'],
                   weight: 400,
                 }}
@@ -98,4 +94,4 @@ function CostingRateComparisonTable({
   );
 }
 
-export default CostingRateComparisonTable;
+export default ApprovalAccomodationTable;
