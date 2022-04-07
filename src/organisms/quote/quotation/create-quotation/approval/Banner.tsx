@@ -1,3 +1,4 @@
+import AnchorAtom from '../../../../../atoms/AnchorAtom';
 import DivAtom from '../../../../../atoms/DivAtom';
 import H2Atom from '../../../../../atoms/H2Atom';
 import ParagraphAtom from '../../../../../atoms/ParagraphAtom';
@@ -24,13 +25,15 @@ function Banner() {
             text="+(94) 777 447 515"
           />
           <DivAtom style={approvalStyles.banner.social}>
-            <ParagraphAtom
+            <AnchorAtom
               style={{ ...approvalStyles.banner.text, margin: '0 0.8rem 0 0' }}
-              text="info@ijazahtours.com"
+              title="info@ijazahtours.com"
+              href="mailto:info@ijazahtours.com"
             />
-            <ParagraphAtom
+            <AnchorAtom
               style={approvalStyles.banner.text}
-              text="www.ijazahtours.com"
+              title="www.ijazahtours.com"
+              href="https://www.ijazahtours.com"
             />
           </DivAtom>
         </DivAtom>
