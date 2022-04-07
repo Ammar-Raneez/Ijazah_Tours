@@ -14,7 +14,7 @@ import CustomerForm from '../../../../organisms/quote/quotation/create-quotation
 import DivAtom from '../../../../atoms/DivAtom';
 import H2Atom from '../../../../atoms/H2Atom';
 import IconAtom from '../../../../atoms/IconAtom';
-import { selectWithNavbarHeight, selectWithNavbarWidth } from '../../../../redux/containerSizeSlice';
+import { selectWith2NavbarHeight, selectWith2NavbarWidth } from '../../../../redux/containerSizeSlice';
 import { db } from '../../../../firebase';
 import { DropdownOption, LibraryGuest } from '../../../../utils/types';
 import { dateTypeOptions, mealPlanOptions } from '../../../../utils/helpers';
@@ -24,8 +24,8 @@ import {
 } from '../../../../styles';
 
 function Customer() {
-  const height = useSelector(selectWithNavbarHeight);
-  const width = useSelector(selectWithNavbarWidth);
+  const height = useSelector(selectWith2NavbarHeight);
+  const width = useSelector(selectWith2NavbarWidth);
 
   const [customerData, setCustomerData] = useState<LibraryGuest[]>();
   const [refData, setRefData] = useState<DropdownOption[]>();

@@ -12,7 +12,7 @@ import DivAtom from '../../../../atoms/DivAtom';
 import ButtonAtom from '../../../../atoms/ButtonAtom';
 import ParagraphAtom from '../../../../atoms/ParagraphAtom';
 import InputAtom from '../../../../atoms/InputAtom';
-import { selectWithNavbarHeight, selectWithNavbarWidth } from '../../../../redux/containerSizeSlice';
+import { selectWith2NavbarHeight, selectWith2NavbarWidth } from '../../../../redux/containerSizeSlice';
 import { FlexDirection, QuotationAccomodation } from '../../../../utils/types';
 import { mealPlanOptions, roomTypes, widthHeightDynamicStyle } from '../../../../utils/helpers';
 import { QUOTATIONS_ACCOMODATION_DATA } from '../../../../data';
@@ -21,8 +21,8 @@ import {
 } from '../../../../styles';
 
 function Accomodation() {
-  const height = useSelector(selectWithNavbarHeight);
-  const width = useSelector(selectWithNavbarWidth);
+  const height = useSelector(selectWith2NavbarHeight);
+  const width = useSelector(selectWith2NavbarWidth);
 
   const [accomodationData, setAccomodationData] = useState<QuotationAccomodation[]>([]);
 
