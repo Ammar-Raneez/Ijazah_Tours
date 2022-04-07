@@ -5,6 +5,7 @@ import {
 } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
 import SearchIcon from '@material-ui/icons/Search';
 
 import AccomodationTable from '../../../../organisms/quote/quotation/create-quotation/accomodation/AccomodationTable';
@@ -19,6 +20,8 @@ import { QUOTATIONS_ACCOMODATION_DATA } from '../../../../data';
 import {
   quoteCreateQuoteStyles,
 } from '../../../../styles';
+import IconAtom from '../../../../atoms/IconAtom';
+import H2Atom from '../../../../atoms/H2Atom';
 
 function Accomodation() {
   const height = useSelector(selectWith2NavbarHeight);
@@ -43,11 +46,20 @@ function Accomodation() {
 
   return (
     <DivAtom style={{ height: `${height}px` }}>
+      <DivAtom style={quoteCreateQuoteStyles.header}>
+        <IconAtom
+          size="small"
+          children={<ChevronLeftRoundedIcon />}
+          style={quoteCreateQuoteStyles.backBtn}
+          onClick={() => history.replace('/quote/quotations/create/customer')}
+        />
+        <H2Atom style={quoteCreateQuoteStyles.title} text="Accomodation" />
+      </DivAtom>
+
       <ParagraphAtom
         style={{
           ...quoteCreateQuoteStyles.title,
-          marginBottom: '1rem',
-          marginLeft: '1rem',
+          margin: '1rem 0 1rem 1rem',
         }}
         text="Preset Quotes"
       />
