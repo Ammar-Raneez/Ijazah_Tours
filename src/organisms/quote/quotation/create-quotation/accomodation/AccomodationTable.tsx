@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   makeStyles,
   Paper,
@@ -12,10 +13,10 @@ import CloseIcon from '@material-ui/icons/Close';
 import { v4 as uuid } from 'uuid';
 
 import TableColumnCell from '../../../../../molecules/TableColumnCell';
-import TableRowDropdownCell from '../../../../../molecules/TableRowDropdownCell';
+import TableRowEditCell from '../../../../../molecules/TableRowEditCell';
 import TableRowIconCell from '../../../../../molecules/TableRowIconCell';
 import TableRowTextCell from '../../../../../molecules/TableRowTextCell';
-import { QuotationAccomodation } from '../../../../../utils/types';
+import { LibraryAccomodation } from '../../../../../utils/types';
 
 const useStyles = makeStyles((theme: Theme) => ({
   table: {
@@ -28,18 +29,14 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface AccomodationTableProps {
-  data: QuotationAccomodation[];
+  data: LibraryAccomodation[];
   columns: string[];
-  mealPlanOptions: any;
-  roomTypes: any;
-  deleteAccomodation: (row: QuotationAccomodation) => void;
+  deleteAccomodation: (row: LibraryAccomodation) => void;
 }
 
 function AccomodationTable({
   data,
   columns,
-  mealPlanOptions,
-  roomTypes,
   deleteAccomodation,
 }: AccomodationTableProps) {
   const classes = useStyles();
@@ -60,84 +57,100 @@ function AccomodationTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row) => (
-            <TableRow key={uuid()}>
-              <TableRowTextCell
-                key={uuid()}
-                cell={{
-                  align: 'center',
-                  title: row.location,
-                  colors: ['#464E5F'],
-                  weight: 400,
-                }}
-              />
-              <TableRowTextCell
-                key={uuid()}
-                cell={{
-                  align: 'center',
-                  title: row.nights,
-                  colors: ['#464E5F'],
-                  weight: 400,
-                }}
-              />
-              <TableRowTextCell
-                key={uuid()}
-                cell={{
-                  align: 'center',
-                  title: row.category,
-                  colors: ['#464E5F'],
-                  weight: 400,
-                }}
-              />
-              <TableRowTextCell
-                key={uuid()}
-                cell={{
-                  align: 'center',
-                  title: row.accomodation,
-                  colors: ['#464E5F'],
-                  weight: 400,
-                }}
-              />
-              <TableRowTextCell
-                key={uuid()}
-                cell={{
-                  align: 'center',
-                  title: row.pax,
-                  colors: ['#464E5F'],
-                  weight: 400,
-                }}
-              />
-              <TableRowDropdownCell
-                key={uuid()}
-                value={row.roomType}
-                options={roomTypes}
-                align="center"
-              />
-              <TableRowDropdownCell
-                key={uuid()}
-                value={row.mealPlan}
-                options={mealPlanOptions}
-                align="center"
-              />
-              <TableRowTextCell
-                key={uuid()}
-                cell={{
-                  align: 'center',
-                  title: row.city,
-                  colors: ['#464E5F'],
-                  weight: 400,
-                }}
-              />
-              <TableRowIconCell
-                align="center"
-                onClick={() => deleteAccomodation(row)}
-                textColor="#B5B5C3"
-                size="small"
-                padding="8px"
-                children={<CloseIcon style={{ color: 'black' }} />}
-              />
-            </TableRow>
-          ))}
+          {data.map((row) => {
+            const [nights, setNights] = useState('0');
+
+            const [roomTypes] = useState(
+              Object.keys(row.categoryValues).map((cat) => ({ value: cat, label: cat })),
+            );
+            const [mealPlanOptions] = useState(
+              row.rates.map((rate) => rate.newMealPlan).map((rate) => ({ value: rate, label: rate })),
+            );
+
+            const [roomType, setRoomType] = useState(roomTypes?.[0].value);
+            const [mealPlan, setMealPlan] = useState(mealPlanOptions?.[0].value);
+
+            return (
+              <TableRow key={uuid()}>
+                <TableRowTextCell
+                  key={uuid()}
+                  cell={{
+                    align: 'center',
+                    title: row.country,
+                    colors: ['#464E5F'],
+                    weight: 400,
+                  }}
+                />
+                <TableRowEditCell
+                  key={uuid()}
+                  select={false}
+                  value={nights}
+                  setValue={setNights}
+                  align="center"
+                />
+                <TableRowTextCell
+                  key={uuid()}
+                  cell={{
+                    align: 'center',
+                    title: row.accomodationType,
+                    colors: ['#464E5F'],
+                    weight: 400,
+                  }}
+                />
+                <TableRowTextCell
+                  key={uuid()}
+                  cell={{
+                    align: 'center',
+                    title: row.name,
+                    colors: ['#464E5F'],
+                    weight: 400,
+                  }}
+                />
+                <TableRowTextCell
+                  key={uuid()}
+                  cell={{
+                    align: 'center',
+                    title: 'single',
+                    colors: ['#464E5F'],
+                    weight: 400,
+                  }}
+                />
+                <TableRowEditCell
+                  key={uuid()}
+                  select
+                  value={roomType}
+                  setValue={setRoomType}
+                  options={roomTypes}
+                  align="center"
+                />
+                <TableRowEditCell
+                  key={uuid()}
+                  select
+                  value={mealPlan}
+                  setValue={setMealPlan}
+                  options={mealPlanOptions}
+                  align="center"
+                />
+                <TableRowTextCell
+                  key={uuid()}
+                  cell={{
+                    align: 'center',
+                    title: row.city,
+                    colors: ['#464E5F'],
+                    weight: 400,
+                  }}
+                />
+                <TableRowIconCell
+                  align="center"
+                  onClick={() => deleteAccomodation(row)}
+                  textColor="#B5B5C3"
+                  size="small"
+                  padding="8px"
+                  children={<CloseIcon style={{ color: 'black' }} />}
+                />
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </TableContainer>

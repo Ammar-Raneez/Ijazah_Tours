@@ -11,7 +11,7 @@ import {
 import { v4 as uuid } from 'uuid';
 
 import TableColumnCell from '../../../../../molecules/TableColumnCell';
-import TableRowDropdownCell from '../../../../../molecules/TableRowDropdownCell';
+import TableRowEditCell from '../../../../../molecules/TableRowEditCell';
 import TableRowTextCell from '../../../../../molecules/TableRowTextCell';
 import { QuotationCostingAccomodation } from '../../../../../utils/types';
 
@@ -96,8 +96,9 @@ function CostingAccomodationTable({
                   weight: 400,
                 }}
               />
-              <TableRowDropdownCell
+              <TableRowEditCell
                 key={uuid()}
+                select
                 value={row.roomType}
                 options={roomTypes}
                 align="center"
@@ -111,8 +112,9 @@ function CostingAccomodationTable({
                   weight: 400,
                 }}
               />
-              <TableRowDropdownCell
+              <TableRowEditCell
                 key={uuid()}
+                select
                 value={row.mealPlan}
                 options={mealPlanOptions}
                 align="center"
