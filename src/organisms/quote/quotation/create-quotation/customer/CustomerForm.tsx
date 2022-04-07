@@ -33,7 +33,6 @@ interface CustomerFormProps {
   dateType: string;
   checkin: string;
   checkout: string;
-  numberOfDays: number;
   additionalBed: boolean;
   onCreateCustomer: (event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => void;
   onRefNumChange: (data: LibraryGuest[], rf: string) => void;
@@ -43,7 +42,6 @@ interface CustomerFormProps {
   setEmail: any;
   setCountry: any;
   setCity: any;
-  setNumberOfDays: any;
   setHolidayType: any;
   setDestination: any;
   setMealPlan: any;
@@ -66,7 +64,6 @@ function CustomerForm({
   email,
   country,
   city,
-  numberOfDays,
   holidayType,
   destination,
   mealPlan,
@@ -82,7 +79,6 @@ function CustomerForm({
   setEmail,
   setCountry,
   setCity,
-  setNumberOfDays,
   setHolidayType,
   setDestination,
   setMealPlan,
@@ -237,43 +233,24 @@ function CustomerForm({
           }}
           text="Holiday"
         />
-        <DivAtom
+        <TextFieldAtom
+          variant="standard"
+          size="medium"
+          label="Holiday Type"
+          value={holidayType}
+          onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setHolidayType(e.target.value)
+          }
+          options={holidayTypeData}
+          adornmentPosition="end"
           style={{
-            ...quoteCreateQuoteStyles.multiFieldContainer,
-            flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
+            ...libraryStyles.textField,
+            flex: 1,
+            width: widthHeightDynamicStyle(width, 600, '100%', 'auto'),
+            marginBottom: '1rem',
           }}
-        >
-          <FormControlInput
-            margin={widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0') as string}
-            type="number"
-            flex={1}
-            label="No. of Days"
-            fullWidth
-            multiline={false}
-            rows={1}
-            value={numberOfDays}
-            setValue={setNumberOfDays}
-            placeholder=""
-          />
-          <TextFieldAtom
-            variant="standard"
-            size="medium"
-            label="Holiday Type"
-            value={holidayType}
-            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setHolidayType(e.target.value)
-            }
-            options={holidayTypeData}
-            adornmentPosition="end"
-            style={{
-              ...libraryStyles.textField,
-              flex: 1,
-              width: widthHeightDynamicStyle(width, 600, '100%', 'auto'),
-              margin: widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0'),
-            }}
-            disableUnderline={false}
-            select
-          />
-        </DivAtom>
+          disableUnderline={false}
+          select
+        />
         <DivAtom
           style={{
             ...quoteCreateQuoteStyles.multiFieldContainer,

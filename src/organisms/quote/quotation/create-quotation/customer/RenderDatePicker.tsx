@@ -21,8 +21,16 @@ export const RenderDatePicker = ({
   checkout,
   setCheckin,
   setCheckout,
-}: RenderDatePickerProps) => (
-  dateType === dateTypeOptions[0].value ? (
+}: RenderDatePickerProps) => {
+  if (dateType === dateTypeOptions[1].value) {
+    setCheckin('2022-01');
+    setCheckout('2022-02');
+  } else {
+    setCheckin('2022-01-01');
+    setCheckout('2022-02-01');
+  }
+
+  return dateType === dateTypeOptions[0].value ? (
     <DivAtom>
       <TextFieldAtom
         variant="standard"
@@ -73,7 +81,7 @@ export const RenderDatePicker = ({
           ...libraryStyles.textField,
           flex: 1,
           width: widthHeightDynamicStyle(width, 600, '100%', 'auto'),
-          margin: widthHeightDynamicStyle(width, 600, '100%', 'auto'),
+          margin: widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 0 0'),
         }}
         disableUnderline={false}
         select={false}
@@ -98,5 +106,5 @@ export const RenderDatePicker = ({
         type="month"
       />
     </DivAtom>
-  )
-);
+  );
+};

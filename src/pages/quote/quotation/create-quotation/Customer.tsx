@@ -32,6 +32,7 @@ function Customer() {
   const [holidayTypeData, setHolidayTypeData] = useState<DropdownOption[]>();
   const [destinationData, setDestinationData] = useState<DropdownOption[]>();
 
+  const [selectedCustomer, setSelectedCustomer] = useState<LibraryGuest>();
   const [refNum, setRefNum] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -45,9 +46,8 @@ function Customer() {
   const [mealPlan, setMealPlan] = useState(mealPlanOptions[0].value);
 
   const [holidayType, setHolidayType] = useState('');
-  const [checkin, setCheckin] = useState('');
-  const [checkout, setCheckout] = useState('');
-  const [numberOfDays, setNumberOfDays] = useState(0);
+  const [checkin, setCheckin] = useState('2022-01-01');
+  const [checkout, setCheckout] = useState('2022-01-31');
   const [dateType, setDateType] = useState(dateTypeOptions[0].value);
 
   const history = useHistory();
@@ -107,6 +107,7 @@ function Customer() {
   const onRefNumChange = (data: LibraryGuest[], rf: string) => {
     setRefNum(rf);
     const customer = data.find((cus) => cus.refNum === rf);
+    setSelectedCustomer(customer);
     if (customer) {
       setFirstName(customer.name.split(' ')[0]);
       setLastName(customer.name.split(' ')[1]);
@@ -121,6 +122,9 @@ function Customer() {
     event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
   ) => {
     event.preventDefault();
+    const saveCheckin = checkin.split('-').length === 2 ? `${checkin}-15` : checkin;
+    const saveCheckout = checkout.split('-').length === 2 ? `${checkout}-15` : checkout;
+
     localStorage.setItem(
       'New Quote Customer',
       JSON.stringify({
@@ -128,10 +132,12 @@ function Customer() {
           refNum,
           firstName,
           lastName,
-          checkin,
-          checkout,
           contactNumber,
-          numberOfDays,
+          country,
+          saveCheckin,
+          saveCheckout,
+          selectedCustomer?.adults,
+          selectedCustomer?.childrenAges,
         ]],
       }),
     );
@@ -165,7 +171,6 @@ function Customer() {
           email={email}
           country={country}
           city={city}
-          numberOfDays={numberOfDays}
           holidayType={holidayType}
           destination={destination}
           mealPlan={mealPlan}
@@ -181,7 +186,6 @@ function Customer() {
           setEmail={setEmail}
           setCountry={setCountry}
           setCity={setCity}
-          setNumberOfDays={setNumberOfDays}
           setHolidayType={setHolidayType}
           setDestination={setDestination}
           setMealPlan={setMealPlan}
