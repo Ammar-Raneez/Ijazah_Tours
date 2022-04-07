@@ -6,13 +6,14 @@ import Banner from '../../../../organisms/quote/quotation/create-quotation/appro
 import ApprovalRateComparisonTable from '../../../../organisms/quote/quotation/create-quotation/approval/ApprovalRateComparisonTable';
 import ApprovalAccomodationTable from '../../../../organisms/quote/quotation/create-quotation/approval/ApprovalAccomodationTable';
 import ApprovalOverallCost from '../../../../organisms/quote/quotation/create-quotation/approval/ApprovalOverallCost';
+import GuestDetails from '../../../../organisms/quote/quotation/create-quotation/approval/GuestDetails';
 import DivAtom from '../../../../atoms/DivAtom';
+import ParagraphAtom from '../../../../atoms/ParagraphAtom';
+import IconAtom from '../../../../atoms/IconAtom';
 import { selectWith2NavbarHeight } from '../../../../redux/containerSizeSlice';
 import { QuotationCostingAccomodation, QuotationCostingRate } from '../../../../utils/types';
 import { QUOTATIONS_COSTING_ACCOMODATION_DATA, QUOTATIONS_COSTING_RATE_DATA } from '../../../../data';
 import { approvalStyles, quoteCreateQuoteStyles } from '../../../../styles';
-import ParagraphAtom from '../../../../atoms/ParagraphAtom';
-import IconAtom from '../../../../atoms/IconAtom';
 
 function Approval() {
   const height = useSelector(selectWith2NavbarHeight);
@@ -52,6 +53,16 @@ function Approval() {
   return (
     <DivAtom style={{ height: `${height}px` }}>
       <Banner />
+      <GuestDetails
+        name="Ammar"
+        nationality="LK"
+        adults="2"
+        voucherNo="2"
+        arrival="28 sept"
+        departure="31 sept"
+        daysAndNights="4 - 3"
+        children={['4', '5']}
+      />
       <DivAtom style={quoteCreateQuoteStyles.tableContainer}>
         {showRateContainer && QUOTATIONS_COSTING_RATE_DATA.length > 0 && (
           <>

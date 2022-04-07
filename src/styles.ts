@@ -236,6 +236,28 @@ export const approvalStyles = {
       display: 'flex',
     },
   },
+  guestDetails: {
+    container: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      borderBottom: '2px solid #41E93E',
+      padding: '1rem',
+    },
+    costContainer: {
+      container: {
+        width: '200px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        margin: 0,
+      },
+      label: {
+        color: '#1C5BBA',
+      },
+      cost: {
+        fontWeight: 'bold',
+      },
+    },
+  },
   rates: {
     titleText: {
       color: '#1C5BBA',
