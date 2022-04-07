@@ -214,6 +214,30 @@ export const voucherStyles = {
   ...mainContainerStyles,
 };
 
+/// Quotations - Approval
+export const approvalStyles = {
+  banner: {
+    text: {
+      color: '#1C5BBA',
+      margin: 0,
+    },
+    mainContainer: {
+      display: 'flex',
+      borderBottom: '2px solid #41E93E',
+      paddingBottom: '1rem',
+    },
+    contentContainer: {
+      display: 'flex',
+      flexDirection: 'column' as const,
+      padding: '1rem',
+      justifyContent: 'space-between',
+    },
+    social: {
+      display: 'flex',
+    },
+  },
+};
+
 // Library
 export const libraryStyles = {
   ...mainContainerStyles,
