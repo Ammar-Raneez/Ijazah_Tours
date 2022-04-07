@@ -59,6 +59,15 @@ function Costing() {
   }, [rate, commission, sellingPrice, discount]);
 
   const saveCost = () => {
+    localStorage.setItem(
+      'Create Quote Costing',
+      JSON.stringify({
+        discount,
+        netPrice,
+        sellingPrice,
+      }),
+    );
+
     history.replace('/quote/quotations/create/approval');
   };
 

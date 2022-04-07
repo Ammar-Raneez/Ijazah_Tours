@@ -21,6 +21,17 @@ function Approval() {
 
   const [rateData, setRateData] = useState<QuotationCostingRate[]>([]);
 
+  // Customer details
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [nationality, setNationality] = useState('');
+  const [arrival, setArrival] = useState('');
+  const [departure, setDeparture] = useState('');
+  const [daysAndNights, setDaysAndNights] = useState('');
+  const [voucherNo, setVoucherNo] = useState('');
+  const [adults, setAdults] = useState('');
+  const [children, setChildren] = useState<string[]>(['']);
+
   // Overall cost
   const [sellingPrice, setSellingPrice] = useState('');
   const [discount, setDiscount] = useState('');
@@ -33,6 +44,27 @@ function Approval() {
   const [guideAndCar, setGuideAndCar] = useState(false);
 
   const [showRateContainer, setShowRateContainer] = useState(true);
+
+  useEffect(() => {
+    const customerDetails = JSON.parse(
+      localStorage.getItem('New Quote Customer')!,
+    ).data[0];
+
+    setVoucherNo('2');
+    setDaysAndNights('3-2');
+    setFirstName(customerDetails[1]);
+    setLastName(customerDetails[2]);
+    setNationality(customerDetails[4]);
+    setArrival(customerDetails[5]);
+    setDeparture(customerDetails[6]);
+    setAdults(customerDetails[7]);
+    setChildren(customerDetails[8]);
+
+    const costDetails = JSON.parse(localStorage.getItem('Create Quote Costing')!);
+    setSellingPrice(costDetails.sellingPrice);
+    setDiscount(costDetails.discount);
+    setNetPrice(costDetails.netPrice);
+  }, []);
 
   useEffect(() => {
     setRateData(QUOTATIONS_COSTING_RATE_DATA);
@@ -63,14 +95,14 @@ function Approval() {
       <DivAtom style={{ padding: '2rem' }}>
         <Banner />
         <GuestDetails
-          name="Ammar"
-          nationality="LK"
-          adults="2"
-          voucherNo="2"
-          arrival="28 sept"
-          departure="31 sept"
-          daysAndNights="4 - 3"
-          children={['4', '5']}
+          name={`${firstName} ${lastName}`}
+          nationality={nationality}
+          adults={adults}
+          voucherNo={voucherNo}
+          arrival={arrival}
+          departure={departure}
+          daysAndNights={daysAndNights}
+          children={children}
         />
         <DivAtom style={quoteCreateQuoteStyles.tableContainer}>
           {showRateContainer && QUOTATIONS_COSTING_RATE_DATA.length > 0 && (
