@@ -60,71 +60,73 @@ function Approval() {
 
   return (
     <DivAtom style={{ height: `${height}px` }}>
-      <Banner />
-      <GuestDetails
-        name="Ammar"
-        nationality="LK"
-        adults="2"
-        voucherNo="2"
-        arrival="28 sept"
-        departure="31 sept"
-        daysAndNights="4 - 3"
-        children={['4', '5']}
-      />
-      <DivAtom style={quoteCreateQuoteStyles.tableContainer}>
-        {showRateContainer && QUOTATIONS_COSTING_RATE_DATA.length > 0 && (
-          <>
-            <DivAtom style={approvalStyles.rates.titleContainer}>
-              <IconAtom
-                onClick={removeRateContainer}
-                style={{ padding: '8px' }}
-                size="small"
-                children={<CloseIcon style={{ color: 'black' }} />}
+      <DivAtom style={{ padding: '2rem' }}>
+        <Banner />
+        <GuestDetails
+          name="Ammar"
+          nationality="LK"
+          adults="2"
+          voucherNo="2"
+          arrival="28 sept"
+          departure="31 sept"
+          daysAndNights="4 - 3"
+          children={['4', '5']}
+        />
+        <DivAtom style={quoteCreateQuoteStyles.tableContainer}>
+          {showRateContainer && QUOTATIONS_COSTING_RATE_DATA.length > 0 && (
+            <>
+              <DivAtom style={approvalStyles.rates.titleContainer}>
+                <IconAtom
+                  onClick={removeRateContainer}
+                  style={{ padding: '8px' }}
+                  size="small"
+                  children={<CloseIcon style={{ color: 'black' }} />}
+                />
+                <ParagraphAtom style={approvalStyles.titleText} text="Rate Comparison" />
+              </DivAtom>
+              <ApprovalRateComparisonTable
+                columns={[
+                  'Dates',
+                  'Accomodation',
+                  'Booking Engine',
+                  'Rate',
+                  '',
+                ]}
+                deleteRate={deleteRate}
+                data={rateData}
               />
-              <ParagraphAtom style={approvalStyles.titleText} text="Rate Comparison" />
-            </DivAtom>
-            <ApprovalRateComparisonTable
-              columns={[
-                'Dates',
-                'Accomodation',
-                'Booking Engine',
-                'Rate',
-                '',
-              ]}
-              deleteRate={deleteRate}
-              data={rateData}
-            />
-          </>
-        )}
-      </DivAtom>
-      {QUOTATIONS_COSTING_ACCOMODATION_DATA.length > 0 && (
-        <DivAtom style={{ marginTop: '1rem', ...quoteCreateQuoteStyles.tableContainer }}>
-          <ApprovalAccomodationTable
-            columns={[
-              'Nights',
-              'Accomodation',
-              'Room Type',
-              'Room View',
-            ]}
-            data={QUOTATIONS_COSTING_ACCOMODATION_DATA as QuotationCostingAccomodation[]}
-          />
+            </>
+          )}
         </DivAtom>
-      )}
-      <ApprovalOverallCost
-        sellingPrice={sellingPrice}
-        discount={discount}
-        netPrice={netPrice}
-      />
-      <Offers
-        roomAndBreakfast={roomAndBreakfast}
-        receptionAtAirport={receptionAtAirport}
-        allGovernmentTaxes={allGovernmentTaxes}
-        guideAndCar={guideAndCar}
-        setRoomAndBreakfast={setRoomAndBreakfast}
-        setReceptionAtAirport={setReceptionAtAirport}
-        setAllGovernmentTaxes={setAllGovernmentTaxes}
-        setGuideAndCar={setGuideAndCar}
-      />
+        {QUOTATIONS_COSTING_ACCOMODATION_DATA.length > 0 && (
+          <DivAtom style={{ marginTop: '1rem', ...quoteCreateQuoteStyles.tableContainer }}>
+            <ApprovalAccomodationTable
+              columns={[
+                'Nights',
+                'Accomodation',
+                'Room Type',
+                'Room View',
+              ]}
+              data={QUOTATIONS_COSTING_ACCOMODATION_DATA as QuotationCostingAccomodation[]}
+            />
+          </DivAtom>
+        )}
+        <ApprovalOverallCost
+          sellingPrice={sellingPrice}
+          discount={discount}
+          netPrice={netPrice}
+        />
+        <Offers
+          roomAndBreakfast={roomAndBreakfast}
+          receptionAtAirport={receptionAtAirport}
+          allGovernmentTaxes={allGovernmentTaxes}
+          guideAndCar={guideAndCar}
+          setRoomAndBreakfast={setRoomAndBreakfast}
+          setReceptionAtAirport={setReceptionAtAirport}
+          setAllGovernmentTaxes={setAllGovernmentTaxes}
+          setGuideAndCar={setGuideAndCar}
+        />
+      </DivAtom>
     </DivAtom>
   );
 }
