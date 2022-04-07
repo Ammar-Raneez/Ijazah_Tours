@@ -216,6 +216,11 @@ export const voucherStyles = {
 
 /// Quotations - Approval
 export const approvalStyles = {
+  titleText: {
+    color: '#1C5BBA',
+    margin: 0,
+    fontWeight: 'bold',
+  },
   banner: {
     text: {
       color: '#1C5BBA',
@@ -259,11 +264,6 @@ export const approvalStyles = {
     },
   },
   rates: {
-    titleText: {
-      color: '#1C5BBA',
-      margin: 0,
-      fontWeight: 'bold',
-    },
     titleContainer: {
       display: 'flex',
       alignItems: 'center',
@@ -300,6 +300,14 @@ export const approvalStyles = {
       cost: {
         fontWeight: 'bold',
       },
+    },
+  },
+  offers: {
+    container: {
+      padding: '1rem',
+      display: 'flex',
+      flexDirection: 'column' as const,
+      borderBottom: '2px solid #41E93E',
     },
   },
 };

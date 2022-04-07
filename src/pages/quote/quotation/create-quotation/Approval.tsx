@@ -7,6 +7,7 @@ import ApprovalRateComparisonTable from '../../../../organisms/quote/quotation/c
 import ApprovalAccomodationTable from '../../../../organisms/quote/quotation/create-quotation/approval/ApprovalAccomodationTable';
 import ApprovalOverallCost from '../../../../organisms/quote/quotation/create-quotation/approval/ApprovalOverallCost';
 import GuestDetails from '../../../../organisms/quote/quotation/create-quotation/approval/GuestDetails';
+import Offers from '../../../../organisms/quote/quotation/create-quotation/approval/Offers';
 import DivAtom from '../../../../atoms/DivAtom';
 import ParagraphAtom from '../../../../atoms/ParagraphAtom';
 import IconAtom from '../../../../atoms/IconAtom';
@@ -20,9 +21,16 @@ function Approval() {
 
   const [rateData, setRateData] = useState<QuotationCostingRate[]>([]);
 
+  // Overall cost
   const [sellingPrice, setSellingPrice] = useState('');
   const [discount, setDiscount] = useState('');
   const [netPrice, setNetPrice] = useState('');
+
+  // offer extras
+  const [roomAndBreakfast, setRoomAndBreakfast] = useState(false);
+  const [receptionAtAirport, setReceptionAtAirport] = useState(false);
+  const [allGovernmentTaxes, setAllGovernmentTaxes] = useState(false);
+  const [guideAndCar, setGuideAndCar] = useState(false);
 
   const [showRateContainer, setShowRateContainer] = useState(true);
 
@@ -73,7 +81,7 @@ function Approval() {
                 size="small"
                 children={<CloseIcon style={{ color: 'black' }} />}
               />
-              <ParagraphAtom style={approvalStyles.rates.titleText} text="Rate Comparison" />
+              <ParagraphAtom style={approvalStyles.titleText} text="Rate Comparison" />
             </DivAtom>
             <ApprovalRateComparisonTable
               columns={[
@@ -106,6 +114,16 @@ function Approval() {
         sellingPrice={sellingPrice}
         discount={discount}
         netPrice={netPrice}
+      />
+      <Offers
+        roomAndBreakfast={roomAndBreakfast}
+        receptionAtAirport={receptionAtAirport}
+        allGovernmentTaxes={allGovernmentTaxes}
+        guideAndCar={guideAndCar}
+        setRoomAndBreakfast={setRoomAndBreakfast}
+        setReceptionAtAirport={setReceptionAtAirport}
+        setAllGovernmentTaxes={setAllGovernmentTaxes}
+        setGuideAndCar={setGuideAndCar}
       />
     </DivAtom>
   );
