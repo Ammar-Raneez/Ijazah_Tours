@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
-import CloseIcon from '@material-ui/icons/Close';
 import { useSelector } from 'react-redux';
+import { CircularProgress } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
+import { getStorage } from 'firebase/storage';
+import { v4 as uuid } from 'uuid';
+import JSPDF from 'jspdf';
 
 import Banner from '../../../../organisms/quote/quotation/create-quotation/approval/Banner';
 import ApprovalRateComparisonTable from '../../../../organisms/quote/quotation/create-quotation/approval/ApprovalRateComparisonTable';
@@ -11,13 +15,18 @@ import Offers from '../../../../organisms/quote/quotation/create-quotation/appro
 import DivAtom from '../../../../atoms/DivAtom';
 import ParagraphAtom from '../../../../atoms/ParagraphAtom';
 import IconAtom from '../../../../atoms/IconAtom';
-import { selectWith2NavbarHeight } from '../../../../redux/containerSizeSlice';
+import ButtonAtom from '../../../../atoms/ButtonAtom';
+import { selectWith2NavbarHeight, selectWith2NavbarWidth } from '../../../../redux/containerSizeSlice';
 import { QuotationCostingAccomodation, QuotationCostingRate } from '../../../../utils/types';
 import { QUOTATIONS_COSTING_ACCOMODATION_DATA, QUOTATIONS_COSTING_RATE_DATA } from '../../../../data';
 import { approvalStyles, quoteCreateQuoteStyles } from '../../../../styles';
+import { uploadPDF, widthHeightDynamicStyle } from '../../../../utils/helpers';
+
+const storage = getStorage();
 
 function Approval() {
   const height = useSelector(selectWith2NavbarHeight);
+  const width = useSelector(selectWith2NavbarWidth);
 
   const [rateData, setRateData] = useState<QuotationCostingRate[]>([]);
 
@@ -44,6 +53,7 @@ function Approval() {
   const [guideAndCar, setGuideAndCar] = useState(false);
 
   const [showRateContainer, setShowRateContainer] = useState(true);
+  const [isSavingQuote, setIsSavingQuote] = useState(false);
 
   useEffect(() => {
     const customerDetails = JSON.parse(
@@ -90,75 +100,123 @@ function Approval() {
     setShowRateContainer(false);
   };
 
+  const generatePDF = async () => {
+    const report = new JSPDF('portrait', 'pt', 'a2');
+    return report.html(document.querySelector('#report') as HTMLElement).then(async () => {
+      const filename = `${uuid()}-${firstName}.pdf`;
+      const pdfURL = await uploadPDF(storage, 'customer-quotation-pdfs', report.output('blob'), filename);
+      report.save(filename);
+      return pdfURL;
+    });
+  };
+
+  const saveUserQuotation = async () => {
+    setIsSavingQuote(true);
+    const pdfURL = await generatePDF();
+    console.log(pdfURL);
+    setIsSavingQuote(false);
+  };
+
   return (
     <DivAtom style={{ height: `${height}px` }}>
-      <DivAtom style={{ padding: '2rem' }}>
-        <Banner />
-        <GuestDetails
-          name={`${firstName} ${lastName}`}
-          nationality={nationality}
-          adults={adults}
-          voucherNo={voucherNo}
-          arrival={arrival}
-          departure={departure}
-          daysAndNights={daysAndNights}
-          children={children}
-        />
-        <DivAtom style={quoteCreateQuoteStyles.tableContainer}>
-          {showRateContainer && QUOTATIONS_COSTING_RATE_DATA.length > 0 && (
-            <>
-              <DivAtom style={approvalStyles.rates.titleContainer}>
-                <IconAtom
-                  onClick={removeRateContainer}
-                  style={{ padding: '8px' }}
-                  size="small"
-                  children={<CloseIcon style={{ color: 'black' }} />}
+      <div id="report">
+        <DivAtom style={{ padding: '2rem' }}>
+          <Banner />
+          <GuestDetails
+            name={`${firstName} ${lastName}`}
+            nationality={nationality}
+            adults={adults}
+            voucherNo={voucherNo}
+            arrival={arrival}
+            departure={departure}
+            daysAndNights={daysAndNights}
+            children={children}
+          />
+          <DivAtom style={quoteCreateQuoteStyles.tableContainer}>
+            {showRateContainer && QUOTATIONS_COSTING_RATE_DATA.length > 0 && (
+              <>
+                <DivAtom style={approvalStyles.rates.titleContainer}>
+                  <IconAtom
+                    onClick={removeRateContainer}
+                    style={{ padding: '8px' }}
+                    size="small"
+                    children={<CloseIcon style={{ color: 'black' }} />}
+                  />
+                  <ParagraphAtom style={approvalStyles.titleText} text="Rate Comparison" />
+                </DivAtom>
+                <ApprovalRateComparisonTable
+                  columns={[
+                    'Dates',
+                    'Accomodation',
+                    'Booking Engine',
+                    'Rate',
+                    '',
+                  ]}
+                  deleteRate={deleteRate}
+                  data={rateData}
                 />
-                <ParagraphAtom style={approvalStyles.titleText} text="Rate Comparison" />
-              </DivAtom>
-              <ApprovalRateComparisonTable
+              </>
+            )}
+          </DivAtom>
+          {QUOTATIONS_COSTING_ACCOMODATION_DATA.length > 0 && (
+            <DivAtom style={{ marginTop: '1rem', ...quoteCreateQuoteStyles.tableContainer }}>
+              <ApprovalAccomodationTable
                 columns={[
-                  'Dates',
+                  'Nights',
                   'Accomodation',
-                  'Booking Engine',
-                  'Rate',
-                  '',
+                  'Room Type',
+                  'Room View',
                 ]}
-                deleteRate={deleteRate}
-                data={rateData}
+                data={QUOTATIONS_COSTING_ACCOMODATION_DATA as QuotationCostingAccomodation[]}
               />
-            </>
+            </DivAtom>
+          )}
+          <ApprovalOverallCost
+            sellingPrice={sellingPrice}
+            discount={discount}
+            netPrice={netPrice}
+          />
+          {!isSavingQuote ? (
+            <Offers
+              roomAndBreakfast={roomAndBreakfast}
+              receptionAtAirport={receptionAtAirport}
+              allGovernmentTaxes={allGovernmentTaxes}
+              guideAndCar={guideAndCar}
+              setRoomAndBreakfast={setRoomAndBreakfast}
+              setReceptionAtAirport={setReceptionAtAirport}
+              setAllGovernmentTaxes={setAllGovernmentTaxes}
+              setGuideAndCar={setGuideAndCar}
+            />
+          ) : (
+            (roomAndBreakfast || receptionAtAirport || allGovernmentTaxes || guideAndCar) && (
+              <DivAtom style={approvalStyles.offers.container}>
+                <ParagraphAtom style={approvalStyles.titleText} text="This offer includes:" />
+                <ul>
+                  {roomAndBreakfast && <li>Room and Breakfast in the hotel</li>}
+                  {receptionAtAirport && <li>Reception at Airport</li>}
+                  {allGovernmentTaxes && <li>All Goverenment Taxes</li>}
+                  {guideAndCar && (
+                    <li>Guide and the Car. Transportation from Reception to Fairwell, (Throught the Trip)</li>
+                  )}
+                </ul>
+              </DivAtom>
+            )
           )}
         </DivAtom>
-        {QUOTATIONS_COSTING_ACCOMODATION_DATA.length > 0 && (
-          <DivAtom style={{ marginTop: '1rem', ...quoteCreateQuoteStyles.tableContainer }}>
-            <ApprovalAccomodationTable
-              columns={[
-                'Nights',
-                'Accomodation',
-                'Room Type',
-                'Room View',
-              ]}
-              data={QUOTATIONS_COSTING_ACCOMODATION_DATA as QuotationCostingAccomodation[]}
-            />
-          </DivAtom>
-        )}
-        <ApprovalOverallCost
-          sellingPrice={sellingPrice}
-          discount={discount}
-          netPrice={netPrice}
-        />
-        <Offers
-          roomAndBreakfast={roomAndBreakfast}
-          receptionAtAirport={receptionAtAirport}
-          allGovernmentTaxes={allGovernmentTaxes}
-          guideAndCar={guideAndCar}
-          setRoomAndBreakfast={setRoomAndBreakfast}
-          setReceptionAtAirport={setReceptionAtAirport}
-          setAllGovernmentTaxes={setAllGovernmentTaxes}
-          setGuideAndCar={setGuideAndCar}
-        />
-      </DivAtom>
+      </div>
+
+      <ButtonAtom
+        size="large"
+        text="Save"
+        endIcon={isSavingQuote && <CircularProgress size={20} color="inherit" />}
+        disabled={isSavingQuote}
+        onClick={saveUserQuotation}
+        style={{
+          ...quoteCreateQuoteStyles.addBtn,
+          width: widthHeightDynamicStyle(width, 768, '100%', '18%'),
+          margin: '0 0 1rem 2rem',
+        }}
+      />
     </DivAtom>
   );
 }

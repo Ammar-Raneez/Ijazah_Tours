@@ -4,6 +4,7 @@ import {
   FirebaseStorage,
   getDownloadURL,
   ref,
+  uploadBytes,
   uploadString,
 } from 'firebase/storage';
 import { v4 as uuid } from 'uuid';
@@ -51,6 +52,15 @@ export const uploadImage = async (storage: FirebaseStorage, container: string, p
   const randomString = uuid();
   const storageRef = ref(storage, `${container}/${randomString + filepath}`);
   await uploadString(storageRef, pic, 'data_url');
+  return getDownloadURL(storageRef);
+};
+
+export const uploadPDF = async (storage: FirebaseStorage, container: string, pdf: Blob, filepath: string) => {
+  const storageRef = ref(storage, `${container}/${filepath}`);
+  await uploadBytes(storageRef, pdf, {
+    contentType: 'application/pdf',
+  });
+
   return getDownloadURL(storageRef);
 };
 
