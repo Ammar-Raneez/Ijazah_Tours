@@ -45,7 +45,7 @@ function ApprovalRateComparisonTable({
   const classes = useStyles();
 
   return (
-    <TableContainer style={width < 768 ? { width: '100%' } : {}} className={classes.paper} component={Paper}>
+    <TableContainer style={width < 1500 ? { width: '100%' } : {}} className={classes.paper} component={Paper}>
       <Table className={classes.table} aria-label="quotations table">
         <TableHead>
           <TableRow style={{ borderTop: '1px solid #41E93E' }}>
