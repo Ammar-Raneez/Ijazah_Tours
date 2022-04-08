@@ -66,6 +66,7 @@ function GuestDetails({
           <span>
             {children.map((child, index) => (
               <SpanAtom
+                key={index}
                 style={approvalStyles.guestDetails.costContainer.cost}
                 text={getChildrenAgeString(child, index)}
               />
