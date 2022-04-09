@@ -51,7 +51,7 @@ function Guest() {
   }, [isDeleting, isCreating, isUpdating]);
 
   const deleteGuest = async (row: LibraryGuest) => {
-    const confirmDelete = confirm('Are you sure you want to delete this guest?');
+    const confirmDelete = window.confirm('Are you sure you want to delete this guest?');
     if (confirmDelete) {
       setIsDeleting(false);
       await deleteDoc(doc(db, 'Library Guests', row.id));
