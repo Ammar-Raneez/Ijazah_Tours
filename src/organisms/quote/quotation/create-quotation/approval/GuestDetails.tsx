@@ -58,21 +58,23 @@ function GuestDetails({
             text={adults}
           />
         </p>
-        <p style={approvalStyles.guestDetails.costContainer.container}>
-          <SpanAtom
-            style={approvalStyles.guestDetails.costContainer.label}
-            text="Children Ages"
-          />
-          <span>
-            {children.map((child, index) => (
-              <SpanAtom
-                key={index}
-                style={approvalStyles.guestDetails.costContainer.cost}
-                text={getChildrenAgeString(child, index)}
-              />
-            ))}
-          </span>
-        </p>
+        {children && (
+          <p style={approvalStyles.guestDetails.costContainer.container}>
+            <SpanAtom
+              style={approvalStyles.guestDetails.costContainer.label}
+              text="Children Ages"
+            />
+            <span>
+              {children.map((child, index) => (
+                <SpanAtom
+                  key={index}
+                  style={approvalStyles.guestDetails.costContainer.cost}
+                  text={getChildrenAgeString(child, index)}
+                />
+              ))}
+            </span>
+          </p>
+        )}
       </DivAtom>
       <DivAtom>
         <p style={approvalStyles.guestDetails.costContainer.container}>
