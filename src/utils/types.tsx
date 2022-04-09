@@ -2,6 +2,7 @@ import { Timestamp } from 'firebase/firestore';
 
 export type Order = 'asc' | 'desc';
 export type Status = 'ACTIVE' | 'INACTIVE';
+export type CustomerQuoteStatus = 'APPROVED' | 'IN PROGRESS' | 'COMPLETE';
 export type NavbarType = 'quote' | 'library' | 'settings';
 export type FlexDirection = 'column' | 'row' | 'row-reverse' | 'column-reverse';
 export type JustifyContent = 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around';
@@ -54,17 +55,18 @@ export interface SettingsSingleInput {
   val: string;
 }
 
-export interface AccomodationRate {
+// Quotations
+export interface CustomerQuotation {
   id: string;
-  newRateStart: string;
-  newRateEnd: string;
-  newMealPlan: string;
-  newSinglePrice: string;
-  newDoublePrice: string;
-  newTriplePrice: string;
+  refNum: string;
+  firstName: string;
+  lastName: string;
+  profilePic: string;
+  pdfURL: string;
+  netPrice: string;
+  status: CustomerQuoteStatus;
 }
 
-// Quotations
 export interface QuotationAccomodation {
   id: string;
   location: string;
@@ -91,6 +93,15 @@ export interface QuotationCostingRate {
 }
 
 // Library
+export interface AccomodationRate {
+  id: string;
+  newRateStart: string;
+  newRateEnd: string;
+  newMealPlan: string;
+  newSinglePrice: string;
+  newDoublePrice: string;
+  newTriplePrice: string;
+}
 export interface LibraryAccomodation {
   id: string;
   name: string;

@@ -15,20 +15,20 @@ import GuestProfile from '../../../molecules/GuestProfile';
 import TableRowButtonCell from '../../../molecules/TableRowButtonCell';
 import TableRowTextCell from '../../../molecules/TableRowTextCell';
 import TablePaginationActions from '../../../molecules/TableBottomPagination';
-import { Order } from '../../../utils/types';
+import { CustomerQuotation, Order } from '../../../utils/types';
 import { getComparator, stableSort } from '../../../utils/helpers';
 import TableHead from '../../../molecules/TableHead';
 
 const headCells = [
   { id: 'guest', label: 'GUEST' },
-  { id: 'earning', label: 'EARNINGS' },
-  { id: 'commission', label: 'COMMISION' },
+  { id: 'refnum', label: 'REF NUM' },
+  { id: 'price', label: 'PRICE' },
   { id: '...', label: '' },
   { id: '...1', label: '' },
 ];
 
 interface QuotationsTableProps {
-  rowdata: any[];
+  rowdata: CustomerQuotation[];
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -89,7 +89,7 @@ function QuotationsTable({ rowdata }: QuotationsTableProps) {
             stickyHeader
             aria-labelledby="tableTitle"
             size="medium"
-            aria-label="Library table"
+            aria-label="quotations table"
           >
             <TableHead
               classes={classes}
@@ -103,7 +103,7 @@ function QuotationsTable({ rowdata }: QuotationsTableProps) {
             <TableBody>
               {stableSort(rowdata, getComparator(order as Order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row: any) => (
+                .map((row: CustomerQuotation) => (
                   <TableRow
                     hover
                     tabIndex={-1}
@@ -111,8 +111,8 @@ function QuotationsTable({ rowdata }: QuotationsTableProps) {
                   >
                     <TableCell align="left">
                       <GuestProfile
-                        image={row.image}
-                        title={row.title}
+                        image={row.profilePic}
+                        title={`${row.firstName} ${row.lastName}`}
                         titleWeight={300}
                         paraColor="#464E5F"
                       />
@@ -120,7 +120,7 @@ function QuotationsTable({ rowdata }: QuotationsTableProps) {
                     <TableRowTextCell
                       cell={{
                         align: 'left',
-                        title: row.earning,
+                        title: row.refNum,
                         colors: ['#464E5F', '#B5B5C3'],
                         weight: 300,
                       }}
@@ -128,9 +128,9 @@ function QuotationsTable({ rowdata }: QuotationsTableProps) {
                     <TableRowTextCell
                       cell={{
                         align: 'left',
-                        title: row.commission,
+                        title: row.netPrice,
                         colors: ['#464E5F', '#B5B5C3'],
-                        weight: 300,
+                        weight: 600,
                       }}
                     />
                     <TableRowButtonCell
@@ -139,11 +139,11 @@ function QuotationsTable({ rowdata }: QuotationsTableProps) {
                       btnWidth="8rem"
                       btnSize="medium"
                       btnBorderRadius="0.5rem"
-                      cell={row}
+                      cell={{ status: row.status }}
                       btnDisabled
                     />
                     <TableRowButtonCell
-                      onClick={() => null}
+                      onClick={() => window.open(row.pdfURL)}
                       align="right"
                       btnWidth="8rem"
                       btnSize="medium"

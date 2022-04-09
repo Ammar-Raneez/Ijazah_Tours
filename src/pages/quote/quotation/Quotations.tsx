@@ -2,6 +2,7 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, Route } from 'react-router-dom';
+import { CircularProgress } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { collection, getDocs } from 'firebase/firestore';
 
@@ -18,9 +19,8 @@ import InputAtom from '../../../atoms/InputAtom';
 import { selectWithNavbarHeight, selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
 import { db } from '../../../firebase';
 import { CustomerQuotation, FlexDirection, JustifyContent } from '../../../utils/types';
-import { widthHeightDynamicStyle } from '../../../utils/helpers';
-import { QUOTATIONS_DATA } from '../../../data';
-import { quotationsStyles } from '../../../styles';
+import { searchData, widthHeightDynamicStyle } from '../../../utils/helpers';
+import { fetchingDataIndicatorStyles, quotationsStyles } from '../../../styles';
 
 function Quotations() {
   const height = useSelector(selectWithNavbarHeight);
@@ -30,6 +30,10 @@ function Quotations() {
   const [initialQuotationSearchData, setInitialQuotationSearchData] = useState<CustomerQuotation[]>([]);
 
   const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    searchData(search, initialQuotationSearchData, setQuotationsData);
+  }, [initialQuotationSearchData, search]);
 
   useEffect(() => {
     const getIntialQuotationsData = async () => {
@@ -86,107 +90,115 @@ function Quotations() {
               height: `${height}px`,
             }}
           >
-            <DivAtom
-              style={{
-                ...quotationsStyles.btnMainContainer,
-                flexDirection: widthHeightDynamicStyle(width, 768, 'column', 'row') as FlexDirection,
-              }}
-            >
-              <Link to="/quote/quotations/create/customer">
-                <ButtonAtom
-                  text="New Quote +"
+            {quotationsData ? (
+              <>
+                <DivAtom
                   style={{
-                    ...quotationsStyles.btn,
-                    marginRight: '16px',
-                    marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
-                    width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
+                    ...quotationsStyles.btnMainContainer,
+                    flexDirection: widthHeightDynamicStyle(width, 768, 'column', 'row') as FlexDirection,
                   }}
-                  onClick={() => null}
-                  size="large"
-                />
-              </Link>
-              <ButtonAtom
-                text="Compare Rates"
-                style={{
-                  ...quotationsStyles.btn,
-                  marginRight: '16px',
-                  marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
-                  width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
-                }}
-                onClick={() => null}
-                size="large"
-              />
-              <ButtonAtom
-                text="Preset Quotes"
-                style={{
-                  ...quotationsStyles.btn,
-                  marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
-                  width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
-                }}
-                onClick={() => null}
-                size="large"
-              />
-            </DivAtom>
-            <DivAtom
-              style={{
-                ...quotationsStyles.dataCardContainer,
-                flexDirection: widthHeightDynamicStyle(width, 768, 'column', 'row') as FlexDirection,
-              }}
-            >
-              <DataCard title="Total" total={60} />
-              <DataCard title="Closed" total={16} />
-              <DataCard title="Completed" total={43} />
-              <DataCard title="On Going" total={64} />
-            </DivAtom>
-            <DivAtom
-              style={{
-                ...quotationsStyles.btnSubContainer,
-                flexDirection: widthHeightDynamicStyle(width, 768, 'column', 'row') as FlexDirection,
-              }}
-            >
-              <DivAtom
-                style={{
-                  ...quotationsStyles.btnSubInnerContainer,
-                  margin: widthHeightDynamicStyle(width, 768, '0 0 1rem 0', 0),
-                }}
-              >
-                <ButtonAtom
-                  text="Approved"
+                >
+                  <Link to="/quote/quotations/create/customer">
+                    <ButtonAtom
+                      text="New Quote +"
+                      style={{
+                        ...quotationsStyles.btn,
+                        marginRight: '16px',
+                        marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
+                        width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
+                      }}
+                      onClick={() => null}
+                      size="large"
+                    />
+                  </Link>
+                  <ButtonAtom
+                    text="Compare Rates"
+                    style={{
+                      ...quotationsStyles.btn,
+                      marginRight: '16px',
+                      marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
+                      width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
+                    }}
+                    onClick={() => null}
+                    size="large"
+                  />
+                  <ButtonAtom
+                    text="Preset Quotes"
+                    style={{
+                      ...quotationsStyles.btn,
+                      marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
+                      width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
+                    }}
+                    onClick={() => null}
+                    size="large"
+                  />
+                </DivAtom>
+                <DivAtom
                   style={{
-                    ...quotationsStyles.btn,
-                    marginRight: '16px',
+                    ...quotationsStyles.dataCardContainer,
+                    flexDirection: widthHeightDynamicStyle(width, 768, 'column', 'row') as FlexDirection,
                   }}
-                  onClick={() => null}
-                  size="large"
+                >
+                  <DataCard title="Total" total={60} />
+                  <DataCard title="Closed" total={16} />
+                  <DataCard title="Completed" total={43} />
+                  <DataCard title="On Going" total={64} />
+                </DivAtom>
+                <DivAtom
+                  style={{
+                    ...quotationsStyles.btnSubContainer,
+                    flexDirection: widthHeightDynamicStyle(width, 768, 'column', 'row') as FlexDirection,
+                  }}
+                >
+                  <DivAtom
+                    style={{
+                      ...quotationsStyles.btnSubInnerContainer,
+                      margin: widthHeightDynamicStyle(width, 768, '0 0 1rem 0', 0),
+                    }}
+                  >
+                    <ButtonAtom
+                      text="Approved"
+                      style={{
+                        ...quotationsStyles.btn,
+                        marginRight: '16px',
+                      }}
+                      onClick={() => null}
+                      size="large"
+                    />
+                    <ButtonAtom
+                      text="Complete"
+                      style={quotationsStyles.btn}
+                      onClick={() => null}
+                      size="large"
+                    />
+                  </DivAtom>
+                  <DivAtom
+                    style={{
+                      ...quotationsStyles.searchContainer,
+                      justifyContent: widthHeightDynamicStyle(width, 768, 'flex-start', 'flex-end') as JustifyContent,
+                    }}
+                  >
+                    <InputAtom
+                      placeholder="Search"
+                      adornmentPosition="start"
+                      fullWidth={width < 768}
+                      value={search}
+                      plain="false"
+                      onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)
+                      }
+                      children={<SearchIcon />}
+                    />
+                  </DivAtom>
+                </DivAtom>
+                <QuotationsTable
+                  rowdata={quotationsData}
                 />
-                <ButtonAtom
-                  text="Complete"
-                  style={quotationsStyles.btn}
-                  onClick={() => null}
-                  size="large"
-                />
+              </>
+            ) : (
+              <DivAtom style={fetchingDataIndicatorStyles.container}>
+                <CircularProgress size={20} color="primary" />
               </DivAtom>
-              <DivAtom
-                style={{
-                  ...quotationsStyles.searchContainer,
-                  justifyContent: widthHeightDynamicStyle(width, 768, 'flex-start', 'flex-end') as JustifyContent,
-                }}
-              >
-                <InputAtom
-                  placeholder="Search"
-                  adornmentPosition="start"
-                  fullWidth={width < 768}
-                  value={search}
-                  plain="false"
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)
-                  }
-                  children={<SearchIcon />}
-                />
-              </DivAtom>
-            </DivAtom>
-            <QuotationsTable
-              rowdata={QUOTATIONS_DATA}
-            />
+            )}
           </DivAtom>
         </DivAtom>
       </Route>

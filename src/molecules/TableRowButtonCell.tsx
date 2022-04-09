@@ -2,6 +2,7 @@ import { MouseEventHandler } from 'react';
 import { TableCell } from '@material-ui/core';
 
 import ButtonAtom from '../atoms/ButtonAtom';
+import { CustomerQuoteStatus } from '../utils/types';
 
 interface TableRowButtonCellProps {
   btnWidth: string;
@@ -12,7 +13,7 @@ interface TableRowButtonCellProps {
   btnDisabled?: boolean;
   btnText?: string;
   btnColors?: string[];
-  cell?: { status: string };
+  cell?: { status: CustomerQuoteStatus };
 }
 
 function TableRowButtonCell({
@@ -30,9 +31,15 @@ function TableRowButtonCell({
   let color;
   if (btnColors) {
     [backgroundColor, color] = btnColors;
+  } else if (cell!.status === 'APPROVED') {
+    backgroundColor = '#41E93E';
+    color = '#146521';
+  } else if (cell!.status === 'COMPLETE') {
+    backgroundColor = '#7595EC';
+    color = '#0847A5';
   } else {
-    backgroundColor = cell!.status === 'Approved' ? '#41E93E' : '#C1BFBF';
-    color = cell!.status === 'Approved' ? '#146521' : '#464E5F';
+    backgroundColor = '#C1BFBF';
+    color = '#464E5F';
   }
 
   return (
