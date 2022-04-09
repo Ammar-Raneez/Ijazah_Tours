@@ -30,6 +30,7 @@ function Quotations() {
   const [initialQuotationSearchData, setInitialQuotationSearchData] = useState<CustomerQuotation[]>([]);
 
   const [search, setSearch] = useState('');
+  const [created, setCreated] = useState(false);
 
   useEffect(() => {
     searchData(search, initialQuotationSearchData, setQuotationsData);
@@ -49,7 +50,7 @@ function Quotations() {
     };
 
     getIntialQuotationsData();
-  }, []);
+  }, [created]);
 
   return (
     <>
@@ -76,7 +77,7 @@ function Quotations() {
               <Costing />
             </Route>
             <Route path="/quote/quotations/create/approval">
-              <Approval />
+              <Approval setCreated={setCreated} />
             </Route>
           </DivAtom>
         </DivAtom>

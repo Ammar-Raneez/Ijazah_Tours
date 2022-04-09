@@ -27,7 +27,11 @@ import { approvalStyles, quoteCreateQuoteStyles } from '../../../../styles';
 
 const storage = getStorage();
 
-function Approval() {
+interface ApprovalProps {
+  setCreated: any;
+}
+
+function Approval({ setCreated }: ApprovalProps) {
   const height = useSelector(selectWith2NavbarHeight);
   const width = useSelector(selectWith2NavbarWidth);
 
@@ -121,6 +125,7 @@ function Approval() {
 
   const saveUserQuotation = async () => {
     setIsSavingQuote(true);
+    setCreated(false);
     const pdfURL = await generatePDF();
     await setDoc(doc(db, 'Approval Quotations', userId), {
       refNum,
@@ -144,8 +149,8 @@ function Approval() {
     });
 
     setIsSavingQuote(false);
+    setCreated(true);
     history.replace('/quote/quotations');
-    window.location.reload();
   };
 
   const getSaveQuoteOffers = (val: boolean) => (val ? 'Yes' : 'No');
