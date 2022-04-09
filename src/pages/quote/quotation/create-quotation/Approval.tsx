@@ -145,7 +145,10 @@ function Approval() {
 
     setIsSavingQuote(false);
     history.replace('/quote/quotations');
+    window.location.reload();
   };
+
+  const getSaveQuoteOffers = (val: boolean) => (val ? 'Yes' : 'No');
 
   return (
     <DivAtom style={{ height: `${height}px` }}>
@@ -218,19 +221,18 @@ function Approval() {
               setGuideAndCar={setGuideAndCar}
             />
           ) : (
-            (roomAndBreakfast || receptionAtAirport || allGovernmentTaxes || guideAndCar) && (
-              <DivAtom style={approvalStyles.offers.container}>
-                <ParagraphAtom style={approvalStyles.titleText} text="This offer includes:" />
-                <ul>
-                  {roomAndBreakfast && <li>Room and Breakfast in the hotel</li>}
-                  {receptionAtAirport && <li>Reception at Airport</li>}
-                  {allGovernmentTaxes && <li>All Goverenment Taxes</li>}
-                  {guideAndCar && (
-                    <li>Guide and the Car. Transportation from Reception to Fairwell, (Throught the Trip)</li>
-                  )}
-                </ul>
-              </DivAtom>
-            )
+            <DivAtom style={approvalStyles.offers.container}>
+              <ParagraphAtom style={approvalStyles.titleText} text="This offer includes:" />
+              <ul>
+                <li>Room and Breakfast in the hotel: {getSaveQuoteOffers(roomAndBreakfast)}</li>
+                <li>Reception at Airport: {getSaveQuoteOffers(receptionAtAirport)}</li>
+                <li>All Government Taxes: {getSaveQuoteOffers(allGovernmentTaxes)}</li>
+                <li>
+                  Guide and the Car.
+                  Transportation from Reception to Fairwell, (Throught the Trip): {getSaveQuoteOffers(guideAndCar)}
+                </li>
+              </ul>
+            </DivAtom>
           )}
         </DivAtom>
       </div>

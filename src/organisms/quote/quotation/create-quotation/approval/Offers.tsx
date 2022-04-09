@@ -42,8 +42,8 @@ function Offers({
       <CheckboxAtom
         checked={allGovernmentTaxes}
         onChange={() => setAllGovernmentTaxes(!allGovernmentTaxes)}
-        label="All Goverenment Taxes"
-        name="all-goverenment-taxes"
+        label="All Government Taxes"
+        name="all-government-taxes"
       />
       <CheckboxAtom
         checked={guideAndCar}

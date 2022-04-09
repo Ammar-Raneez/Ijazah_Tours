@@ -20,9 +20,9 @@ import { getComparator, stableSort } from '../../../utils/helpers';
 import TableHead from '../../../molecules/TableHead';
 
 const headCells = [
-  { id: 'guest', label: 'GUEST' },
-  { id: 'refnum', label: 'REF NUM' },
-  { id: 'price', label: 'PRICE' },
+  { id: 'name', label: 'GUEST' },
+  { id: 'refNum', label: 'REF NUM' },
+  { id: 'netPrice', label: 'PRICE' },
   { id: '...', label: '' },
   { id: '...1', label: '' },
 ];
