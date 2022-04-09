@@ -51,7 +51,6 @@ function Guest() {
   }, [isDeleting, isCreating, isUpdating]);
 
   const deleteGuest = async (row: LibraryGuest) => {
-    // eslint-disable-next-line no-alert, no-restricted-globals
     const confirmDelete = confirm('Are you sure you want to delete this guest?');
     if (confirmDelete) {
       setIsDeleting(false);

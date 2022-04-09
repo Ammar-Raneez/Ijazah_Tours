@@ -97,8 +97,7 @@ function Accomodation() {
   }, []);
 
   const deleteAccomodation = async (row: LibraryAccomodation) => {
-    // eslint-disable-next-line no-alert, no-restricted-globals
-    const confirmDelete = confirm('Are you sure you want to delete this accomodation?');
+    const confirmDelete = window.confirm('Are you sure you want to delete this accomodation?');
     if (confirmDelete) {
       setIsDeleting(false);
       await deleteDoc(doc(db, 'Library Accomodation', row.id));

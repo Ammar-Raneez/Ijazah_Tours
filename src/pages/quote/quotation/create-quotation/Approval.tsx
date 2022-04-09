@@ -141,6 +141,7 @@ function Approval() {
       allGovernmentTaxes,
       guideAndCar,
       pdfURL,
+      status: 'COMPLETE',
     });
 
     setIsSavingQuote(false);

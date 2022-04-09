@@ -48,5 +48,6 @@ module.exports = {
     'no-unused-vars': 'off',
     'global-require': 'off',
     '@typescript-eslint/no-unused-vars': 'error',
+    'no-alert': 'off',
   },
 };

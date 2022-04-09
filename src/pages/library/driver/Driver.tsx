@@ -52,8 +52,7 @@ function Driver() {
   }, [isDeleting, isCreating, isUpdating]);
 
   const deleteDriver = async (row: LibraryDriver) => {
-    // eslint-disable-next-line no-alert, no-restricted-globals
-    const confirmDelete = confirm('Are you sure you want to delete this driver?');
+    const confirmDelete = window.confirm('Are you sure you want to delete this driver?');
     if (confirmDelete) {
       setIsDeleting(false);
       await deleteDoc(doc(db, 'Library Drivers', row.id));

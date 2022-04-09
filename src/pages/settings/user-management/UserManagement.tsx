@@ -98,8 +98,7 @@ function UserManagement() {
   };
 
   const deleteTeamMember = async (row: SettingsTeamMember) => {
-    // eslint-disable-next-line no-alert, no-restricted-globals
-    const confirmDelete = confirm('Are you sure you want to delete this team member?');
+    const confirmDelete = window.confirm('Are you sure you want to delete this team member?');
     if (confirmDelete) {
       setIsDeleting(false);
       await deleteDoc(doc(db, 'Team Members', row.id));

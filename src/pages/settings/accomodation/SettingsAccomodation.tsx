@@ -142,8 +142,7 @@ function SettingsAccomodation() {
   };
 
   const onDeleteSingleInput = async (type: string, id: string) => {
-    // eslint-disable-next-line no-alert, no-restricted-globals
-    const confirmDelete = confirm('Are you sure you want to delete this item?');
+    const confirmDelete = window.confirm('Are you sure you want to delete this item?');
     if (confirmDelete) {
       setIsDeleting(false);
       await deleteDoc(doc(db, `Settings ${type}`, id));
@@ -193,8 +192,7 @@ function SettingsAccomodation() {
   };
 
   const deleteLocation = async (row: SettingsLocation) => {
-    // eslint-disable-next-line no-alert, no-restricted-globals
-    const confirmDelete = confirm('Are you sure you want to delete this item?');
+    const confirmDelete = window.confirm('Are you sure you want to delete this item?');
     if (confirmDelete) {
       setIsDeleting(false);
       await deleteDoc(doc(db, `Settings Locations`, row.id));
