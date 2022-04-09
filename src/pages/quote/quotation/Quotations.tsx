@@ -1,7 +1,9 @@
-import { ChangeEvent, useState } from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, Route } from 'react-router-dom';
 import SearchIcon from '@material-ui/icons/Search';
+import { collection, getDocs } from 'firebase/firestore';
 
 import Customer from './create-quotation/Customer';
 import Accomodation from './create-quotation/Accomodation';
@@ -14,7 +16,8 @@ import DivAtom from '../../../atoms/DivAtom';
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import InputAtom from '../../../atoms/InputAtom';
 import { selectWithNavbarHeight, selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
-import { FlexDirection, JustifyContent } from '../../../utils/types';
+import { db } from '../../../firebase';
+import { CustomerQuotation, FlexDirection, JustifyContent } from '../../../utils/types';
 import { widthHeightDynamicStyle } from '../../../utils/helpers';
 import { QUOTATIONS_DATA } from '../../../data';
 import { quotationsStyles } from '../../../styles';
@@ -23,7 +26,26 @@ function Quotations() {
   const height = useSelector(selectWithNavbarHeight);
   const width = useSelector(selectWithNavbarWidth);
 
+  const [quotationsData, setQuotationsData] = useState<CustomerQuotation[]>();
+  const [initialQuotationSearchData, setInitialQuotationSearchData] = useState<CustomerQuotation[]>([]);
+
   const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    const getIntialQuotationsData = async () => {
+      const data = (await getDocs(collection(db, 'Approval Quotations'))).docs;
+      const quotations = data.map((dc) => dc.data());
+      const ids = data.map((dc) => dc.id);
+      ids.forEach((id, i) => {
+        quotations[i].id = id;
+      });
+
+      setQuotationsData(quotations as CustomerQuotation[]);
+      setInitialQuotationSearchData(quotations as CustomerQuotation[]);
+    };
+
+    getIntialQuotationsData();
+  }, []);
 
   return (
     <>

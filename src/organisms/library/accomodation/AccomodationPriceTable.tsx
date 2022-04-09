@@ -37,7 +37,7 @@ function AccomodationPriceTable({
 
   return (
     <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="quotations table">
+      <Table className={classes.table} aria-label="accomodations price table">
         <TableHead>
           <TableRow>
             {columns.map((column) => (

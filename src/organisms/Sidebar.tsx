@@ -114,7 +114,7 @@ function Sidebar({ wind, handleDrawerToggle, mobileOpen }: SidebarProps) {
   };
 
   return (
-    <nav className={classes.drawer} aria-label="mailbox folders">
+    <nav className={classes.drawer} aria-label="drawable-sidebar">
       <Hidden only={['lg']} implementation="css">
         <StyledDrawer
           container={container}

@@ -37,7 +37,7 @@ function CostingRateComparisonTable({
 
   return (
     <TableContainer className={classes.paper} component={Paper}>
-      <Table className={classes.table} aria-label="quotations table">
+      <Table className={classes.table} aria-label="costing rate table">
         <TableHead>
           <TableRow>
             {columns.map((column) => (
