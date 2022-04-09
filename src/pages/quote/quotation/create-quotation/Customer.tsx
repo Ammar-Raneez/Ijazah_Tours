@@ -62,9 +62,9 @@ function Customer() {
       const htData = hData.map((dc) => dc.data());
       const deData = dData.map((dc) => dc.data());
 
-      const rfIds = rfData.map((dc) => dc.id);
-      const htIds = htData.map((dc) => dc.id);
-      const deIds = deData.map((dc) => dc.id);
+      const rfIds = rData.map((dc) => dc.id);
+      const htIds = hData.map((dc) => dc.id);
+      const deIds = dData.map((dc) => dc.id);
 
       rfIds.forEach((id, i) => {
         rfData[i].id = id;
@@ -138,6 +138,7 @@ function Customer() {
           saveCheckout,
           selectedCustomer?.adults,
           selectedCustomer?.childrenAges,
+          selectedCustomer?.id,
         ]],
       }),
     );

@@ -83,7 +83,7 @@ function CreateAccomodation({
     const getInitialData = async () => {
       const aData = (await getDocs(collection(db, `Settings Accomodation Types`))).docs;
       const accData = aData.map((dc) => dc.data());
-      const accIds = accData.map((dc) => dc.id);
+      const accIds = aData.map((dc) => dc.id);
 
       accIds.forEach((id, i) => {
         accData[i].id = id;
