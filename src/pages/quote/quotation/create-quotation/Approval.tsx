@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { CircularProgress } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { getStorage } from 'firebase/storage';
+import { doc, setDoc } from 'firebase/firestore';
 import { v4 as uuid } from 'uuid';
 import JSPDF from 'jspdf';
 
@@ -19,8 +21,9 @@ import ButtonAtom from '../../../../atoms/ButtonAtom';
 import { selectWith2NavbarHeight, selectWith2NavbarWidth } from '../../../../redux/containerSizeSlice';
 import { QuotationCostingAccomodation, QuotationCostingRate } from '../../../../utils/types';
 import { QUOTATIONS_COSTING_ACCOMODATION_DATA, QUOTATIONS_COSTING_RATE_DATA } from '../../../../data';
-import { approvalStyles, quoteCreateQuoteStyles } from '../../../../styles';
+import { db } from '../../../../firebase';
 import { uploadPDF, widthHeightDynamicStyle } from '../../../../utils/helpers';
+import { approvalStyles, quoteCreateQuoteStyles } from '../../../../styles';
 
 const storage = getStorage();
 
@@ -31,6 +34,8 @@ function Approval() {
   const [rateData, setRateData] = useState<QuotationCostingRate[]>([]);
 
   // Customer details
+  const [refNum, setRefNum] = useState('');
+  const [userId, setUserId] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [nationality, setNationality] = useState('');
@@ -55,6 +60,8 @@ function Approval() {
   const [showRateContainer, setShowRateContainer] = useState(true);
   const [isSavingQuote, setIsSavingQuote] = useState(false);
 
+  const history = useHistory();
+
   useEffect(() => {
     const customerDetails = JSON.parse(
       localStorage.getItem('New Quote Customer')!,
@@ -62,6 +69,7 @@ function Approval() {
 
     setVoucherNo('2');
     setDaysAndNights('3-2');
+    setRefNum(customerDetails[0]);
     setFirstName(customerDetails[1]);
     setLastName(customerDetails[2]);
     setNationality(customerDetails[4]);
@@ -69,6 +77,7 @@ function Approval() {
     setDeparture(customerDetails[6]);
     setAdults(customerDetails[7]);
     setChildren(customerDetails[8]);
+    setUserId(customerDetails[9]);
 
     const costDetails = JSON.parse(localStorage.getItem('Create Quote Costing')!);
     setSellingPrice(costDetails.sellingPrice);
@@ -113,8 +122,29 @@ function Approval() {
   const saveUserQuotation = async () => {
     setIsSavingQuote(true);
     const pdfURL = await generatePDF();
-    console.log(pdfURL);
+    await setDoc(doc(db, 'Approval Quotations', userId), {
+      refNum,
+      firstName,
+      lastName,
+      nationality,
+      arrival,
+      departure,
+      adults,
+      children,
+      netPrice,
+      sellingPrice,
+      discount,
+      voucherNo,
+      daysAndNights,
+      roomAndBreakfast,
+      receptionAtAirport,
+      allGovernmentTaxes,
+      guideAndCar,
+      pdfURL,
+    });
+
     setIsSavingQuote(false);
+    history.replace('/quote/quotations');
   };
 
   return (
