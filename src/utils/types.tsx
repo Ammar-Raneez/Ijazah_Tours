@@ -59,8 +59,7 @@ export interface SettingsSingleInput {
 export interface CustomerQuotation {
   id: string;
   refNum: string;
-  firstName: string;
-  lastName: string;
+  name: string;
   profilePic: string;
   pdfURL: string;
   netPrice: string;

@@ -124,8 +124,6 @@ function Approval() {
     const pdfURL = await generatePDF();
     await setDoc(doc(db, 'Approval Quotations', userId), {
       refNum,
-      firstName,
-      lastName,
       nationality,
       arrival,
       departure,
@@ -141,6 +139,7 @@ function Approval() {
       allGovernmentTaxes,
       guideAndCar,
       pdfURL,
+      name: `${firstName} ${lastName}`,
       status: 'COMPLETE',
     });
 

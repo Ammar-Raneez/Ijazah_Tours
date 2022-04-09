@@ -112,7 +112,7 @@ function QuotationsTable({ rowdata }: QuotationsTableProps) {
                     <TableCell align="left">
                       <GuestProfile
                         image={row.profilePic}
-                        title={`${row.firstName} ${row.lastName}`}
+                        title={row.name}
                         titleWeight={300}
                         paraColor="#464E5F"
                       />
