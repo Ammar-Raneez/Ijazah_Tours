@@ -5,7 +5,6 @@ import {
   collection,
   deleteDoc,
   doc,
-  DocumentData,
   getDocs,
   serverTimestamp,
   setDoc,
@@ -42,7 +41,7 @@ function UserManagement() {
   const [editLastName, setEditLastName] = useState('');
   const [editRole, setEditRole] = useState('');
 
-  const [teamData, setTeamData] = useState<DocumentData[]>([]);
+  const [teamData, setTeamData] = useState<SettingsTeamMember[]>([]);
 
   const [showValidationErrorMessage, setShowValidationErrorMessage] = useState(false);
 
@@ -64,7 +63,7 @@ function UserManagement() {
         members[i].id = id;
       });
 
-      setTeamData(members);
+      setTeamData(members as SettingsTeamMember[]);
     };
 
     getInitialTeamData();
@@ -238,7 +237,7 @@ function UserManagement() {
               ]}
               deleteTeamMember={deleteTeamMember}
               onEditTeamMemberClick={onEditTeamMemberClick}
-              data={teamData as SettingsTeamMember[]}
+              data={teamData}
             />
           )}
         </DivAtom>

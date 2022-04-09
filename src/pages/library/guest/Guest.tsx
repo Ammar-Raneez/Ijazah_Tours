@@ -5,7 +5,6 @@ import {
   collection,
   deleteDoc,
   doc,
-  DocumentData,
   getDocs,
 } from 'firebase/firestore';
 
@@ -21,8 +20,8 @@ import { libraryStyles } from '../../../styles';
 
 function Guest() {
   const height = useSelector(selectWithNavbarHeight);
-  const [guestData, setGuestData] = useState<DocumentData[]>([]);
-  const [initialGuestSearchData, setInitialGuestSearchData] = useState<DocumentData[]>([]);
+  const [guestData, setGuestData] = useState<LibraryGuest[]>([]);
+  const [initialGuestSearchData, setInitialGuestSearchData] = useState<LibraryGuest[]>([]);
   const [search, setSearch] = useState('');
 
   const [editGuestData, setEditGuestData] = useState<LibraryGuest>();
@@ -44,8 +43,8 @@ function Guest() {
         guests[i].id = id;
       });
 
-      setGuestData(guests);
-      setInitialGuestSearchData(guests);
+      setGuestData(guests as LibraryGuest[]);
+      setInitialGuestSearchData(guests as LibraryGuest[]);
     };
 
     getIntialData();
@@ -82,7 +81,7 @@ function Guest() {
             <EditGuest
               isUpdating={isUpdating}
               setIsUpdating={setIsUpdating}
-              row={editGuestData as LibraryGuest}
+              row={editGuestData!}
             />
           </Route>
           <Route exact path="/library/guest">
@@ -91,7 +90,7 @@ function Guest() {
               setSearch={setSearch}
               onEditGuestClick={onEditGuestClick}
               deleteGuest={deleteGuest}
-              data={guestData as LibraryGuest[]}
+              data={guestData}
             />
           </Route>
         </DivAtom>

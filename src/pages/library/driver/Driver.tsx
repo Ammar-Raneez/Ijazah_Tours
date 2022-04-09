@@ -5,7 +5,6 @@ import {
   collection,
   deleteDoc,
   doc,
-  DocumentData,
   getDocs,
 } from 'firebase/firestore';
 
@@ -22,8 +21,8 @@ import { libraryStyles } from '../../../styles';
 function Driver() {
   const height = useSelector(selectWithNavbarHeight);
 
-  const [driverData, setDriverData] = useState<DocumentData[]>([]);
-  const [initialDriverSearchData, setInitialDriverSearchData] = useState<DocumentData[]>([]);
+  const [driverData, setDriverData] = useState<LibraryDriver[]>([]);
+  const [initialDriverSearchData, setInitialDriverSearchData] = useState<LibraryDriver[]>([]);
   const [search, setSearch] = useState('');
 
   const [editDriverData, setEditDriverData] = useState<LibraryDriver>();
@@ -45,8 +44,8 @@ function Driver() {
         drivers[i].id = id;
       });
 
-      setDriverData(drivers);
-      setInitialDriverSearchData(drivers);
+      setDriverData(drivers as LibraryDriver[]);
+      setInitialDriverSearchData(drivers as LibraryDriver[]);
     };
 
     getIntialData();
@@ -83,7 +82,7 @@ function Driver() {
             <EditDriver
               isUpdating={isUpdating}
               setIsUpdating={setIsUpdating}
-              row={editDriverData as LibraryDriver}
+              row={editDriverData!}
             />
           </Route>
           <Route exact path="/library/driver">
@@ -92,7 +91,7 @@ function Driver() {
               setSearch={setSearch}
               onEditDriverClick={onEditDriverClick}
               deleteDriver={deleteDriver}
-              data={driverData as LibraryDriver[]}
+              data={driverData}
             />
           </Route>
         </DivAtom>

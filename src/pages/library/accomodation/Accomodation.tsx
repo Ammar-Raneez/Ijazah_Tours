@@ -5,7 +5,6 @@ import {
   collection,
   deleteDoc,
   doc,
-  DocumentData,
   getDocs,
 } from 'firebase/firestore';
 
@@ -22,12 +21,12 @@ import { libraryStyles } from '../../../styles';
 function Accomodation() {
   const height = useSelector(selectWithNavbarHeight);
 
-  const [accomodationData, setAccomodationData] = useState<DocumentData[]>([]);
+  const [accomodationData, setAccomodationData] = useState<LibraryAccomodation[]>([]);
   const [roomViewData, setRoomViewData] = useState<SettingsRoomProperties[]>([]);
   const [roomCategoriesData, setRoomCategoriesData] = useState<SettingsRoomProperties[]>([]);
   const [roomGradingsData, setRoomGradingsData] = useState<SettingsRoomProperties[]>([]);
   const [accomodationTypeData, setAccomodationTypeData] = useState<DropdownOption[]>([]);
-  const [initialAccomodationSearchData, setInitialAccomodationSearchData] = useState<DocumentData[]>([]);
+  const [initialAccomodationSearchData, setInitialAccomodationSearchData] = useState<LibraryAccomodation[]>([]);
   const [search, setSearch] = useState('');
 
   const [editAccomodationData, setEditAccomodationData] = useState<LibraryAccomodation>();
@@ -43,14 +42,14 @@ function Accomodation() {
   useEffect(() => {
     const getIntialAccomodationData = async () => {
       const data = (await getDocs(collection(db, 'Library Accomodation'))).docs;
-      const accomodation = data.map((dc) => dc.data());
+      const accomodations = data.map((dc) => dc.data());
       const ids = data.map((dc) => dc.id);
       ids.forEach((id, i) => {
-        accomodation[i].id = id;
+        accomodations[i].id = id;
       });
 
-      setAccomodationData(accomodation);
-      setInitialAccomodationSearchData(accomodation);
+      setAccomodationData(accomodations as LibraryAccomodation[]);
+      setInitialAccomodationSearchData(accomodations as LibraryAccomodation[]);
     };
 
     getIntialAccomodationData();
@@ -66,10 +65,12 @@ function Accomodation() {
       const types = tData.map((dc) => dc.data());
       const gradings = gData.map((dc) => dc.data());
       const accomodationTypes = aData.map((dc) => dc.data());
+
       const viewIds = vData.map((dc) => dc.id);
       const typeIds = tData.map((dc) => dc.id);
       const gradingIds = gData.map((dc) => dc.id);
       const accomodationTypeIds = aData.map((dc) => dc.id);
+
       viewIds.forEach((id, i) => {
         views[i].id = id;
       });
@@ -135,7 +136,7 @@ function Accomodation() {
             roomGradingsData={roomGradingsData}
             isUpdating={isUpdating}
             setIsUpdating={setIsUpdating}
-            row={editAccomodationData as LibraryAccomodation}
+            row={editAccomodationData!}
           />
         </Route>
         <Route exact path="/library/accomodation">
@@ -145,7 +146,7 @@ function Accomodation() {
               setSearch={setSearch}
               deleteAccomodation={deleteAccomodation}
               onEditAccomodationClick={onEditAccomodationClick}
-              data={accomodationData as LibraryAccomodation[]}
+              data={accomodationData}
             />
           </DivAtom>
         </Route>
