@@ -28,6 +28,7 @@ function Quotations() {
 
   const [quotationsData, setQuotationsData] = useState<CustomerQuotation[]>();
   const [initialQuotationSearchData, setInitialQuotationSearchData] = useState<CustomerQuotation[]>([]);
+  const [initialQuotationFilteredData, setInitialQuotationFilteredData] = useState<CustomerQuotation[]>([]);
 
   const [search, setSearch] = useState('');
   const [created, setCreated] = useState(false);
@@ -47,10 +48,27 @@ function Quotations() {
 
       setQuotationsData(quotations as CustomerQuotation[]);
       setInitialQuotationSearchData(quotations as CustomerQuotation[]);
+      setInitialQuotationFilteredData(quotations as CustomerQuotation[]);
     };
 
     getIntialQuotationsData();
   }, [created]);
+
+  const filterApproved = () => {
+    const approvedData = initialQuotationFilteredData.filter((quote) => (
+      quote.status === 'APPROVED'
+    ));
+
+    setQuotationsData(approvedData);
+  };
+
+  const filterCompleted = () => {
+    const approvedData = initialQuotationFilteredData.filter((quote) => (
+      quote.status === 'COMPLETE'
+    ));
+
+    setQuotationsData(approvedData);
+  };
 
   return (
     <>
@@ -140,10 +158,25 @@ function Quotations() {
                     flexDirection: widthHeightDynamicStyle(width, 768, 'column', 'row') as FlexDirection,
                   }}
                 >
-                  <DataCard title="Total" total={60} />
-                  <DataCard title="Closed" total={16} />
-                  <DataCard title="Completed" total={43} />
-                  <DataCard title="On Going" total={64} />
+                  <DataCard title="Total" total={quotationsData.length} />
+                  <DataCard
+                    title="Approved"
+                    total={quotationsData.filter((quote) => quote.status === 'APPROVED').length}
+                  />
+                  <DataCard
+                    title="Completed"
+                    total={quotationsData.filter((quote) => quote.status === 'COMPLETE').length}
+                    style={{
+                      marginTop: widthHeightDynamicStyle(width, 900, '1rem', 0),
+                    }}
+                  />
+                  <DataCard
+                    title="In Progress"
+                    total={quotationsData.filter((quote) => quote.status === 'IN PROGRESS').length}
+                    style={{
+                      marginTop: widthHeightDynamicStyle(width, 1400, '1rem', 0),
+                    }}
+                  />
                 </DivAtom>
                 <DivAtom
                   style={{
@@ -163,13 +196,13 @@ function Quotations() {
                         ...quotationsStyles.btn,
                         marginRight: '16px',
                       }}
-                      onClick={() => null}
+                      onClick={filterApproved}
                       size="large"
                     />
                     <ButtonAtom
                       text="Complete"
                       style={quotationsStyles.btn}
-                      onClick={() => null}
+                      onClick={filterCompleted}
                       size="large"
                     />
                   </DivAtom>

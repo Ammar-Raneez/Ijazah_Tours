@@ -1,3 +1,4 @@
+import { CSSProperties } from 'react';
 import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -18,9 +19,10 @@ const useStyles = makeStyles({
 interface DataCardProps {
   title: string;
   total: number;
+  style?: CSSProperties;
 }
 
-export default function DataCard({ title, total }: DataCardProps) {
+export default function DataCard({ title, total, style }: DataCardProps) {
   const width = useSelector(selectWithNavbarWidth);
 
   const classes = useStyles();
@@ -28,7 +30,7 @@ export default function DataCard({ title, total }: DataCardProps) {
   return (
     <Card
       className={classes.root}
-      style={{ marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0) }}
+      style={{ ...style, marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0) }}
       variant="outlined"
     >
       <CardContent>
