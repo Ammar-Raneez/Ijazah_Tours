@@ -20,7 +20,7 @@ import H2Atom from '../../../../atoms/H2Atom';
 import { selectWith2NavbarHeight, selectWith2NavbarWidth } from '../../../../redux/containerSizeSlice';
 import { db } from '../../../../firebase';
 import { FlexDirection, UserAccomodation } from '../../../../utils/types';
-import { widthHeightDynamicStyle } from '../../../../utils/helpers';
+import { getDaysDifference, widthHeightDynamicStyle } from '../../../../utils/helpers';
 import {
   fetchingDataIndicatorStyles,
   quoteCreateQuoteStyles,
@@ -34,6 +34,9 @@ function Accomodation() {
   const [selectedAccomodations, setSelectedAccomodations] = useState<UserAccomodation[]>([]);
 
   const [search, setSearch] = useState('');
+
+  const [showValidationErrorMessage, setShowValidationErrorMessage] = useState(false);
+  const [validationNightsRequired, setValidationNightssRequired] = useState(0);
 
   const history = useHistory();
 
@@ -80,15 +83,27 @@ function Accomodation() {
   };
 
   const continueToCosting = () => {
-    // const customerDetails = JSON.parse(
-    //   localStorage.getItem('New Quote Customer')!,
-    // ).data[0];
-    // const selectedAccomodationDetails = JSON.parse(
-    //   localStorage.getItem('New Quote Accomodation')!,
-    // ).selectedAccomodations;
+    setShowValidationErrorMessage(false);
 
-    // const daysDifference = getDaysDifference(customerDetails[6], customerDetails[5]);
-    history.replace('/quote/quotations/create/costing');
+    const customerDetails = JSON.parse(
+      localStorage.getItem('New Quote Customer')!,
+    ).data[0];
+    const selectedAccomodationDetails: UserAccomodation[] = JSON.parse(
+      localStorage.getItem('New Quote Accomodation')!,
+    ).selectedAccomodations;
+
+    // Subtract 1 to equal number of nights
+    const nightsRequired = getDaysDifference(customerDetails[6], customerDetails[5]) - 1;
+    const totalUsedNights = selectedAccomodationDetails.reduce((prev, curr) => (
+      prev + Number(curr.nights)
+    ), 0);
+    setValidationNightssRequired(nightsRequired);
+
+    if (nightsRequired !== totalUsedNights) {
+      setShowValidationErrorMessage(true);
+    } else {
+      history.replace('/quote/quotations/create/costing');
+    }
   };
 
   return (
@@ -182,6 +197,14 @@ function Accomodation() {
               />
             )}
           </DivAtom>
+
+          {showValidationErrorMessage && (
+            <ParagraphAtom
+              // eslint-disable-next-line max-len
+              text={`Please specify the same number of nights as your departure - check-in. (Nights required - ${validationNightsRequired})`}
+              style={quoteCreateQuoteStyles.errorMsg}
+            />
+          )}
 
           <DivAtom
             style={{
