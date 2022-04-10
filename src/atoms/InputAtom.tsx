@@ -14,6 +14,7 @@ interface InputAtomProps {
   multiline?: boolean;
   error?: boolean;
   rows?: number;
+  minValue?: number;
   adornmentPosition?: 'start' | 'end';
   children?: ReactNode;
   style?: CSSProperties;
@@ -27,6 +28,7 @@ function InputAtom({
   disabled,
   multiline,
   rows,
+  minValue,
   error,
   placeholder,
   fullWidth,
@@ -58,7 +60,7 @@ function InputAtom({
         )
       }
       inputProps={{
-        min: 0,
+        min: minValue || 0,
       }}
     />
   );

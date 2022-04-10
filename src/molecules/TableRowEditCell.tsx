@@ -53,6 +53,7 @@ function TableRowEditCell({
           type="number"
           onChange={(e) => onCountChange && onCountChange(e.target.value)}
           placeholder=""
+          minValue={1}
         />
       </FormControl>
     </TableCell>

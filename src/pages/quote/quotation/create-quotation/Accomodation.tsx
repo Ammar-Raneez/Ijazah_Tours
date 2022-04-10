@@ -50,7 +50,7 @@ function Accomodation() {
       selectedAccomodationsCopy.forEach((acc) => {
         const roomTypes = Object.keys(acc.categoryValues).map((cat) => ({ value: cat, label: cat }));
         const mealPlanOptions = acc.rates.map((rate) => rate.newMealPlan).map((rate) => ({ value: rate, label: rate }));
-        acc.nights = '0';
+        acc.nights = '1';
         acc.roomRate = '$50'; // do calculation
         acc.total = '$150'; // do calculation
         acc.pax = 'Single'; // do calculation
@@ -80,6 +80,14 @@ function Accomodation() {
   };
 
   const continueToCosting = () => {
+    // const customerDetails = JSON.parse(
+    //   localStorage.getItem('New Quote Customer')!,
+    // ).data[0];
+    // const selectedAccomodationDetails = JSON.parse(
+    //   localStorage.getItem('New Quote Accomodation')!,
+    // ).selectedAccomodations;
+
+    // const daysDifference = getDaysDifference(customerDetails[6], customerDetails[5]);
     history.replace('/quote/quotations/create/costing');
   };
 

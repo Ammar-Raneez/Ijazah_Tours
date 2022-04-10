@@ -50,7 +50,7 @@ function AccomodationTable({
               <TableColumnCell
                 key={uuid()}
                 align="center"
-                color="b5b5c3"
+                color="black"
                 column={column}
               />
             ))}
@@ -69,40 +69,28 @@ function AccomodationTable({
             const [roomType, setRoomType] = useState(row.roomType);
             const [mealPlan, setMealPlan] = useState(row.mealPlan);
 
-            const [accomodations] = useState<UserAccomodation[]>(
-              localStorage.getItem('New Quote Accomodation')
-                ? JSON.parse(localStorage.getItem('New Quote Accomodation')!).selectedAccomodations
-                : [],
-            );
-            const [accomodation, setAccomodation] = useState<UserAccomodation>(
-              accomodations?.find((acc: UserAccomodation) => acc.id === row.id)!,
-            );
-            const [accomodationIndex] = useState<number>(
-              accomodations?.findIndex((acc: UserAccomodation) => acc.id === row.id),
-            );
-
             const onSelectChange = (val: string, type: string) => {
+              const { accomodation } = getAccomodationsFromStorage();
               if (type === 'Room Type') {
                 setRoomType(val);
                 const updatedAcc = { ...accomodation, roomType: val };
-                setAccomodation(updatedAcc);
                 saveUpdatedAccomodation(updatedAcc);
               } else {
                 setMealPlan(val);
                 const updatedAcc = { ...accomodation, mealPlan: val };
-                setAccomodation(updatedAcc);
                 saveUpdatedAccomodation(updatedAcc);
               }
             };
 
             const onNightsChange = (val: string) => {
+              const { accomodation } = getAccomodationsFromStorage();
               setNights(val);
               const updatedAcc = { ...accomodation, nights: val };
-              setAccomodation(updatedAcc);
               saveUpdatedAccomodation(updatedAcc);
             };
 
             const saveUpdatedAccomodation = (updatedAcc: UserAccomodation) => {
+              const { accomodations, accomodationIndex } = getAccomodationsFromStorage();
               const accomodationsCopy = [...accomodations];
               accomodationsCopy.splice(accomodationIndex, 1);
               accomodationsCopy.push(updatedAcc);
@@ -110,6 +98,13 @@ function AccomodationTable({
                 'New Quote Accomodation',
                 JSON.stringify({ selectedAccomodations: accomodationsCopy }),
               );
+            };
+
+            const getAccomodationsFromStorage = () => {
+              const accomodations = JSON.parse(localStorage.getItem('New Quote Accomodation')!).selectedAccomodations;
+              const accomodation = accomodations?.find((acc: UserAccomodation) => acc.id === row.id)!;
+              const accomodationIndex = accomodations?.findIndex((acc: UserAccomodation) => acc.id === row.id);
+              return { accomodations, accomodation, accomodationIndex };
             };
 
             return (
