@@ -167,3 +167,8 @@ export interface RadioButtonOption extends Option {}
 export interface DropdownOption extends Option {}
 export interface QuoteHeadCell extends TableHeadCell {}
 export interface LibraryHeadCell extends TableHeadCell {}
+export interface UserAccomodation extends LibraryAccomodation {
+  nights: string;
+  mealPlan: string;
+  roomType: string;
+}

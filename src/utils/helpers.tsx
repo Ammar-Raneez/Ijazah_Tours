@@ -100,12 +100,6 @@ export const vehicleOptions = [
   { label: 'BMW', value: 'BMW' },
 ];
 
-export const roomTypes = [
-  { label: 'Diluxe', value: 'Diluxe' },
-  { label: 'Mega', value: 'Mega' },
-  { label: 'Suite', value: 'Suite' },
-];
-
 export const mealPlanOptions = [
   { label: 'BB', value: 'BB' },
   { label: 'FB', value: 'FB' },
