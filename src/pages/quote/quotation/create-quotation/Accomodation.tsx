@@ -19,7 +19,7 @@ import IconAtom from '../../../../atoms/IconAtom';
 import H2Atom from '../../../../atoms/H2Atom';
 import { selectWith2NavbarHeight, selectWith2NavbarWidth } from '../../../../redux/containerSizeSlice';
 import { db } from '../../../../firebase';
-import { FlexDirection, LibraryAccomodation } from '../../../../utils/types';
+import { FlexDirection, UserAccomodation } from '../../../../utils/types';
 import { widthHeightDynamicStyle } from '../../../../utils/helpers';
 import {
   fetchingDataIndicatorStyles,
@@ -30,7 +30,8 @@ function Accomodation() {
   const height = useSelector(selectWith2NavbarHeight);
   const width = useSelector(selectWith2NavbarWidth);
 
-  const [accomodationData, setAccomodationData] = useState<LibraryAccomodation[]>([]);
+  const [accomodationData, setAccomodationData] = useState<UserAccomodation[]>([]);
+  const [selectedAccomodations, setSelectedAccomodations] = useState<UserAccomodation[]>([]);
 
   const [search, setSearch] = useState('');
 
@@ -45,17 +46,42 @@ function Accomodation() {
         data[i].id = id;
       });
 
-      setAccomodationData(data as LibraryAccomodation[]);
+      const selectedAccomodationsCopy = [...data as UserAccomodation[]];
+      selectedAccomodationsCopy.forEach((acc) => {
+        const roomTypes = Object.keys(acc.categoryValues).map((cat) => ({ value: cat, label: cat }));
+        const mealPlanOptions = acc.rates.map((rate) => rate.newMealPlan).map((rate) => ({ value: rate, label: rate }));
+        acc.nights = '0';
+        acc.roomType = roomTypes[0].value;
+        acc.mealPlan = mealPlanOptions[0].value;
+      });
+
+      localStorage.setItem('New Quote Accomodation', JSON.stringify({
+        selectedAccomodations: selectedAccomodationsCopy,
+      }));
+
+      // Temporary until search bar is done
+      setSelectedAccomodations(selectedAccomodationsCopy);
+      setAccomodationData(data as UserAccomodation[]);
     };
 
     getInitialData();
   }, []);
 
-  const deleteAccomodation = (acc: LibraryAccomodation) => {
-    const removeIndex = accomodationData.findIndex((ac) => ac.id === acc.id);
-    const tempAccomodation = [...accomodationData];
+  const deleteAccomodation = (acc: UserAccomodation) => {
+    const removeIndex = selectedAccomodations.findIndex((ac) => ac.id === acc.id);
+    const tempAccomodation = [...selectedAccomodations];
     tempAccomodation.splice(removeIndex, 1);
-    setAccomodationData(tempAccomodation);
+
+    // Temporary until search bar is done
+    // setSelectedAccomodations(tempAccomodation);
+  };
+
+  const continueToCosting = () => {
+    localStorage.setItem('New Quote Accomodation', JSON.stringify({
+      selectedAccomodations,
+    }));
+
+    history.replace('/quote/quotations/create/costing');
   };
 
   return (
@@ -131,7 +157,7 @@ function Accomodation() {
                 style={{ padding: '0.2rem' }}
               />
             </DivAtom>
-            {accomodationData.length > 0 && (
+            {selectedAccomodations.length > 0 && (
               <AccomodationTable
                 columns={[
                   'LOCATION',
@@ -145,7 +171,7 @@ function Accomodation() {
                   '',
                 ]}
                 deleteAccomodation={deleteAccomodation}
-                data={accomodationData}
+                data={selectedAccomodations}
               />
             )}
           </DivAtom>
@@ -161,7 +187,7 @@ function Accomodation() {
               size="large"
               text="Continue"
               disabled={accomodationData.length === 0}
-              onClick={() => history.replace('/quote/quotations/create/costing')}
+              onClick={continueToCosting}
               style={{
                 ...quoteCreateQuoteStyles.addBtn,
                 width: widthHeightDynamicStyle(width, 768, '100%', '18%'),

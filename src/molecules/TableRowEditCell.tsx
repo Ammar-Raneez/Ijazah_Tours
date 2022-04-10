@@ -1,23 +1,27 @@
-import { TableCell } from '@material-ui/core';
+import { FormControl, TableCell } from '@material-ui/core';
 
+import InputAtom from '../atoms/InputAtom';
 import TextFieldAtom from '../atoms/TextFieldAtom';
 import { libraryStyles } from '../styles';
-import FormControlInput from './FormControlInput';
 
 interface TableRowEditCellProps {
   value: string;
+  type: string;
   select: boolean;
   align: 'left' | 'center' | 'right';
   options?: any;
-  setValue?: any;
+  onSelectChange?: (val: string, type: string) => void;
+  onCountChange?: (val: string) => void;
 }
 
 function TableRowEditCell({
   value,
+  type,
   select,
   options,
   align,
-  setValue,
+  onSelectChange,
+  onCountChange,
 }: TableRowEditCellProps) {
   return select ? (
     <TableCell align={align}>
@@ -26,7 +30,7 @@ function TableRowEditCell({
         size="medium"
         label=""
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(e) => onSelectChange && onSelectChange(e.target.value, type)!}
         options={options}
         adornmentPosition="end"
         style={{
@@ -39,18 +43,18 @@ function TableRowEditCell({
     </TableCell>
   ) : (
     <TableCell align={align}>
-      <FormControlInput
-        flex={1}
-        type="number"
-        label=""
-        fullWidth
-        multiline={false}
-        rows={1}
-        value={value}
-        setValue={setValue}
-        placeholder=""
-        margin="0"
-      />
+      <FormControl>
+        <InputAtom
+          plain="true"
+          fullWidth
+          multiline={false}
+          rows={1}
+          value={value}
+          type="number"
+          onChange={(e) => onCountChange && onCountChange(e.target.value)}
+          placeholder=""
+        />
+      </FormControl>
     </TableCell>
   );
 }
