@@ -83,7 +83,7 @@ function Approval({ setCreated }: ApprovalProps) {
     setChildren(customerDetails[8]);
     setUserId(customerDetails[9]);
 
-    const costDetails = JSON.parse(localStorage.getItem('Create Quote Costing')!);
+    const costDetails = JSON.parse(localStorage.getItem('New Quote Costing')!);
     setSellingPrice(costDetails.sellingPrice);
     setDiscount(costDetails.discount);
     setNetPrice(costDetails.netPrice);
