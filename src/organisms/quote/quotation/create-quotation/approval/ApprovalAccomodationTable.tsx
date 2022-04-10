@@ -37,7 +37,6 @@ function ApprovalAccomodationTable({
   columns,
 }: ApprovalAccomodationTableProps) {
   const width = useSelector(selectWith2NavbarWidth);
-
   const classes = useStyles();
 
   return (
@@ -57,37 +56,50 @@ function ApprovalAccomodationTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row) => (
-            <TableRow key={uuid()}>
-              <TableRowTextCell
-                key={uuid()}
-                cell={{
-                  align: 'center',
-                  title: row.nights,
-                  colors: ['#464E5F'],
-                  weight: 400,
-                }}
-              />
-              <TableRowTextCell
-                key={uuid()}
-                cell={{
-                  align: 'center',
-                  title: row.name,
-                  colors: ['#464E5F'],
-                  weight: 400,
-                }}
-              />
-              <TableRowTextCell
-                key={uuid()}
-                cell={{
-                  align: 'center',
-                  title: row.roomType,
-                  colors: ['#464E5F'],
-                  weight: 400,
-                }}
-              />
-            </TableRow>
-          ))}
+          {data.map((row) => {
+            const roomView = row.views.find((view) => view.checked);
+
+            return (
+              <TableRow key={uuid()}>
+                <TableRowTextCell
+                  key={uuid()}
+                  cell={{
+                    align: 'center',
+                    title: row.nights,
+                    colors: ['#464E5F'],
+                    weight: 400,
+                  }}
+                />
+                <TableRowTextCell
+                  key={uuid()}
+                  cell={{
+                    align: 'center',
+                    title: row.name,
+                    colors: ['#464E5F'],
+                    weight: 400,
+                  }}
+                />
+                <TableRowTextCell
+                  key={uuid()}
+                  cell={{
+                    align: 'center',
+                    title: row.roomType,
+                    colors: ['#464E5F'],
+                    weight: 400,
+                  }}
+                />
+                <TableRowTextCell
+                  key={uuid()}
+                  cell={{
+                    align: 'center',
+                    title: roomView ? roomView.val : 'None',
+                    colors: ['#464E5F'],
+                    weight: 400,
+                  }}
+                />
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </TableContainer>

@@ -19,10 +19,11 @@ import IconAtom from '../../../../atoms/IconAtom';
 import ButtonAtom from '../../../../atoms/ButtonAtom';
 import { selectWith2NavbarHeight, selectWith2NavbarWidth } from '../../../../redux/containerSizeSlice';
 import { db } from '../../../../firebase';
-import { QuotationCostingRate } from '../../../../utils/types';
+import { QuotationCostingRate, UserAccomodation } from '../../../../utils/types';
 import { getDaysDifference, uploadPDF, widthHeightDynamicStyle } from '../../../../utils/helpers';
 import { QUOTATIONS_COSTING_RATE_DATA } from '../../../../data';
-import { approvalStyles, quoteCreateQuoteStyles } from '../../../../styles';
+import { approvalStyles, fetchingDataIndicatorStyles, quoteCreateQuoteStyles } from '../../../../styles';
+import ApprovalAccomodationTable from '../../../../organisms/quote/quotation/create-quotation/approval/ApprovalAccomodationTable';
 
 const storage = getStorage();
 
@@ -35,6 +36,7 @@ function Approval({ setCreated }: ApprovalProps) {
   const width = useSelector(selectWith2NavbarWidth);
 
   const [rateData, setRateData] = useState<QuotationCostingRate[]>([]);
+  const [accomodationData, setAccomodationData] = useState<UserAccomodation[]>();
 
   // Customer details
   const [refNum, setRefNum] = useState('');
@@ -69,6 +71,11 @@ function Approval({ setCreated }: ApprovalProps) {
     const customerDetails = JSON.parse(
       localStorage.getItem('New Quote Customer')!,
     ).data[0];
+    const accomodationDetails: UserAccomodation[] = JSON.parse(
+      localStorage.getItem('New Quote Accomodation')!,
+    ).selectedAccomodations;
+
+    setAccomodationData(accomodationDetails);
 
     const daysDifference = getDaysDifference(customerDetails[6], customerDetails[5]);
     setVoucherNo('2');
@@ -155,105 +162,115 @@ function Approval({ setCreated }: ApprovalProps) {
 
   const getSaveQuoteOffers = (val: boolean) => (val ? 'Yes' : 'No');
 
+  const OffersContainer = () => (!isSavingQuote ? (
+    <Offers
+      roomAndBreakfast={roomAndBreakfast}
+      receptionAtAirport={receptionAtAirport}
+      allGovernmentTaxes={allGovernmentTaxes}
+      guideAndCar={guideAndCar}
+      setRoomAndBreakfast={setRoomAndBreakfast}
+      setReceptionAtAirport={setReceptionAtAirport}
+      setAllGovernmentTaxes={setAllGovernmentTaxes}
+      setGuideAndCar={setGuideAndCar}
+    />
+  ) : (
+    <DivAtom style={approvalStyles.offers.container}>
+      <ParagraphAtom style={approvalStyles.titleText} text="This offer includes:" />
+      <ul>
+        <li>Room and Breakfast in the hotel: {getSaveQuoteOffers(roomAndBreakfast)}</li>
+        <li>Reception at Airport: {getSaveQuoteOffers(receptionAtAirport)}</li>
+        <li>All Government Taxes: {getSaveQuoteOffers(allGovernmentTaxes)}</li>
+        <li>
+          Guide and the Car.
+          Transportation from Reception to Fairwell, (Throught the Trip): {getSaveQuoteOffers(guideAndCar)}
+        </li>
+      </ul>
+    </DivAtom>
+  ));
+
   return (
     <DivAtom style={{ height: `${height}px` }}>
-      <div id="report">
-        <DivAtom style={{ padding: '2rem' }}>
-          <Banner />
-          <GuestDetails
-            name={`${firstName} ${lastName}`}
-            nationality={nationality}
-            adults={adults}
-            voucherNo={voucherNo}
-            arrival={arrival}
-            departure={departure}
-            daysAndNights={daysAndNights}
-            children={children}
-          />
-          <DivAtom style={quoteCreateQuoteStyles.tableContainer}>
-            {showRateContainer && QUOTATIONS_COSTING_RATE_DATA.length > 0 && (
-              <>
-                <DivAtom style={approvalStyles.rates.titleContainer}>
-                  <IconAtom
-                    onClick={removeRateContainer}
-                    style={{ padding: '8px' }}
-                    size="small"
-                    children={<CloseIcon style={{ color: 'black' }} />}
-                  />
-                  <ParagraphAtom style={approvalStyles.titleText} text="Rate Comparison" />
-                </DivAtom>
-                <ApprovalRateComparisonTable
-                  columns={[
-                    'Dates',
-                    'Accomodation',
-                    'Booking Engine',
-                    'Rate',
-                    '',
-                  ]}
-                  deleteRate={deleteRate}
-                  data={rateData}
-                />
-              </>
-            )}
-          </DivAtom>
-          {/* {QUOTATIONS_COSTING_ACCOMODATION_DATA.length > 0 && (
-            <DivAtom style={{ marginTop: '1rem', ...quoteCreateQuoteStyles.tableContainer }}>
-              <ApprovalAccomodationTable
-                columns={[
-                  'Nights',
-                  'Accomodation',
-                  'Room Type',
-                  'Room View',
-                ]}
-                data={QUOTATIONS_COSTING_ACCOMODATION_DATA as CostingAccomodation[]}
+      {(accomodationData && rateData) ? (
+        <>
+          <div id="report">
+            <DivAtom style={{ padding: '2rem' }}>
+              <Banner />
+              <GuestDetails
+                name={`${firstName} ${lastName}`}
+                nationality={nationality}
+                adults={adults}
+                voucherNo={voucherNo}
+                arrival={arrival}
+                departure={departure}
+                daysAndNights={daysAndNights}
+                children={children}
               />
+              <DivAtom style={quoteCreateQuoteStyles.tableContainer}>
+                {showRateContainer && rateData.length > 0 && (
+                  <>
+                    <DivAtom style={approvalStyles.rates.titleContainer}>
+                      <IconAtom
+                        onClick={removeRateContainer}
+                        style={{ padding: '8px' }}
+                        size="small"
+                        children={<CloseIcon style={{ color: 'black' }} />}
+                      />
+                      <ParagraphAtom style={approvalStyles.titleText} text="Rate Comparison" />
+                    </DivAtom>
+                    <ApprovalRateComparisonTable
+                      columns={[
+                        'Dates',
+                        'Accomodation',
+                        'Booking Engine',
+                        'Rate',
+                        '',
+                      ]}
+                      deleteRate={deleteRate}
+                      data={rateData}
+                    />
+                  </>
+                )}
+              </DivAtom>
+              {accomodationData.length > 0 && (
+                <DivAtom style={{ marginTop: '1rem', ...quoteCreateQuoteStyles.tableContainer }}>
+                  <ApprovalAccomodationTable
+                    columns={[
+                      'Nights',
+                      'Accomodation',
+                      'Room Type',
+                      'Room View',
+                    ]}
+                    data={accomodationData}
+                  />
+                </DivAtom>
+              )}
+              <ApprovalOverallCost
+                sellingPrice={sellingPrice}
+                discount={discount}
+                netPrice={netPrice}
+              />
+              <OffersContainer />
             </DivAtom>
-          )} */}
-          <ApprovalOverallCost
-            sellingPrice={sellingPrice}
-            discount={discount}
-            netPrice={netPrice}
-          />
-          {!isSavingQuote ? (
-            <Offers
-              roomAndBreakfast={roomAndBreakfast}
-              receptionAtAirport={receptionAtAirport}
-              allGovernmentTaxes={allGovernmentTaxes}
-              guideAndCar={guideAndCar}
-              setRoomAndBreakfast={setRoomAndBreakfast}
-              setReceptionAtAirport={setReceptionAtAirport}
-              setAllGovernmentTaxes={setAllGovernmentTaxes}
-              setGuideAndCar={setGuideAndCar}
-            />
-          ) : (
-            <DivAtom style={approvalStyles.offers.container}>
-              <ParagraphAtom style={approvalStyles.titleText} text="This offer includes:" />
-              <ul>
-                <li>Room and Breakfast in the hotel: {getSaveQuoteOffers(roomAndBreakfast)}</li>
-                <li>Reception at Airport: {getSaveQuoteOffers(receptionAtAirport)}</li>
-                <li>All Government Taxes: {getSaveQuoteOffers(allGovernmentTaxes)}</li>
-                <li>
-                  Guide and the Car.
-                  Transportation from Reception to Fairwell, (Throught the Trip): {getSaveQuoteOffers(guideAndCar)}
-                </li>
-              </ul>
-            </DivAtom>
-          )}
-        </DivAtom>
-      </div>
+          </div>
 
-      <ButtonAtom
-        size="large"
-        text="Save"
-        endIcon={isSavingQuote && <CircularProgress size={20} color="inherit" />}
-        disabled={isSavingQuote}
-        onClick={saveUserQuotation}
-        style={{
-          ...quoteCreateQuoteStyles.addBtn,
-          width: widthHeightDynamicStyle(width, 768, '100%', '18%'),
-          margin: '0 0 1rem 2rem',
-        }}
-      />
+          <ButtonAtom
+            size="large"
+            text="Save"
+            endIcon={isSavingQuote && <CircularProgress size={20} color="inherit" />}
+            disabled={isSavingQuote}
+            onClick={saveUserQuotation}
+            style={{
+              ...quoteCreateQuoteStyles.addBtn,
+              width: widthHeightDynamicStyle(width, 768, '100%', '18%'),
+              margin: '0 0 1rem 2rem',
+            }}
+          />
+        </>
+      ) : (
+        <DivAtom style={fetchingDataIndicatorStyles.container}>
+          <CircularProgress size={20} color="primary" />
+        </DivAtom>
+      )}
     </DivAtom>
   );
 }
