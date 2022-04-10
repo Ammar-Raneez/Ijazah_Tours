@@ -104,7 +104,7 @@ function CostingAccomodationTable({
                 key={uuid()}
                 cell={{
                   align: 'center',
-                  title: row.roomRate,
+                  title: row.mealPlan,
                   colors: ['#464E5F'],
                   weight: 400,
                 }}
@@ -113,7 +113,7 @@ function CostingAccomodationTable({
                 key={uuid()}
                 cell={{
                   align: 'center',
-                  title: row.mealPlan,
+                  title: row.roomRate,
                   colors: ['#464E5F'],
                   weight: 400,
                 }}

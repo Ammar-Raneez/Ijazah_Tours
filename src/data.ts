@@ -1,39 +1,3 @@
-export const QUOTATIONS_ACCOMODATION_DATA = [
-  {
-    id: '1',
-    location: 'L1',
-    nights: '2',
-    category: 'Hotel',
-    accomodation: 'Hilton',
-    pax: 'Single',
-    roomType: 'Diluxe',
-    mealPlan: 'FB',
-    city: 'Colombo',
-  },
-  {
-    id: '2',
-    location: 'L1',
-    nights: '2',
-    category: 'Hotel',
-    accomodation: 'Hilton',
-    pax: 'Single',
-    roomType: 'Mega',
-    mealPlan: 'FB',
-    city: 'Colombo',
-  },
-  {
-    id: '3',
-    location: 'L1',
-    nights: '2',
-    category: 'Hotel',
-    accomodation: 'Hilton',
-    pax: 'Single',
-    roomType: 'Suite',
-    mealPlan: 'FB',
-    city: 'Colombo',
-  },
-];
-
 export const QUOTATIONS_COSTING_ACCOMODATION_DATA = [
   {
     location: 'L1',

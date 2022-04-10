@@ -123,8 +123,8 @@ function Costing() {
                 'ACCOMODATION',
                 'PAX',
                 'ROOM TYPE',
-                'ROOM RATE',
                 'MEAL PLAN',
+                'ROOM RATE',
                 'TOTAL',
               ]}
               accTotal={accomodationTotal}
