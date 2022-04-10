@@ -4,6 +4,7 @@ import {
 } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { CircularProgress } from '@material-ui/core';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
 import { doc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { v4 as uuid } from 'uuid';
@@ -20,7 +21,7 @@ import {
   LibraryAccomodation,
   SettingsRoomProperties,
 } from '../../../utils/types';
-import { libraryAccomodationStyles } from '../../../styles';
+import { fetchingDataIndicatorStyles, libraryAccomodationStyles } from '../../../styles';
 
 interface EditAccomodationProps {
   row: LibraryAccomodation;
@@ -183,59 +184,65 @@ function EditAccomodation({
         />
       </DivAtom>
 
-      <CreateEditAccomodationForm
-        isCreating={isUpdating}
-        accomodationTypeData={accomodationTypeData}
-        allRoomTypes={roomCategoriesData}
-        allRoomViews={roomViewData}
-        allRoomGradings={roomGradingsData}
-        deleteRate={deleteRate}
-        rateData={rateData}
-        width={width}
-        btnText="Update"
-        showValidationErrorMessage={showValidationErrorMessage}
-        location={location}
-        accomodationType={accomodationType}
-        city={city}
-        group={group}
-        name={name}
-        contactNumber={contactNumber}
-        email={email}
-        webLink={webLink}
-        ijazahLink={ijazahLink}
-        newRateStart={newRateStart}
-        newRateEnd={newRateEnd}
-        newMealPlan={newMealPlan}
-        newSinglePrice={newSinglePrice}
-        newDoublePrice={newDoublePrice}
-        newTriplePrice={newTriplePrice}
-        selectedTypes={selectedTypes}
-        roomCategories={roomCategories}
-        roomViews={roomViews}
-        roomGradings={roomGradings}
-        selectedTypeValues={selectedTypeValues}
-        addRoomCategory={addRoomCategory}
-        addRoomView={addRoomView}
-        addRoomGradings={addRoomGradings}
-        onSetSelectedTypeValue={onSetSelectedTypeValue}
-        onCreateRate={onCreateRate}
-        onAddEditAccomodation={onEditAccomodation}
-        setAccomodationType={setAccomodationType}
-        setLocation={setLocation}
-        setCity={setCity}
-        setGroup={setGroup}
-        setName={setName}
-        setContactNumber={setContactNumber}
-        setEmail={setEmail}
-        setWebLink={setWebLink}
-        setIjazahLink={setIjazahLink}
-        setNewRateStart={setNewRateStart}
-        setNewRateEnd={setNewRateEnd}
-        setNewMealPlan={setNewMealPlan}
-        setNewSinglePrice={setNewSinglePrice}
-        setNewDoublePrice={setNewDoublePrice}
-        setNewTriplePrice={setNewTriplePrice}
-      />
+      {(accomodationTypeData && roomCategoriesData && roomViewData && roomGradingsData) ? (
+        <CreateEditAccomodationForm
+          isCreating={isUpdating}
+          accomodationTypeData={accomodationTypeData}
+          allRoomTypes={roomCategoriesData}
+          allRoomViews={roomViewData}
+          allRoomGradings={roomGradingsData}
+          deleteRate={deleteRate}
+          rateData={rateData}
+          width={width}
+          btnText="Update"
+          showValidationErrorMessage={showValidationErrorMessage}
+          location={location}
+          accomodationType={accomodationType}
+          city={city}
+          group={group}
+          name={name}
+          contactNumber={contactNumber}
+          email={email}
+          webLink={webLink}
+          ijazahLink={ijazahLink}
+          newRateStart={newRateStart}
+          newRateEnd={newRateEnd}
+          newMealPlan={newMealPlan}
+          newSinglePrice={newSinglePrice}
+          newDoublePrice={newDoublePrice}
+          newTriplePrice={newTriplePrice}
+          selectedTypes={selectedTypes}
+          roomCategories={roomCategories}
+          roomViews={roomViews}
+          roomGradings={roomGradings}
+          selectedTypeValues={selectedTypeValues}
+          addRoomCategory={addRoomCategory}
+          addRoomView={addRoomView}
+          addRoomGradings={addRoomGradings}
+          onSetSelectedTypeValue={onSetSelectedTypeValue}
+          onCreateRate={onCreateRate}
+          onAddEditAccomodation={onEditAccomodation}
+          setAccomodationType={setAccomodationType}
+          setLocation={setLocation}
+          setCity={setCity}
+          setGroup={setGroup}
+          setName={setName}
+          setContactNumber={setContactNumber}
+          setEmail={setEmail}
+          setWebLink={setWebLink}
+          setIjazahLink={setIjazahLink}
+          setNewRateStart={setNewRateStart}
+          setNewRateEnd={setNewRateEnd}
+          setNewMealPlan={setNewMealPlan}
+          setNewSinglePrice={setNewSinglePrice}
+          setNewDoublePrice={setNewDoublePrice}
+          setNewTriplePrice={setNewTriplePrice}
+        />
+      ) : (
+        <DivAtom style={fetchingDataIndicatorStyles.container}>
+          <CircularProgress size={20} color="primary" />
+        </DivAtom>
+      )}
     </DivAtom>
   );
 }

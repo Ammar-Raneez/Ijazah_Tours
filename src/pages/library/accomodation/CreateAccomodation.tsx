@@ -130,6 +130,7 @@ function CreateAccomodation({
       gradings,
       accomodationType,
       country: location,
+      categories: roomCategories,
       categoryValues: selectedTypeValues,
       tel: contactNumber,
       rates: rateData,
