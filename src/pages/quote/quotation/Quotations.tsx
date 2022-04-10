@@ -113,7 +113,7 @@ function Quotations() {
               height: `${height}px`,
             }}
           >
-            {quotationsData ? (
+            {(quotationsData && initialQuotationCardData) ? (
               <>
                 <DivAtom
                   style={{
