@@ -89,6 +89,13 @@ export const searchData = (search: string, initialData: any, setter: any) => {
   }
 };
 
+export const getDaysDifference = (a: string, b: string) => {
+  const dateA = new Date(a);
+  const dateB = new Date(b);
+  const difference = dateA.getTime() - dateB.getTime();
+  return Math.ceil(difference / (1000 * 3600 * 24));
+};
+
 export const statusOptions = [
   { label: 'ACTIVE', value: 'ACTIVE' },
   { label: 'INACTIVE', value: 'INACTIVE' },

@@ -10,7 +10,6 @@ import JSPDF from 'jspdf';
 
 import Banner from '../../../../organisms/quote/quotation/create-quotation/approval/Banner';
 import ApprovalRateComparisonTable from '../../../../organisms/quote/quotation/create-quotation/approval/ApprovalRateComparisonTable';
-import ApprovalAccomodationTable from '../../../../organisms/quote/quotation/create-quotation/approval/ApprovalAccomodationTable';
 import ApprovalOverallCost from '../../../../organisms/quote/quotation/create-quotation/approval/ApprovalOverallCost';
 import GuestDetails from '../../../../organisms/quote/quotation/create-quotation/approval/GuestDetails';
 import Offers from '../../../../organisms/quote/quotation/create-quotation/approval/Offers';
@@ -19,10 +18,10 @@ import ParagraphAtom from '../../../../atoms/ParagraphAtom';
 import IconAtom from '../../../../atoms/IconAtom';
 import ButtonAtom from '../../../../atoms/ButtonAtom';
 import { selectWith2NavbarHeight, selectWith2NavbarWidth } from '../../../../redux/containerSizeSlice';
-import { QuotationCostingAccomodation, QuotationCostingRate } from '../../../../utils/types';
-import { QUOTATIONS_COSTING_ACCOMODATION_DATA, QUOTATIONS_COSTING_RATE_DATA } from '../../../../data';
 import { db } from '../../../../firebase';
-import { uploadPDF, widthHeightDynamicStyle } from '../../../../utils/helpers';
+import { QuotationCostingRate } from '../../../../utils/types';
+import { getDaysDifference, uploadPDF, widthHeightDynamicStyle } from '../../../../utils/helpers';
+import { QUOTATIONS_COSTING_RATE_DATA } from '../../../../data';
 import { approvalStyles, quoteCreateQuoteStyles } from '../../../../styles';
 
 const storage = getStorage();
@@ -71,8 +70,9 @@ function Approval({ setCreated }: ApprovalProps) {
       localStorage.getItem('New Quote Customer')!,
     ).data[0];
 
+    const daysDifference = getDaysDifference(customerDetails[6], customerDetails[5]);
     setVoucherNo('2');
-    setDaysAndNights('3-2');
+    setDaysAndNights(`${daysDifference + 1} - ${daysDifference}`);
     setRefNum(customerDetails[0]);
     setFirstName(customerDetails[1]);
     setLastName(customerDetails[2]);
@@ -196,7 +196,7 @@ function Approval({ setCreated }: ApprovalProps) {
               </>
             )}
           </DivAtom>
-          {QUOTATIONS_COSTING_ACCOMODATION_DATA.length > 0 && (
+          {/* {QUOTATIONS_COSTING_ACCOMODATION_DATA.length > 0 && (
             <DivAtom style={{ marginTop: '1rem', ...quoteCreateQuoteStyles.tableContainer }}>
               <ApprovalAccomodationTable
                 columns={[
@@ -205,10 +205,10 @@ function Approval({ setCreated }: ApprovalProps) {
                   'Room Type',
                   'Room View',
                 ]}
-                data={QUOTATIONS_COSTING_ACCOMODATION_DATA as QuotationCostingAccomodation[]}
+                data={QUOTATIONS_COSTING_ACCOMODATION_DATA as CostingAccomodation[]}
               />
             </DivAtom>
-          )}
+          )} */}
           <ApprovalOverallCost
             sellingPrice={sellingPrice}
             discount={discount}

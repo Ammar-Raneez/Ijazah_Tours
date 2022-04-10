@@ -51,9 +51,9 @@ function Accomodation() {
         const roomTypes = Object.keys(acc.categoryValues).map((cat) => ({ value: cat, label: cat }));
         const mealPlanOptions = acc.rates.map((rate) => rate.newMealPlan).map((rate) => ({ value: rate, label: rate }));
         acc.nights = '0';
-        acc.roomRate = '$50';
-        acc.total = '$150';
-        acc.pax = 'Single';
+        acc.roomRate = '$50'; // do calculation
+        acc.total = '$150'; // do calculation
+        acc.pax = 'Single'; // do calculation
         acc.roomType = roomTypes[0].value;
         acc.mealPlan = mealPlanOptions[0].value;
       });
