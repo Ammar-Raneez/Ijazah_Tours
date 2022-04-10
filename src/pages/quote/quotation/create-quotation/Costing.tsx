@@ -12,7 +12,7 @@ import ParagraphAtom from '../../../../atoms/ParagraphAtom';
 import ButtonAtom from '../../../../atoms/ButtonAtom';
 import { selectWith2NavbarHeight, selectWith2NavbarWidth } from '../../../../redux/containerSizeSlice';
 import { QuotationCostingAccomodation, QuotationCostingRate } from '../../../../utils/types';
-import { mealPlanOptions, roomTypes, widthHeightDynamicStyle } from '../../../../utils/helpers';
+import { widthHeightDynamicStyle } from '../../../../utils/helpers';
 import { QUOTATIONS_COSTING_ACCOMODATION_DATA, QUOTATIONS_COSTING_RATE_DATA } from '../../../../data';
 import { quoteCreateQuoteStyles } from '../../../../styles';
 import IconAtom from '../../../../atoms/IconAtom';
@@ -63,7 +63,7 @@ function Costing() {
 
   const saveCost = () => {
     localStorage.setItem(
-      'Create Quote Costing',
+      'New Quote Costing',
       JSON.stringify({
         discount,
         netPrice,
@@ -128,8 +128,6 @@ function Costing() {
                 'TOTAL',
               ]}
               accTotal={accomodationTotal}
-              mealPlanOptions={mealPlanOptions}
-              roomTypes={roomTypes}
               data={QUOTATIONS_COSTING_ACCOMODATION_DATA as QuotationCostingAccomodation[]}
             />
           </>

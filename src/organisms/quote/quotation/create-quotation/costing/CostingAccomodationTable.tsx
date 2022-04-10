@@ -11,7 +11,6 @@ import {
 import { v4 as uuid } from 'uuid';
 
 import TableColumnCell from '../../../../../molecules/TableColumnCell';
-import TableRowEditCell from '../../../../../molecules/TableRowEditCell';
 import TableRowTextCell from '../../../../../molecules/TableRowTextCell';
 import { QuotationCostingAccomodation } from '../../../../../utils/types';
 
@@ -29,16 +28,12 @@ interface CostingAccomodationTableProps {
   data: QuotationCostingAccomodation[];
   columns: string[];
   accTotal: string;
-  mealPlanOptions: any;
-  roomTypes: any;
 }
 
 function CostingAccomodationTable({
   data,
   columns,
   accTotal,
-  mealPlanOptions,
-  roomTypes,
 }: CostingAccomodationTableProps) {
   const classes = useStyles();
 
@@ -96,12 +91,14 @@ function CostingAccomodationTable({
                   weight: 400,
                 }}
               />
-              <TableRowEditCell
+              <TableRowTextCell
                 key={uuid()}
-                select
-                value={row.roomType}
-                options={roomTypes}
-                align="center"
+                cell={{
+                  align: 'center',
+                  title: row.roomType,
+                  colors: ['#464E5F'],
+                  weight: 400,
+                }}
               />
               <TableRowTextCell
                 key={uuid()}
@@ -112,12 +109,14 @@ function CostingAccomodationTable({
                   weight: 400,
                 }}
               />
-              <TableRowEditCell
+              <TableRowTextCell
                 key={uuid()}
-                select
-                value={row.mealPlan}
-                options={mealPlanOptions}
-                align="center"
+                cell={{
+                  align: 'center',
+                  title: row.mealPlan,
+                  colors: ['#464E5F'],
+                  weight: 400,
+                }}
               />
               <TableRowTextCell
                 key={uuid()}
