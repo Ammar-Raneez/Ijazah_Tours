@@ -35,8 +35,8 @@ interface AccomodationTableProps {
 }
 
 function AccomodationTable({
-  data,
   columns,
+  data,
   deleteAccomodation,
 }: AccomodationTableProps) {
   const classes = useStyles();
@@ -57,7 +57,7 @@ function AccomodationTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row) => {
+          {data?.map((row) => {
             const [roomTypes] = useState(
               Object.keys(row.categoryValues).map((cat) => ({ value: cat, label: cat })),
             );

@@ -34,6 +34,8 @@ function Accomodation() {
   const [selectedAccomodations, setSelectedAccomodations] = useState<UserAccomodation[]>([]);
 
   const [search, setSearch] = useState('');
+  const [removedAcc, setRemovedAcc] = useState(false);
+  const [addedAcc, setAddedAcc] = useState(false);
 
   const [showValidationErrorMessage, setShowValidationErrorMessage] = useState(false);
   const [validationNightsRequired, setValidationNightssRequired] = useState(0);
@@ -49,37 +51,65 @@ function Accomodation() {
         data[i].id = id;
       });
 
-      const selectedAccomodationsCopy = [...data as UserAccomodation[]];
-      selectedAccomodationsCopy.forEach((acc) => {
-        const roomTypes = Object.keys(acc.categoryValues).map((cat) => ({ value: cat, label: cat }));
-        const mealPlanOptions = acc.rates.map((rate) => rate.newMealPlan).map((rate) => ({ value: rate, label: rate }));
-        acc.nights = '1';
-        acc.roomRate = '$50'; // do calculation
-        acc.total = '$150'; // do calculation
-        acc.pax = 'Single'; // do calculation
-        acc.roomType = roomTypes[0].value;
-        acc.mealPlan = mealPlanOptions[0].value;
-      });
+      if (localStorage.getItem('New Quote Accomodation')) {
+        setSelectedAccomodations(
+          JSON.parse(
+            localStorage.getItem('New Quote Accomodation')!,
+          ).selectedAccomodations as UserAccomodation[],
+        );
+      }
 
-      localStorage.setItem('New Quote Accomodation', JSON.stringify({
-        selectedAccomodations: selectedAccomodationsCopy,
-      }));
-
-      // Temporary until search bar is done
-      setSelectedAccomodations(selectedAccomodationsCopy);
       setAccomodationData(data as UserAccomodation[]);
     };
 
     getInitialData();
-  }, []);
+  }, [addedAcc, removedAcc]);
+
+  const addAccomodation = (acc: UserAccomodation) => {
+    setAddedAcc(false);
+    const roomTypes = Object.keys(acc.categoryValues)
+      .map((cat) => ({ value: cat, label: cat }));
+
+    const mealPlanOptions = acc.rates
+      .map((rate) => rate.newMealPlan)
+      .map((rate) => ({ value: rate, label: rate }));
+
+    acc.nights = '1';
+    acc.roomRate = '$50'; // do calculation
+    acc.total = '$150'; // do calculation
+    acc.pax = 'Single'; // do calculation
+    acc.roomType = roomTypes[0].value;
+    acc.mealPlan = mealPlanOptions[0].value;
+
+    if (localStorage.getItem('New Quote Accomodation')) {
+      const addedAccomodations = JSON.parse(
+        localStorage.getItem('New Quote Accomodation')!,
+      ).selectedAccomodations as UserAccomodation[];
+
+      addedAccomodations.push(acc);
+      localStorage.setItem('New Quote Accomodation', JSON.stringify({
+        selectedAccomodations: addedAccomodations,
+      }));
+    } else {
+      const accomodations = [acc];
+      localStorage.setItem('New Quote Accomodation', JSON.stringify({
+        selectedAccomodations: accomodations,
+      }));
+    }
+
+    setAddedAcc(true);
+  };
 
   const deleteAccomodation = (acc: UserAccomodation) => {
+    setRemovedAcc(false);
     const removeIndex = selectedAccomodations.findIndex((ac) => ac.id === acc.id);
     const tempAccomodation = [...selectedAccomodations];
     tempAccomodation.splice(removeIndex, 1);
+    localStorage.setItem('New Quote Accomodation', JSON.stringify({
+      selectedAccomodations: tempAccomodation,
+    }));
 
-    // Temporary until search bar is done
-    // setSelectedAccomodations(tempAccomodation);
+    setRemovedAcc(true);
   };
 
   const continueToCosting = () => {
@@ -142,7 +172,7 @@ function Accomodation() {
                   marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
                   width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
                 }}
-                onClick={() => null}
+                onClick={() => addAccomodation(accomodationData[0])}
                 size="large"
               />
               <ButtonAtom
@@ -153,7 +183,7 @@ function Accomodation() {
                   marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
                   width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
                 }}
-                onClick={() => null}
+                onClick={() => addAccomodation(accomodationData[1])}
                 size="large"
               />
               <ButtonAtom
