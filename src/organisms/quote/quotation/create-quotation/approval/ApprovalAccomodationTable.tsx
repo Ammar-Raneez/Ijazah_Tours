@@ -14,7 +14,7 @@ import { v4 as uuid } from 'uuid';
 import TableColumnCell from '../../../../../molecules/TableColumnCell';
 import TableRowTextCell from '../../../../../molecules/TableRowTextCell';
 import { selectWith2NavbarWidth } from '../../../../../redux/containerSizeSlice';
-import { QuotationCostingAccomodation } from '../../../../../utils/types';
+import { UserAccomodation } from '../../../../../utils/types';
 
 const useStyles = makeStyles((theme: Theme) => ({
   table: {
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface ApprovalAccomodationTableProps {
-  data: QuotationCostingAccomodation[];
+  data: UserAccomodation[];
   columns: string[];
 }
 
@@ -72,7 +72,7 @@ function ApprovalAccomodationTable({
                 key={uuid()}
                 cell={{
                   align: 'center',
-                  title: row.accomodation,
+                  title: row.name,
                   colors: ['#464E5F'],
                   weight: 400,
                 }}

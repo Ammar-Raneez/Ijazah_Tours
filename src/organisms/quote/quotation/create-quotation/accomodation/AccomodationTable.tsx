@@ -153,7 +153,7 @@ function AccomodationTable({
                   key={uuid()}
                   cell={{
                     align: 'center',
-                    title: 'single',
+                    title: row.pax,
                     colors: ['#464E5F'],
                     weight: 400,
                   }}

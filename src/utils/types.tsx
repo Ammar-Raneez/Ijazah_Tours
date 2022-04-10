@@ -66,23 +66,6 @@ export interface CustomerQuotation {
   status: CustomerQuoteStatus;
 }
 
-export interface QuotationAccomodation {
-  id: string;
-  location: string;
-  nights: string;
-  category: string;
-  accomodation: string;
-  pax: string;
-  roomType: string;
-  mealPlan: string;
-  city: string;
-}
-
-export interface QuotationCostingAccomodation extends QuotationAccomodation {
-  roomRate: string;
-  total: string;
-}
-
 export interface QuotationCostingRate {
   id: string;
   date: string;
@@ -169,6 +152,9 @@ export interface QuoteHeadCell extends TableHeadCell {}
 export interface LibraryHeadCell extends TableHeadCell {}
 export interface UserAccomodation extends LibraryAccomodation {
   nights: string;
+  pax: string;
   mealPlan: string;
   roomType: string;
+  roomRate: string;
+  total: string;
 }

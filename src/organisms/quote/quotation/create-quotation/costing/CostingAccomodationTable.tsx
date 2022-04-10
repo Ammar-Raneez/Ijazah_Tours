@@ -12,7 +12,7 @@ import { v4 as uuid } from 'uuid';
 
 import TableColumnCell from '../../../../../molecules/TableColumnCell';
 import TableRowTextCell from '../../../../../molecules/TableRowTextCell';
-import { QuotationCostingAccomodation } from '../../../../../utils/types';
+import { UserAccomodation } from '../../../../../utils/types';
 
 const useStyles = makeStyles((theme: Theme) => ({
   table: {
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface CostingAccomodationTableProps {
-  data: QuotationCostingAccomodation[];
+  data: UserAccomodation[];
   columns: string[];
   accTotal: string;
 }
@@ -59,7 +59,7 @@ function CostingAccomodationTable({
                 key={uuid()}
                 cell={{
                   align: 'center',
-                  title: row.location,
+                  title: row.country,
                   colors: ['#464E5F'],
                   weight: 400,
                 }}
@@ -77,7 +77,7 @@ function CostingAccomodationTable({
                 key={uuid()}
                 cell={{
                   align: 'center',
-                  title: row.accomodation,
+                  title: row.name,
                   colors: ['#464E5F'],
                   weight: 400,
                 }}
