@@ -27,6 +27,9 @@ function Quotations() {
   const width = useSelector(selectWithNavbarWidth);
 
   const [quotationsData, setQuotationsData] = useState<CustomerQuotation[]>();
+
+  // Keep multiple copies to not affect default states
+  const [initialQuotationCardData, setInitialQuotationCardData] = useState<CustomerQuotation[]>([]);
   const [initialQuotationSearchData, setInitialQuotationSearchData] = useState<CustomerQuotation[]>([]);
   const [initialQuotationFilteredData, setInitialQuotationFilteredData] = useState<CustomerQuotation[]>([]);
 
@@ -47,6 +50,7 @@ function Quotations() {
       });
 
       setQuotationsData(quotations as CustomerQuotation[]);
+      setInitialQuotationCardData(quotations as CustomerQuotation[]);
       setInitialQuotationSearchData(quotations as CustomerQuotation[]);
       setInitialQuotationFilteredData(quotations as CustomerQuotation[]);
     };
@@ -158,21 +162,21 @@ function Quotations() {
                     flexDirection: widthHeightDynamicStyle(width, 768, 'column', 'row') as FlexDirection,
                   }}
                 >
-                  <DataCard title="Total" total={quotationsData.length} />
+                  <DataCard title="Total" total={initialQuotationCardData.length} />
                   <DataCard
                     title="Approved"
-                    total={quotationsData.filter((quote) => quote.status === 'APPROVED').length}
+                    total={initialQuotationCardData.filter((quote) => quote.status === 'APPROVED').length}
                   />
                   <DataCard
                     title="Completed"
-                    total={quotationsData.filter((quote) => quote.status === 'COMPLETE').length}
+                    total={initialQuotationCardData.filter((quote) => quote.status === 'COMPLETE').length}
                     style={{
                       marginTop: widthHeightDynamicStyle(width, 900, '1rem', 0),
                     }}
                   />
                   <DataCard
                     title="In Progress"
-                    total={quotationsData.filter((quote) => quote.status === 'IN PROGRESS').length}
+                    total={initialQuotationCardData.filter((quote) => quote.status === 'IN PROGRESS').length}
                     style={{
                       marginTop: widthHeightDynamicStyle(width, 1400, '1rem', 0),
                     }}
