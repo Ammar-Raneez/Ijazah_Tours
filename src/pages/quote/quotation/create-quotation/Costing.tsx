@@ -48,7 +48,9 @@ function Costing() {
     ).selectedAccomodations;
 
     let accTotal = 0;
+    let transportDays = 0;
     data.forEach((acc) => {
+      transportDays += Number(acc.nights);
       accTotal += Number(acc.total.slice(1, acc.total.length));
     });
 
@@ -57,13 +59,14 @@ function Costing() {
     const priceTotal = ((Number(commission.slice(0, commission.length - 1)) + 100) / 100) * expenseTotal;
     const netTotal = Number(sellingPrice.slice(1, sellingPrice.length)) - Number(discount.slice(1, discount.length));
 
+    setDays(String(transportDays + 1));
     setAccomodationTotal(`$${accTotal}`);
     setTransport(`$${transportTotal}`);
     setTotalExpense(`$${expenseTotal}`);
     setTotalPrice(`$${priceTotal}`);
     setNetPrice(`$${netTotal}`);
     setAccomodationData(data);
-  }, []);
+  }, [rate, transport, totalExpense, commission, sellingPrice, discount]);
 
   const saveCost = () => {
     localStorage.setItem(
