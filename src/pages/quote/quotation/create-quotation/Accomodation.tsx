@@ -33,6 +33,10 @@ function Accomodation() {
   const [accomodationData, setAccomodationData] = useState<UserAccomodation[]>([]);
   const [selectedAccomodations, setSelectedAccomodations] = useState<UserAccomodation[]>([]);
 
+  const [selectedAccomodationsNights, setSelectedAccomodationsNights] = useState<string[]>([]);
+  const [selectedAccomodationsRoomTypes, setSelectedAccomodationsRoomTypes] = useState<string[]>([]);
+  const [selectedAccomodationsMealPlans, setSelectedAccomodationsMealPlans] = useState<string[]>([]);
+
   const [search, setSearch] = useState('');
   const [removedAcc, setRemovedAcc] = useState(false);
   const [addedAcc, setAddedAcc] = useState(false);
@@ -52,11 +56,14 @@ function Accomodation() {
       });
 
       if (localStorage.getItem('New Quote Accomodation')) {
-        setSelectedAccomodations(
-          JSON.parse(
-            localStorage.getItem('New Quote Accomodation')!,
-          ).selectedAccomodations as UserAccomodation[],
-        );
+        const selectedAcc = JSON.parse(
+          localStorage.getItem('New Quote Accomodation')!,
+        ).selectedAccomodations as UserAccomodation[];
+
+        setSelectedAccomodationsNights(selectedAcc.map((acc) => acc.nights));
+        setSelectedAccomodationsRoomTypes(selectedAcc.map((acc) => acc.roomType));
+        setSelectedAccomodationsMealPlans(selectedAcc.map((acc) => acc.mealPlan));
+        setSelectedAccomodations(selectedAcc);
       }
 
       setAccomodationData(data as UserAccomodation[]);
@@ -118,13 +125,10 @@ function Accomodation() {
     const customerDetails = JSON.parse(
       localStorage.getItem('New Quote Customer')!,
     ).data[0];
-    const selectedAccomodationDetails: UserAccomodation[] = JSON.parse(
-      localStorage.getItem('New Quote Accomodation')!,
-    ).selectedAccomodations;
 
     // Subtract 1 to equal number of nights
     const nightsRequired = getDaysDifference(customerDetails[6], customerDetails[5]) - 1;
-    const totalUsedNights = selectedAccomodationDetails.reduce((prev, curr) => (
+    const totalUsedNights = selectedAccomodations.reduce((prev, curr) => (
       prev + Number(curr.nights)
     ), 0);
     setValidationNightssRequired(nightsRequired);
@@ -132,6 +136,7 @@ function Accomodation() {
     if (nightsRequired !== totalUsedNights) {
       setShowValidationErrorMessage(true);
     } else {
+      localStorage.setItem('New Quote Accomodation', JSON.stringify({ selectedAccomodations }));
       history.replace('/quote/quotations/create/costing');
     }
   };
@@ -222,8 +227,15 @@ function Accomodation() {
                   'CITY',
                   '',
                 ]}
+                selectedAccomodations={selectedAccomodations}
+                selectedAccomodationsNights={selectedAccomodationsNights}
+                selectedAccomodationsRoomTypes={selectedAccomodationsRoomTypes}
+                selectedAccomodationsMealPlans={selectedAccomodationsMealPlans}
+                setSelectedAccomodations={setSelectedAccomodations}
+                setSelectedAccomodationsNights={setSelectedAccomodationsNights}
+                setSelectedAccomodationsRoomTypes={setSelectedAccomodationsRoomTypes}
+                setSelectedAccomodationsMealPlans={setSelectedAccomodationsMealPlans}
                 deleteAccomodation={deleteAccomodation}
-                data={selectedAccomodations}
               />
             )}
           </DivAtom>

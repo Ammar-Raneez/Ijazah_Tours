@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   makeStyles,
   Paper,
@@ -29,14 +28,28 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface AccomodationTableProps {
-  data: UserAccomodation[];
+  selectedAccomodations: UserAccomodation[];
   columns: string[];
+  selectedAccomodationsNights: string[];
+  selectedAccomodationsRoomTypes: string[];
+  selectedAccomodationsMealPlans: string[];
+  setSelectedAccomodations: any;
+  setSelectedAccomodationsNights: any;
+  setSelectedAccomodationsRoomTypes: any;
+  setSelectedAccomodationsMealPlans: any;
   deleteAccomodation: (row: UserAccomodation) => void;
 }
 
 function AccomodationTable({
   columns,
-  data,
+  selectedAccomodations,
+  selectedAccomodationsNights,
+  selectedAccomodationsRoomTypes,
+  selectedAccomodationsMealPlans,
+  setSelectedAccomodations,
+  setSelectedAccomodationsNights,
+  setSelectedAccomodationsRoomTypes,
+  setSelectedAccomodationsMealPlans,
   deleteAccomodation,
 }: AccomodationTableProps) {
   const classes = useStyles();
@@ -57,47 +70,58 @@ function AccomodationTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {data?.map((row) => {
-            const [roomTypes] = useState(
-              Object.keys(row.categoryValues).map((cat) => ({ value: cat, label: cat })),
-            );
-            const [mealPlanOptions] = useState(
-              row.rates.map((rate) => rate.newMealPlan).map((rate) => ({ value: rate, label: rate })),
-            );
+          {selectedAccomodations?.length > 0 && selectedAccomodations.map((row, index) => {
+            const roomTypes = Object.keys(row.categoryValues).map((cat) => ({ value: cat, label: cat }));
+            const mealPlanOptions = row.rates
+              .map((rate) => rate.newMealPlan)
+              .map((rate) => ({ value: rate, label: rate }));
 
-            const [nights, setNights] = useState(row.nights);
-            const [roomType, setRoomType] = useState(row.roomType);
-            const [mealPlan, setMealPlan] = useState(row.mealPlan);
+            const rowNights = selectedAccomodationsNights[index];
+            const rowMealPlan = selectedAccomodationsMealPlans[index];
+            const rowRoomType = selectedAccomodationsRoomTypes[index];
 
             const onSelectChange = (val: string, type: string) => {
-              const { accomodation } = getAccomodationsFromStorage();
+              const { accomodation, accomodations, accomodationIndex } = getAccomodationsFromStorage();
+
               if (type === 'Room Type') {
-                setRoomType(val);
+                const roomTypesCopy = setNewStateValue(selectedAccomodationsRoomTypes, val);
+                setSelectedAccomodationsRoomTypes(roomTypesCopy);
                 const updatedAcc = { ...accomodation, roomType: val };
-                saveUpdatedAccomodation(updatedAcc);
+                setNewSelectedAccomodations(accomodations, updatedAcc, accomodationIndex);
               } else {
-                setMealPlan(val);
+                const mealPlansCopy = setNewStateValue(selectedAccomodationsMealPlans, val);
+                setSelectedAccomodationsMealPlans(mealPlansCopy);
                 const updatedAcc = { ...accomodation, mealPlan: val };
-                saveUpdatedAccomodation(updatedAcc);
+                setNewSelectedAccomodations(accomodations, updatedAcc, accomodationIndex);
               }
             };
 
             const onNightsChange = (val: string) => {
-              const { accomodation } = getAccomodationsFromStorage();
-              setNights(val);
+              const { accomodation, accomodations, accomodationIndex } = getAccomodationsFromStorage();
+
+              const nightsCopy = setNewStateValue(selectedAccomodationsNights, val);
+              setSelectedAccomodationsNights(nightsCopy);
               const updatedAcc = { ...accomodation, nights: val };
-              saveUpdatedAccomodation(updatedAcc);
+              setNewSelectedAccomodations(accomodations, updatedAcc, accomodationIndex);
             };
 
-            const saveUpdatedAccomodation = (updatedAcc: UserAccomodation) => {
-              const { accomodations, accomodationIndex } = getAccomodationsFromStorage();
+            const setNewStateValue = (stateValues: string[], val: string) => {
+              const copy = [...stateValues];
+              const toEditNights = copy.findIndex((rt) => rt === val);
+              copy.splice(toEditNights, 1);
+              copy.push(val);
+              return copy;
+            };
+
+            const setNewSelectedAccomodations = (
+              accomodations: UserAccomodation[],
+              updatedAcc: UserAccomodation,
+              accomodationIndex: number,
+            ) => {
               const accomodationsCopy = [...accomodations];
               accomodationsCopy.splice(accomodationIndex, 1);
               accomodationsCopy.push(updatedAcc);
-              localStorage.setItem(
-                'New Quote Accomodation',
-                JSON.stringify({ selectedAccomodations: accomodationsCopy }),
-              );
+              setSelectedAccomodations(accomodationsCopy);
             };
 
             const getAccomodationsFromStorage = () => {
@@ -122,7 +146,7 @@ function AccomodationTable({
                   key={uuid()}
                   type="Nights"
                   select={false}
-                  value={nights}
+                  value={rowNights}
                   onCountChange={onNightsChange}
                   align="center"
                 />
@@ -157,7 +181,7 @@ function AccomodationTable({
                   key={uuid()}
                   select
                   type="Room Type"
-                  value={roomType}
+                  value={rowRoomType}
                   onSelectChange={onSelectChange}
                   options={roomTypes}
                   align="center"
@@ -166,7 +190,7 @@ function AccomodationTable({
                   key={uuid()}
                   select
                   type="Meal Plan"
-                  value={mealPlan}
+                  value={rowMealPlan}
                   onSelectChange={onSelectChange}
                   options={mealPlanOptions}
                   align="center"
