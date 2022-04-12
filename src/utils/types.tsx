@@ -3,6 +3,7 @@ import { Timestamp } from 'firebase/firestore';
 export type Order = 'asc' | 'desc';
 export type Status = 'ACTIVE' | 'INACTIVE';
 export type CustomerQuoteStatus = 'APPROVED' | 'IN PROGRESS' | 'COMPLETE';
+export type VoucherStatus = 'COMPLETE' | 'TODO' | 'SHARE';
 export type NavbarType = 'quote' | 'library' | 'settings';
 export type FlexDirection = 'column' | 'row' | 'row-reverse' | 'column-reverse';
 export type JustifyContent = 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around';

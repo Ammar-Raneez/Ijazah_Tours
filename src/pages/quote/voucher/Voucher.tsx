@@ -8,7 +8,6 @@ import VoucherTable from '../../../organisms/quote/voucher/VoucherTable';
 import DivAtom from '../../../atoms/DivAtom';
 import { selectWithNavbarHeight } from '../../../redux/containerSizeSlice';
 import { db } from '../../../firebase';
-import { DASHBOARD_TASK_DATA } from '../../../data';
 import { fetchingDataIndicatorStyles, voucherStyles } from '../../../styles';
 
 function Voucher() {
@@ -25,6 +24,7 @@ function Voucher() {
       });
 
       const groupedVouchData = _.groupBy(vouchData, (voucher: { quoteNo: string }) => voucher.quoteNo);
+      console.log(groupedVouchData);
       setVoucherData(groupedVouchData);
     };
 
@@ -43,7 +43,6 @@ function Voucher() {
           <DivAtom>
             <VoucherTable
               columns={['Voucher ID', 'Quotation Title', 'Status', '']}
-              rows={DASHBOARD_TASK_DATA}
               voucherData={voucherData}
             />
           </DivAtom>

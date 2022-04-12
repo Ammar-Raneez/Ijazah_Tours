@@ -222,12 +222,31 @@ function Approval({ setCreated }: ApprovalProps) {
   };
 
   const createVoucher = async (guestDetails: any, type: string, title: string) => {
+    let vId = '';
+    switch (title) {
+    case 'Driver':
+      vId = `${quoteTitle.slice(0, 5)} DV`;
+      break;
+    case 'Itinerary':
+      vId = `${quoteTitle.slice(0, 5)} IV`;
+      break;
+    case 'Proforma Invoice':
+      vId = `${quoteTitle.slice(0, 5)} PIV`;
+      break;
+    case 'Cash Receipt':
+    default:
+      vId = `${quoteTitle.slice(0, 5)} CRV`;
+      break;
+    }
+
     await setDoc(doc(db, 'Vouchers', String(quoteNo), 'Vouchers', uuid()), {
+      vId,
       guestDetails,
       type,
       title,
       quoteNo: String(quoteNo),
       quotationTitle: quoteTitle,
+      mainVId: `${quoteTitle.slice(0, 5)} V`,
       driverDetails: driverChoice,
       accomodationDetails: JSON.parse(
         localStorage.getItem('New Quote Accomodation')!,
@@ -240,10 +259,15 @@ function Approval({ setCreated }: ApprovalProps) {
 
   const createAccomodationVouchers = async (guestDetails: any, type: string) => {
     accomodationData!.forEach(async (acc) => {
+      const accVName = acc.name.toUpperCase().split(' ').map((w) => w[0]).join('');
+      const vId = `${quoteTitle.slice(0, 5)} HV${accVName}`;
+
       await setDoc(doc(db, 'Vouchers', String(quoteNo), 'Vouchers', uuid()), {
+        vId,
         guestDetails,
         type,
         title: acc.name,
+        mainVId: `${quoteTitle.slice(0, 5)} V`,
         quoteNo: String(quoteNo),
         quotationTitle: quoteTitle,
         driverDetails: driverChoice,
