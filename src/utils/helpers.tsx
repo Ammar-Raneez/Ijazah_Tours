@@ -113,6 +113,11 @@ export const mealPlanOptions = [
   { label: 'HB', value: 'HB' },
 ];
 
+export const tourTypeOptions = [
+  { label: 'Standard Tour', value: 'Standard Tour' },
+  { label: 'Only Driver Tour', value: 'Only Driver Tour' },
+];
+
 export const dateTypeOptions = [
   { label: 'Specific Dates', value: 'specific-dates' },
   { label: 'Not Specific', value: 'not-specific' },

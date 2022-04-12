@@ -46,7 +46,7 @@ function ReminderInputDialog({
 }: ReminderInputDialogProps) {
   return (
     <>
-      <Dialog open={openDialog} onClose={setOpenDialog}>
+      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
         <DialogTitle style={settingsStyles.title}>{title}</DialogTitle>
         <DialogContent style={settingsStyles.multiFieldDialogContainer}>
           <CheckboxGroup

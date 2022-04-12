@@ -4,7 +4,12 @@ import { useHistory } from 'react-router-dom';
 import { CircularProgress } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { getStorage } from 'firebase/storage';
-import { doc, setDoc } from 'firebase/firestore';
+import {
+  collection,
+  doc,
+  getDocs,
+  setDoc,
+} from 'firebase/firestore';
 import { v4 as uuid } from 'uuid';
 import JSPDF from 'jspdf';
 
@@ -19,11 +24,17 @@ import IconAtom from '../../../../atoms/IconAtom';
 import ButtonAtom from '../../../../atoms/ButtonAtom';
 import { selectWith2NavbarHeight, selectWith2NavbarWidth } from '../../../../redux/containerSizeSlice';
 import { db } from '../../../../firebase';
-import { QuotationCostingRate, UserAccomodation } from '../../../../utils/types';
-import { getDaysDifference, uploadPDF, widthHeightDynamicStyle } from '../../../../utils/helpers';
+import { LibraryDriver, QuotationCostingRate, UserAccomodation } from '../../../../utils/types';
+import {
+  getDaysDifference,
+  tourTypeOptions,
+  uploadPDF,
+  widthHeightDynamicStyle,
+} from '../../../../utils/helpers';
 import { QUOTATIONS_COSTING_RATE_DATA } from '../../../../data';
 import { approvalStyles, fetchingDataIndicatorStyles, quoteCreateQuoteStyles } from '../../../../styles';
 import ApprovalAccomodationTable from '../../../../organisms/quote/quotation/create-quotation/approval/ApprovalAccomodationTable';
+import TourTypeDialog from '../../../../organisms/quote/quotation/create-quotation/approval/TourTypeDialog';
 
 const storage = getStorage();
 
@@ -62,10 +73,32 @@ function Approval({ setCreated }: ApprovalProps) {
   const [allGovernmentTaxes, setAllGovernmentTaxes] = useState(false);
   const [guideAndCar, setGuideAndCar] = useState(false);
 
+  // Tour Type
+  const [driverChoice, setDriverChoice] = useState<LibraryDriver>();
+  const [driverData, setDriverData] = useState<LibraryDriver[]>();
+  const [tourType, setTourType] = useState(tourTypeOptions[0].value);
+  const [openTourTypeDialog, setOpenTourTypeDialog] = useState(false);
+  const [showTourTypeValidationErrorMsg, setShowTourTypeValidationErrorMsg] = useState(false);
+
   const [showRateContainer, setShowRateContainer] = useState(true);
   const [isSavingQuote, setIsSavingQuote] = useState(false);
 
   const history = useHistory();
+
+  useEffect(() => {
+    const getInitialData = async () => {
+      const dData = (await getDocs(collection(db, `Library Drivers`))).docs;
+      const data = dData.map((dc) => dc.data());
+      const ids = dData.map((dc) => dc.id);
+      ids.forEach((id, i) => {
+        data[i].id = id;
+      });
+
+      setDriverData(data as LibraryDriver[]);
+    };
+
+    getInitialData();
+  }, []);
 
   useEffect(() => {
     const customerDetails = JSON.parse(
@@ -160,6 +193,16 @@ function Approval({ setCreated }: ApprovalProps) {
     history.replace('/quote/quotations');
   };
 
+  const onTourTypeConfirm = () => {
+    setShowTourTypeValidationErrorMsg(false);
+
+    if (tourType === '' || !driverChoice) {
+      setShowTourTypeValidationErrorMsg(true);
+    } else {
+      setOpenTourTypeDialog(false);
+    }
+  };
+
   const getSaveQuoteOffers = (val: boolean) => (val ? 'Yes' : 'No');
 
   const OffersContainer = () => (!isSavingQuote ? (
@@ -190,7 +233,7 @@ function Approval({ setCreated }: ApprovalProps) {
 
   return (
     <DivAtom style={{ height: `${height}px` }}>
-      {(accomodationData && rateData) ? (
+      {(accomodationData && rateData && driverData) ? (
         <>
           <div id="report">
             <DivAtom style={{ padding: '2rem' }}>
@@ -205,44 +248,48 @@ function Approval({ setCreated }: ApprovalProps) {
                 daysAndNights={daysAndNights}
                 children={children}
               />
-              <DivAtom style={quoteCreateQuoteStyles.tableContainer}>
-                {showRateContainer && rateData.length > 0 && (
-                  <>
-                    <DivAtom style={approvalStyles.rates.titleContainer}>
-                      <IconAtom
-                        onClick={removeRateContainer}
-                        style={{ padding: '8px' }}
-                        size="small"
-                        children={<CloseIcon style={{ color: 'black' }} />}
+              {tourType === tourTypeOptions[0].value && (
+                <>
+                  <DivAtom style={quoteCreateQuoteStyles.tableContainer}>
+                    {showRateContainer && rateData.length > 0 && (
+                      <>
+                        <DivAtom style={approvalStyles.rates.titleContainer}>
+                          <IconAtom
+                            onClick={removeRateContainer}
+                            style={{ padding: '8px' }}
+                            size="small"
+                            children={<CloseIcon style={{ color: 'black' }} />}
+                          />
+                          <ParagraphAtom style={approvalStyles.titleText} text="Rate Comparison" />
+                        </DivAtom>
+                        <ApprovalRateComparisonTable
+                          columns={[
+                            'Dates',
+                            'Accomodation',
+                            'Booking Engine',
+                            'Rate',
+                            '',
+                          ]}
+                          deleteRate={deleteRate}
+                          data={rateData}
+                        />
+                      </>
+                    )}
+                  </DivAtom>
+                  {accomodationData.length > 0 && (
+                    <DivAtom style={{ marginTop: '1rem', ...quoteCreateQuoteStyles.tableContainer }}>
+                      <ApprovalAccomodationTable
+                        columns={[
+                          'Nights',
+                          'Accomodation',
+                          'Room Type',
+                          'Room View',
+                        ]}
+                        data={accomodationData}
                       />
-                      <ParagraphAtom style={approvalStyles.titleText} text="Rate Comparison" />
                     </DivAtom>
-                    <ApprovalRateComparisonTable
-                      columns={[
-                        'Dates',
-                        'Accomodation',
-                        'Booking Engine',
-                        'Rate',
-                        '',
-                      ]}
-                      deleteRate={deleteRate}
-                      data={rateData}
-                    />
-                  </>
-                )}
-              </DivAtom>
-              {accomodationData.length > 0 && (
-                <DivAtom style={{ marginTop: '1rem', ...quoteCreateQuoteStyles.tableContainer }}>
-                  <ApprovalAccomodationTable
-                    columns={[
-                      'Nights',
-                      'Accomodation',
-                      'Room Type',
-                      'Room View',
-                    ]}
-                    data={accomodationData}
-                  />
-                </DivAtom>
+                  )}
+                </>
               )}
               <ApprovalOverallCost
                 sellingPrice={sellingPrice}
@@ -253,17 +300,42 @@ function Approval({ setCreated }: ApprovalProps) {
             </DivAtom>
           </div>
 
-          <ButtonAtom
-            size="large"
-            text="Approve"
-            endIcon={isSavingQuote && <CircularProgress size={20} color="inherit" />}
-            disabled={isSavingQuote}
-            onClick={saveUserQuotation}
-            style={{
-              ...quoteCreateQuoteStyles.addBtn,
-              width: widthHeightDynamicStyle(width, 768, '100%', '18%'),
-              margin: '0 0 1rem 2rem',
-            }}
+          <DivAtom style={{ padding: '2rem' }}>
+            <ButtonAtom
+              size="large"
+              text="Select Tour Type"
+              onClick={() => setOpenTourTypeDialog(true)}
+              style={{
+                ...quoteCreateQuoteStyles.addBtn,
+                width: widthHeightDynamicStyle(width, 768, '100%', '18%'),
+                margin: widthHeightDynamicStyle(width, 768, '100%', '18%') ? '0 1rem 1rem 0' : '0 0 1rem 2rem',
+              }}
+            />
+
+            <ButtonAtom
+              size="large"
+              text="Approve"
+              endIcon={isSavingQuote && <CircularProgress size={20} color="inherit" />}
+              disabled={isSavingQuote || tourType === '' || !driverChoice}
+              onClick={saveUserQuotation}
+              style={{
+                ...quoteCreateQuoteStyles.addBtn,
+                width: widthHeightDynamicStyle(width, 768, '100%', '18%'),
+                margin: widthHeightDynamicStyle(width, 768, '100%', '18%') ? '0 1rem 1rem 0' : '0 0 1rem 2rem',
+              }}
+            />
+          </DivAtom>
+
+          <TourTypeDialog
+            title="Select Tour Type"
+            driverData={driverData}
+            openDialog={openTourTypeDialog}
+            setOpenDialog={setOpenTourTypeDialog}
+            tourType={tourType}
+            setTourType={setTourType}
+            setDriverChoice={setDriverChoice}
+            onConfirm={onTourTypeConfirm}
+            validationErrorMsg={showTourTypeValidationErrorMsg}
           />
         </>
       ) : (
