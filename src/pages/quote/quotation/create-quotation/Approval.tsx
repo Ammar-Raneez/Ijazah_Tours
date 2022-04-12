@@ -8,6 +8,7 @@ import {
   collection,
   doc,
   getDocs,
+  serverTimestamp,
   setDoc,
 } from 'firebase/firestore';
 import { v4 as uuid } from 'uuid';
@@ -58,7 +59,8 @@ function Approval({ setCreated }: ApprovalProps) {
   const [arrival, setArrival] = useState('');
   const [departure, setDeparture] = useState('');
   const [daysAndNights, setDaysAndNights] = useState('');
-  const [voucherNo, setVoucherNo] = useState('');
+  const [quoteTitle, setQuoteTitle] = useState('');
+  const [quoteNo, setQuoteNo] = useState('');
   const [adults, setAdults] = useState('');
   const [children, setChildren] = useState<string[]>(['']);
 
@@ -110,18 +112,19 @@ function Approval({ setCreated }: ApprovalProps) {
 
     setAccomodationData(accomodationDetails);
 
-    const daysDifference = getDaysDifference(customerDetails[6], customerDetails[5]);
-    setVoucherNo('2');
+    const daysDifference = getDaysDifference(customerDetails[8], customerDetails[7]);
+    setQuoteTitle(customerDetails[0]);
+    setQuoteNo(customerDetails[1]);
     setDaysAndNights(`${daysDifference + 1} - ${daysDifference}`);
-    setRefNum(customerDetails[0]);
-    setFirstName(customerDetails[1]);
-    setLastName(customerDetails[2]);
-    setNationality(customerDetails[4]);
-    setArrival(customerDetails[5]);
-    setDeparture(customerDetails[6]);
-    setAdults(customerDetails[7]);
-    setChildren(customerDetails[8]);
-    setUserId(customerDetails[9]);
+    setRefNum(customerDetails[2]);
+    setFirstName(customerDetails[3]);
+    setLastName(customerDetails[4]);
+    setNationality(customerDetails[5]);
+    setArrival(customerDetails[6]);
+    setDeparture(customerDetails[7]);
+    setAdults(customerDetails[8]);
+    setChildren(customerDetails[10]);
+    setUserId(customerDetails[11]);
 
     const costDetails = JSON.parse(localStorage.getItem('New Quote Costing')!);
     setSellingPrice(costDetails.sellingPrice);
@@ -167,7 +170,8 @@ function Approval({ setCreated }: ApprovalProps) {
     setIsSavingQuote(true);
     setCreated(false);
     const pdfURL = await generatePDF();
-    await setDoc(doc(db, 'Approval Quotations', userId), {
+    const guestDetails = {
+      user: userId,
       refNum,
       nationality,
       arrival,
@@ -177,7 +181,8 @@ function Approval({ setCreated }: ApprovalProps) {
       netPrice,
       sellingPrice,
       discount,
-      voucherNo,
+      quoteTitle,
+      quoteNo,
       daysAndNights,
       roomAndBreakfast,
       receptionAtAirport,
@@ -186,11 +191,13 @@ function Approval({ setCreated }: ApprovalProps) {
       pdfURL,
       name: `${firstName} ${lastName}`,
       status: 'IN PROGRESS',
-    });
+    };
 
+    await setDoc(doc(db, 'Approval Quotations', uuid()), guestDetails);
+    await createVouchers(guestDetails);
     setIsSavingQuote(false);
     setCreated(true);
-    history.replace('/quote/quotations');
+    history.replace('/quote/voucher');
   };
 
   const onTourTypeConfirm = () => {
@@ -201,6 +208,49 @@ function Approval({ setCreated }: ApprovalProps) {
     } else {
       setOpenTourTypeDialog(false);
     }
+  };
+
+  const createVouchers = async (guestDetails: any) => {
+    await createVoucher(guestDetails, 'Driver Voucher', 'Driver');
+    await createVoucher(guestDetails, 'Itinerary Voucher', 'Itinerary');
+    await createVoucher(guestDetails, 'Tour Confirmation Voucher', 'Proforma Invoice');
+    await createVoucher(guestDetails, 'Cash Receipt', 'Cash Receipt');
+
+    if (tourType === tourTypeOptions[0].value) {
+      await createAccomodationVouchers(guestDetails, 'Supplier Voucher');
+    }
+  };
+
+  const createVoucher = async (guestDetails: any, type: string, title: string) => {
+    await setDoc(doc(db, 'Vouchers', String(quoteNo), 'Vouchers', uuid()), {
+      guestDetails,
+      type,
+      title,
+      quotation: quoteTitle,
+      driverDetails: driverChoice,
+      accomodationDetails: JSON.parse(
+        localStorage.getItem('New Quote Accomodation')!,
+      ).selectedAccomodations,
+      status: 'SHARE',
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    });
+  };
+
+  const createAccomodationVouchers = async (guestDetails: any, type: string) => {
+    accomodationData!.forEach(async (acc) => {
+      await setDoc(doc(db, 'Vouchers', String(quoteNo), 'Vouchers', uuid()), {
+        guestDetails,
+        type,
+        title: acc.name,
+        quotation: quoteTitle,
+        driverDetails: driverChoice,
+        accomodationDetails: acc,
+        status: 'SHARE',
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      });
+    });
   };
 
   const getSaveQuoteOffers = (val: boolean) => (val ? 'Yes' : 'No');
@@ -242,7 +292,7 @@ function Approval({ setCreated }: ApprovalProps) {
                 name={`${firstName} ${lastName}`}
                 nationality={nationality}
                 adults={adults}
-                voucherNo={voucherNo}
+                quoteNo={quoteNo}
                 arrival={arrival}
                 departure={departure}
                 daysAndNights={daysAndNights}

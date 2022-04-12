@@ -21,6 +21,7 @@ interface CustomerFormProps {
   destinationData: DropdownOption[];
   width: number;
   refNum: string;
+  title: string;
   firstName: string;
   lastName: string;
   contactNumber: string
@@ -36,6 +37,7 @@ interface CustomerFormProps {
   additionalBed: boolean;
   onCreateCustomer: (event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => void;
   onRefNumChange: (data: LibraryGuest[], rf: string) => void;
+  setTitle: any;
   setFirstName: any;
   setLastName: any;
   setContactNumber: any;
@@ -57,6 +59,7 @@ function CustomerForm({
   holidayTypeData,
   destinationData,
   width,
+  title,
   refNum,
   firstName,
   lastName,
@@ -73,6 +76,7 @@ function CustomerForm({
   additionalBed,
   onCreateCustomer,
   onRefNumChange,
+  setTitle,
   setFirstName,
   setLastName,
   setContactNumber,
@@ -107,6 +111,17 @@ function CustomerForm({
             marginBottom: '1rem',
           }}
           text="Guest"
+        />
+        <FormControlInput
+          margin={widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0') as string}
+          flex={1}
+          label="Title"
+          fullWidth
+          multiline={false}
+          rows={1}
+          value={title}
+          setValue={setTitle}
+          placeholder="Enter Title"
         />
         <DivAtom
           style={{
@@ -341,6 +356,7 @@ function CustomerForm({
           size="large"
           text="Continue"
           onClick={(event) => onCreateCustomer(event)}
+          disabled={title.trim() === ''}
           style={{
             ...quoteCreateQuoteStyles.addBtn,
             width: widthHeightDynamicStyle(width, 768, '100%', '18%'),

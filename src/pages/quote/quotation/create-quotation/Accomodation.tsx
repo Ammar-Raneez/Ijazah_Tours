@@ -127,7 +127,7 @@ function Accomodation() {
     ).data[0];
 
     // Subtract 1 to equal number of nights
-    const nightsRequired = getDaysDifference(customerDetails[6], customerDetails[5]) - 1;
+    const nightsRequired = getDaysDifference(customerDetails[8], customerDetails[7]) - 1;
     const totalUsedNights = selectedAccomodations.reduce((prev, curr) => (
       prev + Number(curr.nights)
     ), 0);

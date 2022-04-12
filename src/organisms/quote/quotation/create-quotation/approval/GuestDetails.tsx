@@ -6,7 +6,7 @@ interface GuestDetailsProps {
   name: string;
   nationality: string;
   adults: string;
-  voucherNo: string;
+  quoteNo: string;
   arrival: string;
   departure: string;
   daysAndNights: string;
@@ -17,7 +17,7 @@ function GuestDetails({
   name,
   nationality,
   adults,
-  voucherNo,
+  quoteNo,
   arrival,
   departure,
   daysAndNights,
@@ -80,11 +80,11 @@ function GuestDetails({
         <p style={approvalStyles.guestDetails.costContainer.container}>
           <SpanAtom
             style={approvalStyles.guestDetails.costContainer.label}
-            text="Voucher No"
+            text="Quote Id"
           />
           <SpanAtom
             style={approvalStyles.guestDetails.costContainer.cost}
-            text={voucherNo}
+            text={quoteNo}
           />
         </p>
         <p style={approvalStyles.guestDetails.costContainer.container}>

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { doc, serverTimestamp, updateDoc } from 'firebase/firestore';

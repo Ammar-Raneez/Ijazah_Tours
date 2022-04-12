@@ -32,6 +32,9 @@ function Customer() {
   const [holidayTypeData, setHolidayTypeData] = useState<DropdownOption[]>();
   const [destinationData, setDestinationData] = useState<DropdownOption[]>();
 
+  const [title, setTitle] = useState('');
+  const [quoteNum, setQuoteNum] = useState(0);
+
   const [selectedCustomer, setSelectedCustomer] = useState<LibraryGuest>();
   const [refNum, setRefNum] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -54,18 +57,24 @@ function Customer() {
 
   useEffect(() => {
     const getInitialData = async () => {
+      const qData = (await getDocs(collection(db, `Approval Quotations`))).docs;
       const rData = (await getDocs(collection(db, `Library Guests`))).docs;
       const hData = (await getDocs(collection(db, `Settings Holiday Types`))).docs;
       const dData = (await getDocs(collection(db, `Library Accomodation`))).docs;
 
+      const aqData = qData.map((dc) => dc.data());
       const rfData = rData.map((dc) => dc.data());
       const htData = hData.map((dc) => dc.data());
       const deData = dData.map((dc) => dc.data());
 
+      const aqIds = aqData.map((dc) => dc.id);
       const rfIds = rData.map((dc) => dc.id);
       const htIds = hData.map((dc) => dc.id);
       const deIds = dData.map((dc) => dc.id);
 
+      aqIds.forEach((id, i) => {
+        aqData[i].id = id;
+      });
       rfIds.forEach((id, i) => {
         rfData[i].id = id;
       });
@@ -75,6 +84,8 @@ function Customer() {
       deIds.forEach((id, i) => {
         deData[i].id = id;
       });
+
+      setQuoteNum(aqData.length + 1);
 
       const refNums = rfData.map((cus) => ({
         value: cus.refNum,
@@ -129,6 +140,8 @@ function Customer() {
       'New Quote Customer',
       JSON.stringify({
         data: [[
+          title,
+          quoteNum,
           refNum,
           firstName,
           lastName,
@@ -166,6 +179,8 @@ function Customer() {
           destinationData={destinationData}
           width={width}
           refNum={refNum}
+          title={title}
+          setTitle={setTitle}
           firstName={firstName}
           lastName={lastName}
           contactNumber={contactNumber}
