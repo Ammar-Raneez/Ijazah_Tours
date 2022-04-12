@@ -87,6 +87,17 @@ function CustomerForm({
   setCheckin,
   setCheckout,
 }: CustomerFormProps) {
+  const changeDateType = (type: string) => {
+    setDateType(type);
+    if (type === dateTypeOptions[1].value) {
+      setCheckin('2022-01');
+      setCheckout('2022-02');
+    } else {
+      setCheckin('2022-01-01');
+      setCheckout('2022-02-01');
+    }
+  };
+
   return (
     <>
       <DivAtom style={quoteCreateQuoteStyles.formContainer}>
@@ -307,7 +318,7 @@ function CustomerForm({
               ...quoteCreateQuoteStyles.radioBtnContainer,
               margin: widthHeightDynamicStyle(width, 600, 0, '0 1rem'),
             }}
-            onChange={(e) => setDateType(e.target.value)}
+            onChange={(e) => changeDateType(e.target.value)}
           />
           <RenderDatePicker
             width={width}

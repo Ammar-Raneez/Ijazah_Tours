@@ -152,7 +152,7 @@ function Approval({ setCreated }: ApprovalProps) {
       guideAndCar,
       pdfURL,
       name: `${firstName} ${lastName}`,
-      status: 'COMPLETE',
+      status: 'IN PROGRESS',
     });
 
     setIsSavingQuote(false);
@@ -255,7 +255,7 @@ function Approval({ setCreated }: ApprovalProps) {
 
           <ButtonAtom
             size="large"
-            text="Save"
+            text="Approve"
             endIcon={isSavingQuote && <CircularProgress size={20} color="inherit" />}
             disabled={isSavingQuote}
             onClick={saveUserQuotation}

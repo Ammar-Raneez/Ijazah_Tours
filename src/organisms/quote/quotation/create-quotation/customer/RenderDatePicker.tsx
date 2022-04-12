@@ -21,16 +21,8 @@ export const RenderDatePicker = ({
   checkout,
   setCheckin,
   setCheckout,
-}: RenderDatePickerProps) => {
-  if (dateType === dateTypeOptions[1].value) {
-    setCheckin('2022-01');
-    setCheckout('2022-02');
-  } else {
-    setCheckin('2022-01-01');
-    setCheckout('2022-02-01');
-  }
-
-  return dateType === dateTypeOptions[0].value ? (
+}: RenderDatePickerProps) => (
+  dateType === dateTypeOptions[0].value ? (
     <DivAtom>
       <TextFieldAtom
         variant="standard"
@@ -106,5 +98,5 @@ export const RenderDatePicker = ({
         type="month"
       />
     </DivAtom>
-  );
-};
+  )
+);
