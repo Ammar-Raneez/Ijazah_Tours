@@ -4,6 +4,7 @@ import {
   useEffect,
   useState,
 } from 'react';
+import { useHistory } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import Collapse from '@material-ui/core/Collapse';
 import Table from '@material-ui/core/Table';
@@ -42,6 +43,8 @@ function Row({
   const [vouchersChecked, setVouchersChecked] = useState(
     row.map((voucher: { completed: boolean }) => voucher.completed === true),
   );
+
+  const history = useHistory();
 
   useEffect(() => {
     getOverallRowStatus();
@@ -112,6 +115,26 @@ function Row({
     getOverallRowStatus() === 'COMPLETE' ? ['#29CC97', '#ffffff'] : ['#7879F1', '#ffffff']
   );
 
+  const getVoucherLink = (type: string) => {
+    let linkType = 'supplier';
+    switch (type) {
+    case 'Cash Receipt':
+      linkType = 'receipt';
+      return linkType;
+    case 'Tour Confirmation Voucher':
+      linkType = 'tour-confirmation';
+      return linkType;
+    case 'Itinerary Voucher':
+      linkType = 'itinerary';
+      return linkType;
+    case 'Driver Voucher':
+      linkType = 'driver';
+      return linkType;
+    default:
+      return linkType;
+    }
+  };
+
   return (
     <Fragment>
       <TableRow>
@@ -167,7 +190,11 @@ function Row({
                       <TableCell>{voucher.title}</TableCell>
                       <TableRowButtonCell
                         key={uuid()}
-                        onClick={() => null}
+                        onClick={() => (
+                          getVoucherStatus(index) === 'SHARE'
+                            ? history.replace(`/quote/voucher/${getVoucherLink(voucher.type)}/${voucher.id}`)
+                            : null
+                        )}
                         align="left"
                         btnWidth="8rem"
                         btnSize="medium"

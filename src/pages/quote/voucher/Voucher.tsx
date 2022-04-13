@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { Route } from 'react-router-dom';
 import { CircularProgress } from '@material-ui/core';
 import {
   collection,
@@ -85,25 +86,42 @@ function Voucher() {
       >
         {voucherData ? (
           <>
-            <DivAtom>
-              <VoucherTable
-                columns={['Voucher ID', 'Quotation Title', 'Status', '']}
-                voucherData={voucherData}
-                setVoucherData={setVoucherData}
+            <Route path="/quote/voucher/supplier/:id">
+
+            </Route>
+            <Route path="/quote/voucher/driver/:id">
+
+            </Route>
+            <Route path="/quote/voucher/itinerary/:id">
+
+            </Route>
+            <Route path="/quote/voucher/tour-confirmation/:id">
+
+            </Route>
+            <Route path="/quote/voucher/receipt/:id">
+
+            </Route>
+            <Route exact path="/quote/voucher">
+              <DivAtom>
+                <VoucherTable
+                  columns={['Voucher ID', 'Quotation Title', 'Status', '']}
+                  voucherData={voucherData}
+                  setVoucherData={setVoucherData}
+                />
+              </DivAtom>
+              <ButtonAtom
+                endIcon={isUpdating && <CircularProgress size={20} color="inherit" />}
+                size="large"
+                disabled={isUpdating}
+                text="Update"
+                onClick={onUpdateVoucherStatus}
+                style={{
+                  ...quoteCreateQuoteStyles.addBtn,
+                  width: widthHeightDynamicStyle(width, 768, '100%', '18%'),
+                  marginTop: '1rem',
+                }}
               />
-            </DivAtom>
-            <ButtonAtom
-              endIcon={isUpdating && <CircularProgress size={20} color="inherit" />}
-              size="large"
-              disabled={isUpdating}
-              text="Update"
-              onClick={onUpdateVoucherStatus}
-              style={{
-                ...quoteCreateQuoteStyles.addBtn,
-                width: widthHeightDynamicStyle(width, 768, '100%', '18%'),
-                marginTop: '1rem',
-              }}
-            />
+            </Route>
           </>
         ) : (
           <DivAtom style={fetchingDataIndicatorStyles.container}>
