@@ -14,7 +14,12 @@ import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
 import SpanAtom from '../../../atoms/SpanAtom';
 import { selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
-import { number2words, uploadPDF, widthHeightDynamicStyle } from '../../../utils/helpers';
+import {
+  getElementWidth,
+  number2words,
+  uploadPDF,
+  widthHeightDynamicStyle,
+} from '../../../utils/helpers';
 import { voucherStyles } from '../../../styles';
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import { db } from '../../../firebase';
@@ -45,7 +50,8 @@ function CashReceipt({ voucherData }: CashReceiptProps) {
   };
 
   const generatePDF = async () => {
-    const report = new JSPDF('landscape', 'pt', [1600, 590]);
+    const { elementWidth, elementHeight } = getElementWidth('report');
+    const report = new JSPDF('landscape', 'pt', [elementWidth + 10, elementHeight + 10]);
     return report.html(document.querySelector('#report') as HTMLElement).then(async () => {
       const filename = `${uuid()}-${vData.guestDetails.name}.pdf`;
       const pdfURL = await uploadPDF(storage, 'voucher-cash-receipt-pdfs', report.output('blob'), filename);

@@ -96,6 +96,13 @@ export const getDaysDifference = (a: string, b: string) => {
   return Math.ceil(difference / (1000 * 3600 * 24));
 };
 
+export const getElementWidth = (id: string) => {
+  const element = document.querySelector<HTMLElement>(`#${id}`);
+  const elementWidth = element!.offsetWidth;
+  const elementHeight = element!.offsetHeight;
+  return { elementWidth, elementHeight };
+};
+
 // eslint-disable-next-line max-len
 const num = 'zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen'.split(' ');
 const tens = 'twenty thirty forty fifty sixty seventy eighty ninety'.split(' ');
