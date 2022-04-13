@@ -14,12 +14,17 @@ import {
 import _ from 'lodash';
 
 import VoucherTable from '../../../organisms/quote/voucher/VoucherTable';
+import SupplierVoucher from '../../../organisms/quote/voucher/SupplierVoucher';
+import DriverVoucher from '../../../organisms/quote/voucher/DriverVoucher';
+import ItineraryVoucher from '../../../organisms/quote/voucher/ItineraryVoucher';
+import TourConfirmationVoucher from '../../../organisms/quote/voucher/TourConfirmationVoucher';
+import CashReceipt from '../../../organisms/quote/voucher/CashReceipt';
 import DivAtom from '../../../atoms/DivAtom';
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import { selectWithNavbarHeight, selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
 import { db } from '../../../firebase';
 import { widthHeightDynamicStyle } from '../../../utils/helpers';
-import { fetchingDataIndicatorStyles, quoteCreateQuoteStyles, voucherStyles } from '../../../styles';
+import { fetchingDataIndicatorStyles, voucherStyles } from '../../../styles';
 
 function Voucher() {
   const width = useSelector(selectWithNavbarWidth);
@@ -87,19 +92,19 @@ function Voucher() {
         {voucherData ? (
           <>
             <Route path="/quote/voucher/supplier/:id">
-
+              <SupplierVoucher voucherData={voucherData} />
             </Route>
             <Route path="/quote/voucher/driver/:id">
-
+              <DriverVoucher voucherData={voucherData} />
             </Route>
             <Route path="/quote/voucher/itinerary/:id">
-
+              <ItineraryVoucher voucherData={voucherData} />
             </Route>
             <Route path="/quote/voucher/tour-confirmation/:id">
-
+              <TourConfirmationVoucher voucherData={voucherData} />
             </Route>
             <Route path="/quote/voucher/receipt/:id">
-
+              <CashReceipt voucherData={voucherData} />
             </Route>
             <Route exact path="/quote/voucher">
               <DivAtom>
@@ -116,7 +121,7 @@ function Voucher() {
                 text="Update"
                 onClick={onUpdateVoucherStatus}
                 style={{
-                  ...quoteCreateQuoteStyles.addBtn,
+                  ...voucherStyles.addBtn,
                   width: widthHeightDynamicStyle(width, 768, '100%', '18%'),
                   marginTop: '1rem',
                 }}

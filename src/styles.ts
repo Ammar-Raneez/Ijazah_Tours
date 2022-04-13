@@ -208,10 +208,12 @@ export const quoteCreateQuoteStyles = {
 
 export const summaryStyles = {
   ...mainContainerStyles,
+  ...quoteCreateQuoteStyles,
 };
 
 export const voucherStyles = {
   ...mainContainerStyles,
+  ...quoteCreateQuoteStyles,
 };
 
 /// Quotations - Approval
