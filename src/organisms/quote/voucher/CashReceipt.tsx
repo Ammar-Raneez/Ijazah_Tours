@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { CircularProgress } from '@material-ui/core';
 import { doc, setDoc } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
@@ -43,6 +42,8 @@ function CashReceipt({ voucherData }: CashReceiptProps) {
 
   const [isSavingReceipt, setIsSavingReceipt] = useState(false);
 
+  const history = useHistory();
+
   const createPriceText = (netPrice: string) => {
     const numberPrice = netPrice.slice(1);
     const wordPrice = number2words(numberPrice);
@@ -65,9 +66,11 @@ function CashReceipt({ voucherData }: CashReceiptProps) {
     const pdfURL = await generatePDF();
     const vDataCopy = { ...vData };
     vDataCopy.pdfURL = pdfURL;
+    vDataCopy.director = director;
     await updateDB(vDataCopy);
     setVData(vDataCopy);
     setIsSavingReceipt(false);
+    history.replace('/quote/voucher');
   };
 
   const updateDB = async (vDataCopy: any) => {
