@@ -119,10 +119,10 @@ function Approval({ setCreated }: ApprovalProps) {
     setRefNum(customerDetails[2]);
     setFirstName(customerDetails[3]);
     setLastName(customerDetails[4]);
-    setNationality(customerDetails[5]);
-    setArrival(customerDetails[6]);
-    setDeparture(customerDetails[7]);
-    setAdults(customerDetails[8]);
+    setNationality(customerDetails[6]);
+    setArrival(customerDetails[7]);
+    setDeparture(customerDetails[8]);
+    setAdults(customerDetails[9]);
     setChildren(customerDetails[10]);
     setUserId(customerDetails[11]);
 
