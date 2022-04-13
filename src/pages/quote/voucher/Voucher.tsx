@@ -32,6 +32,8 @@ function Voucher() {
   const [voucherData, setVoucherData] = useState<any>();
   const [isUpdating, setIsUpdating] = useState(false);
 
+  const [isVoucherApproved, setIsVoucherApproved] = useState(false);
+
   useEffect(() => {
     const getInitialData = async () => {
       const vData = (await getDocs(collectionGroup(db, `Vouchers`))).docs;
@@ -46,7 +48,7 @@ function Voucher() {
     };
 
     getInitialData();
-  }, []);
+  }, [isVoucherApproved]);
 
   const onUpdateVoucherStatus = async () => {
     setIsUpdating(true);
@@ -95,16 +97,16 @@ function Voucher() {
               <SupplierVoucher voucherData={voucherData} />
             </Route>
             <Route path="/quote/voucher/driver/:id">
-              <DriverVoucher voucherData={voucherData} />
+              <DriverVoucher setIsVoucherApproved={setIsVoucherApproved} voucherData={voucherData} />
             </Route>
             <Route path="/quote/voucher/itinerary/:id">
-              <ItineraryVoucher voucherData={voucherData} />
+              <ItineraryVoucher setIsVoucherApproved={setIsVoucherApproved} voucherData={voucherData} />
             </Route>
             <Route path="/quote/voucher/tour-confirmation/:id">
-              <TourConfirmationVoucher voucherData={voucherData} />
+              <TourConfirmationVoucher setIsVoucherApproved={setIsVoucherApproved} voucherData={voucherData} />
             </Route>
             <Route path="/quote/voucher/receipt/:id">
-              <CashReceipt voucherData={voucherData} />
+              <CashReceipt setIsVoucherApproved={setIsVoucherApproved} voucherData={voucherData} />
             </Route>
             <Route exact path="/quote/voucher">
               <DivAtom>

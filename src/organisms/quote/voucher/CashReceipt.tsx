@@ -27,9 +27,10 @@ const storage = getStorage();
 
 interface CashReceiptProps {
   voucherData: any;
+  setIsVoucherApproved: any;
 }
 
-function CashReceipt({ voucherData }: CashReceiptProps) {
+function CashReceipt({ voucherData, setIsVoucherApproved }: CashReceiptProps) {
   const width = useSelector(selectWithNavbarWidth);
 
   const { id } = useParams<{ id: string }>();
@@ -63,6 +64,7 @@ function CashReceipt({ voucherData }: CashReceiptProps) {
 
   const saveVoucherReceipt = async () => {
     setIsSavingReceipt(true);
+    setIsVoucherApproved(false);
     const pdfURL = await generatePDF();
     const vDataCopy = { ...vData };
     vDataCopy.pdfURL = pdfURL;
@@ -70,6 +72,7 @@ function CashReceipt({ voucherData }: CashReceiptProps) {
     await updateDB(vDataCopy);
     setVData(vDataCopy);
     setIsSavingReceipt(false);
+    setIsVoucherApproved(true);
     history.replace('/quote/voucher');
   };
 
