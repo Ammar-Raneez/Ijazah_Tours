@@ -3,6 +3,9 @@ import { useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { CircularProgress, TextField } from '@material-ui/core';
 import { doc, setDoc } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
+import JSPDF from 'jspdf';
+import { v4 as uuid } from 'uuid';
 
 import Banner from '../quotation/create-quotation/approval/Banner';
 import VoucherSummary from './specific-voucher/VoucherSummary';
@@ -14,8 +17,10 @@ import SpanAtom from '../../../atoms/SpanAtom';
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import { selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
 import { db } from '../../../firebase';
-import { widthHeightDynamicStyle } from '../../../utils/helpers';
+import { getElementWidth, uploadPDF, widthHeightDynamicStyle } from '../../../utils/helpers';
 import { voucherStyles } from '../../../styles';
+
+const storage = getStorage();
 
 interface DriverVoucherProps {
   voucherData: any;
@@ -38,10 +43,23 @@ function DriverVoucher({ voucherData, setIsVoucherApproved }: DriverVoucherProps
 
   const history = useHistory();
 
+  const generatePDF = async () => {
+    const { elementWidth, elementHeight } = getElementWidth('report');
+    const report = new JSPDF('landscape', 'pt', [elementWidth + 10, elementHeight + 10]);
+    return report.html(document.querySelector('#report') as HTMLElement).then(async () => {
+      const filename = `${uuid()}-${vData.guestDetails.name}.pdf`;
+      const pdfURL = await uploadPDF(storage, 'voucher-driver-pdfs', report.output('blob'), filename);
+      report.save(filename);
+      return pdfURL;
+    });
+  };
+
   const saveVoucher = async () => {
     setIsSavingVoucher(true);
     setIsVoucherApproved(false);
+    const pdfURL = await generatePDF();
     const vDataCopy = { ...vData };
+    vDataCopy.pdfURL = pdfURL;
     vDataCopy.director = director;
     vDataCopy.remarks = remarks;
     await updateDB(vDataCopy);
@@ -59,83 +77,86 @@ function DriverVoucher({ voucherData, setIsVoucherApproved }: DriverVoucherProps
   return (
     <>
       <H2Atom style={voucherStyles.title} text="Driver Voucher" />
-      <DivAtom style={{ padding: '2rem' }}>
-        <Banner />
-        <VoucherSummary vData={vData} type="driver" />
-        <VoucherGuestTable
-          accColumns={['NIGHTS', 'CITY', 'ACCOMODATION']}
-          guestColumns={['ADULTS', 'CHILDREN', 'AGE']}
-          data={vData}
-        />
-        <DivAtom
-          style={{
-            ...voucherStyles.voucherTemplate.summaryDetails.mainContainer,
-            justifyContent: 'flex-end',
-          }}
-        >
-          <p style={voucherStyles.voucherTemplate.summaryDetails.detailContainer}>
-            <SpanAtom
-              text="Payment"
-              style={voucherStyles.voucherTemplate.summaryDetails.label}
-            />
-            <SpanAtom
-              text={vData.guestDetails.netPrice}
-              style={voucherStyles.voucherTemplate.summaryDetails.detail}
-            />
-          </p>
-        </DivAtom>
-        <DivAtom
-          style={{
-            ...voucherStyles.voucherTemplate.summaryDetails.mainContainer,
-            borderBottom: 0,
-          }}
-        >
-          <TextField
-            multiline
-            fullWidth
-            variant="outlined"
-            maxRows={10}
-            minRows={5}
-            value={remarks}
-            onChange={(e) => setRemarks(e.target.value)}
-            label="Remarks"
-            color="primary"
-            focused
-          />
-        </DivAtom>
-        <DivAtom
-          style={{
-            ...voucherStyles.voucherTemplate.summaryDetails.mainContainer,
-            justifyContent: 'flex-end',
-            paddingRight: 0,
-            borderBottom: 0,
-          }}
-        >
-          <FormControlInput
-            width={widthHeightDynamicStyle(width, 1300, '50%', '30%') as string}
-            label="Director"
-            fullWidth={false}
-            multiline={false}
-            rows={1}
-            value={director}
-            setValue={setDirector}
-            placeholder=""
-          />
-        </DivAtom>
+      <div id="report">
         <DivAtom style={{ padding: '2rem' }}>
-          <ButtonAtom
-            size="large"
-            text="Confirm"
-            endIcon={isSavingVoucher && <CircularProgress size={20} color="inherit" />}
-            disabled={isSavingVoucher || director === ''}
-            onClick={saveVoucher}
-            style={{
-              ...voucherStyles.addBtn,
-              width: widthHeightDynamicStyle(width, 768, '100%', '15%'),
-              margin: widthHeightDynamicStyle(width, 768, '100%', '18%') ? '0 1rem 1rem 0' : '0 0 1rem 2rem',
-            }}
+          <Banner />
+          <VoucherSummary vData={vData} type="driver" />
+          <VoucherGuestTable
+            accColumns={['NIGHTS', 'CITY', 'ACCOMODATION']}
+            guestColumns={['ADULTS', 'CHILDREN', 'AGE']}
+            data={vData}
           />
+          <DivAtom
+            style={{
+              ...voucherStyles.voucherTemplate.summaryDetails.mainContainer,
+              justifyContent: 'flex-end',
+            }}
+          >
+            <p style={voucherStyles.voucherTemplate.summaryDetails.detailContainer}>
+              <SpanAtom
+                text="Payment"
+                style={voucherStyles.voucherTemplate.summaryDetails.label}
+              />
+              <SpanAtom
+                text={vData.guestDetails.netPrice}
+                style={voucherStyles.voucherTemplate.summaryDetails.detail}
+              />
+            </p>
+          </DivAtom>
+          <DivAtom
+            style={{
+              ...voucherStyles.voucherTemplate.summaryDetails.mainContainer,
+              borderBottom: 0,
+            }}
+          >
+            <TextField
+              multiline
+              fullWidth
+              variant="outlined"
+              maxRows={10}
+              minRows={5}
+              value={remarks}
+              onChange={(e) => setRemarks(e.target.value)}
+              label="Remarks"
+              color="primary"
+              focused
+            />
+          </DivAtom>
+          <DivAtom
+            style={{
+              ...voucherStyles.voucherTemplate.summaryDetails.mainContainer,
+              justifyContent: 'flex-end',
+              paddingRight: 0,
+              borderBottom: 0,
+            }}
+          >
+            <FormControlInput
+              width={widthHeightDynamicStyle(width, 1300, '50%', '30%') as string}
+              label="Director"
+              fullWidth={false}
+              multiline={false}
+              rows={1}
+              value={director}
+              setValue={setDirector}
+              placeholder=""
+            />
+          </DivAtom>
         </DivAtom>
+      </div>
+
+      <DivAtom style={{ padding: '2rem' }}>
+        <ButtonAtom
+          size="large"
+          text="Confirm"
+          endIcon={isSavingVoucher && <CircularProgress size={20} color="inherit" />}
+          disabled={isSavingVoucher || director === ''}
+          onClick={saveVoucher}
+          style={{
+            ...voucherStyles.addBtn,
+            width: widthHeightDynamicStyle(width, 768, '100%', '15%'),
+            margin: widthHeightDynamicStyle(width, 768, '100%', '18%') ? '0 1rem 1rem 0' : '0 0 1rem 2rem',
+          }}
+        />
       </DivAtom>
     </>
   );
