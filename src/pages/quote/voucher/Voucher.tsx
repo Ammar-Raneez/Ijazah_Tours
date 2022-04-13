@@ -2,10 +2,13 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { CircularProgress } from '@material-ui/core';
 import {
+  collection,
   collectionGroup,
   doc,
   getDocs,
+  query,
   setDoc,
+  where,
 } from 'firebase/firestore';
 import _ from 'lodash';
 
@@ -41,12 +44,30 @@ function Voucher() {
 
   const onUpdateVoucherStatus = async () => {
     setIsUpdating(true);
-    await updateVoucherStatus();
+    await updateVoucherQuotationStatus();
     setIsUpdating(false);
   };
 
-  const updateVoucherStatus = async () => {
+  const updateVoucherQuotationStatus = async () => {
     Object.keys(voucherData).forEach(async (quoteNo) => {
+      const quotationQuery = query(collection(db, 'Approval Quotations'), where('quoteNo', '==', Number(quoteNo)));
+      const quotationSnapshot = await getDocs(quotationQuery);
+      if (voucherData[quoteNo].every((voucher: { completed: boolean }) => voucher.completed === true)) {
+        quotationSnapshot.forEach(async (snap) => {
+          await setDoc(doc(db, 'Approval Quotations', snap.id), {
+            ...snap.data(),
+            status: 'COMPLETE',
+          });
+        });
+      } else {
+        quotationSnapshot.forEach(async (snap) => {
+          await setDoc(doc(db, 'Approval Quotations', snap.id), {
+            ...snap.data(),
+            status: 'IN PROGRESS',
+          });
+        });
+      }
+
       await voucherData[quoteNo].forEach(async (voucher: any) => {
         const { id, ...v } = voucher;
         await setDoc(doc(db, 'Vouchers', quoteNo, 'Vouchers', id), v);
