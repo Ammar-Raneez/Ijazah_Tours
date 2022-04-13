@@ -251,7 +251,7 @@ function Approval({ setCreated }: ApprovalProps) {
       accomodationDetails: JSON.parse(
         localStorage.getItem('New Quote Accomodation')!,
       ).selectedAccomodations,
-      status: 'SHARE',
+      completed: false,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
     });
@@ -272,7 +272,7 @@ function Approval({ setCreated }: ApprovalProps) {
         quotationTitle: quoteTitle,
         driverDetails: driverChoice,
         accomodationDetails: acc,
-        status: 'SHARE',
+        completed: false,
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
       });

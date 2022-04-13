@@ -2,7 +2,7 @@ import { MouseEventHandler } from 'react';
 import { TableCell } from '@material-ui/core';
 
 import ButtonAtom from '../atoms/ButtonAtom';
-import { CustomerQuoteStatus, VoucherStatus } from '../utils/types';
+import { CustomerQuoteStatus } from '../utils/types';
 
 interface TableRowButtonCellProps {
   btnWidth: string;
@@ -13,7 +13,7 @@ interface TableRowButtonCellProps {
   btnDisabled?: boolean;
   btnText?: string;
   btnColors?: string[];
-  cell?: { status: CustomerQuoteStatus | VoucherStatus };
+  cell?: { status: CustomerQuoteStatus };
 }
 
 function TableRowButtonCell({

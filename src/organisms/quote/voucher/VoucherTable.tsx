@@ -1,5 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { ChangeEvent, Fragment, useState } from 'react';
+import {
+  ChangeEvent,
+  Fragment,
+  useEffect,
+  useState,
+} from 'react';
 import Box from '@material-ui/core/Box';
 import Collapse from '@material-ui/core/Collapse';
 import Table from '@material-ui/core/Table';
@@ -19,18 +23,29 @@ import TableRowIconCell from '../../../molecules/TableRowIconCell';
 import TableRowCheckboxCell from '../../../molecules/TableRowCheckboxCell';
 
 interface VoucherTableProps {
-  columns?: string[];
+  columns: string[];
   voucherData: any[];
+  setVoucherData: any;
 }
 
-function Row({ row }: any) {
+function Row({
+  row,
+  voucherData,
+  setVoucherData,
+}: any) {
   const [open, setOpen] = useState(false);
-  const [rowChecked, setRowChecked] = useState(row.status === 'A');
-  const [subTasksChecked, setSubTasksChecked] = useState(
-    row.subtasks
-      ? row.subtasks.map((subtask: any) => subtask.status === 'COMPLETE')
-      : [],
+  const [rowChecked, setRowChecked] = useState(
+    row.status === 'COMPLETE'
+    || row.every((voucher: { completed: boolean }) => voucher.completed === true),
   );
+
+  const [vouchersChecked, setVouchersChecked] = useState(
+    row.map((voucher: { completed: boolean }) => voucher.completed === true),
+  );
+
+  useEffect(() => {
+    getOverallRowStatus();
+  }, []);
 
   const keyboardIcon = open ? (
     <KeyboardArrowDownIcon />
@@ -39,25 +54,56 @@ function Row({ row }: any) {
   );
 
   const onChangeRowStatus = (e: ChangeEvent<HTMLInputElement>) => {
+    const { quoteNo } = row[0];
+    const tempUpdatedVoucherData = { ...voucherData };
+    const tempUpdatedRowData = tempUpdatedVoucherData[quoteNo].map((voucher: any) => (
+      { ...voucher, completed: e.target.checked }
+    ));
+    tempUpdatedVoucherData[quoteNo] = tempUpdatedRowData;
+
+    setVoucherData(tempUpdatedVoucherData);
     setRowChecked(e.target.checked);
+    setVouchersChecked(vouchersChecked.map((checked: boolean) => !checked));
   };
 
-  const onChangeSubTaskStatus = (
+  const onChangeVoucherStatus = (
     e: ChangeEvent<HTMLInputElement>,
     index: number,
   ) => {
-    const temp = [...subTasksChecked];
-    temp[index] = e.target.checked;
-    setSubTasksChecked(temp);
+    const { quoteNo } = row[0];
+    const tempUpdatedVoucherData = { ...voucherData };
+    const tempUpdatedRowData = [...tempUpdatedVoucherData[quoteNo]];
+    tempUpdatedRowData.splice(index, 1, {
+      ...row[index],
+      completed: e.target.checked,
+    });
+    tempUpdatedVoucherData[quoteNo] = tempUpdatedRowData;
+
+    const tempChecked = [...vouchersChecked];
+    tempChecked[index] = e.target.checked;
+
+    setVoucherData(tempUpdatedVoucherData);
+    setVouchersChecked(tempChecked);
+    setRowChecked(tempChecked.every((v: boolean) => v === true));
+    getOverallRowStatus();
   };
 
   const getOverallRowStatus = () => {
     let status = 'COMPLETE';
-    row.forEach((voucher: any) => {
-      if (voucher.status !== 'COMPLETE') {
+    vouchersChecked.forEach((checked: boolean) => {
+      if (!checked) {
         status = 'TODO';
       }
     });
+
+    return status;
+  };
+
+  const getVoucherStatus = (index: number) => {
+    let status = 'SHARE';
+    if (vouchersChecked[index]) {
+      status = 'COMPLETE';
+    }
 
     return status;
   };
@@ -114,8 +160,8 @@ function Row({ row }: any) {
                     <TableRow key={voucher.id}>
                       <TableRowCheckboxCell
                         name={voucher.vId}
-                        checked={subTasksChecked[index]}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => onChangeSubTaskStatus(e, index)}
+                        checked={vouchersChecked[index]}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => onChangeVoucherStatus(e, index)}
                         align="left"
                       />
                       <TableCell>{voucher.title}</TableCell>
@@ -126,13 +172,13 @@ function Row({ row }: any) {
                         btnWidth="8rem"
                         btnSize="medium"
                         btnBorderRadius="0.5rem"
-                        btnText={voucher.status}
+                        btnText={getVoucherStatus(index)}
                         btnColors={
-                          subTasksChecked[index]
+                          vouchersChecked[index]
                             ? ['#29CC97', '#ffffff']
                             : ['#7879F1', '#ffffff']
                         }
-                        btnDisabled={voucher.status === 'COMPLETE'}
+                        btnDisabled={vouchersChecked[index]}
                       />
                     </TableRow>
                   ))}
@@ -146,20 +192,29 @@ function Row({ row }: any) {
   );
 }
 
-export default function VoucherTable({ columns, voucherData }: VoucherTableProps) {
+export default function VoucherTable({
+  columns,
+  voucherData,
+  setVoucherData,
+}: VoucherTableProps) {
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
-            {columns!.map((column) => (
+            {columns.map((column) => (
               <TableColumnCell key={uuid()} color="black" column={column} />
             ))}
           </TableRow>
         </TableHead>
         <TableBody>
           {Object.keys(voucherData).map((row: any) => (
-            <Row key={row} row={voucherData[row]} />
+            <Row
+              key={row}
+              row={voucherData[row]}
+              voucherData={voucherData}
+              setVoucherData={setVoucherData}
+            />
           ))}
         </TableBody>
       </Table>
