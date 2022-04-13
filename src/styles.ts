@@ -223,7 +223,7 @@ export const voucherStyles = {
         padding: '1rem',
       },
       detailContainer: {
-        width: '200px',
+        width: '250px',
         display: 'flex',
         justifyContent: 'space-between',
         margin: 0,
@@ -233,6 +233,7 @@ export const voucherStyles = {
       },
       detail: {
         fontWeight: 'bold',
+        textAlign: 'right' as const,
       },
     },
     cashReceipt: {
