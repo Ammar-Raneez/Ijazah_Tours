@@ -3,10 +3,11 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import Banner from '../quotation/create-quotation/approval/Banner';
+import VoucherSummary from './specific-voucher/VoucherSummary';
+import VoucherGuestTable from './specific-voucher/VoucherGuestTable';
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
 import { voucherStyles } from '../../../styles';
-import VoucherSummary from './VoucherSummary';
 
 interface DriverVoucherProps {
   voucherData: any;
@@ -27,6 +28,11 @@ function DriverVoucher({ voucherData }: DriverVoucherProps) {
       <DivAtom style={{ padding: '2rem' }}>
         <Banner />
         <VoucherSummary vData={vData} type="driver" />
+        <VoucherGuestTable
+          accColumns={['NIGHTS', 'CITY', 'ACCOMODATION']}
+          guestColumns={['ADULTS', 'CHILDREN', 'AGE']}
+          data={vData}
+        />
       </DivAtom>
     </>
   );

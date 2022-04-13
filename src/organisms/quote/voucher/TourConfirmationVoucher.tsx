@@ -2,7 +2,8 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import VoucherSummary from './VoucherSummary';
+import VoucherSummary from './specific-voucher/VoucherSummary';
+import VoucherGuestTable from './specific-voucher/VoucherGuestTable';
 import Banner from '../quotation/create-quotation/approval/Banner';
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
@@ -27,6 +28,11 @@ function TourConfirmationVoucher({ voucherData }: TourConfirmationVoucherProps) 
       <DivAtom style={{ padding: '2rem' }}>
         <Banner />
         <VoucherSummary vData={vData} type="tour-confirmation" />
+        <VoucherGuestTable
+          accColumns={['NIGHTS', 'CITY', 'ACCOMODATION']}
+          guestColumns={['ADULTS', 'CHILDREN', 'AGE']}
+          data={vData}
+        />
       </DivAtom>
     </>
   );

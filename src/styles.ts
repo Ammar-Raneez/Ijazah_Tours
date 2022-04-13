@@ -222,6 +222,9 @@ export const voucherStyles = {
         borderBottom: '2px solid #41E93E',
         padding: '1rem',
       },
+      multiTableContainer: {
+        padding: '1rem',
+      },
       detailContainer: {
         width: '250px',
         display: 'flex',

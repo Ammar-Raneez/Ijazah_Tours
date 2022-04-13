@@ -1,6 +1,6 @@
-import DivAtom from '../../../atoms/DivAtom';
-import SpanAtom from '../../../atoms/SpanAtom';
-import { voucherStyles } from '../../../styles';
+import DivAtom from '../../../../atoms/DivAtom';
+import SpanAtom from '../../../../atoms/SpanAtom';
+import { voucherStyles } from '../../../../styles';
 
 interface VoucherSummaryProps {
   type: string;
