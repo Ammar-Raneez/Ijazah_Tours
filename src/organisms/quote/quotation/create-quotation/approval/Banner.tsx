@@ -16,6 +16,10 @@ function Banner() {
           />
           <ParagraphAtom
             style={approvalStyles.banner.text}
+            text="Government Approved Tour Company"
+          />
+          <ParagraphAtom
+            style={approvalStyles.banner.text}
             text="115, Manning Place, Colombo 06, Sri Lanka"
           />
         </DivAtom>
