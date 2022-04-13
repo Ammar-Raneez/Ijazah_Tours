@@ -96,6 +96,30 @@ export const getDaysDifference = (a: string, b: string) => {
   return Math.ceil(difference / (1000 * 3600 * 24));
 };
 
+// eslint-disable-next-line max-len
+const num = 'zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen'.split(' ');
+const tens = 'twenty thirty forty fifty sixty seventy eighty ninety'.split(' ');
+
+export const number2words: any = (n: any) => {
+  if (n < 20) {
+    return num[n];
+  }
+
+  const digit = n % 10;
+  if (n < 100) {
+    // eslint-disable-next-line no-bitwise
+    return tens[~~(n / 10) - 2] + (digit ? ` ${num[digit]}` : '');
+  }
+
+  if (n < 1000) {
+    // eslint-disable-next-line no-bitwise, prefer-template
+    return num[~~(n / 100)] + ' hundred' + (n % 100 === 0 ? '' : ' and ' + number2words(n % 100));
+  }
+
+  // eslint-disable-next-line no-bitwise, prefer-template
+  return number2words(~~(n / 1000)) + ' thousand' + (n % 1000 !== 0 ? ' ' + number2words(n % 1000) : '');
+};
+
 export const statusOptions = [
   { label: 'ACTIVE', value: 'ACTIVE' },
   { label: 'INACTIVE', value: 'INACTIVE' },
