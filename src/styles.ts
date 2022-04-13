@@ -214,6 +214,47 @@ export const summaryStyles = {
 export const voucherStyles = {
   ...mainContainerStyles,
   ...quoteCreateQuoteStyles,
+  voucherTemplate: {
+    summaryDetails: {
+      mainContainer: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        borderBottom: '2px solid #41E93E',
+        padding: '1rem',
+      },
+      detailContainer: {
+        width: '200px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        margin: 0,
+      },
+      label: {
+        color: '#1C5BBA',
+      },
+      detail: {
+        fontWeight: 'bold',
+      },
+    },
+    cashReceipt: {
+      mainContainer: {
+        padding: '1rem',
+        borderBottom: '2px solid #41E93E',
+      },
+      detailContainer: {
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'flex-start',
+        margin: '1rem 0',
+      },
+      label: {
+        color: '#1C5BBA',
+        width: '550px',
+      },
+      detail: {
+        fontWeight: 'bold',
+      },
+    },
+  },
 };
 
 /// Quotations - Approval

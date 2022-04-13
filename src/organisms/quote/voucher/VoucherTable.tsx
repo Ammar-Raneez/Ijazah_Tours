@@ -192,7 +192,8 @@ function Row({
                         key={uuid()}
                         onClick={() => (
                           getVoucherStatus(index) === 'SHARE'
-                            ? history.replace(`/quote/voucher/${getVoucherLink(voucher.type)}/${voucher.id}`)
+                            // eslint-disable-next-line max-len
+                            ? history.replace(`/quote/voucher/${getVoucherLink(voucher.type)}/${voucher.id}+${voucher.quoteNo}`)
                             : null
                         )}
                         align="left"
