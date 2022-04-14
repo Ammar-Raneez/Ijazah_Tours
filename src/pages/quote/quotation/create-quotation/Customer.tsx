@@ -102,9 +102,9 @@ function Customer() {
       }));
 
       setCustomerData(rfData as LibraryGuest[]);
-      onRefNumChange(rfData as LibraryGuest[], refNums[0].value);
+      onRefNumChange(rfData as LibraryGuest[], localStorage.getItem('New Guest Ref Num') || refNums[0].value);
 
-      setRefNum(refNums[0].value);
+      setRefNum(localStorage.getItem('New Guest Ref Num') || refNums[0].value);
       setHolidayType(holidays[0].value);
       setDestination(destinations[0].value);
 

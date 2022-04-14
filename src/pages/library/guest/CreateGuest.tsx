@@ -79,7 +79,8 @@ function CreateGuest({
 
     setIsCreating(false);
     clearInputs();
-    history.replace('/library/guest');
+    localStorage.setItem('New Guest Ref Num', refNum);
+    history.replace('/quote/quotations/create/customer');
   };
 
   const uploadPassport = async () => (
