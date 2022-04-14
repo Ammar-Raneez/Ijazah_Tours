@@ -2531,6 +2531,11 @@
     "@types/history" "^4.7.11"
     "@types/react" "*"
 
+"@types/react-select-country-list@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@types/react-select-country-list/-/react-select-country-list-2.2.0.tgz#26cb825cc72943ea5775c305abecfc06f15784b4"
+  integrity sha512-VECRojGGvbnkhXZUYmMS+AiGe5O/jzVpD5BXXlOC532qJCGNAJ+Pgm6ka9rEz7qi12v26/GwnyqrNn51IMdrZg==
+
 "@types/react-transition-group@^4.2.0":
   version "4.4.4"
   resolved "https://registry.yarnpkg.com/@types/react-transition-group/-/react-transition-group-4.4.4.tgz#acd4cceaa2be6b757db61ed7b432e103242d163e"
@@ -3873,6 +3878,18 @@ cookie@0.4.2:
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.4.2.tgz#0e41f24de5ecf317947c82fc789e06a884824432"
   integrity sha512-aSWTXFzaKWkvHO1Ny/s+ePFpvKsPnjc551iI41v3ny/ow6tBG5Vd+FuqGNhh1LxOmVzOlGUriIlOaokOvhaStA==
 
+copy-webpack-plugin@^9.0.0:
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/copy-webpack-plugin/-/copy-webpack-plugin-9.1.0.tgz#2d2c460c4c4695ec0a58afb2801a1205256c4e6b"
+  integrity sha512-rxnR7PaGigJzhqETHGmAcxKnLZSR5u1Y3/bcIv/1FnqXedcL/E2ewK7ZCNrArJKCiSv8yVXhTqetJh8inDvfsA==
+  dependencies:
+    fast-glob "^3.2.7"
+    glob-parent "^6.0.1"
+    globby "^11.0.3"
+    normalize-path "^3.0.0"
+    schema-utils "^3.1.1"
+    serialize-javascript "^6.0.0"
+
 core-js-compat@^3.20.2, core-js-compat@^3.21.0:
   version "3.21.1"
   resolved "https://registry.yarnpkg.com/core-js-compat/-/core-js-compat-3.21.1.tgz#cac369f67c8d134ff8f9bd1623e3bc2c42068c82"
@@ -3927,6 +3944,13 @@ country-flag-icons@^1.0.2:
   version "1.4.25"
   resolved "https://registry.yarnpkg.com/country-flag-icons/-/country-flag-icons-1.4.25.tgz#0ddd1d44106ed013e1b5c506de793a60af5c4a6c"
   integrity sha512-1sF/6cit7MYfmxrqNiVN0ijLGv10xtV8egAUwUgIW6Q/Y6d7SuuVw5TOBnG7qIFqrNjxaPNoIAZmx7yOEuZvDA==
+
+country-state-city@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/country-state-city/-/country-state-city-3.0.1.tgz#f25c469c3d5d23a46c20d03e1c0c156c179d22ce"
+  integrity sha512-vOEg/Q3uOmlvXrByBUJ9/aVSeekM7a//QNcR+ftNr2F9C4LJN3bSIWXgwm5BOF1Lr5d6JVeKg9h/zFz6nW19eA==
+  dependencies:
+    copy-webpack-plugin "^9.0.0"
 
 cross-spawn@^7.0.2, cross-spawn@^7.0.3:
   version "7.0.3"
@@ -5032,7 +5056,7 @@ fast-deep-equal@^3.1.1, fast-deep-equal@^3.1.3:
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz#3a7d56b559d6cbc3eb512325244e619a65c6c525"
   integrity sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==
 
-fast-glob@^3.2.11, fast-glob@^3.2.9:
+fast-glob@^3.2.11, fast-glob@^3.2.7, fast-glob@^3.2.9:
   version "3.2.11"
   resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-3.2.11.tgz#a1172ad95ceb8a16e20caa5c5e56480e5129c1d9"
   integrity sha512-xrO3+1bxSo3ZVHAnqzyuewYT6aMFHRAd4Kcs92MAonjwQZLsK9d0SF1IyQ3k5PoirxTW0Oe/RqFgMQ6TcNE5Ew==
@@ -5403,7 +5427,7 @@ globals@^13.6.0, globals@^13.9.0:
   dependencies:
     type-fest "^0.20.2"
 
-globby@^11.0.1, globby@^11.0.4:
+globby@^11.0.1, globby@^11.0.3, globby@^11.0.4:
   version "11.1.0"
   resolved "https://registry.yarnpkg.com/globby/-/globby-11.1.0.tgz#bd4be98bb042f83d796f7e3811991fbe82a0d34b"
   integrity sha512-jhIXaOzy1sb8IyocaruWSn1TjmnBVs8Ayhcy83rmxNJ8q2uWKCAj3CnJY+KpGSXCueAPc0i05kVvVKtP1t9S3g==
@@ -8386,6 +8410,11 @@ react-scripts@5.0.0:
     workbox-webpack-plugin "^6.4.1"
   optionalDependencies:
     fsevents "^2.3.2"
+
+react-select-country-list@^2.2.3:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/react-select-country-list/-/react-select-country-list-2.2.3.tgz#af263072a7797a660e7bd67702495dd1f95268ab"
+  integrity sha512-eRgXL613dVyJiE99yKDYLvSBKDxvIlhkmvO2DVIjdKVyUQq6kBqoMUV/2zuRIAsbRXgBGmKjeL1dxjf7zTfszg==
 
 react-transition-group@^4.4.0:
   version "4.4.2"

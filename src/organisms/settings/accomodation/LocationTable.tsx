@@ -60,7 +60,7 @@ function LocationTable({
                 key={uuid()}
                 cell={{
                   align: 'center',
-                  title: row.title,
+                  title: row.location.value,
                   colors: ['#464E5F', '#B5B5C3'],
                   weight: 400,
                 }}
@@ -69,7 +69,7 @@ function LocationTable({
                 key={uuid()}
                 cell={{
                   align: 'center',
-                  title: row.city,
+                  title: row.cities.map((c) => c.value).join(', '),
                   colors: ['#464E5F', '#B5B5C3'],
                   weight: 400,
                 }}

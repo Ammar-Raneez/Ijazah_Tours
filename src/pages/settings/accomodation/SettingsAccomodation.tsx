@@ -22,7 +22,7 @@ import SectionContainer from '../../../organisms/settings/SectionContainer';
 import SingleInputDialog from '../../../organisms/settings/SingleInputDialog';
 import { selectWithNavbarHeight, selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
 import { settingsStyles } from '../../../styles';
-import { SettingsLocation, SettingsSingleInput } from '../../../utils/types';
+import { CityLocationDropdown, SettingsLocation, SettingsSingleInput } from '../../../utils/types';
 
 const INPUT_TYPES = [
   {
@@ -63,10 +63,10 @@ function SettingsAccomodation() {
   const [editSingleInput, setEditSingleInput] = useState('');
 
   const [locationData, setLocationData] = useState<DocumentData[]>([]);
-  const [newLocationTitle, setNewLocationTitle] = useState('');
-  const [newLocationCity, setNewLocationCity] = useState('');
-  const [editLocationTitle, setEditLocationTitle] = useState('');
-  const [editLocationCity, setEditLocationCity] = useState('');
+  const [newLocationTitle, setNewLocationTitle] = useState<CityLocationDropdown>({ id: '', label: '', value: '' });
+  const [newLocationCities, setNewLocationCities] = useState<CityLocationDropdown[]>([]);
+  const [editLocationTitle, setEditLocationTitle] = useState<CityLocationDropdown>({ id: '', label: '', value: '' });
+  const [editLocationCities, setEditLocationCities] = useState<CityLocationDropdown[]>([]);
 
   const [editId, setEditId] = useState('');
 
@@ -154,15 +154,15 @@ function SettingsAccomodation() {
 
   const onCreateLocation = async () => {
     setShowValidationErrorMessage(false);
-    if (newLocationTitle.trim() === '' || newLocationCity.trim() === '') {
+    if (newLocationTitle.value.trim() === '' || newLocationCities.length === 0) {
       setShowValidationErrorMessage(true);
       return;
     }
 
     setIsCreating(true);
     await setDoc(doc(db, 'Settings Locations', uuid()), {
-      title: newLocationTitle,
-      city: newLocationCity,
+      location: newLocationTitle,
+      cities: newLocationCities,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
     });
@@ -173,21 +173,21 @@ function SettingsAccomodation() {
   };
 
   const clearLocationInputs = () => {
-    setNewLocationTitle('');
-    setNewLocationCity('');
+    setNewLocationTitle({ id: '', label: '', value: '' });
+    setNewLocationCities([]);
   };
 
   const onEditLocation = async () => {
     setShowValidationErrorMessage(false);
-    if (editLocationTitle.trim() === '' || editLocationCity.trim() === '') {
+    if (editLocationTitle.value.trim() === '' || editLocationCities.length === 0) {
       setShowValidationErrorMessage(true);
       return;
     }
 
     setIsUpdating(true);
     await updateDoc(doc(db, 'Settings Locations', editId), {
-      title: editLocationTitle,
-      city: editLocationCity,
+      location: editLocationTitle,
+      cities: editLocationCities,
       updatedAt: serverTimestamp(),
     });
     setIsUpdating(false);
@@ -213,8 +213,8 @@ function SettingsAccomodation() {
 
   const onEditLocationClick = (row: SettingsLocation) => {
     setOpenEditLocationDialog(true);
-    setEditLocationTitle(row.title);
-    setEditLocationCity(row.city);
+    setEditLocationTitle(row.location);
+    setEditLocationCities(row.cities);
     setEditId(row.id);
     setShowValidationErrorMessage(false);
   };
@@ -290,10 +290,10 @@ function SettingsAccomodation() {
             title="Add Location"
             showValidationErrorMessage={showValidationErrorMessage}
             isCreating={isCreating}
-            newTitle={newLocationTitle}
-            newCity={newLocationCity}
-            setNewTitle={setNewLocationTitle}
-            setNewCity={setNewLocationCity}
+            newLocation={newLocationTitle}
+            newCities={newLocationCities}
+            setNewLocation={setNewLocationTitle}
+            setNewCities={setNewLocationCities}
             openDialog={openNewLocationDialog}
             setOpenDialog={() => setOpenNewLocationDialog(false)}
             onCreate={onCreateLocation}
@@ -303,10 +303,10 @@ function SettingsAccomodation() {
             title="Edit Location"
             showValidationErrorMessage={showValidationErrorMessage}
             isCreating={isUpdating}
-            newTitle={editLocationTitle}
-            newCity={editLocationCity}
-            setNewTitle={setEditLocationTitle}
-            setNewCity={setEditLocationCity}
+            newLocation={editLocationTitle}
+            newCities={editLocationCities}
+            setNewLocation={setEditLocationTitle}
+            setNewCities={setEditLocationCities}
             openDialog={openEditLocationDialog}
             setOpenDialog={() => setOpenEditLocationDialog(false)}
             onCreate={onEditLocation}
@@ -314,7 +314,7 @@ function SettingsAccomodation() {
           <DivAtom style={{ marginTop: '1rem' }}>
             {locationData[0] && (
               <LocationTable
-                columns={['LOCATION', 'CITY', '', '']}
+                columns={['LOCATION', 'CITIES', '', '']}
                 data={locationData as SettingsLocation[]}
                 deleteLocation={deleteLocation}
                 onEditLocationClick={onEditLocationClick}

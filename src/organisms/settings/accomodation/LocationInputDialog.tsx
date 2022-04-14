@@ -1,72 +1,119 @@
-import { MouseEventHandler } from 'react';
+import { ChangeEvent, MouseEventHandler } from 'react';
 
 import {
   CircularProgress,
   Dialog,
   DialogContent,
   DialogTitle,
+  Input,
+  MenuItem,
+  Select,
 } from '@material-ui/core';
+import { Country, City } from 'country-state-city';
+import { v4 as uuid } from 'uuid';
 
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import ParagraphAtom from '../../../atoms/ParagraphAtom';
-import FormControlInput from '../../../molecules/FormControlInput';
+import TextFieldAtom from '../../../atoms/TextFieldAtom';
 import {
+  libraryStyles,
   settingsStyles,
   TableToolbarStyles,
 } from '../../../styles';
+import { MenuProps } from '../../../utils/helpers';
+import { CityLocationDropdown } from '../../../utils/types';
 
 interface LocationInputDialogProps {
   title: string;
-  newTitle: string;
-  newCity: string;
+  newLocation: CityLocationDropdown;
+  newCities: CityLocationDropdown[];
   openDialog: boolean;
   showValidationErrorMessage: boolean;
   isCreating: boolean;
   onCreate: MouseEventHandler<HTMLButtonElement>;
-  setNewTitle: any;
-  setNewCity: any;
+  setNewLocation: any;
+  setNewCities: any;
   setOpenDialog: any;
 }
 
 function LocationInputDialog({
   title,
-  newTitle,
-  newCity,
+  newLocation,
+  newCities,
   openDialog,
   showValidationErrorMessage,
   isCreating,
   setOpenDialog,
-  setNewTitle,
-  setNewCity,
+  setNewLocation,
+  setNewCities,
   onCreate,
 }: LocationInputDialogProps) {
+  const countries = Country.getAllCountries();
+
+  const updatedCountries = countries?.map((country) => ({
+    label: country.name,
+    value: country.name,
+    id: country.isoCode,
+  }));
+
+  const updatedStates = (id: string) => (
+    City.getCitiesOfCountry(id)
+      ?.map((state) => ({ label: state.name, value: state.name }))
+  );
+
+  const onCountryChange = (val: string) => {
+    const countryCode = countries.find((c) => c.name === val)?.isoCode;
+    setNewLocation({ id: countryCode, label: val, value: val });
+    setNewCities([]);
+  };
+
+  const handleCitiesChange = (event: ChangeEvent<{ value: unknown }>) => {
+    const val = event.target.value as string[];
+    const toSet = val.map((v) => ({ id: v, label: v, value: v }));
+    setNewCities(toSet);
+  };
+
   return (
     <>
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
         <DialogTitle style={settingsStyles.title}>{title}</DialogTitle>
         <DialogContent style={settingsStyles.multiFieldDialogContainer}>
-          <FormControlInput
-            label="Location"
-            fullWidth
-            multiline={false}
-            rows={1}
-            value={newTitle}
-            placeholder="Enter Location"
-            setValue={setNewTitle}
-            margin="0 0 1rem 0"
-            flex={1}
-          />
-          <FormControlInput
-            label="City"
-            fullWidth
-            multiline={false}
-            rows={1}
-            value={newCity}
-            placeholder="Enter City"
-            setValue={setNewCity}
-            margin="0 0 1rem 0"
-            flex={1}
-          />
+          {updatedCountries && (
+            <>
+              <TextFieldAtom
+                variant="standard"
+                size="medium"
+                label="Location"
+                value={newLocation.value}
+                onChange={(e: ChangeEvent<HTMLTextAreaElement>) => onCountryChange(e.target.value)}
+                options={updatedCountries}
+                adornmentPosition="end"
+                style={{
+                  ...libraryStyles.textField,
+                  width: '100%',
+                }}
+                disableUnderline={false}
+                select
+              />
+
+              <Select
+                labelId="cities-label"
+                id="cities"
+                multiple
+                placeholder="Cities"
+                value={newCities.map((city) => city.value)}
+                onChange={handleCitiesChange}
+                input={<Input />}
+                MenuProps={MenuProps}
+              >
+                {updatedStates(newLocation.id)?.map((city) => (
+                  <MenuItem key={uuid()} value={city.value}>
+                    {city.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </>
+          )}
           {showValidationErrorMessage && (
             <ParagraphAtom
               text="Please fill in all the fields"

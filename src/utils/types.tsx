@@ -29,8 +29,8 @@ export interface SettingsRoomProperties {
 
 export interface SettingsLocation {
   id: string;
-  title: string;
-  city: string;
+  location: CityLocationDropdown;
+  cities: CityLocationDropdown[];
 }
 
 export interface SettingsReminder {
@@ -153,6 +153,9 @@ export interface RadioButtonOption extends Option {}
 export interface DropdownOption extends Option {}
 export interface QuoteHeadCell extends TableHeadCell {}
 export interface LibraryHeadCell extends TableHeadCell {}
+export interface CityLocationDropdown extends Option {
+  id: string;
+}
 export interface UserAccomodation extends LibraryAccomodation {
   nights: string;
   pax: string;
