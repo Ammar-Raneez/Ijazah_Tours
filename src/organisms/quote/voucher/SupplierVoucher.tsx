@@ -37,8 +37,8 @@ function SupplierVoucher({ voucherData, setIsVoucherApproved }: SupplierVoucherP
     voucher.id === id.split('+')[0]
   )));
 
-  const [director, setDirector] = useState('');
-  const [remarks, setRemarks] = useState('');
+  const [director, setDirector] = useState(vData.director || '');
+  const [remarks, setRemarks] = useState(vData.remarks || '');
 
   const [isSavingVoucher, setIsSavingVoucher] = useState(false);
 

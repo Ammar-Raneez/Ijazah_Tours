@@ -37,7 +37,7 @@ function ItineraryVoucher({ voucherData, setIsVoucherApproved }: ItineraryVouche
     voucher.id === id.split('+')[0]
   )));
 
-  const [director, setDirector] = useState('');
+  const [director, setDirector] = useState(vData.director || '');
 
   const [isSavingVoucher, setIsSavingVoucher] = useState(false);
 

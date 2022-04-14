@@ -41,9 +41,9 @@ function TourConfirmationVoucher({
     voucher.id === id.split('+')[0]
   )));
 
-  const [advance, setAdvance] = useState('');
-  const [balance, setBalance] = useState('');
-  const [proforma, setProforma] = useState(TOUR_CONFIRM_STARTING_PROFORMA);
+  const [advance, setAdvance] = useState(vData.paymentAdvance || '');
+  const [balance, setBalance] = useState(vData.paymentBalance || '');
+  const [proforma, setProforma] = useState(vData.proforma || TOUR_CONFIRM_STARTING_PROFORMA);
 
   const [isSavingVoucher, setIsSavingVoucher] = useState(false);
 

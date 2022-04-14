@@ -40,7 +40,7 @@ function CashReceipt({ voucherData, setIsVoucherApproved }: CashReceiptProps) {
     voucher.id === id.split('+')[0]
   )));
 
-  const [director, setDirector] = useState('');
+  const [director, setDirector] = useState(vData.director || '');
 
   const [isSavingReceipt, setIsSavingReceipt] = useState(false);
 
