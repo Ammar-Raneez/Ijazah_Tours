@@ -3,9 +3,9 @@ import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOut
 import ButtonAtom from '../../atoms/ButtonAtom';
 import DivAtom from '../../atoms/DivAtom';
 import H2Atom from '../../atoms/H2Atom';
-import { FlexDirection } from '../../utils/types';
-import { widthHeightDynamicStyle } from '../../utils/helpers';
 import { settingsStyles, TableToolbarStyles } from '../../styles';
+import { widthHeightDynamicStyle } from '../../utils/helpers';
+import { FlexDirection } from '../../utils/types';
 
 interface SectionContainerProps {
   width: number;

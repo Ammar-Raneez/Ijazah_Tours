@@ -1,4 +1,5 @@
 import { MouseEventHandler } from 'react';
+
 import {
   CircularProgress,
   Dialog,
@@ -7,12 +8,12 @@ import {
 } from '@material-ui/core';
 
 import ButtonAtom from '../../../atoms/ButtonAtom';
+import ParagraphAtom from '../../../atoms/ParagraphAtom';
+import FormControlInput from '../../../molecules/FormControlInput';
 import {
   settingsStyles,
   TableToolbarStyles,
 } from '../../../styles';
-import FormControlInput from '../../../molecules/FormControlInput';
-import ParagraphAtom from '../../../atoms/ParagraphAtom';
 
 interface LocationInputDialogProps {
   title: string;

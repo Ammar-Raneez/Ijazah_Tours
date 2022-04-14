@@ -1,4 +1,5 @@
 import { ChangeEvent, MouseEvent } from 'react';
+
 import {
   Checkbox,
   TableCell,
@@ -8,8 +9,8 @@ import {
 } from '@material-ui/core';
 import { ClassNameMap } from '@material-ui/core/styles/withStyles';
 
-import TableColumnCell from './TableColumnCell';
 import { Order, LibraryHeadCell, QuoteHeadCell } from '../utils/types';
+import TableColumnCell from './TableColumnCell';
 
 interface TableHeadProps {
   orderBy: string;

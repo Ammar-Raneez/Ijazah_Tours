@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { doc, serverTimestamp, updateDoc } from 'firebase/firestore';
 
-import UserProfileForm from '../../organisms/profile/UserProfileForm';
+import { doc, serverTimestamp, updateDoc } from 'firebase/firestore';
+import { useDispatch, useSelector } from 'react-redux';
+
 import DivAtom from '../../atoms/DivAtom';
+import { db } from '../../firebase';
+import UserProfileForm from '../../organisms/profile/UserProfileForm';
 import { selectWithoutNavbarHeight, selectWithoutNavbarWidth } from '../../redux/containerSizeSlice';
 import { login, selectUser } from '../../redux/userSlice';
-import { db } from '../../firebase';
 import { userProfileStyles } from '../../styles';
 
 function UserProfile() {

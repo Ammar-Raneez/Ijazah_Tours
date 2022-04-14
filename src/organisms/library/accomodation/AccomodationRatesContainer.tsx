@@ -1,19 +1,20 @@
 import { ChangeEvent, MouseEventHandler } from 'react';
+
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 
-import AccomodationPriceTable from './AccomodationPriceTable';
-import FormControlInput from '../../../molecules/FormControlInput';
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
 import TextFieldAtom from '../../../atoms/TextFieldAtom';
-import { AccomodationRate, FlexDirection } from '../../../utils/types';
-import { widthHeightDynamicStyle } from '../../../utils/helpers';
+import FormControlInput from '../../../molecules/FormControlInput';
 import {
   libraryAccomodationStyles,
   libraryStyles,
   TableToolbarStyles,
 } from '../../../styles';
+import { widthHeightDynamicStyle } from '../../../utils/helpers';
+import { AccomodationRate, FlexDirection } from '../../../utils/types';
+import AccomodationPriceTable from './AccomodationPriceTable';
 
 interface AccomodationRatesContainerProps {
   width: number;

@@ -2,7 +2,7 @@ import {
   Fragment,
   MouseEvent,
 } from 'react';
-import { useSelector } from 'react-redux';
+
 import {
   createStyles,
   IconButton,
@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import { useSelector } from 'react-redux';
 
 import SpanAtom from '../atoms/SpanAtom';
 import { selectWithNavbarWidth } from '../redux/containerSizeSlice';

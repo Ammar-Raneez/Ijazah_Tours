@@ -75,7 +75,7 @@ export const uploadPDF = async (
 };
 
 export const getUserOnLogin = async (user: User) => {
-  const userData = (await getDocs(collection(db, `Team Members`)))
+  const userData = (await getDocs(collection(db, 'Team Members')))
     .docs.find((doc) => doc.get('email') === user.email);
   const data = userData!.data();
   const { id } = userData!;

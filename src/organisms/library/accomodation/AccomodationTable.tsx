@@ -3,26 +3,27 @@ import {
   MouseEvent,
   useState,
 } from 'react';
+
 import {
   Theme,
   makeStyles,
 } from '@material-ui/core';
+import Checkbox from '@material-ui/core/Checkbox';
+import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 
-import TableRowTextCell from '../../../molecules/TableRowTextCell';
-import TableToolbar from '../../../molecules/TableToolbar';
+import TablePaginationActions from '../../../molecules/TableBottomPagination';
 import TableHead from '../../../molecules/TableHead';
 import TableRowIconCell from '../../../molecules/TableRowIconCell';
-import TablePaginationActions from '../../../molecules/TableBottomPagination';
+import TableRowTextCell from '../../../molecules/TableRowTextCell';
+import TableToolbar from '../../../molecules/TableToolbar';
 import { getComparator, stableSort } from '../../../utils/helpers';
 import { LibraryAccomodation, Order } from '../../../utils/types';
 

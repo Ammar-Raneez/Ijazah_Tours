@@ -2,26 +2,27 @@ import {
   MouseEvent,
   useState,
 } from 'react';
-import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+
 import { CircularProgress } from '@material-ui/core';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
 import { doc, serverTimestamp, updateDoc } from 'firebase/firestore';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 
-import CreateEditAccomodationForm from '../../../organisms/library/accomodation/CreateEditAccomodationForm';
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
 import IconAtom from '../../../atoms/IconAtom';
-import { selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
 import { db } from '../../../firebase';
+import CreateEditAccomodationForm from '../../../organisms/library/accomodation/CreateEditAccomodationForm';
+import { selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
+import { fetchingDataIndicatorStyles, libraryAccomodationStyles } from '../../../styles';
 import {
   AccomodationRate,
   DropdownOption,
   LibraryAccomodation,
   SettingsRoomProperties,
 } from '../../../utils/types';
-import { fetchingDataIndicatorStyles, libraryAccomodationStyles } from '../../../styles';
 
 interface EditAccomodationProps {
   row: LibraryAccomodation;

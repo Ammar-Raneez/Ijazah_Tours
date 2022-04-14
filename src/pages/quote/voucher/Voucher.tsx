@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Route } from 'react-router-dom';
+
 import { CircularProgress } from '@material-ui/core';
 import {
   collection,
@@ -12,19 +11,21 @@ import {
   where,
 } from 'firebase/firestore';
 import _ from 'lodash';
+import { useSelector } from 'react-redux';
+import { Route } from 'react-router-dom';
 
-import VoucherTable from '../../../organisms/quote/voucher/VoucherTable';
-import SupplierVoucher from '../../../organisms/quote/voucher/SupplierVoucher';
+import ButtonAtom from '../../../atoms/ButtonAtom';
+import DivAtom from '../../../atoms/DivAtom';
+import { db } from '../../../firebase';
+import CashReceipt from '../../../organisms/quote/voucher/CashReceipt';
 import DriverVoucher from '../../../organisms/quote/voucher/DriverVoucher';
 import ItineraryVoucher from '../../../organisms/quote/voucher/ItineraryVoucher';
+import SupplierVoucher from '../../../organisms/quote/voucher/SupplierVoucher';
 import TourConfirmationVoucher from '../../../organisms/quote/voucher/TourConfirmationVoucher';
-import CashReceipt from '../../../organisms/quote/voucher/CashReceipt';
-import DivAtom from '../../../atoms/DivAtom';
-import ButtonAtom from '../../../atoms/ButtonAtom';
+import VoucherTable from '../../../organisms/quote/voucher/VoucherTable';
 import { selectWithNavbarHeight, selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
-import { db } from '../../../firebase';
-import { widthHeightDynamicStyle } from '../../../utils/helpers';
 import { fetchingDataIndicatorStyles, voucherStyles } from '../../../styles';
+import { widthHeightDynamicStyle } from '../../../utils/helpers';
 
 function Voucher() {
   const width = useSelector(selectWithNavbarWidth);
@@ -36,7 +37,7 @@ function Voucher() {
 
   useEffect(() => {
     const getInitialData = async () => {
-      const vData = (await getDocs(collectionGroup(db, `Vouchers`))).docs;
+      const vData = (await getDocs(collectionGroup(db, 'Vouchers'))).docs;
       const vouchData = vData.map((dc) => dc.data());
       const vouchIds = vData.map((dc) => dc.id);
       vouchIds.forEach((id, i) => {

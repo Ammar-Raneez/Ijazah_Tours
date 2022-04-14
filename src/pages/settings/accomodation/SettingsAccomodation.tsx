@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+
 import {
   collection,
   deleteDoc,
@@ -10,18 +10,19 @@ import {
   setDoc,
   updateDoc,
 } from 'firebase/firestore';
+import { useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 
+import DivAtom from '../../../atoms/DivAtom';
+import UnorderedListAtom from '../../../atoms/UnorderedListAtom';
+import { db } from '../../../firebase';
 import LocationInputDialog from '../../../organisms/settings/accomodation/LocationInputDialog';
 import LocationTable from '../../../organisms/settings/accomodation/LocationTable';
 import SectionContainer from '../../../organisms/settings/SectionContainer';
 import SingleInputDialog from '../../../organisms/settings/SingleInputDialog';
-import DivAtom from '../../../atoms/DivAtom';
-import UnorderedListAtom from '../../../atoms/UnorderedListAtom';
 import { selectWithNavbarHeight, selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
-import { db } from '../../../firebase';
-import { SettingsLocation, SettingsSingleInput } from '../../../utils/types';
 import { settingsStyles } from '../../../styles';
+import { SettingsLocation, SettingsSingleInput } from '../../../utils/types';
 
 const INPUT_TYPES = [
   {
@@ -94,7 +95,7 @@ function SettingsAccomodation() {
         }),
       );
 
-      const lData = (await getDocs(collection(db, `Settings Locations`))).docs;
+      const lData = (await getDocs(collection(db, 'Settings Locations'))).docs;
       const locations = lData.map((dc) => dc.data());
       const locationIds = lData.map((dc) => dc.id);
       locationIds.forEach((id, i) => {
@@ -158,7 +159,7 @@ function SettingsAccomodation() {
     }
 
     setIsCreating(true);
-    await setDoc(doc(db, `Settings Locations`, uuid()), {
+    await setDoc(doc(db, 'Settings Locations', uuid()), {
       title: newLocationTitle,
       city: newLocationCity,
       createdAt: serverTimestamp(),
@@ -182,7 +183,7 @@ function SettingsAccomodation() {
     }
 
     setIsUpdating(true);
-    await updateDoc(doc(db, `Settings Locations`, editId), {
+    await updateDoc(doc(db, 'Settings Locations', editId), {
       title: editLocationTitle,
       city: editLocationCity,
       updatedAt: serverTimestamp(),
@@ -195,7 +196,7 @@ function SettingsAccomodation() {
     const confirmDelete = window.confirm('Are you sure you want to delete this item?');
     if (confirmDelete) {
       setIsDeleting(false);
-      await deleteDoc(doc(db, `Settings Locations`, row.id));
+      await deleteDoc(doc(db, 'Settings Locations', row.id));
       setIsDeleting(true);
     }
   };

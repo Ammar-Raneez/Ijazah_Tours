@@ -1,16 +1,17 @@
 import { ChangeEvent } from 'react';
+
 import { CircularProgress } from '@material-ui/core';
 
-import ImageUploader from './ImageUploader';
-import FormControlInput from '../../../molecules/FormControlInput';
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import DivAtom from '../../../atoms/DivAtom';
-import TextFieldAtom from '../../../atoms/TextFieldAtom';
-import ParagraphAtom from '../../../atoms/ParagraphAtom';
 import H2Atom from '../../../atoms/H2Atom';
-import { FlexDirection } from '../../../utils/types';
-import { statusOptions, widthHeightDynamicStyle } from '../../../utils/helpers';
+import ParagraphAtom from '../../../atoms/ParagraphAtom';
+import TextFieldAtom from '../../../atoms/TextFieldAtom';
+import FormControlInput from '../../../molecules/FormControlInput';
 import { libraryCreateGuestStyles, libraryStyles } from '../../../styles';
+import { statusOptions, widthHeightDynamicStyle } from '../../../utils/helpers';
+import { FlexDirection } from '../../../utils/types';
+import ImageUploader from './ImageUploader';
 
 interface CreateEditGuestFormProps {
   width: number;

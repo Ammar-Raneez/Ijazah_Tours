@@ -7,12 +7,12 @@ import {
 } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 
-import { LibraryDriver } from '../../../../../utils/types';
-import { quoteCreateQuoteStyles, TableToolbarStyles } from '../../../../../styles';
 import ButtonAtom from '../../../../../atoms/ButtonAtom';
-import RadioButtonGroup from '../../../../../molecules/RadioButtonGroup';
-import { tourTypeOptions } from '../../../../../utils/helpers';
 import ParagraphAtom from '../../../../../atoms/ParagraphAtom';
+import RadioButtonGroup from '../../../../../molecules/RadioButtonGroup';
+import { quoteCreateQuoteStyles, TableToolbarStyles } from '../../../../../styles';
+import { tourTypeOptions } from '../../../../../utils/helpers';
+import { LibraryDriver } from '../../../../../utils/types';
 
 interface TourTypeDialogProps {
   driverData: LibraryDriver[];

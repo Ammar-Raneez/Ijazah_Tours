@@ -1,8 +1,8 @@
 import DivAtom from '../../../../../atoms/DivAtom';
 import FormControlInput from '../../../../../molecules/FormControlInput';
-import { FlexDirection } from '../../../../../utils/types';
-import { widthHeightDynamicStyle } from '../../../../../utils/helpers';
 import { quoteCreateQuoteStyles } from '../../../../../styles';
+import { widthHeightDynamicStyle } from '../../../../../utils/helpers';
+import { FlexDirection } from '../../../../../utils/types';
 
 interface CostingTransportProps {
   width: number;

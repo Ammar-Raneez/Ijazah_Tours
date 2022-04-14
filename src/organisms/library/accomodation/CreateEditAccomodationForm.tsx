@@ -1,22 +1,23 @@
 import { ChangeEvent, MouseEvent } from 'react';
+
 import { CircularProgress, FormControl, InputLabel } from '@material-ui/core';
 
-import AccomodationRatesContainer from './AccomodationRatesContainer';
-import FormControlInput from '../../../molecules/FormControlInput';
-import CheckboxGroup from '../../../molecules/CheckboxGroup';
-import DivAtom from '../../../atoms/DivAtom';
-import ParagraphAtom from '../../../atoms/ParagraphAtom';
-import InputAtom from '../../../atoms/InputAtom';
 import ButtonAtom from '../../../atoms/ButtonAtom';
+import DivAtom from '../../../atoms/DivAtom';
+import InputAtom from '../../../atoms/InputAtom';
+import ParagraphAtom from '../../../atoms/ParagraphAtom';
 import TextFieldAtom from '../../../atoms/TextFieldAtom';
+import CheckboxGroup from '../../../molecules/CheckboxGroup';
+import FormControlInput from '../../../molecules/FormControlInput';
+import { libraryAccomodationStyles, libraryStyles } from '../../../styles';
+import { widthHeightDynamicStyle } from '../../../utils/helpers';
 import {
   AccomodationRate,
   DropdownOption,
   FlexDirection,
   SettingsRoomProperties,
 } from '../../../utils/types';
-import { widthHeightDynamicStyle } from '../../../utils/helpers';
-import { libraryAccomodationStyles, libraryStyles } from '../../../styles';
+import AccomodationRatesContainer from './AccomodationRatesContainer';
 
 interface CreateEditAccomodationFormProps {
   accomodationTypeData: DropdownOption[];

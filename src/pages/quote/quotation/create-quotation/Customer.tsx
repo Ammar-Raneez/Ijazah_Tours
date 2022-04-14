@@ -1,27 +1,28 @@
 import {
   useEffect, useState, MouseEvent,
 } from 'react';
-import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+
 import { CircularProgress } from '@material-ui/core';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
 import {
   collection,
   getDocs,
 } from 'firebase/firestore';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
-import CustomerForm from '../../../../organisms/quote/quotation/create-quotation/customer/CustomerForm';
 import DivAtom from '../../../../atoms/DivAtom';
 import H2Atom from '../../../../atoms/H2Atom';
 import IconAtom from '../../../../atoms/IconAtom';
-import { selectWith2NavbarHeight, selectWith2NavbarWidth } from '../../../../redux/containerSizeSlice';
 import { db } from '../../../../firebase';
-import { DropdownOption, LibraryGuest } from '../../../../utils/types';
-import { dateTypeOptions, mealPlanOptions } from '../../../../utils/helpers';
+import CustomerForm from '../../../../organisms/quote/quotation/create-quotation/customer/CustomerForm';
+import { selectWith2NavbarHeight, selectWith2NavbarWidth } from '../../../../redux/containerSizeSlice';
 import {
   fetchingDataIndicatorStyles,
   quoteCreateQuoteStyles,
 } from '../../../../styles';
+import { dateTypeOptions, mealPlanOptions } from '../../../../utils/helpers';
+import { DropdownOption, LibraryGuest } from '../../../../utils/types';
 
 function Customer() {
   const height = useSelector(selectWith2NavbarHeight);
@@ -57,10 +58,10 @@ function Customer() {
 
   useEffect(() => {
     const getInitialData = async () => {
-      const qData = (await getDocs(collection(db, `Approval Quotations`))).docs;
-      const rData = (await getDocs(collection(db, `Library Guests`))).docs;
-      const hData = (await getDocs(collection(db, `Settings Holiday Types`))).docs;
-      const dData = (await getDocs(collection(db, `Library Accomodation`))).docs;
+      const qData = (await getDocs(collection(db, 'Approval Quotations'))).docs;
+      const rData = (await getDocs(collection(db, 'Library Guests'))).docs;
+      const hData = (await getDocs(collection(db, 'Settings Holiday Types'))).docs;
+      const dData = (await getDocs(collection(db, 'Library Accomodation'))).docs;
 
       const aqData = qData.map((dc) => dc.data());
       const rfData = rData.map((dc) => dc.data());

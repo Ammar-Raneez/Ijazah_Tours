@@ -3,8 +3,7 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
 import {
   collection,
@@ -13,16 +12,18 @@ import {
   serverTimestamp,
   setDoc,
 } from 'firebase/firestore';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 
-import CreateEditAccomodationForm from '../../../organisms/library/accomodation/CreateEditAccomodationForm';
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
 import IconAtom from '../../../atoms/IconAtom';
 import { db } from '../../../firebase';
+import CreateEditAccomodationForm from '../../../organisms/library/accomodation/CreateEditAccomodationForm';
 import { selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
-import { AccomodationRate, SettingsRoomProperties, DropdownOption } from '../../../utils/types';
 import { libraryAccomodationStyles } from '../../../styles';
+import { AccomodationRate, SettingsRoomProperties, DropdownOption } from '../../../utils/types';
 
 interface CreateAccomodationProps {
   isCreating: boolean;
@@ -81,7 +82,7 @@ function CreateAccomodation({
 
   useEffect(() => {
     const getInitialData = async () => {
-      const aData = (await getDocs(collection(db, `Settings Accomodation Types`))).docs;
+      const aData = (await getDocs(collection(db, 'Settings Accomodation Types'))).docs;
       const accData = aData.map((dc) => dc.data());
       const accIds = aData.map((dc) => dc.id);
 

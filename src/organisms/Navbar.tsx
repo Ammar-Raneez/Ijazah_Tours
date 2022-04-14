@@ -1,8 +1,8 @@
 import DivAtom from '../atoms/DivAtom';
 import LinkAtom from '../atoms/LinkAtom';
 import LinkTextAtom from '../atoms/LinkTextAtom';
-import { NavbarType } from '../utils/types';
 import { navbarStyles } from '../styles';
+import { NavbarType } from '../utils/types';
 
 const LINKS = [
   {

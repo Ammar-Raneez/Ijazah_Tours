@@ -1,22 +1,23 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Route, useHistory } from 'react-router-dom';
+
 import {
   collection,
   deleteDoc,
   doc,
   getDocs,
 } from 'firebase/firestore';
+import { useSelector } from 'react-redux';
+import { Route, useHistory } from 'react-router-dom';
 
+import DivAtom from '../../../atoms/DivAtom';
+import { db } from '../../../firebase';
+import AccomodationTable from '../../../organisms/library/accomodation/AccomodationTable';
+import { selectWithNavbarHeight } from '../../../redux/containerSizeSlice';
+import { libraryStyles } from '../../../styles';
+import { searchData } from '../../../utils/helpers';
+import { DropdownOption, LibraryAccomodation, SettingsRoomProperties } from '../../../utils/types';
 import CreateAccomodation from './CreateAccomodation';
 import EditAccomodation from './EditAccomodation';
-import AccomodationTable from '../../../organisms/library/accomodation/AccomodationTable';
-import DivAtom from '../../../atoms/DivAtom';
-import { selectWithNavbarHeight } from '../../../redux/containerSizeSlice';
-import { db } from '../../../firebase';
-import { DropdownOption, LibraryAccomodation, SettingsRoomProperties } from '../../../utils/types';
-import { searchData } from '../../../utils/helpers';
-import { libraryStyles } from '../../../styles';
 
 function Accomodation() {
   const height = useSelector(selectWithNavbarHeight);
@@ -64,7 +65,7 @@ function Accomodation() {
       const vData = (await getDocs(collection(db, 'Settings Room Views'))).docs;
       const tData = (await getDocs(collection(db, 'Settings Room Types'))).docs;
       const gData = (await getDocs(collection(db, 'Settings Room Gradings'))).docs;
-      const aData = (await getDocs(collection(db, `Settings Accomodation Types`))).docs;
+      const aData = (await getDocs(collection(db, 'Settings Accomodation Types'))).docs;
       const views = vData.map((dc) => dc.data());
       const types = tData.map((dc) => dc.data());
       const gradings = gData.map((dc) => dc.data());

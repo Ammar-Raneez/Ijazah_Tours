@@ -11,10 +11,10 @@ import {
 import { useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 
+import DivAtom from '../../../../atoms/DivAtom';
+import SpanAtom from '../../../../atoms/SpanAtom';
 import TableColumnCell from '../../../../molecules/TableColumnCell';
 import TableRowTextCell from '../../../../molecules/TableRowTextCell';
-import SpanAtom from '../../../../atoms/SpanAtom';
-import DivAtom from '../../../../atoms/DivAtom';
 import { selectWithNavbarWidth } from '../../../../redux/containerSizeSlice';
 import { voucherStyles } from '../../../../styles';
 

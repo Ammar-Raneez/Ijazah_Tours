@@ -1,4 +1,7 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
+
+import { CircularProgress } from '@material-ui/core';
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
 import {
   BrowserRouter as Router,
@@ -6,33 +9,31 @@ import {
   Route,
   Switch,
 } from 'react-router-dom';
-import { CircularProgress } from '@material-ui/core';
 import styled from 'styled-components';
-import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 
-import Quotations from './pages/quote/quotation/Quotations';
-import Voucher from './pages/quote/voucher/Voucher';
-import Summary from './pages/quote/summary/Summary';
+import DivAtom from './atoms/DivAtom';
+import GlobalStyle from './globalStyle';
+import Header from './organisms/Header';
+import Navbar from './organisms/Navbar';
+import Sidebar from './organisms/Sidebar';
+import Dashboard from './pages/dashboard/Dashboard';
 import Accomodation from './pages/library/accomodation/Accomodation';
 import Driver from './pages/library/driver/Driver';
 import Guest from './pages/library/guest/Guest';
-import Dashboard from './pages/dashboard/Dashboard';
+import Login from './pages/login/Login';
 import UserProfile from './pages/profile/UserProfile';
+import Quotations from './pages/quote/quotation/Quotations';
+import Summary from './pages/quote/summary/Summary';
+import Voucher from './pages/quote/voucher/Voucher';
 import SettingsAccomodation from './pages/settings/accomodation/SettingsAccomodation';
+import General from './pages/settings/general/General';
 import Tour from './pages/settings/tour/Tour';
 import UserManagement from './pages/settings/user-management/UserManagement';
-import General from './pages/settings/general/General';
-import Login from './pages/login/Login';
-import Header from './organisms/Header';
-import Sidebar from './organisms/Sidebar';
-import Navbar from './organisms/Navbar';
-import DivAtom from './atoms/DivAtom';
 import { onSizeChange } from './redux/containerSizeSlice';
 import { login, logout } from './redux/userSlice';
-import ProtectedRoute from './utils/ProtectedRoute';
-import { getUserOnLogin, widthHeightDynamicStyle } from './utils/helpers';
-import GlobalStyle from './globalStyle';
 import { fetchingDataIndicatorStyles } from './styles';
+import { getUserOnLogin, widthHeightDynamicStyle } from './utils/helpers';
+import ProtectedRoute from './utils/ProtectedRoute';
 
 const rememberMe = localStorage.getItem('Ijazah Remember Me') !== 'false';
 

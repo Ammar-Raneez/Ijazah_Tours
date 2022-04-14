@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import {
   collection,
   deleteDoc,
@@ -10,20 +11,20 @@ import {
   setDoc,
   updateDoc,
 } from 'firebase/firestore';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 
-import UMTeamMemberTable from '../../../organisms/settings/user-management/UMTeamMemberTable';
-import UMTeamMemberDialog from '../../../organisms/settings/user-management/UMTeamMemberDialog';
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
+import { auth, db } from '../../../firebase';
+import UMTeamMemberDialog from '../../../organisms/settings/user-management/UMTeamMemberDialog';
+import UMTeamMemberTable from '../../../organisms/settings/user-management/UMTeamMemberTable';
 import { selectWithNavbarHeight, selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
 import { selectUser, login } from '../../../redux/userSlice';
-import { auth, db } from '../../../firebase';
-import { FlexDirection, SettingsTeamMember } from '../../../utils/types';
-import { widthHeightDynamicStyle } from '../../../utils/helpers';
 import { TableToolbarStyles, settingsStyles } from '../../../styles';
+import { widthHeightDynamicStyle } from '../../../utils/helpers';
+import { FlexDirection, SettingsTeamMember } from '../../../utils/types';
 
 function UserManagement() {
   const user = useSelector(selectUser);

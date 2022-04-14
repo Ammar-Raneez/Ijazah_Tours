@@ -1,7 +1,8 @@
 import { ChangeEvent, FormEvent } from 'react';
+
 import { CircularProgress } from '@material-ui/core';
-import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
 
 import ButtonAtom from '../../atoms/ButtonAtom';
 import CheckboxAtom from '../../atoms/CheckboxAtom';

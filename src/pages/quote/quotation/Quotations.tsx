@@ -1,25 +1,26 @@
 import { ChangeEvent, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Link, Route } from 'react-router-dom';
+
 import { CircularProgress } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { collection, getDocs } from 'firebase/firestore';
+import { useSelector } from 'react-redux';
+import { Link, Route } from 'react-router-dom';
 
-import Customer from './create-quotation/Customer';
-import Accomodation from './create-quotation/Accomodation';
-import Costing from './create-quotation/Costing';
-import Approval from './create-quotation/Approval';
-import QuotationsTable from '../../../organisms/quote/quotation/QuotationsTable';
-import CreateQuotationNavbar from '../../../organisms/quote/quotation/CreateQuotationNavbar';
-import DataCard from '../../../molecules/DataCard';
-import DivAtom from '../../../atoms/DivAtom';
 import ButtonAtom from '../../../atoms/ButtonAtom';
+import DivAtom from '../../../atoms/DivAtom';
 import InputAtom from '../../../atoms/InputAtom';
-import { selectWithNavbarHeight, selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
 import { db } from '../../../firebase';
-import { CustomerQuotation, FlexDirection, JustifyContent } from '../../../utils/types';
-import { searchData, widthHeightDynamicStyle } from '../../../utils/helpers';
+import DataCard from '../../../molecules/DataCard';
+import CreateQuotationNavbar from '../../../organisms/quote/quotation/CreateQuotationNavbar';
+import QuotationsTable from '../../../organisms/quote/quotation/QuotationsTable';
+import { selectWithNavbarHeight, selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
 import { fetchingDataIndicatorStyles, quotationsStyles } from '../../../styles';
+import { searchData, widthHeightDynamicStyle } from '../../../utils/helpers';
+import { CustomerQuotation, FlexDirection, JustifyContent } from '../../../utils/types';
+import Accomodation from './create-quotation/Accomodation';
+import Approval from './create-quotation/Approval';
+import Costing from './create-quotation/Costing';
+import Customer from './create-quotation/Customer';
 
 function Quotations() {
   const height = useSelector(selectWithNavbarHeight);

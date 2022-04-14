@@ -1,16 +1,17 @@
 import { ChangeEvent } from 'react';
+
 import { CircularProgress } from '@material-ui/core';
 
-import ImageUploader from './ImageUploader';
-import FormControlInput from '../../../molecules/FormControlInput';
-import CheckboxGroup from '../../../molecules/CheckboxGroup';
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import DivAtom from '../../../atoms/DivAtom';
-import TextFieldAtom from '../../../atoms/TextFieldAtom';
 import ParagraphAtom from '../../../atoms/ParagraphAtom';
-import { FlexDirection } from '../../../utils/types';
-import { statusOptions, vehicleOptions, widthHeightDynamicStyle } from '../../../utils/helpers';
+import TextFieldAtom from '../../../atoms/TextFieldAtom';
+import CheckboxGroup from '../../../molecules/CheckboxGroup';
+import FormControlInput from '../../../molecules/FormControlInput';
 import { libraryDriverStyles, libraryStyles } from '../../../styles';
+import { statusOptions, vehicleOptions, widthHeightDynamicStyle } from '../../../utils/helpers';
+import { FlexDirection } from '../../../utils/types';
+import ImageUploader from './ImageUploader';
 
 interface CreateEditDriverFormProps {
   width: number;

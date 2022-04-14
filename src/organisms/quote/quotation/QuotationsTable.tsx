@@ -1,4 +1,5 @@
 import { ChangeEvent, MouseEvent, useState } from 'react';
+
 import {
   makeStyles,
   Paper,
@@ -12,12 +13,12 @@ import {
 } from '@material-ui/core';
 
 import GuestProfile from '../../../molecules/GuestProfile';
+import TablePaginationActions from '../../../molecules/TableBottomPagination';
+import TableHead from '../../../molecules/TableHead';
 import TableRowButtonCell from '../../../molecules/TableRowButtonCell';
 import TableRowTextCell from '../../../molecules/TableRowTextCell';
-import TablePaginationActions from '../../../molecules/TableBottomPagination';
-import { CustomerQuotation, Order } from '../../../utils/types';
 import { getComparator, stableSort } from '../../../utils/helpers';
-import TableHead from '../../../molecules/TableHead';
+import { CustomerQuotation, Order } from '../../../utils/types';
 
 const headCells = [
   { id: 'name', label: 'GUEST' },

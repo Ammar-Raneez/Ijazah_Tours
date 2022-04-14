@@ -1,4 +1,5 @@
 import { ChangeEvent, MouseEventHandler } from 'react';
+
 import {
   CircularProgress,
   Dialog,
@@ -9,12 +10,12 @@ import {
 } from '@material-ui/core';
 
 import ButtonAtom from '../../atoms/ButtonAtom';
+import InputAtom from '../../atoms/InputAtom';
+import ParagraphAtom from '../../atoms/ParagraphAtom';
 import {
   settingsStyles,
   TableToolbarStyles,
 } from '../../styles';
-import InputAtom from '../../atoms/InputAtom';
-import ParagraphAtom from '../../atoms/ParagraphAtom';
 
 interface SingleInputDialogProps {
   title: string;

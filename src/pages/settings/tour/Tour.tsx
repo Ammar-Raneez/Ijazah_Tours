@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+
 import {
   collection,
   deleteDoc,
@@ -10,18 +10,19 @@ import {
   setDoc,
   updateDoc,
 } from 'firebase/firestore';
+import { useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 
-import SectionContainer from '../../../organisms/settings/SectionContainer';
-import ReminderTable from '../../../organisms/settings/tour/ReminderTable';
+import DivAtom from '../../../atoms/DivAtom';
 import UnorderedListAtom from '../../../atoms/UnorderedListAtom';
+import { db } from '../../../firebase';
+import SectionContainer from '../../../organisms/settings/SectionContainer';
 import SingleInputDialog from '../../../organisms/settings/SingleInputDialog';
 import ReminderInputDialog from '../../../organisms/settings/tour/ReminderInputDialog';
-import DivAtom from '../../../atoms/DivAtom';
+import ReminderTable from '../../../organisms/settings/tour/ReminderTable';
 import { selectWithNavbarHeight, selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
-import { db } from '../../../firebase';
-import { SettingsReminder, SettingsSingleInput } from '../../../utils/types';
 import { settingsStyles } from '../../../styles';
+import { SettingsReminder, SettingsSingleInput } from '../../../utils/types';
 
 const INPUT_TYPES = [
   {
@@ -96,7 +97,7 @@ function Tour() {
         }),
       );
 
-      const rData = (await getDocs(collection(db, `Settings Reminders`))).docs;
+      const rData = (await getDocs(collection(db, 'Settings Reminders'))).docs;
       const reminders = rData.map((dc) => dc.data());
       const reminderIds = rData.map((dc) => dc.id);
       reminderIds.forEach((id, i) => {
@@ -161,7 +162,7 @@ function Tour() {
 
     setIsCreating(true);
     const type = newReminderTypes[0] ? 'Creation of Customer' : 'Creation of Quotation';
-    await setDoc(doc(db, `Settings Reminders`, uuid()), {
+    await setDoc(doc(db, 'Settings Reminders', uuid()), {
       title: newReminderTitle,
       description: newReminderDesc,
       type,
@@ -187,7 +188,7 @@ function Tour() {
 
     setIsUpdating(true);
     const type = editReminderTypes[0] ? 'Creation of Customer' : 'Creation of Quotation';
-    await updateDoc(doc(db, `Settings Reminders`, editId), {
+    await updateDoc(doc(db, 'Settings Reminders', editId), {
       title: editReminderTitle,
       description: editReminderDesc,
       type,
@@ -201,7 +202,7 @@ function Tour() {
     const confirmDelete = window.confirm('Are you sure you want to delete this item?');
     if (confirmDelete) {
       setIsDeleting(false);
-      await deleteDoc(doc(db, `Settings Reminders`, row.id));
+      await deleteDoc(doc(db, 'Settings Reminders', row.id));
       setIsDeleting(true);
     }
   };

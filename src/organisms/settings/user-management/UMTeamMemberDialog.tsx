@@ -1,4 +1,5 @@
 import { MouseEventHandler } from 'react';
+
 import {
   CircularProgress,
   Dialog,
@@ -6,13 +7,13 @@ import {
   DialogTitle,
 } from '@material-ui/core';
 
-import FormControlInput from '../../../molecules/FormControlInput';
 import ButtonAtom from '../../../atoms/ButtonAtom';
+import ParagraphAtom from '../../../atoms/ParagraphAtom';
+import FormControlInput from '../../../molecules/FormControlInput';
 import {
   settingsStyles,
   TableToolbarStyles,
 } from '../../../styles';
-import ParagraphAtom from '../../../atoms/ParagraphAtom';
 
 interface UMTeamMemberDialogProps {
   btnText: string;

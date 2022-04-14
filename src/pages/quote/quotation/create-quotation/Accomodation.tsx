@@ -3,28 +3,29 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+
 import { CircularProgress } from '@material-ui/core';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
 import SearchIcon from '@material-ui/icons/Search';
 import { collection, getDocs } from 'firebase/firestore';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
-import AccomodationTable from '../../../../organisms/quote/quotation/create-quotation/accomodation/AccomodationTable';
-import DivAtom from '../../../../atoms/DivAtom';
 import ButtonAtom from '../../../../atoms/ButtonAtom';
-import ParagraphAtom from '../../../../atoms/ParagraphAtom';
-import InputAtom from '../../../../atoms/InputAtom';
-import IconAtom from '../../../../atoms/IconAtom';
+import DivAtom from '../../../../atoms/DivAtom';
 import H2Atom from '../../../../atoms/H2Atom';
-import { selectWith2NavbarHeight, selectWith2NavbarWidth } from '../../../../redux/containerSizeSlice';
+import IconAtom from '../../../../atoms/IconAtom';
+import InputAtom from '../../../../atoms/InputAtom';
+import ParagraphAtom from '../../../../atoms/ParagraphAtom';
 import { db } from '../../../../firebase';
-import { FlexDirection, UserAccomodation } from '../../../../utils/types';
-import { getDaysDifference, widthHeightDynamicStyle } from '../../../../utils/helpers';
+import AccomodationTable from '../../../../organisms/quote/quotation/create-quotation/accomodation/AccomodationTable';
+import { selectWith2NavbarHeight, selectWith2NavbarWidth } from '../../../../redux/containerSizeSlice';
 import {
   fetchingDataIndicatorStyles,
   quoteCreateQuoteStyles,
 } from '../../../../styles';
+import { getDaysDifference, widthHeightDynamicStyle } from '../../../../utils/helpers';
+import { FlexDirection, UserAccomodation } from '../../../../utils/types';
 
 function Accomodation() {
   const height = useSelector(selectWith2NavbarHeight);

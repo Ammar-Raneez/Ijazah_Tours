@@ -1,6 +1,5 @@
 import { MouseEvent, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+
 import {
   createStyles,
   Hidden,
@@ -10,14 +9,16 @@ import {
   MenuItem,
   Theme,
 } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import MenuIcon from '@material-ui/icons/Menu';
 import { getAuth, signOut } from 'firebase/auth';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
-import GuestProfile from '../molecules/GuestProfile';
 import AvatarAtom from '../atoms/AvatarAtom';
 import DivAtom from '../atoms/DivAtom';
 import SpanAtom from '../atoms/SpanAtom';
+import GuestProfile from '../molecules/GuestProfile';
 import { logout, selectUser } from '../redux/userSlice';
 import { headerStyles } from '../styles';
 

@@ -1,4 +1,5 @@
 import { CSSProperties } from 'react';
+
 import Avatar from '@material-ui/core/Avatar';
 
 interface AvatarAtomProps {

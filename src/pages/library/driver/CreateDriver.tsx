@@ -1,19 +1,20 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
 import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 
-import CreateEditDriverForm from '../../../organisms/library/driver/CreateEditDriverForm';
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
 import IconAtom from '../../../atoms/IconAtom';
-import { selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
 import { db } from '../../../firebase';
-import { statusOptions, uploadImage, vehicleOptions } from '../../../utils/helpers';
+import CreateEditDriverForm from '../../../organisms/library/driver/CreateEditDriverForm';
+import { selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
 import { libraryDriverStyles } from '../../../styles';
+import { statusOptions, uploadImage, vehicleOptions } from '../../../utils/helpers';
 
 const storage = getStorage();
 

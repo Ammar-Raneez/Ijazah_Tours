@@ -1,26 +1,27 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
+
 import { CircularProgress, TextField } from '@material-ui/core';
 import { doc, setDoc } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 import JSPDF from 'jspdf';
+import { useSelector } from 'react-redux';
+import { useHistory, useParams } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 
-import VoucherSummary from './specific-voucher/VoucherSummary';
-import VoucherGuestTable from './specific-voucher/VoucherGuestTable';
-import Banner from '../quotation/create-quotation/approval/Banner';
-import FormControlInput from '../../../molecules/FormControlInput';
+import ButtonAtom from '../../../atoms/ButtonAtom';
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
-import SpanAtom from '../../../atoms/SpanAtom';
-import ButtonAtom from '../../../atoms/ButtonAtom';
 import ParagraphAtom from '../../../atoms/ParagraphAtom';
-import { selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
-import { getElementWidth, uploadPDF, widthHeightDynamicStyle } from '../../../utils/helpers';
-import { db } from '../../../firebase';
+import SpanAtom from '../../../atoms/SpanAtom';
 import { TOUR_CONFIRM_STARTING_PROFORMA } from '../../../data';
+import { db } from '../../../firebase';
+import FormControlInput from '../../../molecules/FormControlInput';
+import { selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
 import { voucherStyles } from '../../../styles';
+import { getElementWidth, uploadPDF, widthHeightDynamicStyle } from '../../../utils/helpers';
+import Banner from '../quotation/create-quotation/approval/Banner';
+import VoucherGuestTable from './specific-voucher/VoucherGuestTable';
+import VoucherSummary from './specific-voucher/VoucherSummary';
 
 const storage = getStorage();
 

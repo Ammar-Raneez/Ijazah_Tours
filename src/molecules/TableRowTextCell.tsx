@@ -1,7 +1,7 @@
 import { TableCell } from '@material-ui/core';
 import { v4 as uuid } from 'uuid';
-import AnchorAtom from '../atoms/AnchorAtom';
 
+import AnchorAtom from '../atoms/AnchorAtom';
 import ParagraphAtom from '../atoms/ParagraphAtom';
 import { tableRowTextCellStyles } from '../styles';
 

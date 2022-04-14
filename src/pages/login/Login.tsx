@@ -2,18 +2,19 @@ import {
   FormEvent,
   useState,
 } from 'react';
-import { useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
-import LoginForm from '../../organisms/login/LoginForm';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+
 import DivAtom from '../../atoms/DivAtom';
 import H2Atom from '../../atoms/H2Atom';
 import ParagraphAtom from '../../atoms/ParagraphAtom';
-import { login } from '../../redux/userSlice';
+import LoginForm from '../../organisms/login/LoginForm';
 import { selectWithNavbarWidth } from '../../redux/containerSizeSlice';
-import { getUserOnLogin, widthHeightDynamicStyle } from '../../utils/helpers';
+import { login } from '../../redux/userSlice';
 import { loginStyles } from '../../styles';
+import { getUserOnLogin, widthHeightDynamicStyle } from '../../utils/helpers';
 
 function Login() {
   const width = useSelector(selectWithNavbarWidth);

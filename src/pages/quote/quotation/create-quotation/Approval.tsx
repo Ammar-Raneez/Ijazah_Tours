@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+
 import { CircularProgress } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import { getStorage } from 'firebase/storage';
 import {
   collection,
   doc,
@@ -11,31 +9,34 @@ import {
   serverTimestamp,
   setDoc,
 } from 'firebase/firestore';
-import { v4 as uuid } from 'uuid';
+import { getStorage } from 'firebase/storage';
 import JSPDF from 'jspdf';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { v4 as uuid } from 'uuid';
 
-import Banner from '../../../../organisms/quote/quotation/create-quotation/approval/Banner';
-import ApprovalRateComparisonTable from '../../../../organisms/quote/quotation/create-quotation/approval/ApprovalRateComparisonTable';
+import ButtonAtom from '../../../../atoms/ButtonAtom';
+import DivAtom from '../../../../atoms/DivAtom';
+import IconAtom from '../../../../atoms/IconAtom';
+import ParagraphAtom from '../../../../atoms/ParagraphAtom';
+import { QUOTATIONS_COSTING_RATE_DATA } from '../../../../data';
+import { db } from '../../../../firebase';
+import ApprovalAccomodationTable from '../../../../organisms/quote/quotation/create-quotation/approval/ApprovalAccomodationTable';
 import ApprovalOverallCost from '../../../../organisms/quote/quotation/create-quotation/approval/ApprovalOverallCost';
+import ApprovalRateComparisonTable from '../../../../organisms/quote/quotation/create-quotation/approval/ApprovalRateComparisonTable';
+import Banner from '../../../../organisms/quote/quotation/create-quotation/approval/Banner';
 import GuestDetails from '../../../../organisms/quote/quotation/create-quotation/approval/GuestDetails';
 import Offers from '../../../../organisms/quote/quotation/create-quotation/approval/Offers';
-import DivAtom from '../../../../atoms/DivAtom';
-import ParagraphAtom from '../../../../atoms/ParagraphAtom';
-import IconAtom from '../../../../atoms/IconAtom';
-import ButtonAtom from '../../../../atoms/ButtonAtom';
+import TourTypeDialog from '../../../../organisms/quote/quotation/create-quotation/approval/TourTypeDialog';
 import { selectWith2NavbarHeight, selectWith2NavbarWidth } from '../../../../redux/containerSizeSlice';
-import { db } from '../../../../firebase';
-import { LibraryDriver, QuotationCostingRate, UserAccomodation } from '../../../../utils/types';
+import { approvalStyles, fetchingDataIndicatorStyles, quoteCreateQuoteStyles } from '../../../../styles';
 import {
   getDaysDifference,
   tourTypeOptions,
   uploadPDF,
   widthHeightDynamicStyle,
 } from '../../../../utils/helpers';
-import { QUOTATIONS_COSTING_RATE_DATA } from '../../../../data';
-import { approvalStyles, fetchingDataIndicatorStyles, quoteCreateQuoteStyles } from '../../../../styles';
-import ApprovalAccomodationTable from '../../../../organisms/quote/quotation/create-quotation/approval/ApprovalAccomodationTable';
-import TourTypeDialog from '../../../../organisms/quote/quotation/create-quotation/approval/TourTypeDialog';
+import { LibraryDriver, QuotationCostingRate, UserAccomodation } from '../../../../utils/types';
 
 const storage = getStorage();
 
@@ -89,7 +90,7 @@ function Approval({ setCreated }: ApprovalProps) {
 
   useEffect(() => {
     const getInitialData = async () => {
-      const dData = (await getDocs(collection(db, `Library Drivers`))).docs;
+      const dData = (await getDocs(collection(db, 'Library Drivers'))).docs;
       const data = dData.map((dc) => dc.data());
       const ids = dData.map((dc) => dc.id);
       ids.forEach((id, i) => {

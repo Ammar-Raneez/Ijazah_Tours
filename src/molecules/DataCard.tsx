@@ -1,13 +1,14 @@
 import { CSSProperties } from 'react';
-import { useSelector } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
+
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import { makeStyles } from '@material-ui/core/styles';
+import { useSelector } from 'react-redux';
 
 import ParagraphAtom from '../atoms/ParagraphAtom';
-import { widthHeightDynamicStyle } from '../utils/helpers';
-import { DataCardStyles } from '../styles';
 import { selectWithNavbarWidth } from '../redux/containerSizeSlice';
+import { DataCardStyles } from '../styles';
+import { widthHeightDynamicStyle } from '../utils/helpers';
 
 const useStyles = makeStyles({
   root: {

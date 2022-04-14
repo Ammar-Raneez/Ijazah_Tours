@@ -1,23 +1,24 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+
 import { CircularProgress } from '@material-ui/core';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
-import CostingRateComparisonTable from '../../../../organisms/quote/quotation/create-quotation/costing/CostingRateComparisonTable';
-import CostingAccomodationTable from '../../../../organisms/quote/quotation/create-quotation/costing/CostingAccomodationTable';
-import CostingTransport from '../../../../organisms/quote/quotation/create-quotation/costing/CostingTransport';
-import CostingOverallCost from '../../../../organisms/quote/quotation/create-quotation/costing/CostingOverallCost';
-import DivAtom from '../../../../atoms/DivAtom';
-import ParagraphAtom from '../../../../atoms/ParagraphAtom';
 import ButtonAtom from '../../../../atoms/ButtonAtom';
-import { selectWith2NavbarHeight, selectWith2NavbarWidth } from '../../../../redux/containerSizeSlice';
-import { UserAccomodation, QuotationCostingRate } from '../../../../utils/types';
-import { widthHeightDynamicStyle } from '../../../../utils/helpers';
-import { QUOTATIONS_COSTING_RATE_DATA } from '../../../../data';
-import { fetchingDataIndicatorStyles, quoteCreateQuoteStyles } from '../../../../styles';
-import IconAtom from '../../../../atoms/IconAtom';
+import DivAtom from '../../../../atoms/DivAtom';
 import H2Atom from '../../../../atoms/H2Atom';
+import IconAtom from '../../../../atoms/IconAtom';
+import ParagraphAtom from '../../../../atoms/ParagraphAtom';
+import { QUOTATIONS_COSTING_RATE_DATA } from '../../../../data';
+import CostingAccomodationTable from '../../../../organisms/quote/quotation/create-quotation/costing/CostingAccomodationTable';
+import CostingOverallCost from '../../../../organisms/quote/quotation/create-quotation/costing/CostingOverallCost';
+import CostingRateComparisonTable from '../../../../organisms/quote/quotation/create-quotation/costing/CostingRateComparisonTable';
+import CostingTransport from '../../../../organisms/quote/quotation/create-quotation/costing/CostingTransport';
+import { selectWith2NavbarHeight, selectWith2NavbarWidth } from '../../../../redux/containerSizeSlice';
+import { fetchingDataIndicatorStyles, quoteCreateQuoteStyles } from '../../../../styles';
+import { widthHeightDynamicStyle } from '../../../../utils/helpers';
+import { UserAccomodation, QuotationCostingRate } from '../../../../utils/types';
 
 function Costing() {
   const height = useSelector(selectWith2NavbarHeight);

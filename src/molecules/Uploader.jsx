@@ -1,6 +1,6 @@
 import { Button } from '@material-ui/core';
-import { v4 as uuid } from 'uuid';
 import ImageUploading from 'react-images-uploading';
+import { v4 as uuid } from 'uuid';
 
 export default function Uploader({ images, setter, btnText }) {
   return (

@@ -1,28 +1,29 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
+
 import { CircularProgress } from '@material-ui/core';
 import { doc, setDoc } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 import JSPDF from 'jspdf';
+import { useSelector } from 'react-redux';
+import { useHistory, useParams } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 
-import Banner from '../quotation/create-quotation/approval/Banner';
-import FormControlInput from '../../../molecules/FormControlInput';
+import ButtonAtom from '../../../atoms/ButtonAtom';
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
-import SpanAtom from '../../../atoms/SpanAtom';
 import ParagraphAtom from '../../../atoms/ParagraphAtom';
-import ButtonAtom from '../../../atoms/ButtonAtom';
-import { selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
+import SpanAtom from '../../../atoms/SpanAtom';
 import { db } from '../../../firebase';
+import FormControlInput from '../../../molecules/FormControlInput';
+import { selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
+import { voucherStyles } from '../../../styles';
 import {
   getElementWidth,
   number2words,
   uploadPDF,
   widthHeightDynamicStyle,
 } from '../../../utils/helpers';
-import { voucherStyles } from '../../../styles';
+import Banner from '../quotation/create-quotation/approval/Banner';
 
 const storage = getStorage();
 

@@ -1,6 +1,6 @@
 import DivAtom from '../../../../../atoms/DivAtom';
-import { approvalStyles } from '../../../../../styles';
 import SpanAtom from '../../../../../atoms/SpanAtom';
+import { approvalStyles } from '../../../../../styles';
 
 interface ApprovalOverallCostProps {
   sellingPrice: string;

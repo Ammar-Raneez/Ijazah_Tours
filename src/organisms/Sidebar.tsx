@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+
 import {
   Divider,
   Drawer,
@@ -9,13 +9,14 @@ import {
   makeStyles,
   Theme,
 } from '@material-ui/core';
-import styled from 'styled-components';
-import { getAuth, signOut } from 'firebase/auth';
 import clsx from 'clsx';
+import { getAuth, signOut } from 'firebase/auth';
+import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
 
+import ButtonAtom from '../atoms/ButtonAtom';
 import LinkAtom from '../atoms/LinkAtom';
 import LinkTextAtom from '../atoms/LinkTextAtom';
-import ButtonAtom from '../atoms/ButtonAtom';
 import { logout } from '../redux/userSlice';
 import { navbarStyles } from '../styles';
 
