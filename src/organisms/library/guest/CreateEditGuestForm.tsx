@@ -309,7 +309,12 @@ function CreateEditGuestForm({
           ...libraryCreateGuestStyles.addBtnContainer,
           flexDirection: widthHeightDynamicStyle(width, 768, 'column', 'row') as FlexDirection,
           padding: widthHeightDynamicStyle(width, 768, '1rem', 0),
-          margin: widthHeightDynamicStyle(width, 768, 0, libraryCreateGuestStyles.addBtnContainer.margin),
+          margin: widthHeightDynamicStyle(
+            width,
+            768,
+            0,
+            libraryCreateGuestStyles.addBtnContainer.margin,
+          ),
         }}
       >
         <ButtonAtom

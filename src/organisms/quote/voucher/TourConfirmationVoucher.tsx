@@ -29,7 +29,10 @@ interface TourConfirmationVoucherProps {
   setIsVoucherApproved: any;
 }
 
-function TourConfirmationVoucher({ voucherData, setIsVoucherApproved }: TourConfirmationVoucherProps) {
+function TourConfirmationVoucher({
+  voucherData,
+  setIsVoucherApproved,
+}: TourConfirmationVoucherProps) {
   const width = useSelector(selectWithNavbarWidth);
 
   const { id } = useParams<{ id: string }>();

@@ -36,7 +36,12 @@ function RadioButtonGroup({
         style={radioGroupStyle}
       >
         {options.map((option) => (
-          <FormControlLabel key={uuid()} value={option.value} control={<Radio />} label={option.label} />
+          <FormControlLabel
+            key={uuid()}
+            value={option.value}
+            control={<Radio />}
+            label={option.label}
+          />
         ))}
       </RadioGroup>
     </FormControl>

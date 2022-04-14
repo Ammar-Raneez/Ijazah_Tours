@@ -56,8 +56,11 @@ function Costing() {
 
     const transportTotal = Number(rate.slice(1, rate.length)) * Number(days);
     const expenseTotal = Number(accTotal + transportTotal);
-    const priceTotal = ((Number(commission.slice(0, commission.length - 1)) + 100) / 100) * expenseTotal;
-    const netTotal = Number(sellingPrice.slice(1, sellingPrice.length)) - Number(discount.slice(1, discount.length));
+    const priceTotal = ((Number(commission.slice(0, commission.length - 1)) + 100) / 100)
+      * expenseTotal;
+
+    const netTotal = Number(sellingPrice.slice(1, sellingPrice.length))
+      - Number(discount.slice(1, discount.length));
 
     setDays(String(transportDays + 1));
     setAccomodationTotal(`$${accTotal}`);
@@ -180,7 +183,12 @@ function Costing() {
             style={{
               ...quoteCreateQuoteStyles.addBtnContainer,
               padding: widthHeightDynamicStyle(width, 768, '1rem', 0),
-              margin: widthHeightDynamicStyle(width, 768, 0, quoteCreateQuoteStyles.addBtnContainer.margin),
+              margin: widthHeightDynamicStyle(
+                width,
+                768,
+                0,
+                quoteCreateQuoteStyles.addBtnContainer.margin,
+              ),
             }}
           >
             <ButtonAtom

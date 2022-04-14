@@ -184,7 +184,9 @@ function Row({
                       <TableRowCheckboxCell
                         name={voucher.vId}
                         checked={vouchersChecked[index]}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => onChangeVoucherStatus(e, index)}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => (
+                          onChangeVoucherStatus(e, index)
+                        )}
                         align="left"
                       />
                       <TableCell>{voucher.title}</TableCell>
@@ -192,7 +194,6 @@ function Row({
                         key={uuid()}
                         onClick={() => (
                           getVoucherStatus(index) === 'SHARE'
-                            // eslint-disable-next-line max-len
                             ? history.replace(`/quote/voucher/${getVoucherLink(voucher.type)}/${voucher.id}+${voucher.quoteNo}`)
                             : null
                         )}

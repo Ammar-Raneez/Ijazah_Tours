@@ -167,7 +167,9 @@ function VoucherGuestTable({
                 key={uuid()}
                 cell={{
                   align: 'center',
-                  title: data.accomodationDetails.views.find((v: { checked: boolean }) => v.checked).val,
+                  title: data.accomodationDetails.views.find((v: { checked: boolean }) => (
+                    v.checked
+                  )).val,
                   colors: ['#464E5F'],
                   weight: 400,
                 }}

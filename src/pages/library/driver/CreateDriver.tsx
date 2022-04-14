@@ -102,7 +102,11 @@ function CreateDriver({
     uploadImage(storage, 'library-driver', vehiclePic[0].data_url, vehiclePic[0].file.name)
   );
 
-  const uploadImages = async () => [await uploadInsurance(), await uploadProfilePic(), await uploadVehiclePic()];
+  const uploadImages = async () => [
+    await uploadInsurance(),
+    await uploadProfilePic(),
+    await uploadVehiclePic(),
+  ];
 
   const clearInputs = () => {
     setFirstName('');

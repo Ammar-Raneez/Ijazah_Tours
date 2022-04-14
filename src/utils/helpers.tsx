@@ -48,14 +48,24 @@ export const widthHeightDynamicStyle = (
   ifFalse: string | number | undefined,
 ) => (value < threshold ? ifTrue : ifFalse);
 
-export const uploadImage = async (storage: FirebaseStorage, container: string, pic: string, filepath: string) => {
+export const uploadImage = async (
+  storage: FirebaseStorage,
+  container: string,
+  pic: string,
+  filepath: string,
+) => {
   const randomString = uuid();
   const storageRef = ref(storage, `${container}/${randomString + filepath}`);
   await uploadString(storageRef, pic, 'data_url');
   return getDownloadURL(storageRef);
 };
 
-export const uploadPDF = async (storage: FirebaseStorage, container: string, pdf: Blob, filepath: string) => {
+export const uploadPDF = async (
+  storage: FirebaseStorage,
+  container: string,
+  pdf: Blob,
+  filepath: string,
+) => {
   const storageRef = ref(storage, `${container}/${filepath}`);
   await uploadBytes(storageRef, pdf, {
     contentType: 'application/pdf',
@@ -103,7 +113,6 @@ export const getElementWidth = (id: string) => {
   return { elementWidth, elementHeight };
 };
 
-// eslint-disable-next-line max-len
 const num = 'zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen'.split(' ');
 const tens = 'twenty thirty forty fifty sixty seventy eighty ninety'.split(' ');
 
@@ -114,17 +123,14 @@ export const number2words: any = (n: any) => {
 
   const digit = n % 10;
   if (n < 100) {
-    // eslint-disable-next-line no-bitwise
     return tens[~~(n / 10) - 2] + (digit ? ` ${num[digit]}` : '');
   }
 
   if (n < 1000) {
-    // eslint-disable-next-line no-bitwise, prefer-template
-    return num[~~(n / 100)] + ' hundred' + (n % 100 === 0 ? '' : ' and ' + number2words(n % 100));
+    return `${num[~~(n / 100)]} hundred${n % 100 === 0 ? '' : ` and ${number2words(n % 100)}`}`;
   }
 
-  // eslint-disable-next-line no-bitwise, prefer-template
-  return number2words(~~(n / 1000)) + ' thousand' + (n % 1000 !== 0 ? ' ' + number2words(n % 1000) : '');
+  return `${number2words(~~(n / 1000))} thousand${n % 1000 !== 0 ? ` ${number2words(n % 1000)}` : ''}`;
 };
 
 export const statusOptions = [

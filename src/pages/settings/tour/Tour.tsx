@@ -241,7 +241,10 @@ function Tour() {
   };
 
   const onChangeEditReminderType = (i: number) => {
-    const updatedCheckedState = editReminderTypes.map((type, index) => (index === i ? !type : type));
+    const updatedCheckedState = editReminderTypes.map((type, index) => (
+      index === i ? !type : type
+    ));
+
     setEditReminderTypes(updatedCheckedState);
     setShowValidationErrorMessage(false);
   };

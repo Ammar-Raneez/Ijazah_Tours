@@ -301,7 +301,8 @@ function Approval({ setCreated }: ApprovalProps) {
         <li>All Government Taxes: {getSaveQuoteOffers(allGovernmentTaxes)}</li>
         <li>
           Guide and the Car.
-          Transportation from Reception to Fairwell, (Throught the Trip): {getSaveQuoteOffers(guideAndCar)}
+          Transportation from Reception to Fairwell, (Throught the Trip):
+          {getSaveQuoteOffers(guideAndCar)}
         </li>
       </ul>
     </DivAtom>

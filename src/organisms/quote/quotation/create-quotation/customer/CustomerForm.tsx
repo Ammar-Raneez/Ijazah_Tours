@@ -134,7 +134,9 @@ function CustomerForm({
             size="medium"
             label="Reference Number"
             value={refNum}
-            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => onRefNumChange(customerData, e.target.value)}
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => (
+              onRefNumChange(customerData, e.target.value)
+            )}
             options={refData}
             adornmentPosition="end"
             style={{
@@ -349,7 +351,12 @@ function CustomerForm({
         style={{
           ...quoteCreateQuoteStyles.addBtnContainer,
           padding: widthHeightDynamicStyle(width, 768, '1rem', 0),
-          margin: widthHeightDynamicStyle(width, 768, 0, quoteCreateQuoteStyles.addBtnContainer.margin),
+          margin: widthHeightDynamicStyle(
+            width,
+            768,
+            0,
+            quoteCreateQuoteStyles.addBtnContainer.margin,
+          ),
         }}
       >
         <ButtonAtom

@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 export const QUOTATIONS_COSTING_RATE_DATA = [
   {
     id: '1',

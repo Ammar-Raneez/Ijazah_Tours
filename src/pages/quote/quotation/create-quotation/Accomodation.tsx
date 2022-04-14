@@ -34,8 +34,14 @@ function Accomodation() {
   const [selectedAccomodations, setSelectedAccomodations] = useState<UserAccomodation[]>([]);
 
   const [selectedAccomodationsNights, setSelectedAccomodationsNights] = useState<string[]>([]);
-  const [selectedAccomodationsRoomTypes, setSelectedAccomodationsRoomTypes] = useState<string[]>([]);
-  const [selectedAccomodationsMealPlans, setSelectedAccomodationsMealPlans] = useState<string[]>([]);
+  const [
+    selectedAccomodationsRoomTypes,
+    setSelectedAccomodationsRoomTypes,
+  ] = useState<string[]>([]);
+  const [
+    selectedAccomodationsMealPlans,
+    setSelectedAccomodationsMealPlans,
+  ] = useState<string[]>([]);
 
   const [search, setSearch] = useState('');
   const [removedAcc, setRemovedAcc] = useState(false);
@@ -242,7 +248,6 @@ function Accomodation() {
 
           {showValidationErrorMessage && (
             <ParagraphAtom
-              // eslint-disable-next-line max-len
               text={`Please specify the same number of nights as your departure - check-in. (Nights required - ${validationNightsRequired})`}
               style={quoteCreateQuoteStyles.errorMsg}
             />
@@ -252,7 +257,12 @@ function Accomodation() {
             style={{
               ...quoteCreateQuoteStyles.addBtnContainer,
               padding: widthHeightDynamicStyle(width, 768, '1rem', 0),
-              margin: widthHeightDynamicStyle(width, 768, 0, quoteCreateQuoteStyles.addBtnContainer.margin),
+              margin: widthHeightDynamicStyle(
+                width,
+                768,
+                0,
+                quoteCreateQuoteStyles.addBtnContainer.margin,
+              ),
             }}
           >
             <ButtonAtom

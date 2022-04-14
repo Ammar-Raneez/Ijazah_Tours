@@ -26,7 +26,11 @@ function Accomodation() {
   const [roomCategoriesData, setRoomCategoriesData] = useState<SettingsRoomProperties[]>([]);
   const [roomGradingsData, setRoomGradingsData] = useState<SettingsRoomProperties[]>([]);
   const [accomodationTypeData, setAccomodationTypeData] = useState<DropdownOption[]>([]);
-  const [initialAccomodationSearchData, setInitialAccomodationSearchData] = useState<LibraryAccomodation[]>([]);
+  const [
+    initialAccomodationSearchData,
+    setInitialAccomodationSearchData,
+  ] = useState<LibraryAccomodation[]>([]);
+
   const [search, setSearch] = useState('');
 
   const [editAccomodationData, setEditAccomodationData] = useState<LibraryAccomodation>();

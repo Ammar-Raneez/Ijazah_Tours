@@ -43,7 +43,11 @@ function Voucher() {
         vouchData[i].id = id;
       });
 
-      const groupedVouchData = _.groupBy(vouchData, (voucher: { quoteNo: string }) => voucher.quoteNo);
+      const groupedVouchData = _.groupBy(
+        vouchData,
+        (voucher: { quoteNo: string }) => voucher.quoteNo,
+      );
+
       setVoucherData(groupedVouchData);
     };
 
@@ -60,7 +64,9 @@ function Voucher() {
     Object.keys(voucherData).forEach(async (quoteNo) => {
       const quotationQuery = query(collection(db, 'Approval Quotations'), where('quoteNo', '==', Number(quoteNo)));
       const quotationSnapshot = await getDocs(quotationQuery);
-      if (voucherData[quoteNo].every((voucher: { completed: boolean }) => voucher.completed === true)) {
+      if (voucherData[quoteNo].every((voucher: { completed: boolean }) => (
+        voucher.completed === true))
+      ) {
         quotationSnapshot.forEach(async (snap) => {
           await setDoc(doc(db, 'Approval Quotations', snap.id), {
             ...snap.data(),
@@ -94,16 +100,28 @@ function Voucher() {
         {voucherData ? (
           <>
             <Route path="/quote/voucher/supplier/:id">
-              <SupplierVoucher setIsVoucherApproved={setIsVoucherApproved} voucherData={voucherData} />
+              <SupplierVoucher
+                setIsVoucherApproved={setIsVoucherApproved}
+                voucherData={voucherData}
+              />
             </Route>
             <Route path="/quote/voucher/driver/:id">
-              <DriverVoucher setIsVoucherApproved={setIsVoucherApproved} voucherData={voucherData} />
+              <DriverVoucher
+                setIsVoucherApproved={setIsVoucherApproved}
+                voucherData={voucherData}
+              />
             </Route>
             <Route path="/quote/voucher/itinerary/:id">
-              <ItineraryVoucher setIsVoucherApproved={setIsVoucherApproved} voucherData={voucherData} />
+              <ItineraryVoucher
+                setIsVoucherApproved={setIsVoucherApproved}
+                voucherData={voucherData}
+              />
             </Route>
             <Route path="/quote/voucher/tour-confirmation/:id">
-              <TourConfirmationVoucher setIsVoucherApproved={setIsVoucherApproved} voucherData={voucherData} />
+              <TourConfirmationVoucher
+                setIsVoucherApproved={setIsVoucherApproved}
+                voucherData={voucherData}
+              />
             </Route>
             <Route path="/quote/voucher/receipt/:id">
               <CashReceipt setIsVoucherApproved={setIsVoucherApproved} voucherData={voucherData} />

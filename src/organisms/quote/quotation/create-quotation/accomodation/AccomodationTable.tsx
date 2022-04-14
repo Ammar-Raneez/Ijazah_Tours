@@ -71,7 +71,10 @@ function AccomodationTable({
         </TableHead>
         <TableBody>
           {selectedAccomodations?.length > 0 && selectedAccomodations.map((row, index) => {
-            const roomTypes = Object.keys(row.categoryValues).map((cat) => ({ value: cat, label: cat }));
+            const roomTypes = Object.keys(row.categoryValues).map((cat) => (
+              { value: cat, label: cat }
+            ));
+
             const mealPlanOptions = row.rates
               .map((rate) => rate.newMealPlan)
               .map((rate) => ({ value: rate, label: rate }));
@@ -81,7 +84,11 @@ function AccomodationTable({
             const rowRoomType = selectedAccomodationsRoomTypes[index];
 
             const onSelectChange = (val: string, type: string) => {
-              const { accomodation, accomodations, accomodationIndex } = getAccomodationsFromStorage();
+              const {
+                accomodation,
+                accomodations,
+                accomodationIndex,
+              } = getAccomodationsFromStorage();
 
               if (type === 'Room Type') {
                 const roomTypesCopy = setNewStateValue(selectedAccomodationsRoomTypes, val);
@@ -97,7 +104,11 @@ function AccomodationTable({
             };
 
             const onNightsChange = (val: string) => {
-              const { accomodation, accomodations, accomodationIndex } = getAccomodationsFromStorage();
+              const {
+                accomodation,
+                accomodations,
+                accomodationIndex,
+              } = getAccomodationsFromStorage();
 
               const nightsCopy = setNewStateValue(selectedAccomodationsNights, val);
               setSelectedAccomodationsNights(nightsCopy);
@@ -126,8 +137,14 @@ function AccomodationTable({
 
             const getAccomodationsFromStorage = () => {
               const accomodations = JSON.parse(localStorage.getItem('New Quote Accomodation')!).selectedAccomodations;
-              const accomodation = accomodations?.find((acc: UserAccomodation) => acc.id === row.id)!;
-              const accomodationIndex = accomodations?.findIndex((acc: UserAccomodation) => acc.id === row.id);
+              const accomodation = accomodations?.find((acc: UserAccomodation) => (
+                acc.id === row.id
+              ))!;
+
+              const accomodationIndex = accomodations?.findIndex((acc: UserAccomodation) => (
+                acc.id === row.id
+              ))!;
+
               return { accomodations, accomodation, accomodationIndex };
             };
 

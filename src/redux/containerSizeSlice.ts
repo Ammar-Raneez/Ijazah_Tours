@@ -37,10 +37,28 @@ export const containerSizeSlice = createSlice({
 });
 
 export const { onSizeChange } = containerSizeSlice.actions;
-export const selectWithNavbarWidth = (state: RootState) => state.containerSize.withNavbarWidth;
-export const selectWithNavbarHeight = (state: RootState) => state.containerSize.withNavbarHeight;
-export const selectWith2NavbarWidth = (state: RootState) => state.containerSize.with2NavbarWidth;
-export const selectWith2NavbarHeight = (state: RootState) => state.containerSize.with2NavbarHeight;
-export const selectWithoutNavbarWidth = (state: RootState) => state.containerSize.withoutNavbarWidth;
-export const selectWithoutNavbarHeight = (state: RootState) => state.containerSize.withoutNavbarHeight;
+export const selectWithNavbarWidth = (state: RootState) => (
+  state.containerSize.withNavbarWidth
+);
+
+export const selectWithNavbarHeight = (state: RootState) => (
+  state.containerSize.withNavbarHeight
+);
+
+export const selectWith2NavbarWidth = (state: RootState) => (
+  state.containerSize.with2NavbarWidth
+);
+
+export const selectWith2NavbarHeight = (state: RootState) => (
+  state.containerSize.with2NavbarHeight
+);
+
+export const selectWithoutNavbarWidth = (state: RootState) => (
+  state.containerSize.withoutNavbarWidth
+);
+
+export const selectWithoutNavbarHeight = (state: RootState) => (
+  state.containerSize.withoutNavbarHeight
+);
+
 export default containerSizeSlice.reducer;

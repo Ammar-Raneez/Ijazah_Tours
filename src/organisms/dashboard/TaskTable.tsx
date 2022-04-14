@@ -97,7 +97,9 @@ function Row({ row }: any) {
                         <TableRowCheckboxCell
                           name={subtask.title}
                           checked={subTasksChecked[index]}
-                          onChange={(e: ChangeEvent<HTMLInputElement>) => onChangeSubTaskStatus(e, index)}
+                          onChange={(e: ChangeEvent<HTMLInputElement>) => (
+                            onChangeSubTaskStatus(e, index)
+                          )}
                           align="left"
                         />
                         <TableRowButtonCell

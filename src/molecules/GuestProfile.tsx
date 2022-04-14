@@ -32,7 +32,10 @@ function GuestProfile({
           text={title}
         />
         {subtitle && (
-          <ParagraphAtom style={{ ...guestProfileStyles.paragraph, color: paraColor }} text={subtitle} />
+          <ParagraphAtom
+            style={{ ...guestProfileStyles.paragraph, color: paraColor }}
+            text={subtitle}
+          />
         )}
       </DivAtom>
     </DivAtom>

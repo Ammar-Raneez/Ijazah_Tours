@@ -29,8 +29,15 @@ function Quotations() {
 
   // Keep multiple copies to not affect default states
   const [initialQuotationCardData, setInitialQuotationCardData] = useState<CustomerQuotation[]>([]);
-  const [initialQuotationSearchData, setInitialQuotationSearchData] = useState<CustomerQuotation[]>([]);
-  const [initialQuotationFilteredData, setInitialQuotationFilteredData] = useState<CustomerQuotation[]>([]);
+  const [
+    initialQuotationSearchData,
+    setInitialQuotationSearchData,
+  ] = useState<CustomerQuotation[]>([]);
+
+  const [
+    initialQuotationFilteredData,
+    setInitialQuotationFilteredData,
+  ] = useState<CustomerQuotation[]>([]);
 
   const [search, setSearch] = useState('');
   const [created, setCreated] = useState(false);
