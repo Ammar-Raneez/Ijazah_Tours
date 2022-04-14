@@ -12,7 +12,10 @@ import FormControlInput from '../../../molecules/FormControlInput';
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
 import SpanAtom from '../../../atoms/SpanAtom';
+import ParagraphAtom from '../../../atoms/ParagraphAtom';
+import ButtonAtom from '../../../atoms/ButtonAtom';
 import { selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
+import { db } from '../../../firebase';
 import {
   getElementWidth,
   number2words,
@@ -20,8 +23,6 @@ import {
   widthHeightDynamicStyle,
 } from '../../../utils/helpers';
 import { voucherStyles } from '../../../styles';
-import ButtonAtom from '../../../atoms/ButtonAtom';
-import { db } from '../../../firebase';
 
 const storage = getStorage();
 
@@ -148,21 +149,31 @@ function CashReceipt({ voucherData, setIsVoucherApproved }: CashReceiptProps) {
           <DivAtom
             style={{
               ...voucherStyles.voucherTemplate.summaryDetails.mainContainer,
-              justifyContent: 'flex-end',
+              justifyContent: !isSavingReceipt ? 'flex-end' : 'flex-start',
               paddingRight: 0,
               borderBottom: 0,
             }}
           >
-            <FormControlInput
-              width={widthHeightDynamicStyle(width, 1300, '50%', '30%') as string}
-              label="Director"
-              fullWidth={false}
-              multiline={false}
-              rows={1}
-              value={director}
-              setValue={setDirector}
-              placeholder=""
-            />
+            {!isSavingReceipt ? (
+              <FormControlInput
+                width={widthHeightDynamicStyle(width, 1300, '50%', '30%') as string}
+                label="Director"
+                fullWidth={false}
+                multiline={false}
+                rows={1}
+                value={director}
+                setValue={setDirector}
+                placeholder=""
+              />
+            ) : (
+              <DivAtom>
+                <SpanAtom
+                  text="Director"
+                  style={voucherStyles.voucherTemplate.summaryDetails.label}
+                />
+                <ParagraphAtom text={director} />
+              </DivAtom>
+            )}
           </DivAtom>
         </DivAtom>
       </div>

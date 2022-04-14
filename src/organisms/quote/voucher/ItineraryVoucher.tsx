@@ -16,6 +16,7 @@ import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
 import SpanAtom from '../../../atoms/SpanAtom';
 import ButtonAtom from '../../../atoms/ButtonAtom';
+import ParagraphAtom from '../../../atoms/ParagraphAtom';
 import { selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
 import { getElementWidth, uploadPDF, widthHeightDynamicStyle } from '../../../utils/helpers';
 import { db } from '../../../firebase';
@@ -105,21 +106,31 @@ function ItineraryVoucher({ voucherData, setIsVoucherApproved }: ItineraryVouche
           <DivAtom
             style={{
               ...voucherStyles.voucherTemplate.summaryDetails.mainContainer,
-              justifyContent: 'flex-end',
+              justifyContent: !isSavingVoucher ? 'flex-end' : 'flex-start',
               paddingRight: 0,
               borderBottom: 0,
             }}
           >
-            <FormControlInput
-              width={widthHeightDynamicStyle(width, 1300, '50%', '30%') as string}
-              label="Director"
-              fullWidth={false}
-              multiline={false}
-              rows={1}
-              value={director}
-              setValue={setDirector}
-              placeholder=""
-            />
+            {!isSavingVoucher ? (
+              <FormControlInput
+                width={widthHeightDynamicStyle(width, 1300, '50%', '30%') as string}
+                label="Director"
+                fullWidth={false}
+                multiline={false}
+                rows={1}
+                value={director}
+                setValue={setDirector}
+                placeholder=""
+              />
+            ) : (
+              <DivAtom>
+                <SpanAtom
+                  text="Director"
+                  style={voucherStyles.voucherTemplate.summaryDetails.label}
+                />
+                <ParagraphAtom text={director} />
+              </DivAtom>
+            )}
           </DivAtom>
         </DivAtom>
       </div>
