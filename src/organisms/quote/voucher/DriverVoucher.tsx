@@ -149,7 +149,7 @@ function DriverVoucher({ voucherData, setIsVoucherApproved }: DriverVoucherProps
           size="large"
           text="Confirm"
           endIcon={isSavingVoucher && <CircularProgress size={20} color="inherit" />}
-          disabled={isSavingVoucher || director === ''}
+          disabled={isSavingVoucher || director === '' || remarks === ''}
           onClick={saveVoucher}
           style={{
             ...voucherStyles.addBtn,

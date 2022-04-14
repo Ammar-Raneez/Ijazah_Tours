@@ -94,7 +94,7 @@ function Voucher() {
         {voucherData ? (
           <>
             <Route path="/quote/voucher/supplier/:id">
-              <SupplierVoucher voucherData={voucherData} />
+              <SupplierVoucher setIsVoucherApproved={setIsVoucherApproved} voucherData={voucherData} />
             </Route>
             <Route path="/quote/voucher/driver/:id">
               <DriverVoucher setIsVoucherApproved={setIsVoucherApproved} voucherData={voucherData} />
