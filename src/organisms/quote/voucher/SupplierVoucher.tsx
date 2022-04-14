@@ -19,6 +19,7 @@ import { db } from '../../../firebase';
 import { getElementWidth, uploadPDF, widthHeightDynamicStyle } from '../../../utils/helpers';
 import { voucherStyles } from '../../../styles';
 import VoucherSummary from './specific-voucher/VoucherSummary';
+import VoucherGuestTable from './specific-voucher/VoucherGuestTable';
 
 const storage = getStorage();
 
@@ -42,8 +43,6 @@ function SupplierVoucher({ voucherData, setIsVoucherApproved }: SupplierVoucherP
   const [isSavingVoucher, setIsSavingVoucher] = useState(false);
 
   const history = useHistory();
-
-  console.log(vData);
 
   const generatePDF = async () => {
     const { elementWidth, elementHeight } = getElementWidth('report');
@@ -83,6 +82,12 @@ function SupplierVoucher({ voucherData, setIsVoucherApproved }: SupplierVoucherP
         <DivAtom style={{ padding: '2rem' }}>
           <Banner />
           <VoucherSummary vData={vData} type="accomodation" />
+          <VoucherGuestTable
+            accColumns={['NIGHTS', 'ROOM TYPE', 'MEAL PLAN', 'VIEW']}
+            guestColumns={['ADULTS', 'CHILDREN', 'AGE']}
+            data={vData}
+            type="accomodation"
+          />
           <DivAtom
             style={{
               ...voucherStyles.voucherTemplate.summaryDetails.mainContainer,

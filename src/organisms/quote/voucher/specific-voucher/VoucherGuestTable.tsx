@@ -37,12 +37,14 @@ interface VoucherGuestTableProps {
   data: any;
   accColumns: string[];
   guestColumns: string[];
+  type?: string;
 }
 
 function VoucherGuestTable({
   data,
   accColumns,
   guestColumns,
+  type,
 }: VoucherGuestTableProps) {
   const width = useSelector(selectWithNavbarWidth);
   const classes = useStyles();
@@ -60,24 +62,28 @@ function VoucherGuestTable({
     return ageString;
   };
 
+  const RenderColumns = (col: string[]) => (
+    col.map((column) => (
+      <TableColumnCell
+        greenBorder
+        key={uuid()}
+        align="center"
+        color="#1C5BBA"
+        column={column}
+      />
+    ))
+  );
+
   const GuestTable = () => (
     <TableContainer
       style={width < 1500 ? { width: '100%' } : {}}
       className={classes.guestPaper}
       component={Paper}
     >
-      <Table className={classes.table} aria-label="approval accomodation table">
+      <Table className={classes.table} aria-label="voucher guest table">
         <TableHead>
           <TableRow style={{ borderTop: '1px solid #41E93E' }}>
-            {guestColumns.map((column) => (
-              <TableColumnCell
-                greenBorder
-                key={uuid()}
-                align="center"
-                color="#1C5BBA"
-                column={column}
-              />
-            ))}
+            {RenderColumns(guestColumns)}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -124,25 +130,17 @@ function VoucherGuestTable({
       <Table className={classes.table} aria-label="approval accomodation table">
         <TableHead>
           <TableRow style={{ borderTop: '1px solid #41E93E' }}>
-            {accColumns.map((column) => (
-              <TableColumnCell
-                greenBorder
-                key={uuid()}
-                align="center"
-                color="#1C5BBA"
-                column={column}
-              />
-            ))}
+            {RenderColumns(accColumns)}
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.accomodationDetails.map((row: any) => (
+          {type === 'accomodation' ? (
             <TableRow key={uuid()}>
               <TableRowTextCell
                 key={uuid()}
                 cell={{
                   align: 'center',
-                  title: row.nights,
+                  title: data.accomodationDetails.nights,
                   colors: ['#464E5F'],
                   weight: 400,
                 }}
@@ -151,7 +149,7 @@ function VoucherGuestTable({
                 key={uuid()}
                 cell={{
                   align: 'center',
-                  title: row.city,
+                  title: data.accomodationDetails.roomType,
                   colors: ['#464E5F'],
                   weight: 400,
                 }}
@@ -160,16 +158,59 @@ function VoucherGuestTable({
                 key={uuid()}
                 cell={{
                   align: 'center',
-                  title: row.name,
+                  title: data.accomodationDetails.mealPlan,
+                  colors: ['#464E5F'],
+                  weight: 400,
+                }}
+              />
+              <TableRowTextCell
+                key={uuid()}
+                cell={{
+                  align: 'center',
+                  title: data.accomodationDetails.views.find((v: { checked: boolean }) => v.checked).val,
                   colors: ['#464E5F'],
                   weight: 400,
                 }}
               />
             </TableRow>
-          ))}
+          ) : (
+            <>
+              {data.accomodationDetails.map((row: any) => (
+                <TableRow key={uuid()}>
+                  <TableRowTextCell
+                    key={uuid()}
+                    cell={{
+                      align: 'center',
+                      title: row.nights,
+                      colors: ['#464E5F'],
+                      weight: 400,
+                    }}
+                  />
+                  <TableRowTextCell
+                    key={uuid()}
+                    cell={{
+                      align: 'center',
+                      title: row.city,
+                      colors: ['#464E5F'],
+                      weight: 400,
+                    }}
+                  />
+                  <TableRowTextCell
+                    key={uuid()}
+                    cell={{
+                      align: 'center',
+                      title: row.name,
+                      colors: ['#464E5F'],
+                      weight: 400,
+                    }}
+                  />
+                </TableRow>
+              ))}
+            </>
+          )}
         </TableBody>
       </Table>
-    </TableContainer>
+    </TableContainer >
   );
 
   return (
@@ -185,6 +226,18 @@ function VoucherGuestTable({
             style={voucherStyles.voucherTemplate.summaryDetails.detail}
           />
         </p>
+        {type === 'accomodation' && (
+          <p style={voucherStyles.voucherTemplate.summaryDetails.detailContainer}>
+            <SpanAtom
+              text="Nationality"
+              style={voucherStyles.voucherTemplate.summaryDetails.label}
+            />
+            <SpanAtom
+              text={data.guestDetails.nationality}
+              style={voucherStyles.voucherTemplate.summaryDetails.detail}
+            />
+          </p>
+        )}
         <GuestTable />
         <AccomodationTable />
       </DivAtom>
