@@ -210,7 +210,7 @@ export default function GuestTable({
                       <TableRowTextCell
                         cell={{
                           align: 'left',
-                          title: row.country,
+                          title: row.country.value,
                           colors: ['#B5B5C3'],
                           weight: 500,
                         }}

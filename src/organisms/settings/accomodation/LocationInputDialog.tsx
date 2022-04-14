@@ -75,6 +75,7 @@ function LocationInputDialog({
       label: v,
       value: v,
     }));
+
     setNewCities(toSet);
   };
 

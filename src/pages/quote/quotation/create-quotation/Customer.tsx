@@ -121,8 +121,8 @@ function Customer() {
       setLastName(customer.name.split(' ')[1]);
       setContactNumber(customer.tel);
       setEmail(customer.email);
-      setCountry(customer.country);
-      setCity(customer.city);
+      setCountry(customer.country.value);
+      setCity(customer.city.value);
     }
   };
 

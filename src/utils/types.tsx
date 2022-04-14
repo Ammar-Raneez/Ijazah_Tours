@@ -127,10 +127,10 @@ export interface LibraryGuest {
   name: string;
   refNum: string;
   tel: string;
-  country: string;
+  country: LocationDropdown;
   status: Status;
   occupation: string;
-  city: string;
+  city: CityDropdown;
   email: string;
   adults: number;
   rooms: number;

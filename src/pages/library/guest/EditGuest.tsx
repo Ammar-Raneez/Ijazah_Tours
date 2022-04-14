@@ -49,8 +49,8 @@ function EditGuest({ row, isUpdating, setIsUpdating }: EditGuestProps) {
   const onEditGuest = async () => {
     setShowValidationErrorMessage(false);
     if (firstName.trim() === '' || lastName.trim() === '' || refNum.trim() === ''
-      || country.trim() === '' || contactNumber.trim() === '' || email.trim() === ''
-      || city.trim() === '' || occupation.trim() === '' || status.trim() === ''
+      || country.value.trim() === '' || contactNumber.trim() === '' || email.trim() === ''
+      || city.value.trim() === '' || occupation.trim() === '' || status.trim() === ''
       || passport.length === 0 || !passport) {
       setShowValidationErrorMessage(true);
       return;

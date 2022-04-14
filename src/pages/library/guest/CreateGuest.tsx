@@ -15,6 +15,7 @@ import CreateEditGuestForm from '../../../organisms/library/guest/CreateEditGues
 import { selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
 import { libraryCreateGuestStyles } from '../../../styles';
 import { statusOptions, uploadImage } from '../../../utils/helpers';
+import { CityDropdown, LocationDropdown } from '../../../utils/types';
 
 const storage = getStorage();
 
@@ -32,8 +33,13 @@ function CreateGuest({
   const [refNum, setRefNum] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [country, setCountry] = useState('');
-  const [city, setCity] = useState('');
+  const [country, setCountry] = useState<LocationDropdown>({ id: '', label: '', value: '' });
+  const [city, setCity] = useState<CityDropdown>({
+    label: '',
+    value: '',
+    countryId: '',
+    countryName: '',
+  });
   const [contactNumber, setContactNumber] = useState('');
   const [email, setEmail] = useState('');
   const [occupation, setOccupation] = useState('');
@@ -51,8 +57,8 @@ function CreateGuest({
   const onAddGuest = async () => {
     setShowValidationErrorMessage(false);
     if (firstName.trim() === '' || lastName.trim() === '' || refNum.trim() === ''
-      || country.trim() === '' || contactNumber.trim() === '' || email.trim() === ''
-      || city.trim() === '' || occupation.trim() === '' || status.trim() === ''
+      || country.value.trim() === '' || contactNumber.trim() === '' || email.trim() === ''
+      || city.value.trim() === '' || occupation.trim() === '' || status.trim() === ''
       || passport.length === 0 || !passport) {
       setShowValidationErrorMessage(true);
       return;
@@ -92,8 +98,13 @@ function CreateGuest({
     setFirstName('');
     setLastName('');
     setEmail('');
-    setCountry('');
-    setCity('');
+    setCountry({ id: '', label: '', value: '' });
+    setCity({
+      label: '',
+      value: '',
+      countryId: '',
+      countryName: '',
+    });
     setOccupation('');
     setContactNumber('');
     setAdults(0);

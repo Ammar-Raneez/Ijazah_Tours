@@ -1,7 +1,13 @@
 import { ChangeEvent } from 'react';
 
-import { CircularProgress } from '@material-ui/core';
+import {
+  CircularProgress,
+  Input,
+  MenuItem,
+  Select,
+} from '@material-ui/core';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import { City, Country } from 'country-state-city';
 import { v4 as uuid } from 'uuid';
 
 import ButtonAtom from '../../../atoms/ButtonAtom';
@@ -13,8 +19,8 @@ import PhoneInputAtom from '../../../atoms/PhoneInputAtom';
 import TextFieldAtom from '../../../atoms/TextFieldAtom';
 import FormControlInput from '../../../molecules/FormControlInput';
 import { libraryCreateGuestStyles, libraryStyles } from '../../../styles';
-import { statusOptions, widthHeightDynamicStyle } from '../../../utils/helpers';
-import { FlexDirection } from '../../../utils/types';
+import { MenuProps, statusOptions, widthHeightDynamicStyle } from '../../../utils/helpers';
+import { CityDropdown, FlexDirection, LocationDropdown } from '../../../utils/types';
 import ImageUploader from './ImageUploader';
 
 interface CreateEditGuestFormProps {
@@ -28,8 +34,8 @@ interface CreateEditGuestFormProps {
   refNum: string;
   firstName: string;
   lastName: string;
-  country: string;
-  city: string;
+  country: LocationDropdown;
+  city: CityDropdown;
   status: string;
   contactNumber: string;
   email: string;
@@ -90,6 +96,43 @@ function CreateEditGuestForm({
   setPassport,
   onAddReminder,
 }: CreateEditGuestFormProps) {
+  const countries = Country.getAllCountries();
+
+  const updatedCountries = countries?.map((c) => ({
+    label: c.name,
+    value: c.name,
+    id: c.isoCode,
+  }));
+
+  const updatedStates = (id: string) => (
+    City.getCitiesOfCountry(id)
+      ?.map((state) => ({ label: state.name, value: state.name }))
+  );
+
+  const onCountryChange = (val: string) => {
+    const countryCode = countries.find((c) => c.name === val)?.isoCode;
+    if (countryCode) {
+      setCountry({ id: countryCode, label: val, value: val });
+    }
+
+    setCity({
+      label: '',
+      value: '',
+      countryId: '',
+      countryName: '',
+    });
+  };
+
+  const handleCitiesChange = (event: ChangeEvent<{ value: unknown }>) => {
+    const val = event.target.value as string;
+    setCity({
+      countryId: country.id,
+      countryName: country.value,
+      label: val,
+      value: val,
+    });
+  };
+
   const getAgeString = (age: number) => (age === 1 ? `${age} year old` : `${age} years old`);
 
   const onRemoveChildAge = (i: number) => {
@@ -165,28 +208,41 @@ function CreateEditGuestForm({
             flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
           }}
         >
-          <FormControlInput
-            margin={widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0') as string}
-            flex={1}
-            label="Country"
-            fullWidth
-            multiline={false}
-            rows={1}
-            value={country}
-            setValue={setCountry}
-            placeholder="Enter Country"
+          <TextFieldAtom
+            variant="standard"
+            size="medium"
+            label="Location"
+            value={country.value}
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => onCountryChange(e.target.value)}
+            options={updatedCountries}
+            adornmentPosition="end"
+            style={{
+              margin: widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0') as string,
+              flex: 1,
+            }}
+            disableUnderline={false}
+            select
           />
-          <FormControlInput
-            margin="0 0 1rem 0"
-            flex={1}
-            label="City"
-            fullWidth
-            multiline={false}
-            rows={1}
-            value={city}
-            setValue={setCity}
-            placeholder="Enter City"
-          />
+
+          <Select
+            labelId="cities-label"
+            id="cities"
+            placeholder="Cities"
+            value={city.value}
+            onChange={handleCitiesChange}
+            input={<Input />}
+            MenuProps={MenuProps}
+            style={{
+              margin: '0 0 1rem 0',
+              flex: 1,
+            }}
+          >
+            {updatedStates(country.id)?.map((c) => (
+              <MenuItem key={uuid()} value={c.value}>
+                {c.label}
+              </MenuItem>
+            ))}
+          </Select>
         </DivAtom>
         <DivAtom
           style={{
