@@ -1,10 +1,13 @@
 import { ChangeEvent } from 'react';
 
 import { CircularProgress } from '@material-ui/core';
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import { v4 as uuid } from 'uuid';
 
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
+import IconAtom from '../../../atoms/IconAtom';
 import ParagraphAtom from '../../../atoms/ParagraphAtom';
 import TextFieldAtom from '../../../atoms/TextFieldAtom';
 import FormControlInput from '../../../molecules/FormControlInput';
@@ -87,6 +90,12 @@ function CreateEditGuestForm({
   onAddReminder,
 }: CreateEditGuestFormProps) {
   const getAgeString = (age: number) => (age === 1 ? `${age} year old` : `${age} years old`);
+
+  const onRemoveChildAge = (i: number) => {
+    const childrenAgesCopy = [...childrenAges];
+    childrenAgesCopy.splice(i, 1);
+    setChildrenAges(childrenAgesCopy);
+  };
 
   return (
     <>
@@ -285,7 +294,12 @@ function CreateEditGuestForm({
           <H2Atom text="All Children Ages" style={libraryCreateGuestStyles.subtitle} />
           <ul>
             {childrenAges.map((age, i) => (
-              <li key={i}>{getAgeString(Number(age))}</li>
+              <DivAtom key={uuid()} style={{ display: 'flex', alignItems: 'center' }}>
+                <li>{getAgeString(Number(age))}</li>
+                <IconAtom size="small" onClick={() => onRemoveChildAge && onRemoveChildAge(i)} style={{ color: 'red' }}>
+                  <DeleteOutlinedIcon />
+                </IconAtom>
+              </DivAtom>
             ))}
           </ul>
         </DivAtom>
