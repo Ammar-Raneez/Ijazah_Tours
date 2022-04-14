@@ -56,6 +56,7 @@ function Quotations() {
         quotations[i].id = id;
       });
 
+      console.log(quotations);
       setQuotationsData(quotations as CustomerQuotation[]);
       setInitialQuotationCardData(quotations as CustomerQuotation[]);
       setInitialQuotationSearchData(quotations as CustomerQuotation[]);

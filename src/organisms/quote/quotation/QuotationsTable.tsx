@@ -23,6 +23,8 @@ import { CustomerQuotation, Order } from '../../../utils/types';
 const headCells = [
   { id: 'name', label: 'GUEST' },
   { id: 'refNum', label: 'REF NUM' },
+  { id: 'quoteTitle', label: 'TITLE' },
+  { id: 'updatedAt', label: 'SHARED DATE' },
   { id: 'netPrice', label: 'PRICE' },
   { id: '...', label: '' },
   { id: '...1', label: '' },
@@ -122,6 +124,22 @@ function QuotationsTable({ rowdata }: QuotationsTableProps) {
                       cell={{
                         align: 'left',
                         title: row.refNum,
+                        colors: ['#464E5F', '#B5B5C3'],
+                        weight: 300,
+                      }}
+                    />
+                    <TableRowTextCell
+                      cell={{
+                        align: 'left',
+                        title: row.quoteTitle,
+                        colors: ['#464E5F', '#B5B5C3'],
+                        weight: 300,
+                      }}
+                    />
+                    <TableRowTextCell
+                      cell={{
+                        align: 'left',
+                        title: new Date(row.updatedAt.toDate()).toDateString(),
                         colors: ['#464E5F', '#B5B5C3'],
                         weight: 300,
                       }}
