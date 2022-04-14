@@ -22,7 +22,7 @@ import {
   quoteCreateQuoteStyles,
 } from '../../../../styles';
 import { dateTypeOptions, mealPlanOptions } from '../../../../utils/helpers';
-import { DropdownOption, LibraryGuest } from '../../../../utils/types';
+import { DropdownOption, LibraryGuest, SettingsLocation } from '../../../../utils/types';
 
 function Customer() {
   const height = useSelector(selectWith2NavbarHeight);
@@ -30,8 +30,8 @@ function Customer() {
 
   const [customerData, setCustomerData] = useState<LibraryGuest[]>();
   const [refData, setRefData] = useState<DropdownOption[]>();
+  const [accomodationLocationData, setAccomodationLocationData] = useState<SettingsLocation[]>();
   const [holidayTypeData, setHolidayTypeData] = useState<DropdownOption[]>();
-  const [destinationData, setDestinationData] = useState<DropdownOption[]>();
 
   const [title, setTitle] = useState('');
   const [quoteNum, setQuoteNum] = useState(0);
@@ -61,17 +61,17 @@ function Customer() {
       const qData = (await getDocs(collection(db, 'Approval Quotations'))).docs;
       const rData = (await getDocs(collection(db, 'Library Guests'))).docs;
       const hData = (await getDocs(collection(db, 'Settings Holiday Types'))).docs;
-      const dData = (await getDocs(collection(db, 'Library Accomodation'))).docs;
+      const lData = (await getDocs(collection(db, 'Settings Locations'))).docs;
 
       const aqData = qData.map((dc) => dc.data());
       const rfData = rData.map((dc) => dc.data());
       const htData = hData.map((dc) => dc.data());
-      const deData = dData.map((dc) => dc.data());
+      const locData = lData.map((dc) => dc.data());
 
       const aqIds = aqData.map((dc) => dc.id);
       const rfIds = rData.map((dc) => dc.id);
       const htIds = hData.map((dc) => dc.id);
-      const deIds = dData.map((dc) => dc.id);
+      const locIds = lData.map((dc) => dc.id);
 
       aqIds.forEach((id, i) => {
         aqData[i].id = id;
@@ -82,8 +82,8 @@ function Customer() {
       htIds.forEach((id, i) => {
         htData[i].id = id;
       });
-      deIds.forEach((id, i) => {
-        deData[i].id = id;
+      locIds.forEach((id, i) => {
+        locData[i].id = id;
       });
 
       setQuoteNum(aqData.length + 1);
@@ -96,21 +96,17 @@ function Customer() {
         value: hol.val,
         label: hol.val,
       }));
-      const destinations = deData.map((des) => ({
-        value: des.name,
-        label: des.name,
-      }));
+
+      setAccomodationLocationData(locData as SettingsLocation[]);
 
       setCustomerData(rfData as LibraryGuest[]);
       onRefNumChange(rfData as LibraryGuest[], localStorage.getItem('New Guest Ref Num') || refNums[0].value);
 
       setRefNum(localStorage.getItem('New Guest Ref Num') || refNums[0].value);
       setHolidayType(holidays[0].value);
-      setDestination(destinations[0].value);
 
       setRefData(refNums);
       setHolidayTypeData(holidays);
-      setDestinationData(destinations);
     };
 
     getInitialData();
@@ -172,12 +168,12 @@ function Customer() {
         <H2Atom style={quoteCreateQuoteStyles.title} text="Create Quotation" />
       </DivAtom>
 
-      {customerData && refData && holidayTypeData && destinationData ? (
+      {customerData && refData && holidayTypeData && accomodationLocationData ? (
         <CustomerForm
           customerData={customerData}
           refData={refData}
+          accomodationLocationData={accomodationLocationData}
           holidayTypeData={holidayTypeData}
-          destinationData={destinationData}
           width={width}
           refNum={refNum}
           title={title}

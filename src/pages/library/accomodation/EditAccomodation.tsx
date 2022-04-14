@@ -20,7 +20,8 @@ import { selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
 import { fetchingDataIndicatorStyles, libraryAccomodationStyles } from '../../../styles';
 import {
   AccomodationRate,
-  CityLocationDropdown,
+  LocationDropdown,
+  CityDropdown,
   DropdownOption,
   LibraryAccomodation,
   SettingsRoomProperties,
@@ -30,9 +31,9 @@ interface EditAccomodationProps {
   row: LibraryAccomodation;
   isUpdating: boolean;
   accomodationTypeData: DropdownOption[],
-  accomodationCities: CityLocationDropdown[];
-  accomodationFilteredCities: CityLocationDropdown[];
-  accomodationLocations: CityLocationDropdown[];
+  accomodationLocations: LocationDropdown[];
+  accomodationCities: CityDropdown[];
+  accomodationFilteredCities: CityDropdown[];
   roomViewData: SettingsRoomProperties[];
   roomCategoriesData: SettingsRoomProperties[];
   roomGradingsData: SettingsRoomProperties[];
@@ -93,7 +94,7 @@ function EditAccomodation({
 
   useEffect(() => {
     const locationId = accomodationLocations.find((l) => l.value === row.country)?.id;
-    const cities = accomodationCities.filter((c) => c.id === locationId);
+    const cities = accomodationCities.filter((c) => c.countryId === locationId);
     setAccomodationFilteredCities(cities);
   }, []);
 

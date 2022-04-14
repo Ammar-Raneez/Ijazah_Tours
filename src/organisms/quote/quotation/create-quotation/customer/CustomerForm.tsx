@@ -13,14 +13,19 @@ import FormControlInput from '../../../../../molecules/FormControlInput';
 import RadioButtonGroup from '../../../../../molecules/RadioButtonGroup';
 import { libraryStyles, quoteCreateQuoteStyles, TableToolbarStyles } from '../../../../../styles';
 import { dateTypeOptions, mealPlanOptions, widthHeightDynamicStyle } from '../../../../../utils/helpers';
-import { DropdownOption, FlexDirection, LibraryGuest } from '../../../../../utils/types';
+import {
+  DropdownOption,
+  FlexDirection,
+  LibraryGuest,
+  SettingsLocation,
+} from '../../../../../utils/types';
 import { RenderDatePicker } from './RenderDatePicker';
 
 interface CustomerFormProps {
   customerData: LibraryGuest[];
+  accomodationLocationData: SettingsLocation[];
   refData: DropdownOption[];
   holidayTypeData: DropdownOption[];
-  destinationData: DropdownOption[];
   width: number;
   refNum: string;
   title: string;
@@ -57,9 +62,9 @@ interface CustomerFormProps {
 
 function CustomerForm({
   customerData,
+  accomodationLocationData,
   refData,
   holidayTypeData,
-  destinationData,
   width,
   title,
   refNum,
@@ -287,7 +292,12 @@ function CustomerForm({
             value={destination}
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setDestination(e.target.value)
             }
-            options={destinationData}
+            options={
+              accomodationLocationData.map((l) => l.cities).flat().map((c) => ({
+                label: `${c.countryName} | ${c.value}`,
+                value: `${c.countryName} | ${c.value}`,
+              }))
+            }
             adornmentPosition="end"
             style={{
               ...libraryStyles.textField,

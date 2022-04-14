@@ -21,12 +21,12 @@ import {
   TableToolbarStyles,
 } from '../../../styles';
 import { MenuProps } from '../../../utils/helpers';
-import { CityLocationDropdown } from '../../../utils/types';
+import { LocationDropdown, CityDropdown } from '../../../utils/types';
 
 interface LocationInputDialogProps {
   title: string;
-  newLocation: CityLocationDropdown;
-  newCities: CityLocationDropdown[];
+  newLocation: LocationDropdown;
+  newCities: CityDropdown[];
   openDialog: boolean;
   showValidationErrorMessage: boolean;
   isCreating: boolean;
@@ -69,7 +69,12 @@ function LocationInputDialog({
 
   const handleCitiesChange = (event: ChangeEvent<{ value: unknown }>) => {
     const val = event.target.value as string[];
-    const toSet = val.map((v) => ({ id: newLocation.id, label: v, value: v }));
+    const toSet = val.map((v) => ({
+      countryId: newLocation.id,
+      countryName: newLocation.value,
+      label: v,
+      value: v,
+    }));
     setNewCities(toSet);
   };
 

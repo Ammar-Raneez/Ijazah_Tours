@@ -29,7 +29,8 @@ import {
   SettingsRoomProperties,
   DropdownOption,
   SettingsLocation,
-  CityLocationDropdown,
+  LocationDropdown,
+  CityDropdown,
 } from '../../../utils/types';
 
 interface CreateAccomodationProps {
@@ -49,12 +50,12 @@ function CreateAccomodation({
 }: CreateAccomodationProps) {
   const width = useSelector(selectWithNavbarWidth);
 
-  const [accomodationLocations, setAccomodationLocations] = useState<CityLocationDropdown[]>();
-  const [accomodationCities, setAccomodationCities] = useState<CityLocationDropdown[]>();
+  const [accomodationLocations, setAccomodationLocations] = useState<LocationDropdown[]>();
+  const [accomodationCities, setAccomodationCities] = useState<CityDropdown[]>();
   const [
     accomodationFilteredCities,
     setAccomodationFilteredCities,
-  ] = useState<CityLocationDropdown[]>([]);
+  ] = useState<CityDropdown[]>([]);
 
   const [accomodationTypeData, setAccomodationTypeData] = useState<DropdownOption[]>();
   const [accomodationType, setAccomodationType] = useState('');

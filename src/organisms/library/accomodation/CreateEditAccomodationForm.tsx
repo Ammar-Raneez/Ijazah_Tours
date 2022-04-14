@@ -19,7 +19,8 @@ import { libraryAccomodationStyles, libraryStyles } from '../../../styles';
 import { widthHeightDynamicStyle } from '../../../utils/helpers';
 import {
   AccomodationRate,
-  CityLocationDropdown,
+  LocationDropdown,
+  CityDropdown,
   DropdownOption,
   FlexDirection,
   SettingsRoomProperties,
@@ -28,9 +29,9 @@ import AccomodationRatesContainer from './AccomodationRatesContainer';
 
 interface CreateEditAccomodationFormProps {
   accomodationTypeData: DropdownOption[];
-  accomodationLocations: CityLocationDropdown[];
-  accomodationCities: CityLocationDropdown[];
-  accomodationFilteredCities: CityLocationDropdown[];
+  accomodationLocations: LocationDropdown[];
+  accomodationCities: CityDropdown[];
+  accomodationFilteredCities: CityDropdown[];
   rateData: AccomodationRate[];
   allRoomTypes: SettingsRoomProperties[];
   allRoomViews: SettingsRoomProperties[];
@@ -176,7 +177,7 @@ function CreateEditAccomodationForm({
               setLocation(e.target.value);
               setCity('');
               const locationId = accomodationLocations.find((l) => l.value === e.target.value)?.id;
-              const cities = accomodationCities.filter((c) => c.id === locationId);
+              const cities = accomodationCities.filter((c) => c.countryId === locationId);
               setAccomodationFilteredCities(cities);
             }}
             options={accomodationLocations}

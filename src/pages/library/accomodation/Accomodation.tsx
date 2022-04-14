@@ -16,7 +16,8 @@ import { selectWithNavbarHeight } from '../../../redux/containerSizeSlice';
 import { libraryStyles } from '../../../styles';
 import { searchData } from '../../../utils/helpers';
 import {
-  CityLocationDropdown,
+  LocationDropdown,
+  CityDropdown,
   DropdownOption,
   LibraryAccomodation,
   SettingsLocation,
@@ -28,12 +29,12 @@ import EditAccomodation from './EditAccomodation';
 function Accomodation() {
   const height = useSelector(selectWithNavbarHeight);
 
-  const [accomodationLocations, setAccomodationLocations] = useState<CityLocationDropdown[]>([]);
-  const [accomodationCities, setAccomodationCities] = useState<CityLocationDropdown[]>([]);
+  const [accomodationLocations, setAccomodationLocations] = useState<LocationDropdown[]>([]);
+  const [accomodationCities, setAccomodationCities] = useState<CityDropdown[]>([]);
   const [
     accomodationFilteredCities,
     setAccomodationFilteredCities,
-  ] = useState<CityLocationDropdown[]>([]);
+  ] = useState<CityDropdown[]>([]);
 
   const [accomodationData, setAccomodationData] = useState<LibraryAccomodation[]>([]);
   const [roomViewData, setRoomViewData] = useState<SettingsRoomProperties[]>([]);

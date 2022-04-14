@@ -22,7 +22,12 @@ import SectionContainer from '../../../organisms/settings/SectionContainer';
 import SingleInputDialog from '../../../organisms/settings/SingleInputDialog';
 import { selectWithNavbarHeight, selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
 import { settingsStyles } from '../../../styles';
-import { CityLocationDropdown, SettingsLocation, SettingsSingleInput } from '../../../utils/types';
+import {
+  LocationDropdown,
+  CityDropdown,
+  SettingsLocation,
+  SettingsSingleInput,
+} from '../../../utils/types';
 
 const INPUT_TYPES = [
   {
@@ -63,10 +68,10 @@ function SettingsAccomodation() {
   const [editSingleInput, setEditSingleInput] = useState('');
 
   const [locationData, setLocationData] = useState<DocumentData[]>([]);
-  const [newLocationTitle, setNewLocationTitle] = useState<CityLocationDropdown>({ id: '', label: '', value: '' });
-  const [newLocationCities, setNewLocationCities] = useState<CityLocationDropdown[]>([]);
-  const [editLocationTitle, setEditLocationTitle] = useState<CityLocationDropdown>({ id: '', label: '', value: '' });
-  const [editLocationCities, setEditLocationCities] = useState<CityLocationDropdown[]>([]);
+  const [newLocationTitle, setNewLocationTitle] = useState<LocationDropdown>({ id: '', label: '', value: '' });
+  const [newLocationCities, setNewLocationCities] = useState<CityDropdown[]>([]);
+  const [editLocationTitle, setEditLocationTitle] = useState<LocationDropdown>({ id: '', label: '', value: '' });
+  const [editLocationCities, setEditLocationCities] = useState<CityDropdown[]>([]);
 
   const [editId, setEditId] = useState('');
 
