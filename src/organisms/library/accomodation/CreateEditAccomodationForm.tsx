@@ -1,6 +1,7 @@
 import { ChangeEvent, MouseEvent } from 'react';
 
 import { CircularProgress, FormControl, InputLabel } from '@material-ui/core';
+import { v4 as uuid } from 'uuid';
 
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import DivAtom from '../../../atoms/DivAtom';
@@ -321,9 +322,9 @@ function CreateEditAccomodationForm({
         {(selectedTypes[0]
           || selectedTypes[1]
           || selectedTypes[2])
-          && selectedTypes.map((type, ind) => (
+          && selectedTypes.map((type) => (
             <DivAtom
-              key={ind}
+              key={uuid()}
               style={{
                 ...libraryAccomodationStyles.multiFieldContainer,
                 flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,

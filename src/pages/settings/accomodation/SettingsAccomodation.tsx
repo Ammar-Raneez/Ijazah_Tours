@@ -240,7 +240,7 @@ function SettingsAccomodation() {
         }}
       >
         {singleInputsData[0] !== undefined && INPUT_TYPES.map((type, index) => (
-          <DivAtom key={index} style={{ marginBottom: '3rem' }}>
+          <DivAtom key={uuid()} style={{ marginBottom: '3rem' }}>
             <SectionContainer
               width={width}
               h2Text={type.h2Text}

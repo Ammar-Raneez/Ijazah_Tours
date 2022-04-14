@@ -2,6 +2,7 @@ import { ReactNode, CSSProperties, ChangeEvent } from 'react';
 
 import { InputAdornment, MenuItem, TextField } from '@material-ui/core';
 import styled from 'styled-components';
+import { v4 as uuid } from 'uuid';
 
 interface DropdownOption {
   label: string;
@@ -101,7 +102,7 @@ function TextFieldAtom({
       removebg={removeBgSelect}
     >
       {options!.map((option: DropdownOption) => (
-        <MenuItem value={option.value} key={option.value}>
+        <MenuItem value={option.value} key={uuid()}>
           {option.label}
         </MenuItem>
       ))}

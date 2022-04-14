@@ -8,6 +8,7 @@ import {
   makeStyles,
   Theme,
 } from '@material-ui/core';
+import { v4 as uuid } from 'uuid';
 
 import CheckboxAtom from '../atoms/CheckboxAtom';
 
@@ -45,7 +46,7 @@ function CheckboxGroup({
       <FormGroup style={style} className={classes.root}>
         {labels.map((lb, index) => (
           <CheckboxAtom
-            key={index}
+            key={uuid()}
             label={lb}
             name={names[index]}
             onChange={(event) => onChange(event, index)}

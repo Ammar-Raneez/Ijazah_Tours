@@ -240,7 +240,7 @@ export default function VoucherTable({
         <TableBody>
           {Object.keys(voucherData).map((row: any) => (
             <Row
-              key={row}
+              key={uuid()}
               row={voucherData[row]}
               voucherData={voucherData}
               setVoucherData={setVoucherData}

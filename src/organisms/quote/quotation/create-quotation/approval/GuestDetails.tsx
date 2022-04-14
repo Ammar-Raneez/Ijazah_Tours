@@ -1,3 +1,5 @@
+import { v4 as uuid } from 'uuid';
+
 import DivAtom from '../../../../../atoms/DivAtom';
 import SpanAtom from '../../../../../atoms/SpanAtom';
 import { approvalStyles } from '../../../../../styles';
@@ -67,7 +69,7 @@ function GuestDetails({
             <span>
               {children.map((child, index) => (
                 <SpanAtom
-                  key={index}
+                  key={uuid()}
                   style={approvalStyles.guestDetails.costContainer.cost}
                   text={getChildrenAgeString(child, index)}
                 />

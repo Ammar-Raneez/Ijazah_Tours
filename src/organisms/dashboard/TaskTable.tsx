@@ -144,7 +144,7 @@ export default function TaskTable({ columns, rows }: TaskTableProps) {
         </TableHead>
         <TableBody>
           {rows!.map((row) => (
-            <Row key={row.name} row={row} />
+            <Row key={uuid()} row={row} />
           ))}
         </TableBody>
       </Table>
