@@ -86,6 +86,7 @@ function CreateDriver({
       vehiclePic: vehiclePicUrl,
       languages: selectedLanguages,
       createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
     });
 
     setIsCreating(false);

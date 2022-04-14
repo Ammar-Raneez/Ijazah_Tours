@@ -194,7 +194,11 @@ function Approval({ setCreated }: ApprovalProps) {
       status: 'IN PROGRESS',
     };
 
-    await setDoc(doc(db, 'Approval Quotations', uuid()), guestDetails);
+    await setDoc(doc(db, 'Approval Quotations', uuid()), {
+      ...guestDetails,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    });
     await createVouchers(guestDetails);
     setIsSavingQuote(false);
     setCreated(true);

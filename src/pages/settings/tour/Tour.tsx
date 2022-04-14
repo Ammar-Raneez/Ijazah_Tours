@@ -121,6 +121,7 @@ function Tour() {
     await setDoc(doc(db, `Settings ${type}`, uuid()), {
       val: newSingleInput,
       createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
     });
 
     setNewSingleInput('');
@@ -167,6 +168,7 @@ function Tour() {
       description: newReminderDesc,
       type,
       createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
     });
 
     clearReminderInputs();

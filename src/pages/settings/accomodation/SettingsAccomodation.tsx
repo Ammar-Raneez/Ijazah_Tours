@@ -119,6 +119,7 @@ function SettingsAccomodation() {
     await setDoc(doc(db, `Settings ${type}`, uuid()), {
       val: newSingleInput,
       createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
     });
 
     setNewSingleInput('');
@@ -163,6 +164,7 @@ function SettingsAccomodation() {
       title: newLocationTitle,
       city: newLocationCity,
       createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
     });
 
     clearLocationInputs();

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { CircularProgress } from '@material-ui/core';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 import JSPDF from 'jspdf';
 import { useSelector } from 'react-redux';
@@ -80,7 +80,10 @@ function CashReceipt({ voucherData, setIsVoucherApproved }: CashReceiptProps) {
 
   const updateDB = async (vDataCopy: any) => {
     const { id: updatedVDataId, ...updatedVData } = vDataCopy;
-    await setDoc(doc(db, 'Vouchers', quoteNo, 'Vouchers', updatedVDataId), updatedVData);
+    await setDoc(doc(db, 'Vouchers', quoteNo, 'Vouchers', updatedVDataId), {
+      ...updatedVData,
+      updatedAt: serverTimestamp(),
+    });
   };
 
   return (

@@ -136,6 +136,7 @@ function CreateAccomodation({
       tel: contactNumber,
       rates: rateData,
       createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
     });
 
     setIsCreating(false);

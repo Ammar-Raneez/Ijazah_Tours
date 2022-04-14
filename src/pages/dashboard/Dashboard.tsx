@@ -21,7 +21,7 @@ function Dashboard() {
         }}
       >
         <DivAtom style={dashboardStyles.btnMainContainer}>
-          <Link to="/quote/quotations/create/customer">
+          <Link to="/library/guest/create">
             <ButtonAtom
               text="Create Customer"
               style={{

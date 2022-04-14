@@ -74,6 +74,7 @@ function CreateGuest({
       passport: url,
       tel: contactNumber,
       createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
     });
 
     setIsCreating(false);

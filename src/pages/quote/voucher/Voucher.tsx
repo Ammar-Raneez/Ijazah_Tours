@@ -7,6 +7,7 @@ import {
   doc,
   getDocs,
   query,
+  serverTimestamp,
   setDoc,
   where,
 } from 'firebase/firestore';
@@ -72,6 +73,7 @@ function Voucher() {
           await setDoc(doc(db, 'Approval Quotations', snap.id), {
             ...snap.data(),
             status: 'COMPLETE',
+            updatedAt: serverTimestamp(),
           });
         });
       } else {
@@ -79,13 +81,17 @@ function Voucher() {
           await setDoc(doc(db, 'Approval Quotations', snap.id), {
             ...snap.data(),
             status: 'IN PROGRESS',
+            updatedAt: serverTimestamp(),
           });
         });
       }
 
       await voucherData[quoteNo].forEach(async (voucher: any) => {
         const { id, ...v } = voucher;
-        await setDoc(doc(db, 'Vouchers', quoteNo, 'Vouchers', id), v);
+        await setDoc(doc(db, 'Vouchers', quoteNo, 'Vouchers', id), {
+          ...v,
+          updatedAt: serverTimestamp(),
+        });
       });
     });
   };

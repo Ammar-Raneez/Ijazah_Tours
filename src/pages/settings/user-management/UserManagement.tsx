@@ -87,6 +87,7 @@ function UserManagement() {
       profileImg: null,
       status: 'ACTIVE',
       createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
       contactNumber: '',
       whatsApp: '',
       title: '',
