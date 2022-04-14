@@ -69,7 +69,7 @@ function LocationInputDialog({
 
   const handleCitiesChange = (event: ChangeEvent<{ value: unknown }>) => {
     const val = event.target.value as string[];
-    const toSet = val.map((v) => ({ id: v, label: v, value: v }));
+    const toSet = val.map((v) => ({ id: newLocation.id, label: v, value: v }));
     setNewCities(toSet);
   };
 

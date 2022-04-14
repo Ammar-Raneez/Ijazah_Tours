@@ -19,6 +19,7 @@ import { libraryAccomodationStyles, libraryStyles } from '../../../styles';
 import { widthHeightDynamicStyle } from '../../../utils/helpers';
 import {
   AccomodationRate,
+  CityLocationDropdown,
   DropdownOption,
   FlexDirection,
   SettingsRoomProperties,
@@ -27,6 +28,9 @@ import AccomodationRatesContainer from './AccomodationRatesContainer';
 
 interface CreateEditAccomodationFormProps {
   accomodationTypeData: DropdownOption[];
+  accomodationLocations: CityLocationDropdown[];
+  accomodationCities: CityLocationDropdown[];
+  accomodationFilteredCities: CityLocationDropdown[];
   rateData: AccomodationRate[];
   allRoomTypes: SettingsRoomProperties[];
   allRoomViews: SettingsRoomProperties[];
@@ -63,6 +67,7 @@ interface CreateEditAccomodationFormProps {
   deleteRate: ((row: AccomodationRate) => Promise<void>) | ((row: AccomodationRate) => void);
   onAddEditAccomodation: () => Promise<void>;
   setAccomodationType: any;
+  setAccomodationFilteredCities: any;
   setLocation: any;
   setCity: any;
   setGroup: any;
@@ -81,6 +86,9 @@ interface CreateEditAccomodationFormProps {
 
 function CreateEditAccomodationForm({
   accomodationTypeData,
+  accomodationLocations,
+  accomodationCities,
+  accomodationFilteredCities,
   rateData,
   allRoomTypes,
   allRoomViews,
@@ -117,6 +125,7 @@ function CreateEditAccomodationForm({
   onAddEditAccomodation,
   deleteRate,
   setAccomodationType,
+  setAccomodationFilteredCities,
   setLocation,
   setCity,
   setGroup,
@@ -158,27 +167,45 @@ function CreateEditAccomodationForm({
             disableUnderline={false}
             select
           />
-          <FormControlInput
-            margin={widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0') as string}
-            flex={1}
+          <TextFieldAtom
+            variant="standard"
+            size="medium"
             label="Location"
-            fullWidth
-            multiline={false}
-            rows={1}
             value={location}
-            setValue={setLocation}
-            placeholder="Enter Location"
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
+              setLocation(e.target.value);
+              setCity('');
+              const locationId = accomodationLocations.find((l) => l.value === e.target.value)?.id;
+              const cities = accomodationCities.filter((c) => c.id === locationId);
+              setAccomodationFilteredCities(cities);
+            }}
+            options={accomodationLocations}
+            adornmentPosition="end"
+            style={{
+              ...libraryStyles.textField,
+              flex: 1,
+              width: widthHeightDynamicStyle(width, 600, '100%', 'auto'),
+              margin: widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0') as string,
+            }}
+            disableUnderline={false}
+            select
           />
-          <FormControlInput
-            margin="0 0 1rem 0"
-            flex={1}
+          <TextFieldAtom
+            variant="standard"
+            size="medium"
             label="City"
-            fullWidth
-            multiline={false}
-            rows={1}
             value={city}
-            setValue={setCity}
-            placeholder="Enter City"
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCity(e.target.value)}
+            options={accomodationFilteredCities}
+            adornmentPosition="end"
+            style={{
+              ...libraryStyles.textField,
+              flex: 1,
+              width: widthHeightDynamicStyle(width, 600, '100%', 'auto'),
+              margin: '0 0 1rem 0',
+            }}
+            disableUnderline={false}
+            select
           />
         </DivAtom>
         <DivAtom

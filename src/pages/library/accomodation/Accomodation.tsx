@@ -15,12 +15,25 @@ import AccomodationTable from '../../../organisms/library/accomodation/Accomodat
 import { selectWithNavbarHeight } from '../../../redux/containerSizeSlice';
 import { libraryStyles } from '../../../styles';
 import { searchData } from '../../../utils/helpers';
-import { DropdownOption, LibraryAccomodation, SettingsRoomProperties } from '../../../utils/types';
+import {
+  CityLocationDropdown,
+  DropdownOption,
+  LibraryAccomodation,
+  SettingsLocation,
+  SettingsRoomProperties,
+} from '../../../utils/types';
 import CreateAccomodation from './CreateAccomodation';
 import EditAccomodation from './EditAccomodation';
 
 function Accomodation() {
   const height = useSelector(selectWithNavbarHeight);
+
+  const [accomodationLocations, setAccomodationLocations] = useState<CityLocationDropdown[]>([]);
+  const [accomodationCities, setAccomodationCities] = useState<CityLocationDropdown[]>([]);
+  const [
+    accomodationFilteredCities,
+    setAccomodationFilteredCities,
+  ] = useState<CityLocationDropdown[]>([]);
 
   const [accomodationData, setAccomodationData] = useState<LibraryAccomodation[]>([]);
   const [roomViewData, setRoomViewData] = useState<SettingsRoomProperties[]>([]);
@@ -62,20 +75,26 @@ function Accomodation() {
 
   useEffect(() => {
     const getIntialRoomData = async () => {
+      const lData = (await getDocs(collection(db, 'Settings Locations'))).docs;
       const vData = (await getDocs(collection(db, 'Settings Room Views'))).docs;
       const tData = (await getDocs(collection(db, 'Settings Room Types'))).docs;
       const gData = (await getDocs(collection(db, 'Settings Room Gradings'))).docs;
       const aData = (await getDocs(collection(db, 'Settings Accomodation Types'))).docs;
+      const locs = lData.map((dc) => dc.data());
       const views = vData.map((dc) => dc.data());
       const types = tData.map((dc) => dc.data());
       const gradings = gData.map((dc) => dc.data());
       const accomodationTypes = aData.map((dc) => dc.data());
 
+      const locIds = lData.map((dc) => dc.id);
       const viewIds = vData.map((dc) => dc.id);
       const typeIds = tData.map((dc) => dc.id);
       const gradingIds = gData.map((dc) => dc.id);
       const accomodationTypeIds = aData.map((dc) => dc.id);
 
+      locIds.forEach((id, i) => {
+        locs[i].id = id;
+      });
       viewIds.forEach((id, i) => {
         views[i].id = id;
       });
@@ -89,6 +108,8 @@ function Accomodation() {
         accomodationTypes[i].id = id;
       });
 
+      setAccomodationLocations((locs as SettingsLocation[]).map((l) => l.location));
+      setAccomodationCities((locs as SettingsLocation[]).map((l) => l.cities).flat());
       setRoomGradingsData(gradings as SettingsRoomProperties[]);
       setRoomViewData(views as SettingsRoomProperties[]);
       setRoomCategoriesData(types as SettingsRoomProperties[]);
@@ -135,6 +156,10 @@ function Accomodation() {
         <Route path="/library/accomodation/edit/:id">
           <EditAccomodation
             accomodationTypeData={accomodationTypeData}
+            accomodationLocations={accomodationLocations}
+            accomodationCities={accomodationCities}
+            accomodationFilteredCities={accomodationFilteredCities}
+            setAccomodationFilteredCities={setAccomodationFilteredCities}
             roomViewData={roomViewData}
             roomCategoriesData={roomCategoriesData}
             roomGradingsData={roomGradingsData}

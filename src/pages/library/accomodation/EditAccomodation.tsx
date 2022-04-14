@@ -1,5 +1,6 @@
 import {
   MouseEvent,
+  useEffect,
   useState,
 } from 'react';
 
@@ -19,6 +20,7 @@ import { selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
 import { fetchingDataIndicatorStyles, libraryAccomodationStyles } from '../../../styles';
 import {
   AccomodationRate,
+  CityLocationDropdown,
   DropdownOption,
   LibraryAccomodation,
   SettingsRoomProperties,
@@ -28,20 +30,28 @@ interface EditAccomodationProps {
   row: LibraryAccomodation;
   isUpdating: boolean;
   accomodationTypeData: DropdownOption[],
+  accomodationCities: CityLocationDropdown[];
+  accomodationFilteredCities: CityLocationDropdown[];
+  accomodationLocations: CityLocationDropdown[];
   roomViewData: SettingsRoomProperties[];
   roomCategoriesData: SettingsRoomProperties[];
   roomGradingsData: SettingsRoomProperties[];
   setIsUpdating: any;
+  setAccomodationFilteredCities: any;
 }
 
 function EditAccomodation({
   row,
   isUpdating,
   accomodationTypeData,
+  accomodationCities,
+  accomodationFilteredCities,
+  accomodationLocations,
   roomViewData,
   roomCategoriesData,
   roomGradingsData,
   setIsUpdating,
+  setAccomodationFilteredCities,
 }: EditAccomodationProps) {
   const width = useSelector(selectWithNavbarWidth);
 
@@ -80,6 +90,12 @@ function EditAccomodation({
   const [showValidationErrorMessage, setShowValidationErrorMessage] = useState(false);
 
   const history = useHistory();
+
+  useEffect(() => {
+    const locationId = accomodationLocations.find((l) => l.value === row.country)?.id;
+    const cities = accomodationCities.filter((c) => c.id === locationId);
+    setAccomodationFilteredCities(cities);
+  }, []);
 
   const onEditAccomodation = async () => {
     setShowValidationErrorMessage(false);
@@ -185,65 +201,75 @@ function EditAccomodation({
         />
       </DivAtom>
 
-      {(accomodationTypeData && roomCategoriesData && roomViewData && roomGradingsData) ? (
-        <CreateEditAccomodationForm
-          isCreating={isUpdating}
-          accomodationTypeData={accomodationTypeData}
-          allRoomTypes={roomCategoriesData}
-          allRoomViews={roomViewData}
-          allRoomGradings={roomGradingsData}
-          deleteRate={deleteRate}
-          rateData={rateData}
-          width={width}
-          btnText="Update"
-          showValidationErrorMessage={showValidationErrorMessage}
-          location={location}
-          accomodationType={accomodationType}
-          city={city}
-          group={group}
-          name={name}
-          contactNumber={contactNumber}
-          email={email}
-          webLink={webLink}
-          ijazahLink={ijazahLink}
-          newRateStart={newRateStart}
-          newRateEnd={newRateEnd}
-          newMealPlan={newMealPlan}
-          newSinglePrice={newSinglePrice}
-          newDoublePrice={newDoublePrice}
-          newTriplePrice={newTriplePrice}
-          selectedTypes={selectedTypes}
-          roomCategories={roomCategories}
-          roomViews={roomViews}
-          roomGradings={roomGradings}
-          selectedTypeValues={selectedTypeValues}
-          addRoomCategory={addRoomCategory}
-          addRoomView={addRoomView}
-          addRoomGradings={addRoomGradings}
-          onSetSelectedTypeValue={onSetSelectedTypeValue}
-          onCreateRate={onCreateRate}
-          onAddEditAccomodation={onEditAccomodation}
-          setAccomodationType={setAccomodationType}
-          setLocation={setLocation}
-          setCity={setCity}
-          setGroup={setGroup}
-          setName={setName}
-          setContactNumber={setContactNumber}
-          setEmail={setEmail}
-          setWebLink={setWebLink}
-          setIjazahLink={setIjazahLink}
-          setNewRateStart={setNewRateStart}
-          setNewRateEnd={setNewRateEnd}
-          setNewMealPlan={setNewMealPlan}
-          setNewSinglePrice={setNewSinglePrice}
-          setNewDoublePrice={setNewDoublePrice}
-          setNewTriplePrice={setNewTriplePrice}
-        />
-      ) : (
-        <DivAtom style={fetchingDataIndicatorStyles.container}>
-          <CircularProgress size={20} color="primary" />
-        </DivAtom>
-      )}
+      {(accomodationTypeData
+        && roomCategoriesData
+        && roomViewData
+        && roomGradingsData
+        && accomodationLocations
+        && accomodationFilteredCities.length > 0
+      ) ? (
+          <CreateEditAccomodationForm
+            isCreating={isUpdating}
+            accomodationTypeData={accomodationTypeData}
+            accomodationLocations={accomodationLocations}
+            accomodationCities={accomodationCities}
+            accomodationFilteredCities={accomodationFilteredCities}
+            setAccomodationFilteredCities={setAccomodationFilteredCities}
+            allRoomTypes={roomCategoriesData}
+            allRoomViews={roomViewData}
+            allRoomGradings={roomGradingsData}
+            deleteRate={deleteRate}
+            rateData={rateData}
+            width={width}
+            btnText="Update"
+            showValidationErrorMessage={showValidationErrorMessage}
+            location={location}
+            accomodationType={accomodationType}
+            city={city}
+            group={group}
+            name={name}
+            contactNumber={contactNumber}
+            email={email}
+            webLink={webLink}
+            ijazahLink={ijazahLink}
+            newRateStart={newRateStart}
+            newRateEnd={newRateEnd}
+            newMealPlan={newMealPlan}
+            newSinglePrice={newSinglePrice}
+            newDoublePrice={newDoublePrice}
+            newTriplePrice={newTriplePrice}
+            selectedTypes={selectedTypes}
+            roomCategories={roomCategories}
+            roomViews={roomViews}
+            roomGradings={roomGradings}
+            selectedTypeValues={selectedTypeValues}
+            addRoomCategory={addRoomCategory}
+            addRoomView={addRoomView}
+            addRoomGradings={addRoomGradings}
+            onSetSelectedTypeValue={onSetSelectedTypeValue}
+            onCreateRate={onCreateRate}
+            onAddEditAccomodation={onEditAccomodation}
+            setAccomodationType={setAccomodationType}
+            setLocation={setLocation}
+            setCity={setCity}
+            setGroup={setGroup}
+            setName={setName}
+            setContactNumber={setContactNumber}
+            setEmail={setEmail}
+            setWebLink={setWebLink}
+            setIjazahLink={setIjazahLink}
+            setNewRateStart={setNewRateStart}
+            setNewRateEnd={setNewRateEnd}
+            setNewMealPlan={setNewMealPlan}
+            setNewSinglePrice={setNewSinglePrice}
+            setNewDoublePrice={setNewDoublePrice}
+            setNewTriplePrice={setNewTriplePrice}
+          />
+        ) : (
+          <DivAtom style={fetchingDataIndicatorStyles.container}>
+            <CircularProgress size={20} color="primary" />
+          </DivAtom>
+        )}
     </DivAtom>
   );
 }

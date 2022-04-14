@@ -4,6 +4,7 @@ import {
   useState,
 } from 'react';
 
+import { CircularProgress } from '@material-ui/core';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
 import {
   collection,
@@ -22,8 +23,14 @@ import IconAtom from '../../../atoms/IconAtom';
 import { db } from '../../../firebase';
 import CreateEditAccomodationForm from '../../../organisms/library/accomodation/CreateEditAccomodationForm';
 import { selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
-import { libraryAccomodationStyles } from '../../../styles';
-import { AccomodationRate, SettingsRoomProperties, DropdownOption } from '../../../utils/types';
+import { fetchingDataIndicatorStyles, libraryAccomodationStyles } from '../../../styles';
+import {
+  AccomodationRate,
+  SettingsRoomProperties,
+  DropdownOption,
+  SettingsLocation,
+  CityLocationDropdown,
+} from '../../../utils/types';
 
 interface CreateAccomodationProps {
   isCreating: boolean;
@@ -42,7 +49,14 @@ function CreateAccomodation({
 }: CreateAccomodationProps) {
   const width = useSelector(selectWithNavbarWidth);
 
-  const [accomodationTypeData, setAccomodationTypeData] = useState<DropdownOption[]>([]);
+  const [accomodationLocations, setAccomodationLocations] = useState<CityLocationDropdown[]>();
+  const [accomodationCities, setAccomodationCities] = useState<CityLocationDropdown[]>();
+  const [
+    accomodationFilteredCities,
+    setAccomodationFilteredCities,
+  ] = useState<CityLocationDropdown[]>([]);
+
+  const [accomodationTypeData, setAccomodationTypeData] = useState<DropdownOption[]>();
   const [accomodationType, setAccomodationType] = useState('');
   const [name, setName] = useState('');
   const [group, setGroup] = useState('');
@@ -83,17 +97,25 @@ function CreateAccomodation({
   useEffect(() => {
     const getInitialData = async () => {
       const aData = (await getDocs(collection(db, 'Settings Accomodation Types'))).docs;
+      const lData = (await getDocs(collection(db, 'Settings Locations'))).docs;
       const accData = aData.map((dc) => dc.data());
+      const locData = lData.map((dc) => dc.data());
       const accIds = aData.map((dc) => dc.id);
+      const locIds = lData.map((dc) => dc.id);
 
       accIds.forEach((id, i) => {
         accData[i].id = id;
+      });
+      locIds.forEach((id, i) => {
+        locData[i].id = id;
       });
       const types = accData.map((acc) => ({
         value: acc.val,
         label: acc.val,
       }));
 
+      setAccomodationLocations((locData as SettingsLocation[]).map((l) => l.location));
+      setAccomodationCities((locData as SettingsLocation[]).map((l) => l.cities).flat());
       setAccomodationTypeData(types);
       setAccomodationType(types[0].value);
     };
@@ -230,59 +252,75 @@ function CreateAccomodation({
         />
       </DivAtom>
 
-      <CreateEditAccomodationForm
-        rateData={rateData}
-        accomodationTypeData={accomodationTypeData}
-        allRoomTypes={roomCategoriesData}
-        allRoomViews={roomViewData}
-        allRoomGradings={roomGradingsData}
-        isCreating={isCreating}
-        deleteRate={(row: AccomodationRate) => deleteRate(row)}
-        showValidationErrorMessage={showValidationErrorMessage}
-        width={width}
-        btnText="Create"
-        accomodationType={accomodationType}
-        location={location}
-        city={city}
-        group={group}
-        name={name}
-        contactNumber={contactNumber}
-        email={email}
-        webLink={webLink}
-        ijazahLink={ijazahLink}
-        newRateStart={newRateStart}
-        newRateEnd={newRateEnd}
-        newMealPlan={newMealPlan}
-        newSinglePrice={newSinglePrice}
-        newDoublePrice={newDoublePrice}
-        newTriplePrice={newTriplePrice}
-        selectedTypes={selectedTypes}
-        roomCategories={roomCategories}
-        roomViews={roomViews}
-        roomGradings={roomGradings}
-        selectedTypeValues={selectedTypeValues}
-        addRoomCategory={addRoomCategory}
-        addRoomView={addRoomView}
-        addRoomGradings={addRoomGradings}
-        onSetSelectedTypeValue={onSetSelectedTypeValue}
-        onCreateRate={onCreateRate}
-        onAddEditAccomodation={onAddAccomodation}
-        setAccomodationType={setAccomodationType}
-        setLocation={setLocation}
-        setCity={setCity}
-        setGroup={setGroup}
-        setName={setName}
-        setContactNumber={setContactNumber}
-        setEmail={setEmail}
-        setWebLink={setWebLink}
-        setIjazahLink={setIjazahLink}
-        setNewRateStart={setNewRateStart}
-        setNewRateEnd={setNewRateEnd}
-        setNewMealPlan={setNewMealPlan}
-        setNewSinglePrice={setNewSinglePrice}
-        setNewDoublePrice={setNewDoublePrice}
-        setNewTriplePrice={setNewTriplePrice}
-      />
+      {(accomodationTypeData
+        && roomCategoriesData
+        && roomViewData
+        && roomGradingsData
+        && accomodationLocations
+        && accomodationCities
+      ) ? (
+          <CreateEditAccomodationForm
+            rateData={rateData}
+            accomodationTypeData={accomodationTypeData}
+            accomodationLocations={accomodationLocations}
+            accomodationCities={accomodationCities}
+            accomodationFilteredCities={accomodationFilteredCities}
+            setAccomodationFilteredCities={setAccomodationFilteredCities}
+            allRoomTypes={roomCategoriesData}
+            allRoomViews={roomViewData}
+            allRoomGradings={roomGradingsData}
+            isCreating={isCreating}
+            deleteRate={(row: AccomodationRate) => deleteRate(row)}
+            showValidationErrorMessage={showValidationErrorMessage}
+            width={width}
+            btnText="Create"
+            accomodationType={accomodationType}
+            location={location}
+            city={city}
+            group={group}
+            name={name}
+            contactNumber={contactNumber}
+            email={email}
+            webLink={webLink}
+            ijazahLink={ijazahLink}
+            newRateStart={newRateStart}
+            newRateEnd={newRateEnd}
+            newMealPlan={newMealPlan}
+            newSinglePrice={newSinglePrice}
+            newDoublePrice={newDoublePrice}
+            newTriplePrice={newTriplePrice}
+            selectedTypes={selectedTypes}
+            roomCategories={roomCategories}
+            roomViews={roomViews}
+            roomGradings={roomGradings}
+            selectedTypeValues={selectedTypeValues}
+            addRoomCategory={addRoomCategory}
+            addRoomView={addRoomView}
+            addRoomGradings={addRoomGradings}
+            onSetSelectedTypeValue={onSetSelectedTypeValue}
+            onCreateRate={onCreateRate}
+            onAddEditAccomodation={onAddAccomodation}
+            setAccomodationType={setAccomodationType}
+            setLocation={setLocation}
+            setCity={setCity}
+            setGroup={setGroup}
+            setName={setName}
+            setContactNumber={setContactNumber}
+            setEmail={setEmail}
+            setWebLink={setWebLink}
+            setIjazahLink={setIjazahLink}
+            setNewRateStart={setNewRateStart}
+            setNewRateEnd={setNewRateEnd}
+            setNewMealPlan={setNewMealPlan}
+            setNewSinglePrice={setNewSinglePrice}
+            setNewDoublePrice={setNewDoublePrice}
+            setNewTriplePrice={setNewTriplePrice}
+          />
+        ) : (
+          <DivAtom style={fetchingDataIndicatorStyles.container}>
+            <CircularProgress size={20} color="primary" />
+          </DivAtom>
+        )}
     </DivAtom>
   );
 }
