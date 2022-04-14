@@ -7,6 +7,7 @@ import ButtonAtom from '../../../../../atoms/ButtonAtom';
 import CheckboxAtom from '../../../../../atoms/CheckboxAtom';
 import DivAtom from '../../../../../atoms/DivAtom';
 import ParagraphAtom from '../../../../../atoms/ParagraphAtom';
+import PhoneInputAtom from '../../../../../atoms/PhoneInputAtom';
 import TextFieldAtom from '../../../../../atoms/TextFieldAtom';
 import FormControlInput from '../../../../../molecules/FormControlInput';
 import RadioButtonGroup from '../../../../../molecules/RadioButtonGroup';
@@ -199,17 +200,10 @@ function CustomerForm({
             flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
           }}
         >
-          <FormControlInput
-            margin={widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0') as string}
-            label="Contact Number"
-            fullWidth
-            disabled
-            flex={1}
-            multiline={false}
-            rows={1}
+          <PhoneInputAtom
             value={contactNumber}
-            setValue={setContactNumber}
-            placeholder="Enter Contact Number"
+            setContactNumber={setContactNumber}
+            style={{ margin: widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 0rem 0') as string }}
           />
           <FormControlInput
             margin="0 0 1rem 0"

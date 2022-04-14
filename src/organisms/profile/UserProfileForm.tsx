@@ -3,6 +3,7 @@ import { CircularProgress } from '@material-ui/core';
 import ButtonAtom from '../../atoms/ButtonAtom';
 import DivAtom from '../../atoms/DivAtom';
 import ParagraphAtom from '../../atoms/ParagraphAtom';
+import PhoneInputAtom from '../../atoms/PhoneInputAtom';
 import FormControlInput from '../../molecules/FormControlInput';
 import { userProfileStyles } from '../../styles';
 import { widthHeightDynamicStyle } from '../../utils/helpers';
@@ -100,16 +101,10 @@ function UserProfileForm({
             setValue={setEmail}
             placeholder="Enter Email"
           />
-          <FormControlInput
-            margin="0 0 1rem 0"
-            flex={1}
-            label="Contact Number"
-            fullWidth
-            multiline={false}
-            rows={1}
+          <PhoneInputAtom
             value={contactNumber}
-            setValue={setContactNumber}
-            placeholder="Enter Contact Number"
+            setContactNumber={setContactNumber}
+            style={{ margin: widthHeightDynamicStyle(width, 600, '0 0 1rem 0', 0) as string }}
           />
         </DivAtom>
         <DivAtom

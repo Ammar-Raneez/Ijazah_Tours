@@ -78,6 +78,10 @@ const formCreateMemberStyles = {
     textAlign: 'center' as const,
   },
   addBtn: shadowButtonStyles,
+  phoneNumberInput: {
+    flex: 1,
+    outline: 'none',
+  },
 };
 
 export const TableToolbarStyles = {
