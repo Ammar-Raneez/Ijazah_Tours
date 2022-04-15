@@ -169,7 +169,7 @@ function VoucherGuestTable({
                   align: 'center',
                   title: data.accomodationDetails.views.find((v: { checked: boolean }) => (
                     v.checked
-                  )).val,
+                  ))?.val || 'None',
                   colors: ['#464E5F'],
                   weight: 400,
                 }}

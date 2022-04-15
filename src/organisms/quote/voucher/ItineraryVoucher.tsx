@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { CircularProgress } from '@material-ui/core';
+import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
 import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 import JSPDF from 'jspdf';
@@ -11,6 +12,7 @@ import { v4 as uuid } from 'uuid';
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import DivAtom from '../../../atoms/DivAtom';
 import H2Atom from '../../../atoms/H2Atom';
+import IconAtom from '../../../atoms/IconAtom';
 import ParagraphAtom from '../../../atoms/ParagraphAtom';
 import SpanAtom from '../../../atoms/SpanAtom';
 import { db } from '../../../firebase';
@@ -79,7 +81,16 @@ function ItineraryVoucher({ voucherData, setIsVoucherApproved }: ItineraryVouche
 
   return (
     <>
-      <H2Atom style={voucherStyles.title} text="Itinerary Voucher" />
+      <DivAtom style={voucherStyles.header}>
+        <IconAtom
+          size="small"
+          children={<ChevronLeftRoundedIcon />}
+          style={voucherStyles.backBtn}
+          onClick={() => history.replace('/quote/voucher')}
+        />
+        <H2Atom style={voucherStyles.title} text="Itinerary Voucher" />
+      </DivAtom>
+
       <div id="report">
         <DivAtom style={{ padding: '2rem' }}>
           <Banner />
