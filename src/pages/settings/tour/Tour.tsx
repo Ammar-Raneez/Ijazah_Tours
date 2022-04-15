@@ -226,6 +226,7 @@ function Tour() {
   };
 
   const onOpenNewDialog = (i: number) => {
+    setNewSingleInput('');
     const updatedOpenDialogs = openNewDialogs.map((open, index) => (index === i ? !open : open));
     setOpenNewDialogs(updatedOpenDialogs);
     setShowValidationErrorMessage(false);
@@ -261,7 +262,7 @@ function Tour() {
         }}
       >
         {singleInputsData[0] !== undefined && INPUT_TYPES.map((type, index) => (
-          <DivAtom key={uuid()} style={{ marginBottom: '3rem' }}>
+          <DivAtom key={index} style={{ marginBottom: '3rem' }}>
             <SectionContainer
               width={width}
               h2Text={type.h2Text}
