@@ -18,16 +18,18 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+import { useSelector } from 'react-redux';
 
 import TablePaginationActions from '../../../molecules/TableBottomPagination';
 import TableHead from '../../../molecules/TableHead';
 import TableRowIconCell from '../../../molecules/TableRowIconCell';
 import TableRowTextCell from '../../../molecules/TableRowTextCell';
 import TableToolbar from '../../../molecules/TableToolbar';
-import { getComparator, stableSort } from '../../../utils/helpers';
+import { selectUser } from '../../../redux/userSlice';
+import { getComparator, roleOptions, stableSort } from '../../../utils/helpers';
 import { LibraryDriver, Order, Status } from '../../../utils/types';
 
-const headCells = [
+const travelAgentCells = [
   { id: 'name', label: 'NAME' },
   { id: 'nic', label: 'NIC NUMBER' },
   { id: 'tel', label: 'TEL NUMBER' },
@@ -35,6 +37,10 @@ const headCells = [
   { id: 'boardCertNum', label: 'BOARD CERT NUMBER' },
   { id: 'vehicleType', label: 'VEHICLE' },
   { id: 'status', label: 'STATUS' },
+];
+
+const adminCells = [
+  ...travelAgentCells,
   { id: '...', label: '' },
   { id: '...1', label: '' },
 ];
@@ -78,6 +84,8 @@ export default function DriverTable({
   deleteDriver,
   onEditDriverClick,
 }: DriverTableProps) {
+  const user = useSelector(selectUser);
+
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('calories');
@@ -156,7 +164,7 @@ export default function DriverTable({
           >
             <TableHead
               classes={classes}
-              headCells={headCells}
+              headCells={user.role === roleOptions[0].value ? adminCells : travelAgentCells}
               numSelected={selected.length}
               order={order as Order}
               orderBy={orderBy}
@@ -247,22 +255,26 @@ export default function DriverTable({
                           weight: 300,
                         }}
                       />
-                      <TableRowIconCell
-                        align="center"
-                        onClick={() => onEditDriverClick(row)}
-                        textColor="#B5B5C3"
-                        size="small"
-                        padding="8px"
-                        children={<EditOutlinedIcon style={{ color: 'green' }} />}
-                      />
-                      <TableRowIconCell
-                        align="center"
-                        onClick={() => deleteDriver(row)}
-                        textColor="#B5B5C3"
-                        size="small"
-                        padding="8px"
-                        children={<DeleteOutlinedIcon style={{ color: 'red' }} />}
-                      />
+                      {user.role === roleOptions[0].value && (
+                        <>
+                          <TableRowIconCell
+                            align="center"
+                            onClick={() => onEditDriverClick(row)}
+                            textColor="#B5B5C3"
+                            size="small"
+                            padding="8px"
+                            children={<EditOutlinedIcon style={{ color: 'green' }} />}
+                          />
+                          <TableRowIconCell
+                            align="center"
+                            onClick={() => deleteDriver(row)}
+                            textColor="#B5B5C3"
+                            size="small"
+                            padding="8px"
+                            children={<DeleteOutlinedIcon style={{ color: 'red' }} />}
+                          />
+                        </>
+                      )}
                     </TableRow>
                   );
                 })}

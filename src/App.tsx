@@ -201,7 +201,7 @@ function App() {
                 </StyledDivAtom>
               </Root>
             </ProtectedRoute>
-            <ProtectedRoute path="/settings">
+            <ProtectedRoute admin path="/settings">
               <Header handleDrawerToggle={handleDrawerToggle} />
               <Root>
                 <Sidebar

@@ -16,21 +16,27 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+import { useSelector } from 'react-redux';
 
 import TablePaginationActions from '../../../molecules/TableBottomPagination';
 import TableHead from '../../../molecules/TableHead';
 import TableRowIconCell from '../../../molecules/TableRowIconCell';
 import TableRowTextCell from '../../../molecules/TableRowTextCell';
 import TableToolbar from '../../../molecules/TableToolbar';
-import { getComparator, stableSort } from '../../../utils/helpers';
+import { selectUser } from '../../../redux/userSlice';
+import { getComparator, roleOptions, stableSort } from '../../../utils/helpers';
 import { LibraryGuest, Order, Status } from '../../../utils/types';
 
-const headCells = [
+const travelAgentCells = [
   { id: 'name', label: 'NAME' },
   { id: 'refNum', label: 'REF NUMBER' },
   { id: 'tel', label: 'TEL NUMBER' },
   { id: 'country', label: 'COUNTRY' },
   { id: 'status', label: 'STATUS' },
+];
+
+const adminCells = [
+  ...travelAgentCells,
   { id: '...', label: '' },
   { id: '...1', label: '' },
 ];
@@ -74,6 +80,8 @@ export default function GuestTable({
   deleteGuest,
   onEditGuestClick,
 }: GuestTableProps) {
+  const user = useSelector(selectUser);
+
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('calories');
@@ -152,7 +160,7 @@ export default function GuestTable({
           >
             <TableHead
               classes={classes}
-              headCells={headCells}
+              headCells={user.role === roleOptions[0].value ? adminCells : travelAgentCells}
               numSelected={selected.length}
               order={order as Order}
               orderBy={orderBy}
@@ -227,22 +235,26 @@ export default function GuestTable({
                           weight: 300,
                         }}
                       />
-                      <TableRowIconCell
-                        align="center"
-                        onClick={() => onEditGuestClick(row)}
-                        textColor="#B5B5C3"
-                        size="small"
-                        padding="8px"
-                        children={<EditOutlinedIcon style={{ color: 'green' }} />}
-                      />
-                      <TableRowIconCell
-                        align="center"
-                        onClick={() => deleteGuest(row)}
-                        textColor="#B5B5C3"
-                        size="small"
-                        padding="8px"
-                        children={<DeleteOutlinedIcon style={{ color: 'red' }} />}
-                      />
+                      {user.role === roleOptions[0].value && (
+                        <>
+                          <TableRowIconCell
+                            align="center"
+                            onClick={() => onEditGuestClick(row)}
+                            textColor="#B5B5C3"
+                            size="small"
+                            padding="8px"
+                            children={<EditOutlinedIcon style={{ color: 'green' }} />}
+                          />
+                          <TableRowIconCell
+                            align="center"
+                            onClick={() => deleteGuest(row)}
+                            textColor="#B5B5C3"
+                            size="small"
+                            padding="8px"
+                            children={<DeleteOutlinedIcon style={{ color: 'red' }} />}
+                          />
+                        </>
+                      )}
                     </TableRow>
                   );
                 })}
