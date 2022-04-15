@@ -11,14 +11,15 @@ import {
 } from '@material-ui/core';
 import clsx from 'clsx';
 import { getAuth, signOut } from 'firebase/auth';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import ButtonAtom from '../atoms/ButtonAtom';
 import LinkAtom from '../atoms/LinkAtom';
 import LinkTextAtom from '../atoms/LinkTextAtom';
-import { logout } from '../redux/userSlice';
+import { logout, selectUser } from '../redux/userSlice';
 import { navbarStyles } from '../styles';
+import { roleOptions } from '../utils/helpers';
 
 const drawerWidth = 240;
 
@@ -60,10 +61,7 @@ const permLinks = [
 ];
 
 const tempLinks = [
-  { key: '1', text: 'Dashboard', link: '/dashboard' },
-  { key: '2', text: 'Quote', link: '/quote' },
-  { key: '3', text: 'Library', link: '/library' },
-  { key: '4', text: 'Settings', link: '/settings' },
+  ...permLinks,
   { key: '5', text: 'View Profile', link: '/user-profile' },
 ];
 
@@ -74,6 +72,8 @@ interface SidebarProps {
 }
 
 function Sidebar({ wind, handleDrawerToggle, mobileOpen }: SidebarProps) {
+  const user = useSelector(selectUser);
+
   const container = wind !== undefined ? () => wind().document.body : undefined;
   const [open] = useState(true);
 
@@ -93,11 +93,14 @@ function Sidebar({ wind, handleDrawerToggle, mobileOpen }: SidebarProps) {
         <Divider />
         <StyledList>
           {links.map((link) => (
-            <LinkAtom key={link.key} to={`${link.link}`}>
-              <ListItem button>
-                <LinkTextAtom text={link.text} />
-              </ListItem>
-            </LinkAtom>
+            ((link.text === 'Settings' && user.role === roleOptions[0].value)
+            || link.text !== 'Settings') && (
+              <LinkAtom key={link.key} to={`${link.link}`}>
+                <ListItem button>
+                  <LinkTextAtom text={link.text} />
+                </ListItem>
+              </LinkAtom>
+            )
           ))}
           {type === 'temp' && (
             <ListItem button>
