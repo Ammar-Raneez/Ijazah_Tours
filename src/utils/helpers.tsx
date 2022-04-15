@@ -156,8 +156,13 @@ export const tourTypeOptions = [
 ];
 
 export const dateTypeOptions = [
-  { label: 'Specific Dates', value: 'specific-dates' },
-  { label: 'Not Specific', value: 'not-specific' },
+  { label: 'Specific Dates', value: 'Specific Dates' },
+  { label: 'Not Specific', value: 'Not Specific' },
+];
+
+export const roleOptions = [
+  { label: 'Admin', value: 'Admin' },
+  { label: 'Travel Agent', value: 'Travel Agent' },
 ];
 
 const ITEM_HEIGHT = 48;

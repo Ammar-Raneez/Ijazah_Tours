@@ -23,8 +23,8 @@ import UMTeamMemberTable from '../../../organisms/settings/user-management/UMTea
 import { selectWithNavbarHeight, selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
 import { selectUser, login } from '../../../redux/userSlice';
 import { TableToolbarStyles, settingsStyles } from '../../../styles';
-import { widthHeightDynamicStyle } from '../../../utils/helpers';
-import { FlexDirection, SettingsTeamMember } from '../../../utils/types';
+import { roleOptions, widthHeightDynamicStyle } from '../../../utils/helpers';
+import { FlexDirection, Role, SettingsTeamMember } from '../../../utils/types';
 
 function UserManagement() {
   const user = useSelector(selectUser);
@@ -35,7 +35,7 @@ function UserManagement() {
   const [newLastName, setNewLastName] = useState('');
   const [newEmail, setNewEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
-  const [newRole, setNewRole] = useState('');
+  const [newRole, setNewRole] = useState(roleOptions[0].value);
 
   const [editId, setEditId] = useState('');
   const [editFirstName, setEditFirstName] = useState('');
@@ -199,7 +199,7 @@ function UserManagement() {
           newFirstname={newFirstName}
           newLastname={newLastName}
           newEmail={newEmail}
-          newRole={newRole}
+          newRole={newRole as Role}
           newPassword={newPassword}
           onEditCreateMember={onCreateMember}
           setNewFirstname={setNewFirstName}
@@ -217,7 +217,7 @@ function UserManagement() {
           setOpenDialog={setEditOpenDialog}
           newFirstname={editFirstName}
           newLastname={editLastName}
-          newRole={editRole}
+          newRole={editRole as Role}
           onEditCreateMember={onEditMember}
           setNewFirstname={setEditFirstName}
           setNewLastname={setEditLastName}

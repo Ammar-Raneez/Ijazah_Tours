@@ -1,6 +1,7 @@
 import { Timestamp } from 'firebase/firestore';
 
 export type Order = 'asc' | 'desc';
+export type Role = 'Admin' | 'Travel Agent';
 export type Status = 'ACTIVE' | 'INACTIVE';
 export type CustomerQuoteStatus = 'APPROVED' | 'IN PROGRESS' | 'COMPLETE';
 export type NavbarType = 'quote' | 'library' | 'settings';

@@ -9,17 +9,20 @@ import {
 
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import ParagraphAtom from '../../../atoms/ParagraphAtom';
+import TextFieldAtom from '../../../atoms/TextFieldAtom';
 import FormControlInput from '../../../molecules/FormControlInput';
 import {
   settingsStyles,
   TableToolbarStyles,
 } from '../../../styles';
+import { roleOptions } from '../../../utils/helpers';
+import { Role } from '../../../utils/types';
 
 interface UMTeamMemberDialogProps {
   btnText: string;
   newFirstname: string;
   newLastname: string;
-  newRole: string;
+  newRole: Role;
   openDialog: boolean;
   showValidationErrorMessage: boolean;
   isCreating: boolean;
@@ -107,15 +110,17 @@ function UMTeamMemberDialog({
               />
             </>
           )}
-          <FormControlInput
-            flex={1}
+          <TextFieldAtom
+            variant="standard"
+            size="medium"
             label="Role"
-            fullWidth
-            multiline={false}
-            rows={1}
             value={newRole}
-            setValue={setNewRole}
-            placeholder="Enter Role"
+            onChange={(e) => setNewRole(e.target.value)}
+            options={roleOptions}
+            adornmentPosition="end"
+            disableUnderline={false}
+            style={{ margin: '0.5rem 0 0 0' }}
+            select
           />
           {showValidationErrorMessage && (
             <ParagraphAtom
