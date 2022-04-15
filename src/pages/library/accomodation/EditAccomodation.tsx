@@ -110,6 +110,16 @@ function EditAccomodation({
       return;
     }
 
+    const views = [...roomViewData];
+    views.forEach((v, i) => {
+      v.checked = roomViews[i];
+    });
+
+    const gradings = [...roomGradingsData];
+    gradings.forEach((v, i) => {
+      v.checked = roomGradings[i];
+    });
+
     setIsUpdating(true);
     await updateDoc(doc(db, 'Library Accomodation', row.id), {
       name,
@@ -119,9 +129,9 @@ function EditAccomodation({
       webLink,
       ijazahLink,
       additionalBedPrice,
-      gradings: roomGradings,
+      views,
+      gradings,
       country: location,
-      views: roomViews,
       categories: roomCategories,
       categoryValues: selectedTypeValues,
       tel: contactNumber,
