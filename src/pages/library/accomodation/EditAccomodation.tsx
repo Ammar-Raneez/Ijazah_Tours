@@ -76,6 +76,8 @@ function EditAccomodation({
     row.gradings.map((val) => val.checked || false),
   );
 
+  const [additionalBedPrice, setAdditionalBedPrice] = useState(row.additionalBedPrice);
+
   const [selectedTypes, setSelectedTypes] = useState(Object.keys(row.categoryValues));
 
   const [selectedTypeValues, setSelectedTypeValues] = useState(row.categoryValues);
@@ -102,7 +104,8 @@ function EditAccomodation({
     setShowValidationErrorMessage(false);
     if (name.trim() === '' || group.trim() === '' || location.trim() === ''
       || city.trim() === '' || contactNumber.trim() === '' || email.trim() === ''
-      || webLink.trim() === '' || ijazahLink.trim() === '' || rateData.length === 0) {
+      || webLink.trim() === '' || ijazahLink.trim() === '' || additionalBedPrice.trim() === ''
+      || rateData.length === 0) {
       setShowValidationErrorMessage(true);
       return;
     }
@@ -115,6 +118,7 @@ function EditAccomodation({
       email,
       webLink,
       ijazahLink,
+      additionalBedPrice,
       gradings: roomGradings,
       country: location,
       views: roomViews,
@@ -233,6 +237,7 @@ function EditAccomodation({
             email={email}
             webLink={webLink}
             ijazahLink={ijazahLink}
+            additionalBedPrice={additionalBedPrice}
             newRateStart={newRateStart}
             newRateEnd={newRateEnd}
             newMealPlan={newMealPlan}
@@ -259,6 +264,7 @@ function EditAccomodation({
             setEmail={setEmail}
             setWebLink={setWebLink}
             setIjazahLink={setIjazahLink}
+            setAdditionalBedPrice={setAdditionalBedPrice}
             setNewRateStart={setNewRateStart}
             setNewRateEnd={setNewRateEnd}
             setNewMealPlan={setNewMealPlan}

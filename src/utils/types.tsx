@@ -94,6 +94,7 @@ export interface LibraryAccomodation {
   accomodationType: string;
   city: string;
   country: string;
+  additionalBedPrice: string;
   group: string;
   email: string;
   webLink: string;

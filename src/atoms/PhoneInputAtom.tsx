@@ -7,12 +7,14 @@ import styled from 'styled-components';
 interface PhoneInputAtomProps {
   value: any;
   setContactNumber: any;
+  disabled?: boolean;
   style?: CSSProperties;
 }
 
 function PhoneInputAtom({
   value,
   setContactNumber,
+  disabled,
   style,
 }: PhoneInputAtomProps) {
   return (
@@ -21,6 +23,7 @@ function PhoneInputAtom({
       value={value}
       onChange={setContactNumber}
       style={style}
+      disabled={disabled}
     />
   );
 }

@@ -83,6 +83,8 @@ function CreateAccomodation({
   );
   const [selectedTypeValues, setSelectedTypeValues] = useState<{ [k: string]: string; }>({});
 
+  const [additionalBedPrice, setAdditionalBedPrice] = useState('');
+
   const [rateData, setRateData] = useState<AccomodationRate[]>([]);
   const [newRateStart, setNewRateStart] = useState('');
   const [newRateEnd, setNewRateEnd] = useState('');
@@ -128,7 +130,8 @@ function CreateAccomodation({
     setShowValidationErrorMessage(false);
     if (name.trim() === '' || group.trim() === '' || location.trim() === ''
       || city.trim() === '' || contactNumber.trim() === '' || email.trim() === ''
-      || webLink.trim() === '' || ijazahLink.trim() === '' || rateData.length === 0) {
+      || webLink.trim() === '' || ijazahLink.trim() === '' || additionalBedPrice.trim() === ''
+      || rateData.length === 0) {
       setShowValidationErrorMessage(true);
       return;
     }
@@ -150,6 +153,7 @@ function CreateAccomodation({
       email,
       webLink,
       ijazahLink,
+      additionalBedPrice,
       views,
       gradings,
       accomodationType,
@@ -205,6 +209,7 @@ function CreateAccomodation({
     setGroup('');
     setLocation('');
     setCity('');
+    setAdditionalBedPrice('');
     setContactNumber('');
     setEmail('');
     setWebLink('');
@@ -284,6 +289,7 @@ function CreateAccomodation({
             email={email}
             webLink={webLink}
             ijazahLink={ijazahLink}
+            additionalBedPrice={additionalBedPrice}
             newRateStart={newRateStart}
             newRateEnd={newRateEnd}
             newMealPlan={newMealPlan}
@@ -310,6 +316,7 @@ function CreateAccomodation({
             setEmail={setEmail}
             setWebLink={setWebLink}
             setIjazahLink={setIjazahLink}
+            setAdditionalBedPrice={setAdditionalBedPrice}
             setNewRateStart={setNewRateStart}
             setNewRateEnd={setNewRateEnd}
             setNewMealPlan={setNewMealPlan}

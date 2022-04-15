@@ -209,6 +209,7 @@ function CustomerForm({
             value={contactNumber}
             setContactNumber={setContactNumber}
             style={{ margin: widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 0rem 0') as string }}
+            disabled
           />
           <FormControlInput
             margin="0 0 1rem 0"

@@ -48,6 +48,7 @@ interface CreateEditAccomodationFormProps {
   email: string;
   webLink: string;
   ijazahLink: string;
+  additionalBedPrice: string;
   newRateStart: string;
   newRateEnd: string;
   newMealPlan: string;
@@ -77,6 +78,7 @@ interface CreateEditAccomodationFormProps {
   setEmail: any;
   setWebLink: any;
   setIjazahLink: any;
+  setAdditionalBedPrice: any;
   setNewRateStart: any,
   setNewRateEnd: any,
   setNewMealPlan: any,
@@ -106,6 +108,7 @@ function CreateEditAccomodationForm({
   email,
   webLink,
   ijazahLink,
+  additionalBedPrice,
   newRateStart,
   newRateEnd,
   newMealPlan,
@@ -135,6 +138,7 @@ function CreateEditAccomodationForm({
   setEmail,
   setWebLink,
   setIjazahLink,
+  setAdditionalBedPrice,
   setNewRateStart,
   setNewRateEnd,
   setNewMealPlan,
@@ -376,6 +380,30 @@ function CreateEditAccomodationForm({
               </FormControl>
             </DivAtom>
           ))}
+
+        <DivAtom
+          key={uuid()}
+          style={{
+            ...libraryAccomodationStyles.multiFieldContainer,
+            flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
+            justifyContent: 'flex-start',
+            marginTop: '0.8rem',
+          }}
+        >
+          <ParagraphAtom style={{ width: '150px' }} text="Additional Bed" />
+          <FormControl style={{ margin: '0 0 1rem 1rem' }}>
+            <InputLabel>Additional Bed</InputLabel>
+            <InputAtom
+              plain="true"
+              fullWidth
+              multiline={false}
+              rows={1}
+              value={additionalBedPrice}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setAdditionalBedPrice(e.target.value)}
+              placeholder="Enter Additional Bed Price"
+            />
+          </FormControl>
+        </DivAtom>
       </DivAtom>
 
       {showValidationErrorMessage && (
