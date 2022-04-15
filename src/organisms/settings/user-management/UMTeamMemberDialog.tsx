@@ -24,12 +24,13 @@ interface UMTeamMemberDialogProps {
   showValidationErrorMessage: boolean;
   isCreating: boolean;
   onEditCreateMember: MouseEventHandler<HTMLButtonElement>;
-  newPassword?: string;
-  newEmail?: string;
   setOpenDialog: any;
   setNewFirstname: any;
   setNewLastname: any;
   setNewRole: any;
+  newPassword?: string;
+  newEmail?: string;
+  editDialog?: boolean;
   setNewEmail?: any;
   setNewPassword?: any;
 }
@@ -39,6 +40,7 @@ function UMTeamMemberDialog({
   newFirstname,
   newLastname,
   newEmail,
+  editDialog,
   newRole,
   newPassword,
   openDialog,
@@ -79,7 +81,7 @@ function UMTeamMemberDialog({
             setValue={setNewLastname}
             placeholder="Enter Last Name"
           />
-          {newEmail === '' && (
+          {!editDialog && (
             <>
               <FormControlInput
                 flex={1}
@@ -87,7 +89,7 @@ function UMTeamMemberDialog({
                 fullWidth
                 multiline={false}
                 rows={1}
-                value={newEmail}
+                value={newEmail!}
                 setValue={setNewEmail}
                 placeholder="Enter Email"
                 type="email"

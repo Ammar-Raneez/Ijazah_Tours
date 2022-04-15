@@ -222,6 +222,7 @@ function UserManagement() {
           setNewFirstname={setEditFirstName}
           setNewLastname={setEditLastName}
           setNewRole={setEditRole}
+          editDialog
         />
         <DivAtom style={{ marginTop: '1rem' }}>
           {teamData.length > 0 && (
