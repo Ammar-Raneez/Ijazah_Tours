@@ -1,7 +1,9 @@
 import { ChangeEvent, MouseEvent } from 'react';
 
+import { Input, MenuItem, Select } from '@material-ui/core';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import { Link } from 'react-router-dom';
+import { v4 as uuid } from 'uuid';
 
 import ButtonAtom from '../../../../../atoms/ButtonAtom';
 import CheckboxAtom from '../../../../../atoms/CheckboxAtom';
@@ -12,7 +14,12 @@ import TextFieldAtom from '../../../../../atoms/TextFieldAtom';
 import FormControlInput from '../../../../../molecules/FormControlInput';
 import RadioButtonGroup from '../../../../../molecules/RadioButtonGroup';
 import { libraryStyles, quoteCreateQuoteStyles, TableToolbarStyles } from '../../../../../styles';
-import { dateTypeOptions, mealPlanOptions, widthHeightDynamicStyle } from '../../../../../utils/helpers';
+import {
+  dateTypeOptions,
+  mealPlanOptions,
+  MenuProps,
+  widthHeightDynamicStyle,
+} from '../../../../../utils/helpers';
 import {
   DropdownOption,
   FlexDirection,
@@ -26,6 +33,7 @@ interface CustomerFormProps {
   accomodationLocationData: SettingsLocation[];
   refData: DropdownOption[];
   holidayTypeData: DropdownOption[];
+  destinations: string[];
   width: number;
   refNum: string;
   title: string;
@@ -36,7 +44,6 @@ interface CustomerFormProps {
   country: string;
   city: string;
   holidayType: string
-  destination: string;
   mealPlan: string;
   dateType: string;
   checkin: string;
@@ -52,7 +59,7 @@ interface CustomerFormProps {
   setCountry: any;
   setCity: any;
   setHolidayType: any;
-  setDestination: any;
+  setDestinations: any;
   setMealPlan: any;
   setAdditionalBed: any;
   setDateType: any;
@@ -75,7 +82,7 @@ function CustomerForm({
   country,
   city,
   holidayType,
-  destination,
+  destinations,
   mealPlan,
   dateType,
   checkin,
@@ -91,7 +98,7 @@ function CustomerForm({
   setCountry,
   setCity,
   setHolidayType,
-  setDestination,
+  setDestinations,
   setMealPlan,
   setAdditionalBed,
   setDateType,
@@ -107,6 +114,11 @@ function CustomerForm({
       setCheckin('2022-01-01');
       setCheckout('2022-02-01');
     }
+  };
+
+  const handleDestinationsChange = (event: ChangeEvent<{ value: unknown }>) => {
+    const val = event.target.value as string[];
+    setDestinations(val);
   };
 
   return (
@@ -286,29 +298,27 @@ function CustomerForm({
             flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
           }}
         >
-          <TextFieldAtom
-            variant="standard"
-            size="medium"
-            label="Destination"
-            value={destination}
-            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setDestination(e.target.value)
-            }
-            options={
-              accomodationLocationData.map((l) => l.cities).flat().map((c) => ({
-                label: `${c.countryName} | ${c.value}`,
-                value: `${c.countryName} | ${c.value}`,
-              }))
-            }
-            adornmentPosition="end"
+          <Select
+            labelId="destinations-label"
+            id="destinations"
+            multiple
+            placeholder="Destinations"
+            value={destinations}
+            onChange={handleDestinationsChange}
+            input={<Input />}
+            MenuProps={MenuProps}
             style={{
-              ...libraryStyles.textField,
               flex: 1,
               width: widthHeightDynamicStyle(width, 600, '100%', 'auto'),
               margin: widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0'),
             }}
-            disableUnderline={false}
-            select
-          />
+          >
+            {accomodationLocationData.map((l) => l.cities).flat().map((c) => (
+              <MenuItem key={uuid()} value={c.value}>
+                {`${c.countryName} | ${c.value}`}
+              </MenuItem>
+            ))}
+          </Select>
           <RadioButtonGroup
             title="Meal Plan"
             options={mealPlanOptions}
