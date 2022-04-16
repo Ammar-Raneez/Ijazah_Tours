@@ -57,6 +57,15 @@ function AccomodationPriceTable({
                 key={uuid()}
                 cell={{
                   align: 'center',
+                  title: row.newRateType,
+                  colors: ['#464E5F', '#B5B5C3'],
+                  weight: 400,
+                }}
+              />
+              <TableRowTextCell
+                key={uuid()}
+                cell={{
+                  align: 'center',
                   title: row.newRateStart,
                   colors: ['#464E5F', '#B5B5C3'],
                   weight: 400,

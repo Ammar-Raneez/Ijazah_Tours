@@ -29,6 +29,7 @@ import AccomodationRatesContainer from './AccomodationRatesContainer';
 
 interface CreateEditAccomodationFormProps {
   accomodationTypeData: DropdownOption[];
+  rateRoomTypes: DropdownOption[];
   accomodationLocations: LocationDropdown[];
   accomodationCities: CityDropdown[];
   accomodationFilteredCities: CityDropdown[];
@@ -49,6 +50,7 @@ interface CreateEditAccomodationFormProps {
   webLink: string;
   ijazahLink: string;
   additionalBedPrice: string;
+  newRateType: string;
   newRateStart: string;
   newRateEnd: string;
   newMealPlan: string;
@@ -79,6 +81,7 @@ interface CreateEditAccomodationFormProps {
   setWebLink: any;
   setIjazahLink: any;
   setAdditionalBedPrice: any;
+  setNewRateType: any;
   setNewRateStart: any,
   setNewRateEnd: any,
   setNewMealPlan: any,
@@ -89,6 +92,7 @@ interface CreateEditAccomodationFormProps {
 
 function CreateEditAccomodationForm({
   accomodationTypeData,
+  rateRoomTypes,
   accomodationLocations,
   accomodationCities,
   accomodationFilteredCities,
@@ -109,6 +113,7 @@ function CreateEditAccomodationForm({
   webLink,
   ijazahLink,
   additionalBedPrice,
+  newRateType,
   newRateStart,
   newRateEnd,
   newMealPlan,
@@ -139,6 +144,7 @@ function CreateEditAccomodationForm({
   setWebLink,
   setIjazahLink,
   setAdditionalBedPrice,
+  setNewRateType,
   setNewRateStart,
   setNewRateEnd,
   setNewMealPlan,
@@ -333,13 +339,16 @@ function CreateEditAccomodationForm({
 
         <AccomodationRatesContainer
           width={width}
+          rateRoomTypes={rateRoomTypes}
           deleteRate={deleteRate}
+          newRateType={newRateType}
           newRateStart={newRateStart}
           newRateEnd={newRateEnd}
           newMealPlan={newMealPlan}
           newSinglePrice={newSinglePrice}
           newDoublePrice={newDoublePrice}
           newTriplePrice={newTriplePrice}
+          setNewRateType={setNewRateType}
           setNewRateStart={setNewRateStart}
           setNewRateEnd={setNewRateEnd}
           setNewMealPlan={setNewMealPlan}

@@ -81,6 +81,7 @@ export interface QuotationCostingRate {
 // Library
 export interface AccomodationRate {
   id: string;
+  newRateType: string;
   newRateStart: string;
   newRateEnd: string;
   newMealPlan: string;

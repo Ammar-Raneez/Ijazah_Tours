@@ -84,8 +84,8 @@ function CreateAccomodation({
   const [selectedTypeValues, setSelectedTypeValues] = useState<{ [k: string]: string; }>({});
 
   const [additionalBedPrice, setAdditionalBedPrice] = useState('');
-
   const [rateData, setRateData] = useState<AccomodationRate[]>([]);
+  const [newRateType, setNewRateType] = useState('');
   const [newRateStart, setNewRateStart] = useState('');
   const [newRateEnd, setNewRateEnd] = useState('');
   const [newMealPlan, setNewMealPlan] = useState('');
@@ -179,6 +179,7 @@ function CreateAccomodation({
       ...rateData,
       {
         id: uuid(),
+        newRateType,
         newRateStart,
         newRateEnd,
         newMealPlan,
@@ -268,6 +269,7 @@ function CreateAccomodation({
           <CreateEditAccomodationForm
             rateData={rateData}
             accomodationTypeData={accomodationTypeData}
+            rateRoomTypes={roomCategoriesData.map((type) => ({ label: type.val, value: type.val }))}
             accomodationLocations={accomodationLocations}
             accomodationCities={accomodationCities}
             accomodationFilteredCities={accomodationFilteredCities}
@@ -290,6 +292,7 @@ function CreateAccomodation({
             webLink={webLink}
             ijazahLink={ijazahLink}
             additionalBedPrice={additionalBedPrice}
+            newRateType={newRateType}
             newRateStart={newRateStart}
             newRateEnd={newRateEnd}
             newMealPlan={newMealPlan}
@@ -317,6 +320,7 @@ function CreateAccomodation({
             setWebLink={setWebLink}
             setIjazahLink={setIjazahLink}
             setAdditionalBedPrice={setAdditionalBedPrice}
+            setNewRateType={setNewRateType}
             setNewRateStart={setNewRateStart}
             setNewRateEnd={setNewRateEnd}
             setNewMealPlan={setNewMealPlan}

@@ -13,11 +13,13 @@ import {
   TableToolbarStyles,
 } from '../../../styles';
 import { widthHeightDynamicStyle } from '../../../utils/helpers';
-import { AccomodationRate, FlexDirection } from '../../../utils/types';
+import { AccomodationRate, DropdownOption, FlexDirection } from '../../../utils/types';
 import AccomodationPriceTable from './AccomodationPriceTable';
 
 interface AccomodationRatesContainerProps {
+  rateRoomTypes: DropdownOption[];
   width: number;
+  newRateType: string;
   newRateStart: string;
   newRateEnd: string;
   newMealPlan: string;
@@ -27,6 +29,7 @@ interface AccomodationRatesContainerProps {
   rateData: AccomodationRate[];
   deleteRate: ((row: AccomodationRate) => Promise<void>) | ((row: AccomodationRate) => void);
   onCreateRate: MouseEventHandler<HTMLButtonElement>;
+  setNewRateType: any;
   setNewRateStart: any;
   setNewRateEnd: any;
   setNewMealPlan: any;
@@ -37,12 +40,15 @@ interface AccomodationRatesContainerProps {
 
 function AccomodationRatesContainer({
   width,
+  rateRoomTypes,
+  newRateType,
   newRateStart,
   newRateEnd,
   newMealPlan,
   newSinglePrice,
   newDoublePrice,
   newTriplePrice,
+  setNewRateType,
   setNewRateStart,
   setNewRateEnd,
   setNewMealPlan,
@@ -56,6 +62,25 @@ function AccomodationRatesContainer({
   return (
     <>
       <H2Atom style={libraryAccomodationStyles.title} text="Rates" />
+      <DivAtom>
+        <TextFieldAtom
+          variant="standard"
+          size="medium"
+          label="Room Type"
+          value={newRateType}
+          onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setNewRateType(e.target.value)}
+          options={rateRoomTypes}
+          adornmentPosition="end"
+          style={{
+            ...libraryStyles.textField,
+            flex: 1,
+            width: widthHeightDynamicStyle(width, 600, '100%', '30%'),
+            margin: '0 0 1rem 0',
+          }}
+          disableUnderline={false}
+          select
+        />
+      </DivAtom>
       <DivAtom
         style={{
           ...libraryAccomodationStyles.multiFieldContainer,
@@ -169,6 +194,7 @@ function AccomodationRatesContainer({
         {rateData.length > 0 && (
           <AccomodationPriceTable
             columns={[
+              'ROOM TYPE',
               'START DATE',
               'END DATE',
               'MEAL PLAN',

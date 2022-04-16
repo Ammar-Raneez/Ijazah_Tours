@@ -83,6 +83,7 @@ function EditAccomodation({
   const [selectedTypeValues, setSelectedTypeValues] = useState(row.categoryValues);
 
   const [rateData, setRateData] = useState<AccomodationRate[]>(row.rates);
+  const [newRateType, setNewRateType] = useState('');
   const [newRateStart, setNewRateStart] = useState('');
   const [newRateEnd, setNewRateEnd] = useState('');
   const [newMealPlan, setNewMealPlan] = useState('');
@@ -150,6 +151,7 @@ function EditAccomodation({
       ...rateData,
       {
         id: uuid(),
+        newRateType,
         newRateStart,
         newRateEnd,
         newMealPlan,
@@ -226,6 +228,7 @@ function EditAccomodation({
           <CreateEditAccomodationForm
             isCreating={isUpdating}
             accomodationTypeData={accomodationTypeData}
+            rateRoomTypes={roomCategoriesData.map((type) => ({ label: type.val, value: type.val }))}
             accomodationLocations={accomodationLocations}
             accomodationCities={accomodationCities}
             accomodationFilteredCities={accomodationFilteredCities}
@@ -248,6 +251,7 @@ function EditAccomodation({
             webLink={webLink}
             ijazahLink={ijazahLink}
             additionalBedPrice={additionalBedPrice}
+            newRateType={newRateType}
             newRateStart={newRateStart}
             newRateEnd={newRateEnd}
             newMealPlan={newMealPlan}
@@ -275,6 +279,7 @@ function EditAccomodation({
             setWebLink={setWebLink}
             setIjazahLink={setIjazahLink}
             setAdditionalBedPrice={setAdditionalBedPrice}
+            setNewRateType={setNewRateType}
             setNewRateStart={setNewRateStart}
             setNewRateEnd={setNewRateEnd}
             setNewMealPlan={setNewMealPlan}
