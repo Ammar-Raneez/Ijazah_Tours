@@ -18,7 +18,7 @@ const LINKS = [
     links: [
       { key: '1', text: 'Quotations', link: '/quote/quotations' },
       { key: '2', text: 'Voucher', link: '/quote/voucher' },
-      { key: '3', text: 'Summary', link: '/quote/summary' },
+      { key: '3', text: 'Summary', link: '/quote/summary/:id' },
     ],
   },
   {
@@ -50,7 +50,12 @@ function Navbar({ type }: NavbarProps) {
   return (
     <DivAtom style={navbarStyles.container}>
       {navbarType?.links.map((link) => (
-        <LinkAtom style={navbarStyles.link} key={link.key} to={link.link}>
+        <LinkAtom
+          disabled={link.link === '/quote/summary'}
+          style={{ ...navbarStyles.link, cursor: link.link === '/quote/summary' ? 'default' : 'pointer' }}
+          key={link.key}
+          to={link.link}
+        >
           <LinkTextAtom text={link.text} />
         </LinkAtom>
       ))}

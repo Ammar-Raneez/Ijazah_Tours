@@ -11,6 +11,7 @@ import {
   TableRow,
   Theme,
 } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 
 import GuestProfile from '../../../molecules/GuestProfile';
 import TablePaginationActions from '../../../molecules/TableBottomPagination';
@@ -28,6 +29,7 @@ const headCells = [
   { id: 'netPrice', label: 'PRICE' },
   { id: '...', label: '' },
   { id: '...1', label: '' },
+  { id: '...2', label: '' },
 ];
 
 interface QuotationsTableProps {
@@ -64,6 +66,8 @@ function QuotationsTable({ rowdata }: QuotationsTableProps) {
   const [orderBy, setOrderBy] = useState('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const history = useHistory();
 
   const handleRequestSort = (
     _: MouseEvent<HTMLSpanElement>,
@@ -139,7 +143,7 @@ function QuotationsTable({ rowdata }: QuotationsTableProps) {
                     <TableRowTextCell
                       cell={{
                         align: 'left',
-                        title: new Date(row.updatedAt.toDate()).toDateString(),
+                        title: new Date(row.createdAt.toDate()).toDateString(),
                         colors: ['#464E5F', '#B5B5C3'],
                         weight: 300,
                       }}
@@ -170,6 +174,26 @@ function QuotationsTable({ rowdata }: QuotationsTableProps) {
                       btnText="View Quote"
                       btnColors={['#C9F7F5', '#1BC5BD']}
                     />
+                    {row.status === 'COMPLETE' ? (
+                      <TableRowButtonCell
+                        onClick={() => history.replace(`/quote/summary/${row.id}`)}
+                        align="right"
+                        btnWidth="8rem"
+                        btnSize="medium"
+                        btnBorderRadius="0.5rem"
+                        btnText="Summary"
+                        btnColors={['#7595EC', '#333333']}
+                      />
+                    ) : (
+                      <TableRowTextCell
+                        cell={{
+                          align: 'left',
+                          title: '',
+                          colors: ['#464E5F', '#B5B5C3'],
+                          weight: 600,
+                        }}
+                      />
+                    )}
                   </TableRow>
                 ))}
             </TableBody>
