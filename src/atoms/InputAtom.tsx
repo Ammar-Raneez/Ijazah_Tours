@@ -1,4 +1,9 @@
-import { ReactNode, CSSProperties, ChangeEvent } from 'react';
+import {
+  ReactNode,
+  CSSProperties,
+  ChangeEvent,
+  FocusEventHandler,
+} from 'react';
 
 import { Input, InputAdornment } from '@material-ui/core';
 import styled from 'styled-components';
@@ -6,7 +11,6 @@ import styled from 'styled-components';
 interface InputAtomProps {
   value: string | number;
   fullWidth: boolean;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   plain?: string;
   type?: string;
   placeholder?: string;
@@ -18,6 +22,8 @@ interface InputAtomProps {
   minValue?: number;
   adornmentPosition?: 'start' | 'end';
   children?: ReactNode;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: FocusEventHandler<HTMLTextAreaElement | HTMLInputElement>;
   style?: CSSProperties;
 }
 
@@ -35,6 +41,7 @@ function InputAtom({
   fullWidth,
   value,
   onChange,
+  onBlur,
   style,
   ...props
 }: InputAtomProps) {
@@ -47,6 +54,7 @@ function InputAtom({
       style={{ ...style, color: 'black' }}
       value={value}
       onChange={onChange}
+      onBlur={onBlur}
       required={required}
       disabled={disabled}
       error={error}

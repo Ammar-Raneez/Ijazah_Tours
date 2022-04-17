@@ -12,6 +12,7 @@ interface TableRowEditCellProps {
   options?: any;
   onSelectChange?: (val: string, type: string) => void;
   onCountChange?: (val: string) => void;
+  onCountChangeBlur?: (val: string) => void;
 }
 
 function TableRowEditCell({
@@ -22,6 +23,7 @@ function TableRowEditCell({
   align,
   onSelectChange,
   onCountChange,
+  onCountChangeBlur,
 }: TableRowEditCellProps) {
   return select ? (
     <TableCell align={align}>
@@ -51,6 +53,7 @@ function TableRowEditCell({
           rows={1}
           value={value}
           type="number"
+          onBlur={(e) => onCountChangeBlur && onCountChangeBlur(e.target.value)}
           onChange={(e) => onCountChange && onCountChange(e.target.value)}
           placeholder=""
           minValue={1}

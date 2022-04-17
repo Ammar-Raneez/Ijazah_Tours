@@ -32,11 +32,8 @@ interface AccomodationTableProps {
   columns: string[];
   selectedAccomodationsNights: string[];
   selectedAccomodationsRoomTypes: string[];
-  selectedAccomodationsMealPlans: string[];
-  setSelectedAccomodations: any;
   setSelectedAccomodationsNights: any;
   setSelectedAccomodationsRoomTypes: any;
-  setSelectedAccomodationsMealPlans: any;
   deleteAccomodation: (row: UserAccomodation) => void;
 }
 
@@ -45,11 +42,8 @@ function AccomodationTable({
   selectedAccomodations,
   selectedAccomodationsNights,
   selectedAccomodationsRoomTypes,
-  selectedAccomodationsMealPlans,
-  setSelectedAccomodations,
   setSelectedAccomodationsNights,
   setSelectedAccomodationsRoomTypes,
-  setSelectedAccomodationsMealPlans,
   deleteAccomodation,
 }: AccomodationTableProps) {
   const classes = useStyles();
@@ -74,77 +68,20 @@ function AccomodationTable({
               { value: cat, label: cat }
             ));
 
-            const mealPlanOptions = row.rates
-              .map((rate) => rate.newMealPlan)
-              .map((rate) => ({ value: rate, label: rate }));
-
-            const rowNights = selectedAccomodationsNights[index];
-            const rowMealPlan = selectedAccomodationsMealPlans[index];
-            const rowRoomType = selectedAccomodationsRoomTypes[index];
-
-            const onSelectChange = (val: string, type: string) => {
-              const {
-                accomodation,
-                accomodations,
-                accomodationIndex,
-              } = getAccomodationsFromStorage();
-
-              if (type === 'Room Type') {
-                const roomTypesCopy = setNewStateValue(selectedAccomodationsRoomTypes, val);
-                setSelectedAccomodationsRoomTypes(roomTypesCopy);
-                const updatedAcc = { ...accomodation, roomType: val };
-                setNewSelectedAccomodations(accomodations, updatedAcc, accomodationIndex);
-              } else {
-                const mealPlansCopy = setNewStateValue(selectedAccomodationsMealPlans, val);
-                setSelectedAccomodationsMealPlans(mealPlansCopy);
-                const updatedAcc = { ...accomodation, mealPlan: val };
-                setNewSelectedAccomodations(accomodations, updatedAcc, accomodationIndex);
-              }
+            const onRoomTypeChange = (v: string) => {
+              const temp = [...selectedAccomodationsRoomTypes];
+              temp.splice(index, 1, v);
+              setSelectedAccomodationsRoomTypes(temp);
             };
 
-            const onNightsChange = (val: string) => {
-              const {
-                accomodation,
-                accomodations,
-                accomodationIndex,
-              } = getAccomodationsFromStorage();
+            // const onNightsChange = (v: string) => {
+            //   console.log(v);
+            // };
 
-              const nightsCopy = setNewStateValue(selectedAccomodationsNights, val);
-              setSelectedAccomodationsNights(nightsCopy);
-              const updatedAcc = { ...accomodation, nights: val };
-              setNewSelectedAccomodations(accomodations, updatedAcc, accomodationIndex);
-            };
-
-            const setNewStateValue = (stateValues: string[], val: string) => {
-              const copy = [...stateValues];
-              const toEditNights = copy.findIndex((rt) => rt === val);
-              copy.splice(toEditNights, 1);
-              copy.push(val);
-              return copy;
-            };
-
-            const setNewSelectedAccomodations = (
-              accomodations: UserAccomodation[],
-              updatedAcc: UserAccomodation,
-              accomodationIndex: number,
-            ) => {
-              const accomodationsCopy = [...accomodations];
-              accomodationsCopy.splice(accomodationIndex, 1);
-              accomodationsCopy.push(updatedAcc);
-              setSelectedAccomodations(accomodationsCopy);
-            };
-
-            const getAccomodationsFromStorage = () => {
-              const accomodations = JSON.parse(localStorage.getItem('New Quote Accomodation')!).selectedAccomodations;
-              const accomodation = accomodations?.find((acc: UserAccomodation) => (
-                acc.id === row.id
-              ))!;
-
-              const accomodationIndex = accomodations?.findIndex((acc: UserAccomodation) => (
-                acc.id === row.id
-              ))!;
-
-              return { accomodations, accomodation, accomodationIndex };
+            const onNightsChangeBlur = (v: string) => {
+              const temp = [...selectedAccomodationsNights];
+              temp.splice(index, 1, v);
+              setSelectedAccomodationsNights(temp);
             };
 
             return (
@@ -162,8 +99,8 @@ function AccomodationTable({
                   key={uuid()}
                   type="Nights"
                   select={false}
-                  value={rowNights}
-                  onCountChange={onNightsChange}
+                  value={selectedAccomodationsNights[index]}
+                  onCountChange={onNightsChangeBlur}
                   align="center"
                 />
                 <TableRowTextCell
@@ -197,19 +134,19 @@ function AccomodationTable({
                   key={uuid()}
                   select
                   type="Room Type"
-                  value={rowRoomType}
-                  onSelectChange={onSelectChange}
+                  value={selectedAccomodationsRoomTypes[index] || ''}
+                  onSelectChange={onRoomTypeChange}
                   options={roomTypes}
                   align="center"
                 />
-                <TableRowEditCell
+                <TableRowTextCell
                   key={uuid()}
-                  select
-                  type="Meal Plan"
-                  value={rowMealPlan}
-                  onSelectChange={onSelectChange}
-                  options={mealPlanOptions}
-                  align="center"
+                  cell={{
+                    align: 'center',
+                    title: row.mealPlan,
+                    colors: ['#464E5F'],
+                    weight: 400,
+                  }}
                 />
                 <TableRowTextCell
                   key={uuid()}
