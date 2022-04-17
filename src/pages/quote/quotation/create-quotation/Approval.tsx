@@ -171,8 +171,11 @@ function Approval({ setCreated }: ApprovalProps) {
     setIsSavingQuote(true);
     setCreated(false);
     const pdfURL = await generatePDF();
+
+    const accomodations = JSON.parse(localStorage.getItem('New Quote Accomodation')!).selectedAccomodations;
+    const costings = JSON.parse(localStorage.getItem('New Quote Costing')!);
+
     const guestDetails = {
-      user: userId,
       refNum,
       nationality,
       arrival,
@@ -190,6 +193,9 @@ function Approval({ setCreated }: ApprovalProps) {
       allGovernmentTaxes,
       guideAndCar,
       pdfURL,
+      accomodations,
+      costings,
+      user: userId,
       name: `${firstName} ${lastName}`,
       status: 'IN PROGRESS',
     };
