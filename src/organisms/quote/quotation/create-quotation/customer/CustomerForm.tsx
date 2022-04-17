@@ -60,6 +60,7 @@ interface CustomerFormProps {
   setCity: any;
   setHolidayType: any;
   setDestinations: any;
+  setToStoreDestinations: any;
   setMealPlan: any;
   setAdditionalBed: any;
   setDateType: any;
@@ -99,6 +100,7 @@ function CustomerForm({
   setCity,
   setHolidayType,
   setDestinations,
+  setToStoreDestinations,
   setMealPlan,
   setAdditionalBed,
   setDateType,
@@ -119,6 +121,14 @@ function CustomerForm({
   const handleDestinationsChange = (event: ChangeEvent<{ value: unknown }>) => {
     const val = event.target.value as string[];
     setDestinations(val);
+    setToStoreDestinations(
+      accomodationLocationData.map((l) => l.cities)
+        .flat()
+        .filter((c) => val.includes(c.value))
+        .map((c) => (
+          `${c.countryName} | ${c.value}`
+        )),
+    );
   };
 
   return (
@@ -379,7 +389,7 @@ function CustomerForm({
           size="large"
           text="Continue"
           onClick={(event) => onCreateCustomer(event)}
-          disabled={title.trim() === ''}
+          disabled={title.trim() === '' || destinations.length === 0}
           style={{
             ...quoteCreateQuoteStyles.addBtn,
             width: widthHeightDynamicStyle(width, 768, '100%', '18%'),

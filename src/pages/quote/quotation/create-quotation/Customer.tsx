@@ -46,6 +46,7 @@ function Customer() {
   const [city, setCity] = useState('');
 
   const [destinations, setDestinations] = useState<string[]>([]);
+  const [toStoreDestinations, setToStoreDestinations] = useState<string[]>([]);
   const [additionalBed, setAdditionalBed] = useState(false);
   const [mealPlan, setMealPlan] = useState(mealPlanOptions[0].value);
 
@@ -149,6 +150,10 @@ function Customer() {
           selectedCustomer?.adults,
           selectedCustomer?.childrenAges,
           selectedCustomer?.id,
+          holidayType,
+          mealPlan,
+          additionalBed,
+          toStoreDestinations,
         ]],
       }),
     );
@@ -201,6 +206,7 @@ function Customer() {
           setCity={setCity}
           setHolidayType={setHolidayType}
           setDestinations={setDestinations}
+          setToStoreDestinations={setToStoreDestinations}
           setMealPlan={setMealPlan}
           setAdditionalBed={setAdditionalBed}
           setDateType={setDateType}

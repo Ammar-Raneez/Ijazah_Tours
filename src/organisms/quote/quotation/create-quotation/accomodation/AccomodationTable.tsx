@@ -53,7 +53,6 @@ function AccomodationTable({
   deleteAccomodation,
 }: AccomodationTableProps) {
   const classes = useStyles();
-
   return (
     <TableContainer className={classes.paper} component={Paper}>
       <Table className={classes.table} aria-label="quotations table">

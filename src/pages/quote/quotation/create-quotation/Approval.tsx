@@ -199,7 +199,9 @@ function Approval({ setCreated }: ApprovalProps) {
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
     });
+
     await createVouchers(guestDetails);
+    clearLocalStorage();
     setIsSavingQuote(false);
     setCreated(true);
     history.replace('/quote/voucher');
@@ -213,6 +215,12 @@ function Approval({ setCreated }: ApprovalProps) {
     } else {
       setOpenTourTypeDialog(false);
     }
+  };
+
+  const clearLocalStorage = () => {
+    localStorage.removeItem('New Quote Accomodation');
+    localStorage.removeItem('New Quote Customer');
+    localStorage.removeItem('New Quote Costing');
   };
 
   const createVouchers = async (guestDetails: any) => {
