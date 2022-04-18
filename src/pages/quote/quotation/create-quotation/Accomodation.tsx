@@ -40,6 +40,11 @@ function Accomodation() {
     setSelectedAccomodationsRoomTypes,
   ] = useState<string[]>([]);
 
+  const [
+    selectedAccomodationsMealPlans,
+    setSelectedAccomodationsMealPlans,
+  ] = useState<string[]>([]);
+
   const [search, setSearch] = useState('');
 
   const [showValidationErrorMessage, setShowValidationErrorMessage] = useState(false);
@@ -94,12 +99,15 @@ function Accomodation() {
     const removeIndex = selectedAccomodations.findIndex((ac) => ac.id === acc.id);
     const tempAccomodationNights = [...selectedAccomodationsNights];
     const tempAccomodationRoomTypes = [...selectedAccomodationsRoomTypes];
+    const tempAccomodationMealPlans = [...selectedAccomodationsMealPlans];
     const tempAccomodation = [...selectedAccomodations];
     tempAccomodationNights.splice(removeIndex, 1);
     tempAccomodationRoomTypes.splice(removeIndex, 1);
+    tempAccomodationMealPlans.splice(removeIndex, 1);
     tempAccomodation.splice(removeIndex, 1);
     setSelectedAccomodationsNights(tempAccomodationNights);
     setSelectedAccomodationsRoomTypes(tempAccomodationRoomTypes);
+    setSelectedAccomodationsMealPlans(tempAccomodationMealPlans);
     setSelectedAccomodations(tempAccomodation);
   };
 
@@ -220,8 +228,10 @@ function Accomodation() {
                 selectedAccomodations={selectedAccomodations}
                 selectedAccomodationsNights={selectedAccomodationsNights}
                 selectedAccomodationsRoomTypes={selectedAccomodationsRoomTypes}
+                selectedAccomodationsMealPlans={selectedAccomodationsMealPlans}
                 setSelectedAccomodationsNights={setSelectedAccomodationsNights}
                 setSelectedAccomodationsRoomTypes={setSelectedAccomodationsRoomTypes}
+                setSelectedAccomodationsMealPlans={setSelectedAccomodationsMealPlans}
                 deleteAccomodation={deleteAccomodation}
               />
             )}

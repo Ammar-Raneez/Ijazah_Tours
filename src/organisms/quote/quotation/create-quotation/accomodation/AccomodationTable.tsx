@@ -32,8 +32,10 @@ interface AccomodationTableProps {
   columns: string[];
   selectedAccomodationsNights: string[];
   selectedAccomodationsRoomTypes: string[];
+  selectedAccomodationsMealPlans: string[];
   setSelectedAccomodationsNights: any;
   setSelectedAccomodationsRoomTypes: any;
+  setSelectedAccomodationsMealPlans: any;
   deleteAccomodation: (row: UserAccomodation) => void;
 }
 
@@ -42,8 +44,10 @@ function AccomodationTable({
   selectedAccomodations,
   selectedAccomodationsNights,
   selectedAccomodationsRoomTypes,
+  selectedAccomodationsMealPlans,
   setSelectedAccomodationsNights,
   setSelectedAccomodationsRoomTypes,
+  setSelectedAccomodationsMealPlans,
   deleteAccomodation,
 }: AccomodationTableProps) {
   const classes = useStyles();
@@ -67,11 +71,20 @@ function AccomodationTable({
             const roomTypes = Object.keys(row.categoryValues).map((cat) => (
               { value: cat, label: cat }
             ));
+            const mealPlans = row.rates.map((rate) => (
+              { value: rate.newMealPlan, label: rate.newMealPlan }
+            ));
 
             const onRoomTypeChange = (v: string) => {
               const temp = [...selectedAccomodationsRoomTypes];
               temp.splice(index, 1, v);
               setSelectedAccomodationsRoomTypes(temp);
+            };
+
+            const onMealPlanChange = (v: string) => {
+              const temp = [...selectedAccomodationsMealPlans];
+              temp.splice(index, 1, v);
+              setSelectedAccomodationsMealPlans(temp);
             };
 
             // const onNightsChange = (v: string) => {
@@ -139,14 +152,14 @@ function AccomodationTable({
                   options={roomTypes}
                   align="center"
                 />
-                <TableRowTextCell
+                <TableRowEditCell
                   key={uuid()}
-                  cell={{
-                    align: 'center',
-                    title: row.mealPlan,
-                    colors: ['#464E5F'],
-                    weight: 400,
-                  }}
+                  select
+                  type="Meal Plan"
+                  value={selectedAccomodationsMealPlans[index] || ''}
+                  onSelectChange={onMealPlanChange}
+                  options={mealPlans}
+                  align="center"
                 />
                 <TableRowTextCell
                   key={uuid()}
