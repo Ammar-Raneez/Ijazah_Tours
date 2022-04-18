@@ -201,6 +201,7 @@ function CreateEditDriverForm({
             value={rate}
             setValue={setRate}
             placeholder="Enter Rate"
+            dollarAdornment
           />
           <CheckboxGroup
             groupTitle="Language"

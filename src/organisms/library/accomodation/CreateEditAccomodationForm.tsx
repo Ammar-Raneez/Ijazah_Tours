@@ -385,6 +385,7 @@ function CreateEditAccomodationForm({
                     onSetSelectedTypeValue(type, e.target.value)
                   )}
                   placeholder="Enter Price"
+                  dollarAdornment
                 />
               </FormControl>
             </DivAtom>
@@ -410,6 +411,7 @@ function CreateEditAccomodationForm({
               value={additionalBedPrice}
               onChange={(e: ChangeEvent<HTMLInputElement>) => setAdditionalBedPrice(e.target.value)}
               placeholder="Enter Additional Bed Price"
+              dollarAdornment
             />
           </FormControl>
         </DivAtom>

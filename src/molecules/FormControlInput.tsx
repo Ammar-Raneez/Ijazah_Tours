@@ -13,6 +13,8 @@ interface FormControlInputProps {
   rows: number;
   setValue: any;
   disabled?: boolean;
+  dollarAdornment?: boolean;
+  lkrAdornment?: boolean;
   flex?: number;
   margin?: string;
   width?: string;
@@ -29,6 +31,8 @@ function FormControlInput({
   margin,
   setValue,
   disabled,
+  dollarAdornment,
+  lkrAdornment,
   flex,
   width,
   type,
@@ -41,6 +45,8 @@ function FormControlInput({
         fullWidth={fullWidth}
         disabled={disabled}
         multiline={multiline}
+        lkrAdornment={lkrAdornment}
+        dollarAdornment={dollarAdornment}
         rows={rows}
         value={value}
         type={type}

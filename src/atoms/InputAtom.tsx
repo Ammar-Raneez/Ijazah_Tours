@@ -17,6 +17,8 @@ interface InputAtomProps {
   required?: boolean;
   disabled?: boolean;
   multiline?: boolean;
+  dollarAdornment?: boolean;
+  lkrAdornment?: boolean;
   error?: boolean;
   rows?: number;
   minValue?: number;
@@ -34,6 +36,8 @@ function InputAtom({
   required,
   disabled,
   multiline,
+  dollarAdornment,
+  lkrAdornment,
   rows,
   minValue,
   error,
@@ -45,6 +49,15 @@ function InputAtom({
   style,
   ...props
 }: InputAtomProps) {
+  let adornment = <></>;
+  if (dollarAdornment) {
+    adornment = <InputAdornment position="start">$</InputAdornment>;
+  } else if (lkrAdornment) {
+    adornment = <InputAdornment position="start">LKR</InputAdornment>;
+  } else if (adornmentPosition) {
+    adornment = <InputAdornment position="start">{props.children}</InputAdornment>;
+  }
+
   return (
     <StyledInput
       multiline={multiline}
@@ -61,13 +74,7 @@ function InputAtom({
       placeholder={placeholder}
       fullWidth={fullWidth}
       disableUnderline={plain === 'false'}
-      startAdornment={
-        adornmentPosition && (
-          <InputAdornment position={adornmentPosition}>
-            {props.children}
-          </InputAdornment>
-        )
-      }
+      startAdornment={adornment}
       inputProps={{
         min: minValue || 0,
       }}
@@ -77,7 +84,7 @@ function InputAtom({
 
 export default InputAtom;
 
-const StyledInput = styled(Input)<InputAtomProps>`
+const StyledInput = styled(Input) <InputAtomProps>`
   ${({ plain }) => plain === 'false' && inputBaseStyle}
 `;
 

@@ -145,6 +145,7 @@ function AccomodationRatesContainer({
           value={newSinglePrice}
           setValue={setNewSinglePrice}
           placeholder="Enter Single Price"
+          dollarAdornment
         />
         <FormControlInput
           margin={widthHeightDynamicStyle(width, 1000, '0 0 1rem 0', '0 1rem 1rem 0') as string}
@@ -156,6 +157,7 @@ function AccomodationRatesContainer({
           value={newDoublePrice}
           setValue={setNewDoublePrice}
           placeholder="Enter Double Price"
+          dollarAdornment
         />
         <FormControlInput
           margin="0 0 1rem 0"
@@ -167,6 +169,7 @@ function AccomodationRatesContainer({
           value={newTriplePrice}
           setValue={setNewTriplePrice}
           placeholder="Enter Triple Price"
+          dollarAdornment
         />
         <ButtonAtom
           startIcon={<AddCircleOutlineOutlinedIcon />}

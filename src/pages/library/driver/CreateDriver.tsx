@@ -79,7 +79,7 @@ function CreateDriver({
       address,
       vehicleType,
       status,
-      rate,
+      rate: `$${rate}`,
       notes,
       insurance: insuranceUrl,
       profilePic: profilePicUrl,
