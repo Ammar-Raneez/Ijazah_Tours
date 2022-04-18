@@ -210,11 +210,7 @@ export const quoteCreateQuoteStyles = {
   ...quotationsStyles,
 };
 
-export const summaryStyles = {
-  ...mainContainerStyles,
-  ...quoteCreateQuoteStyles,
-};
-
+// Voucher
 export const voucherStyles = {
   ...mainContainerStyles,
   ...quoteCreateQuoteStyles,
@@ -263,6 +259,13 @@ export const voucherStyles = {
       },
     },
   },
+};
+
+// Summary
+export const summaryStyles = {
+  ...mainContainerStyles,
+  ...quoteCreateQuoteStyles,
+  ...voucherStyles,
 };
 
 /// Quotations - Approval

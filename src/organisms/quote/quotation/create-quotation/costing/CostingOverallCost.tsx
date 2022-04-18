@@ -52,6 +52,7 @@ function CostingOverallCost({
         setValue={setTotalExpense}
         placeholder="Enter Total Expense"
         margin="0 0 1rem 0"
+        dollarAdornment
       />
       <FormControlInput
         label="Commission"
@@ -75,6 +76,7 @@ function CostingOverallCost({
         setValue={setTotalPrice}
         placeholder="Enter Total Price"
         margin="0 0 1rem 0"
+        dollarAdornment
       />
       <FormControlInput
         label="Selling Price"
@@ -86,6 +88,7 @@ function CostingOverallCost({
         setValue={setSellingPrice}
         placeholder="Enter Selling Price"
         margin="0 0 1rem 0"
+        dollarAdornment
       />
       <FormControlInput
         label="Discount"
@@ -97,6 +100,7 @@ function CostingOverallCost({
         setValue={setDiscount}
         placeholder="Enter Discount"
         margin="0 0 1rem 0"
+        dollarAdornment
       />
       <FormControlInput
         label="Net Price"
@@ -109,6 +113,7 @@ function CostingOverallCost({
         setValue={setNetPrice}
         placeholder="Enter Net Price"
         margin="0 0 1rem 0"
+        dollarAdornment
       />
     </DivAtom>
   );

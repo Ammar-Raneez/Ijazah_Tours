@@ -107,7 +107,7 @@ const RoutePaths = {
     Main: '/quote',
     Quotations: '/quote/quotations',
     Voucher: '/quote/voucher',
-    Summary: '/quote/summary',
+    Summary: '/quote/summary/:id',
   },
   library: {
     Main: '/library',

@@ -168,7 +168,7 @@ function App() {
                   <ProtectedRoute path="/quote/voucher">
                     <Voucher />
                   </ProtectedRoute>
-                  <ProtectedRoute path="/quote/summary">
+                  <ProtectedRoute path="/quote/summary/:id">
                     <Summary />
                   </ProtectedRoute>
                   <ProtectedRoute exact path="/quote">

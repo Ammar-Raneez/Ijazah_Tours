@@ -47,6 +47,7 @@ function CostingTransport({
           placeholder="Enter Rate"
           flex={widthHeightDynamicStyle(width, 600, 1, undefined) as number | undefined}
           margin={widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0') as string}
+          dollarAdornment
         />
         <FormControlInput
           label="Days"
