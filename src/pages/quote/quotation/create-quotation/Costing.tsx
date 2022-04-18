@@ -79,6 +79,12 @@ function Costing() {
         discount,
         netPrice,
         sellingPrice,
+        totalExpense,
+        commission,
+        totalPrice,
+        transportTotal: transport,
+        transportRate: rate,
+        transportDays: days,
       }),
     );
 

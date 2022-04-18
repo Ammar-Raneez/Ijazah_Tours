@@ -84,8 +84,8 @@ function Accomodation() {
       .map((rate) => ({ value: rate, label: rate }));
 
     acc.nights = '1';
-    acc.roomRate = '$50'; // do calculation
-    acc.total = '$150'; // do calculation
+    acc.roomRate = '';
+    acc.total = '';
     acc.pax = 'Single'; // do calculation
     acc.roomType = roomTypes[0].value;
     acc.mealPlan = mealPlanOptions[0].value;
@@ -132,6 +132,36 @@ function Accomodation() {
       tempAccomodation.forEach((acc, index) => {
         acc.nights = selectedAccomodationsNights[index];
         acc.roomType = selectedAccomodationsRoomTypes[index];
+
+        const children = customerDetails[10].length;
+        const adults = customerDetails[9];
+        const days = nightsRequired + 1;
+        const totalGuests = Number(children) + Number(adults);
+        const needAdditionalBed = customerDetails[14];
+
+        const rate = acc.rates.find((r) => r.newMealPlan === customerDetails[13]);
+        if (!rate) {
+          window.alert(`Rate for meal plan ${customerDetails[13]} does not exist`);
+          return;
+        }
+
+        let roomPrice = rate?.newSinglePrice;
+        if (totalGuests >= 3) {
+          roomPrice = rate?.newTriplePrice;
+        } else if (totalGuests >= 2) {
+          roomPrice = rate?.newDoublePrice;
+        }
+
+        const roomTypeCost = acc.categoryValues[
+          Object.keys(acc.categoryValues)
+            .find((cat) => cat === selectedAccomodationsRoomTypes[index])!
+        ];
+
+        // eslint-disable-next-line max-len
+        const totalSum = Number(roomPrice?.slice(1)) + Number(roomTypeCost.slice(1)) + (needAdditionalBed ? Number(acc.additionalBedPrice.slice(1)) : 0);
+
+        acc.roomRate = `$${String(totalSum * days)}`;
+        acc.total = `$${String(totalSum * days)}`;
       });
 
       localStorage.setItem('New Quote Accomodation', JSON.stringify({ selectedAccomodations: tempAccomodation }));
