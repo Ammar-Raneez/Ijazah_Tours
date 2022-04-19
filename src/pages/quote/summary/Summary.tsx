@@ -27,7 +27,6 @@ import { selectWithNavbarWidth, selectWithNavbarHeight } from '../../../redux/co
 import { fetchingDataIndicatorStyles, summaryStyles } from '../../../styles';
 import { widthHeightDynamicStyle } from '../../../utils/helpers';
 
-// TODO -> Update table amount paid/ex rate on refresh
 function Summary() {
   const height = useSelector(selectWithNavbarHeight);
   const width = useSelector(selectWithNavbarWidth);
@@ -122,8 +121,10 @@ function Summary() {
       setEarningsData(userSummary ? (userSummary as any).earningsData : []);
       // setExtrasData(userSummary ? (userSummary as any).extrasData : []);
 
-      setAccAmountPaid(new Array(vcs[0].accomodationDetails).fill('0'));
-      setAccEXRate(new Array(vcs[0].accomodationDetails).fill('0'));
+      setAccAmountPaid(userSummary!.accAmountPaid || new Array(vcs[0].accomodationDetails).fill('0'));
+      setAccEXRate(userSummary!.accEXRate || new Array(vcs[0].accomodationDetails).fill('0'));
+      setTransportAmountPaid(userSummary!.transportAmountPaid || '');
+      setTransportEXRate(userSummary!.transportEXRate || '');
 
       let tempUsdAccTotal = 0;
       vcs[0].accomodationDetails.forEach((acc: any) => {
@@ -269,6 +270,10 @@ function Summary() {
       userId: id,
       otherExpenseData,
       earningsData,
+      accAmountPaid,
+      accEXRate,
+      transportAmountPaid,
+      transportEXRate,
       // extrasData,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
