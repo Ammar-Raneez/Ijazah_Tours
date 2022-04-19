@@ -21,6 +21,8 @@ import Accomodation from './create-quotation/Accomodation';
 import Approval from './create-quotation/Approval';
 import Costing from './create-quotation/Costing';
 import Customer from './create-quotation/Customer';
+import PresetAccomodation from './preset-qoutes/PresetAccomodation';
+import PresetHoliday from './preset-qoutes/PresetHoliday';
 
 function Quotations() {
   const height = useSelector(selectWithNavbarHeight);
@@ -99,8 +101,14 @@ function Quotations() {
             <Route path="/quote/quotations/create/customer">
               <Customer />
             </Route>
+            <Route path="/quote/quotations/create/preset/holiday">
+              <PresetHoliday />
+            </Route>
             <Route path="/quote/quotations/create/accomodation">
               <Accomodation />
+            </Route>
+            <Route path="/quote/quotations/create/preset/accomodation">
+              <PresetAccomodation />
             </Route>
             <Route path="/quote/quotations/create/costing">
               <Costing />
@@ -152,16 +160,18 @@ function Quotations() {
                     onClick={() => null}
                     size="large"
                   />
-                  <ButtonAtom
-                    text="Preset Quotes"
-                    style={{
-                      ...quotationsStyles.btn,
-                      marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
-                      width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
-                    }}
-                    onClick={() => null}
-                    size="large"
-                  />
+                  <Link to="/quote/quotations/create/preset/holiday">
+                    <ButtonAtom
+                      text="Preset Quotes"
+                      style={{
+                        ...quotationsStyles.btn,
+                        marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
+                        width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
+                      }}
+                      onClick={() => null}
+                      size="large"
+                    />
+                  </Link>
                 </DivAtom>
                 <DivAtom
                   style={{

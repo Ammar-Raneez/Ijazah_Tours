@@ -1,9 +1,9 @@
 import { ChangeEvent } from 'react';
 
-import DivAtom from '../../../../../atoms/DivAtom';
-import TextFieldAtom from '../../../../../atoms/TextFieldAtom';
-import { libraryStyles } from '../../../../../styles';
-import { dateTypeOptions, widthHeightDynamicStyle } from '../../../../../utils/helpers';
+import DivAtom from '../../../atoms/DivAtom';
+import TextFieldAtom from '../../../atoms/TextFieldAtom';
+import { libraryStyles } from '../../../styles';
+import { dateTypeOptions, widthHeightDynamicStyle } from '../../../utils/helpers';
 
 interface RenderDatePickerProps {
   width: number;

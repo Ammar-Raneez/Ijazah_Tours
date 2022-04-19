@@ -5,59 +5,42 @@ import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOut
 import { Link } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 
-import ButtonAtom from '../../../../../atoms/ButtonAtom';
-import CheckboxAtom from '../../../../../atoms/CheckboxAtom';
-import DivAtom from '../../../../../atoms/DivAtom';
-import ParagraphAtom from '../../../../../atoms/ParagraphAtom';
-import PhoneInputAtom from '../../../../../atoms/PhoneInputAtom';
-import TextFieldAtom from '../../../../../atoms/TextFieldAtom';
-import FormControlInput from '../../../../../molecules/FormControlInput';
-import RadioButtonGroup from '../../../../../molecules/RadioButtonGroup';
-import { libraryStyles, quoteCreateQuoteStyles, TableToolbarStyles } from '../../../../../styles';
+import ButtonAtom from '../../../../atoms/ButtonAtom';
+import CheckboxAtom from '../../../../atoms/CheckboxAtom';
+import DivAtom from '../../../../atoms/DivAtom';
+import ParagraphAtom from '../../../../atoms/ParagraphAtom';
+import PhoneInputAtom from '../../../../atoms/PhoneInputAtom';
+import TextFieldAtom from '../../../../atoms/TextFieldAtom';
+import FormControlInput from '../../../../molecules/FormControlInput';
+import RadioButtonGroup from '../../../../molecules/RadioButtonGroup';
+import { libraryStyles, quoteCreateQuoteStyles, TableToolbarStyles } from '../../../../styles';
 import {
   dateTypeOptions,
   mealPlanOptions,
   MenuProps,
   widthHeightDynamicStyle,
-} from '../../../../../utils/helpers';
+} from '../../../../utils/helpers';
 import {
   DropdownOption,
   FlexDirection,
-  LibraryGuest,
   SettingsLocation,
-} from '../../../../../utils/types';
-import { RenderDatePicker } from '../../RenderDatePicker';
+} from '../../../../utils/types';
+import { RenderDatePicker } from '../RenderDatePicker';
 
-interface CustomerFormProps {
-  customerData: LibraryGuest[];
+interface HolidayFormProps {
   accomodationLocationData: SettingsLocation[];
-  refData: DropdownOption[];
   holidayTypeData: DropdownOption[];
   destinations: string[];
   width: number;
-  refNum: string;
   title: string;
-  firstName: string;
-  lastName: string;
-  contactNumber: string
-  email: string;
-  country: string;
-  city: string;
   holidayType: string
   mealPlan: string;
   dateType: string;
   checkin: string;
   checkout: string;
   additionalBed: boolean;
-  onCreateCustomer: (event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => void;
-  onRefNumChange: (data: LibraryGuest[], rf: string) => void;
+  onCreateHoliday: (event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => void;
   setTitle: any;
-  setFirstName: any;
-  setLastName: any;
-  setContactNumber: any;
-  setEmail: any;
-  setCountry: any;
-  setCity: any;
   setHolidayType: any;
   setDestinations: any;
   setToStoreDestinations: any;
@@ -68,20 +51,11 @@ interface CustomerFormProps {
   setCheckout: any
 }
 
-function CustomerForm({
-  customerData,
+function HolidayForm({
   accomodationLocationData,
-  refData,
   holidayTypeData,
   width,
   title,
-  refNum,
-  firstName,
-  lastName,
-  contactNumber,
-  email,
-  country,
-  city,
   holidayType,
   destinations,
   mealPlan,
@@ -89,15 +63,8 @@ function CustomerForm({
   checkin,
   checkout,
   additionalBed,
-  onCreateCustomer,
-  onRefNumChange,
+  onCreateHoliday,
   setTitle,
-  setFirstName,
-  setLastName,
-  setContactNumber,
-  setEmail,
-  setCountry,
-  setCity,
   setHolidayType,
   setDestinations,
   setToStoreDestinations,
@@ -106,7 +73,7 @@ function CustomerForm({
   setDateType,
   setCheckin,
   setCheckout,
-}: CustomerFormProps) {
+}: HolidayFormProps) {
   const changeDateType = (type: string) => {
     setDateType(type);
     if (type === dateTypeOptions[1].value) {
@@ -134,13 +101,6 @@ function CustomerForm({
   return (
     <>
       <DivAtom style={quoteCreateQuoteStyles.formContainer}>
-        <ParagraphAtom
-          style={{
-            ...quoteCreateQuoteStyles.title,
-            marginBottom: '1rem',
-          }}
-          text="Guest"
-        />
         <FormControlInput
           margin={widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0') as string}
           flex={1}
@@ -152,131 +112,6 @@ function CustomerForm({
           setValue={setTitle}
           placeholder="Enter Title"
         />
-        <DivAtom
-          style={{
-            ...quoteCreateQuoteStyles.multiFieldContainer,
-            flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
-          }}
-        >
-          <TextFieldAtom
-            variant="standard"
-            size="medium"
-            label="Reference Number"
-            value={refNum}
-            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => (
-              onRefNumChange(customerData, e.target.value)
-            )}
-            options={refData}
-            adornmentPosition="end"
-            style={{
-              ...libraryStyles.textField,
-              flex: 1,
-              width: widthHeightDynamicStyle(width, 600, '100%', 'auto'),
-            }}
-            disableUnderline={false}
-            select
-          />
-          <Link to={'/library/guest/create'}>
-            <ButtonAtom
-              startIcon={<AddCircleOutlineOutlinedIcon />}
-              text="Add New Guest"
-              style={{
-                ...TableToolbarStyles.addBtn,
-                width: widthHeightDynamicStyle(width, 600, '100%', '11rem'),
-                marginTop: '1rem',
-                marginLeft: widthHeightDynamicStyle(width, 600, 0, '1rem'),
-              }}
-              size="large"
-            />
-          </Link>
-        </DivAtom>
-        <DivAtom
-          style={{
-            ...quoteCreateQuoteStyles.multiFieldContainer,
-            flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
-          }}
-        >
-          <FormControlInput
-            margin={widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0') as string}
-            flex={1}
-            label="First Name"
-            fullWidth
-            disabled
-            multiline={false}
-            rows={1}
-            value={firstName}
-            setValue={setFirstName}
-            placeholder="Enter First Name"
-          />
-          <FormControlInput
-            margin="0 0 1rem 0"
-            flex={1}
-            label="Last Name"
-            fullWidth
-            disabled
-            multiline={false}
-            rows={1}
-            value={lastName}
-            setValue={setLastName}
-            placeholder="Enter Last Name"
-          />
-        </DivAtom>
-        <DivAtom
-          style={{
-            ...quoteCreateQuoteStyles.multiFieldContainer,
-            flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
-          }}
-        >
-          <PhoneInputAtom
-            value={contactNumber}
-            setContactNumber={setContactNumber}
-            style={{ margin: widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 0rem 0') as string }}
-            disabled
-          />
-          <FormControlInput
-            margin="0 0 1rem 0"
-            label="Email"
-            fullWidth
-            disabled
-            flex={1}
-            multiline={false}
-            rows={1}
-            value={email}
-            setValue={setEmail}
-            placeholder="Enter Email"
-          />
-        </DivAtom>
-        <DivAtom
-          style={{
-            ...quoteCreateQuoteStyles.multiFieldContainer,
-            flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
-          }}
-        >
-          <FormControlInput
-            margin={widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0') as string}
-            label="Country"
-            fullWidth
-            disabled
-            flex={1}
-            multiline={false}
-            rows={1}
-            value={country}
-            setValue={setCountry}
-            placeholder="Enter Country"
-          />
-          <FormControlInput
-            margin="0 0 1rem 0"
-            label="City"
-            fullWidth
-            disabled
-            flex={1}
-            multiline={false}
-            rows={1}
-            value={city}
-            setValue={setCity}
-            placeholder="Enter City"
-          />
-        </DivAtom>
         <ParagraphAtom
           style={{
             ...quoteCreateQuoteStyles.title,
@@ -388,7 +223,7 @@ function CustomerForm({
         <ButtonAtom
           size="large"
           text="Continue"
-          onClick={(event) => onCreateCustomer(event)}
+          onClick={(event) => onCreateHoliday(event)}
           disabled={title.trim() === '' || destinations.length === 0}
           style={{
             ...quoteCreateQuoteStyles.addBtn,
@@ -401,4 +236,4 @@ function CustomerForm({
   );
 }
 
-export default CustomerForm;
+export default HolidayForm;
