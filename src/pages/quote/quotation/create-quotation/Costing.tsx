@@ -28,12 +28,12 @@ function Costing() {
   const [totalExpense, setTotalExpense] = useState('');
   const [commission, setCommission] = useState('30%');
   const [totalPrice, setTotalPrice] = useState('');
-  const [sellingPrice, setSellingPrice] = useState('$1000');
-  const [discount, setDiscount] = useState('$40');
+  const [sellingPrice, setSellingPrice] = useState('1000');
+  const [discount, setDiscount] = useState('40');
   const [netPrice, setNetPrice] = useState('');
 
   // transport
-  const [rate, setRate] = useState('$60');
+  const [rate, setRate] = useState('60');
   const [days, setDays] = useState('6');
   const [transport, setTransport] = useState('0');
 
@@ -55,20 +55,19 @@ function Costing() {
       accTotal += Number(acc.total.slice(1, acc.total.length));
     });
 
-    const transportTotal = Number(rate.slice(1, rate.length)) * Number(days);
+    const transportTotal = Number(rate) * Number(days);
     const expenseTotal = Number(accTotal + transportTotal);
     const priceTotal = ((Number(commission.slice(0, commission.length - 1)) + 100) / 100)
       * expenseTotal;
 
-    const netTotal = Number(sellingPrice.slice(1, sellingPrice.length))
-      - Number(discount.slice(1, discount.length));
+    const netTotal = Number(sellingPrice) - Number(discount);
 
     setDays(String(transportDays + 1));
-    setAccomodationTotal(`$${accTotal}`);
-    setTransport(`$${transportTotal}`);
-    setTotalExpense(`$${expenseTotal}`);
-    setTotalPrice(`$${priceTotal}`);
-    setNetPrice(`$${netTotal}`);
+    setAccomodationTotal(String(accTotal));
+    setTransport(String(transportTotal));
+    setTotalExpense(String(expenseTotal));
+    setTotalPrice(String(priceTotal));
+    setNetPrice(String(netTotal));
     setAccomodationData(data);
   }, [rate, transport, totalExpense, commission, sellingPrice, discount]);
 

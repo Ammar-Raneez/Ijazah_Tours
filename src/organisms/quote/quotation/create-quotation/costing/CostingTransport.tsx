@@ -77,6 +77,7 @@ function CostingTransport({
           setValue={setTransport}
           flex={widthHeightDynamicStyle(width, 600, 1, undefined) as number | undefined}
           placeholder="Enter Transport"
+          dollarAdornment
         />
       </DivAtom>
     </DivAtom>
