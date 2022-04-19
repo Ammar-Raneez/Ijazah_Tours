@@ -19,6 +19,10 @@ interface SummaryOtherExpensesProps {
   newOTUSDPrice: string;
   newOTLKRPrice: string;
   newOTEXRate: string;
+  lkrOTTotal: string;
+  usdOTTotal: string;
+  lkrTotalExpenseTotal: string;
+  usdTotalExpenseTotal: string;
   onCreate: MouseEventHandler<HTMLButtonElement>;
   onDelete: any;
   otherExpenseData: any;
@@ -36,6 +40,10 @@ function SummaryOtherExpenses({
   newOTUSDPrice,
   newOTLKRPrice,
   newOTEXRate,
+  lkrOTTotal,
+  usdOTTotal,
+  lkrTotalExpenseTotal,
+  usdTotalExpenseTotal,
   onCreate,
   onDelete,
   otherExpenseData,
@@ -146,25 +154,25 @@ function SummaryOtherExpenses({
                 style={summaryStyles.tableOverallRates.label}
               />
               <SpanAtom
-                text="$380"
+                text={usdOTTotal}
                 style={summaryStyles.tableOverallRates.usdValue}
               />
               <SpanAtom
-                text="LKR 106,400"
+                text={lkrOTTotal}
                 style={summaryStyles.tableOverallRates.lkrValue}
               />
             </p>
             <p style={summaryStyles.tableOverallRates.detailContainer}>
               <SpanAtom
-                text="Total Expenses"
+                text="Total Expense"
                 style={summaryStyles.tableOverallRates.label}
               />
               <SpanAtom
-                text="$380"
+                text={usdTotalExpenseTotal}
                 style={summaryStyles.tableOverallRates.usdValue}
               />
               <SpanAtom
-                text="LKR 106,400"
+                text={lkrTotalExpenseTotal}
                 style={summaryStyles.tableOverallRates.lkrValue}
               />
             </p>

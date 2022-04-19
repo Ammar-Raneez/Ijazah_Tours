@@ -57,6 +57,12 @@ function Summary() {
   const [newOTUSDPrice, setNewOTUSDPrice] = useState('');
   const [newOTLKRPrice, setNewOTLKRPrice] = useState('');
   const [newOTEXRate, setNewOTEXRate] = useState('');
+  const [lrkOTTotal, setLkrOTTotal] = useState('LKR 0');
+  const [usdOTTotal, setUsdOTTotal] = useState('$0');
+
+  // Total expenses
+  const [lkrTotalExpenseTotal, setLkrTotalExpenseTotal] = useState('LKR 0');
+  const [usdTotalExpenseTotal, setUsdTotalExpenseTotal] = useState('$0');
 
   // Earnings
   const [earningsData, setEarningsData] = useState<any>();
@@ -132,9 +138,27 @@ function Summary() {
       tempLrkAccTotal += Number(acc);
     });
 
+    let tempUsdOTTotal = 0;
+    let tempLkrOTTotal = 0;
+
+    otherExpenseData?.forEach((ot: any) => {
+      tempUsdOTTotal += Number(ot.usdPrice.slice(1));
+      tempLkrOTTotal += Number(ot.lkrPrice.slice(4));
+    });
+
+    tempUsdOTTotal += Number(newOTUSDPrice);
+    tempLkrOTTotal += Number(newOTLKRPrice);
+
+    setUsdOTTotal(`$${tempUsdOTTotal}`);
+    setLkrOTTotal(`LKR ${tempLkrOTTotal}`);
+
     setLkrAccTotal(`LKR ${tempLrkAccTotal}`);
     setLkrTourExpenseTotal(`lKR ${tempLrkAccTotal + Number(transportAmountPaid)}`);
-  }, [accAmountPaid, accEXRate, transportAmountPaid, transportEXRate]);
+
+    setLkrTotalExpenseTotal(`LKR ${tempLkrOTTotal + tempLrkAccTotal + Number(transportAmountPaid)}`);
+    setUsdTotalExpenseTotal(`$${tempUsdOTTotal + Number(usdTourExpenseTotal.slice(1))}`);
+  // eslint-disable-next-line max-len
+  }, [otherExpenseData, usdTourExpenseTotal, accAmountPaid, accEXRate, transportAmountPaid, transportEXRate]);
 
   const onCreateOtherExpense = () => {
     setOtherExpenseData([
@@ -322,6 +346,10 @@ function Summary() {
                 newOTUSDPrice={newOTUSDPrice}
                 newOTLKRPrice={newOTLKRPrice}
                 newOTEXRate={newOTEXRate}
+                lkrOTTotal={lrkOTTotal}
+                usdOTTotal={usdOTTotal}
+                lkrTotalExpenseTotal={lkrTotalExpenseTotal}
+                usdTotalExpenseTotal={usdTotalExpenseTotal}
                 setNewOTEXRate={setNewOTEXRate}
                 setNewOTUSDPrice={setNewOTUSDPrice}
                 setNewOTLKRPrice={setNewOTLKRPrice}
@@ -330,6 +358,7 @@ function Summary() {
               />
             </DivAtom>
 
+            <hr />
             <DivAtom style={summaryStyles.tableContainer}>
               <SummaryEarnings
                 width={width}
