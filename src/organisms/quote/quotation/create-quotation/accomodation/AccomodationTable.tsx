@@ -56,9 +56,9 @@ function AccomodationTable({
       <Table className={classes.table} aria-label="quotations table">
         <TableHead>
           <TableRow>
-            {columns.map((column) => (
+            {columns.map((column, i) => (
               <TableColumnCell
-                key={uuid()}
+                key={i + 50}
                 align="center"
                 color="black"
                 column={column}
@@ -87,20 +87,15 @@ function AccomodationTable({
               setSelectedAccomodationsMealPlans(temp);
             };
 
-            // const onNightsChange = (v: string) => {
-            //   console.log(v);
-            // };
-
-            const onNightsChangeBlur = (v: string) => {
+            const onNightsChange = (v: string) => {
               const temp = [...selectedAccomodationsNights];
               temp.splice(index, 1, v);
               setSelectedAccomodationsNights(temp);
             };
 
             return (
-              <TableRow key={uuid()}>
+              <TableRow key={index + 100}>
                 <TableRowTextCell
-                  key={uuid()}
                   cell={{
                     align: 'center',
                     title: row.country,
@@ -109,15 +104,13 @@ function AccomodationTable({
                   }}
                 />
                 <TableRowEditCell
-                  key={uuid()}
                   type="Nights"
                   select={false}
                   value={selectedAccomodationsNights[index]}
-                  onCountChange={onNightsChangeBlur}
+                  onCountChange={onNightsChange}
                   align="center"
                 />
                 <TableRowTextCell
-                  key={uuid()}
                   cell={{
                     align: 'center',
                     title: row.accomodationType,
@@ -126,7 +119,6 @@ function AccomodationTable({
                   }}
                 />
                 <TableRowTextCell
-                  key={uuid()}
                   cell={{
                     align: 'center',
                     title: row.name,
@@ -135,7 +127,6 @@ function AccomodationTable({
                   }}
                 />
                 <TableRowTextCell
-                  key={uuid()}
                   cell={{
                     align: 'center',
                     title: row.pax,
@@ -144,7 +135,6 @@ function AccomodationTable({
                   }}
                 />
                 <TableRowEditCell
-                  key={uuid()}
                   select
                   type="Room Type"
                   value={selectedAccomodationsRoomTypes[index] || ''}
@@ -153,7 +143,6 @@ function AccomodationTable({
                   align="center"
                 />
                 <TableRowEditCell
-                  key={uuid()}
                   select
                   type="Meal Plan"
                   value={selectedAccomodationsMealPlans[index] || ''}
@@ -162,7 +151,6 @@ function AccomodationTable({
                   align="center"
                 />
                 <TableRowTextCell
-                  key={uuid()}
                   cell={{
                     align: 'center',
                     title: row.city,

@@ -6,13 +6,16 @@ import { libraryStyles } from '../styles';
 
 interface TableRowEditCellProps {
   value: string;
-  type: string;
   select: boolean;
   align: 'left' | 'center' | 'right';
+  inputTextField?: boolean;
+  lkrAdornment?: boolean;
+  dollarAdornment?: boolean;
+  type?: string;
   options?: any;
   onSelectChange?: (val: string, type: string) => void;
+  onChange?: (val: string) => void;
   onCountChange?: (val: string) => void;
-  onCountChangeBlur?: (val: string) => void;
 }
 
 function TableRowEditCell({
@@ -21,9 +24,12 @@ function TableRowEditCell({
   select,
   options,
   align,
+  inputTextField,
+  lkrAdornment,
+  dollarAdornment,
   onSelectChange,
+  onChange,
   onCountChange,
-  onCountChangeBlur,
 }: TableRowEditCellProps) {
   return select ? (
     <TableCell align={align}>
@@ -32,7 +38,7 @@ function TableRowEditCell({
         size="medium"
         label=""
         value={value}
-        onChange={(e) => onSelectChange && onSelectChange(e.target.value, type)!}
+        onChange={(e) => onSelectChange && type && onSelectChange(e.target.value, type)!}
         options={options}
         adornmentPosition="end"
         style={{
@@ -52,11 +58,15 @@ function TableRowEditCell({
           multiline={false}
           rows={1}
           value={value}
-          type="number"
-          onBlur={(e) => onCountChangeBlur && onCountChangeBlur(e.target.value)}
-          onChange={(e) => onCountChange && onCountChange(e.target.value)}
+          type={inputTextField ? 'text' : 'number'}
+          onChange={(e) => (
+            (onCountChange && onCountChange(e.target.value))
+            || (onChange && onChange(e.target.value))
+          )}
           placeholder=""
           minValue={1}
+          lkrAdornment={lkrAdornment}
+          dollarAdornment={dollarAdornment}
         />
       </FormControl>
     </TableCell>

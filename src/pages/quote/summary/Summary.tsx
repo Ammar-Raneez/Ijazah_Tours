@@ -21,6 +21,7 @@ import { db } from '../../../firebase';
 import SummaryAccomodationTable from '../../../organisms/quote/summary/SummaryAccomodationTable';
 import SummaryEarnings from '../../../organisms/quote/summary/SummaryEarnings';
 import SummaryExtras from '../../../organisms/quote/summary/SummaryExtras';
+import SummaryGuestDetails from '../../../organisms/quote/summary/SummaryGuestDetails';
 import SummaryOtherExpenses from '../../../organisms/quote/summary/SummaryOtherExpenses';
 import SummaryTransportTable from '../../../organisms/quote/summary/SummaryTransportTable';
 import { selectWithNavbarWidth, selectWithNavbarHeight } from '../../../redux/containerSizeSlice';
@@ -34,6 +35,16 @@ function Summary() {
 
   const [quotation, setQuotation] = useState<any>();
   const [vouchers, setVouchers] = useState<any>();
+
+  // Accomodations
+  const [accAmountPaid, setAccAmountPaid] = useState<string[]>([]);
+  const [accEXRate, setAccEXRate] = useState<string[]>([]);
+  const [lrkAccTotal, setLkrAccTotal] = useState('LKR 0');
+  const [usdAccTotal, setUsdAccTotal] = useState('$0');
+
+  // Transportation
+  const [lkrTransportTotal, setLkrTransportTotal] = useState('LKR 0');
+  const [usdTransportTotal, setUsdTransportTotal] = useState('$0');
 
   // Other expenses
   const [otherExpenseData, setOtherExpenseData] = useState<any>();
@@ -94,10 +105,29 @@ function Summary() {
       setOtherExpenseData(userSummary ? (userSummary as any).otherExpenseData : []);
       setEarningsData(userSummary ? (userSummary as any).earningsData : []);
       setExtrasData(userSummary ? (userSummary as any).extrasData : []);
+
+      setAccAmountPaid(new Array(vcs[0].accomodationDetails).fill(''));
+      setAccEXRate(new Array(vcs[0].accomodationDetails).fill(''));
+
+      let tempUsdAccTotal = 0;
+      vcs[0].accomodationDetails.forEach((acc: any) => {
+        tempUsdAccTotal += Number(acc.total.slice(1));
+      });
+
+      setUsdAccTotal(`$${tempUsdAccTotal}`);
     };
 
     getInitialData();
   }, [id]);
+
+  useEffect(() => {
+    let tempLrkAccTotal = 0;
+    accAmountPaid.forEach((acc) => {
+      tempLrkAccTotal += Number(acc);
+    });
+
+    setLkrAccTotal(`LKR ${tempLrkAccTotal}`);
+  }, [accAmountPaid, accEXRate]);
 
   const onCreateOtherExpense = () => {
     setOtherExpenseData([
@@ -202,133 +232,45 @@ function Summary() {
       >
         {quotation && vouchers && otherExpenseData && earningsData && extrasData ? (
           <>
-            <DivAtom style={summaryStyles.voucherTemplate.summaryDetails.mainContainer}>
-              <DivAtom>
-                <p style={summaryStyles.voucherTemplate.summaryDetails.detailContainer}>
-                  <SpanAtom
-                    text="Guest"
-                    style={summaryStyles.voucherTemplate.summaryDetails.label}
-                  />
-                  <SpanAtom
-                    text={quotation.name}
-                    style={summaryStyles.voucherTemplate.summaryDetails.detail}
-                  />
-                </p>
-                <p style={summaryStyles.voucherTemplate.summaryDetails.detailContainer}>
-                  <SpanAtom
-                    text="Nationality"
-                    style={summaryStyles.voucherTemplate.summaryDetails.label}
-                  />
-                  <SpanAtom
-                    text={quotation.nationality}
-                    style={summaryStyles.voucherTemplate.summaryDetails.detail}
-                  />
-                </p>
-                <p style={summaryStyles.voucherTemplate.summaryDetails.detailContainer}>
-                  <SpanAtom
-                    text="Reference No"
-                    style={summaryStyles.voucherTemplate.summaryDetails.label}
-                  />
-                  <SpanAtom
-                    text={quotation.refNum}
-                    style={summaryStyles.voucherTemplate.summaryDetails.detail}
-                  />
-                </p>
-                <p style={summaryStyles.voucherTemplate.summaryDetails.detailContainer}>
-                  <SpanAtom
-                    text="Adults"
-                    style={summaryStyles.voucherTemplate.summaryDetails.label}
-                  />
-                  <SpanAtom
-                    text={quotation.adults}
-                    style={summaryStyles.voucherTemplate.summaryDetails.detail}
-                  />
-                </p>
-                <p style={summaryStyles.voucherTemplate.summaryDetails.detailContainer}>
-                  <SpanAtom
-                    text="Children"
-                    style={summaryStyles.voucherTemplate.summaryDetails.label}
-                  />
-                  <SpanAtom
-                    text={quotation.children.join(', ')}
-                    style={summaryStyles.voucherTemplate.summaryDetails.detail}
-                  />
-                </p>
-              </DivAtom>
-              <DivAtom>
-                <p style={summaryStyles.voucherTemplate.summaryDetails.detailContainer}>
-                  <SpanAtom
-                    text="Driver"
-                    style={summaryStyles.voucherTemplate.summaryDetails.label}
-                  />
-                  <SpanAtom
-                    text={vouchers[0].driverDetails.name}
-                    style={summaryStyles.voucherTemplate.summaryDetails.detail}
-                  />
-                </p>
-                <p style={summaryStyles.voucherTemplate.summaryDetails.detailContainer}>
-                  <SpanAtom
-                    text="Arrival"
-                    style={summaryStyles.voucherTemplate.summaryDetails.label}
-                  />
-                  <SpanAtom
-                    text={quotation.arrival}
-                    style={summaryStyles.voucherTemplate.summaryDetails.detail}
-                  />
-                </p>
-                <p style={summaryStyles.voucherTemplate.summaryDetails.detailContainer}>
-                  <SpanAtom
-                    text="Departure"
-                    style={summaryStyles.voucherTemplate.summaryDetails.label}
-                  />
-                  <SpanAtom
-                    text={quotation.departure}
-                    style={summaryStyles.voucherTemplate.summaryDetails.detail}
-                  />
-                </p>
-                <p style={summaryStyles.voucherTemplate.summaryDetails.detailContainer}>
-                  <SpanAtom
-                    text="Days & Nights"
-                    style={summaryStyles.voucherTemplate.summaryDetails.label}
-                  />
-                  <SpanAtom
-                    text={quotation.daysAndNights}
-                    style={summaryStyles.voucherTemplate.summaryDetails.detail}
-                  />
-                </p>
-              </DivAtom>
-            </DivAtom>
+            <SummaryGuestDetails vouchers={vouchers} quotation={quotation} />
 
-            <DivAtom style={summaryStyles.tableContainer}>
-              <ParagraphAtom text="Accomodation" />
-              <SummaryAccomodationTable
-                columns={[
-                  'NIGHTS',
-                  'ACCOMODATION',
-                  'ROOM TYPE',
-                  'EXTRA',
-                  'MEAL PLAN',
-                  'TOTAL',
-                  'AMOUNT PAID',
-                  'EX RATE',
-                ]}
-                data={vouchers[0].accomodationDetails}
-              />
-              <p style={summaryStyles.tableOverallRates.detailContainer}>
-                <SpanAtom
-                  text="Accomodation"
-                  style={summaryStyles.tableOverallRates.label}
+            {vouchers.length > 4 && (
+              <DivAtom style={summaryStyles.tableContainer}>
+                <ParagraphAtom text="Accomodation" />
+                <SummaryAccomodationTable
+                  columns={[
+                    'NIGHTS',
+                    'ACCOMODATION',
+                    'ROOM TYPE',
+                    'EXTRA',
+                    'ROOM RATE',
+                    'MEAL PLAN',
+                    'TOTAL',
+                    'AMOUNT PAID',
+                    'EX RATE',
+                  ]}
+                  data={vouchers[0].accomodationDetails}
+                  accAmountPaid={accAmountPaid}
+                  accEXRate={accEXRate}
+                  setAccAmountPaid={setAccAmountPaid}
+                  setAccEXRate={setAccEXRate}
                 />
-                <SpanAtom
-                  text="$380"
-                  style={summaryStyles.tableOverallRates.usdValue}
-                />
-                <SpanAtom
-                  text="LKR 106,400"
-                  style={summaryStyles.tableOverallRates.lkrValue}
-                />
-              </p>
-            </DivAtom>
+                <p style={summaryStyles.tableOverallRates.detailContainer}>
+                  <SpanAtom
+                    text="Accomodation"
+                    style={summaryStyles.tableOverallRates.label}
+                  />
+                  <SpanAtom
+                    text={usdAccTotal}
+                    style={summaryStyles.tableOverallRates.usdValue}
+                  />
+                  <SpanAtom
+                    text={lrkAccTotal}
+                    style={summaryStyles.tableOverallRates.lkrValue}
+                  />
+                </p>
+              </DivAtom>
+            )}
 
             <DivAtom style={summaryStyles.tableContainer}>
               <ParagraphAtom text="Transport" />
@@ -337,7 +279,7 @@ function Summary() {
                   'RATE',
                   'DAYS',
                   'TOTAL ($)',
-                  'TOTAL (LKR)',
+                  'AMOUNT PAID',
                   'EX RATE',
                 ]}
                 data={quotation.costings}

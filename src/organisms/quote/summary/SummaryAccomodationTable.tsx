@@ -11,6 +11,7 @@ import {
 import { v4 as uuid } from 'uuid';
 
 import TableColumnCell from '../../../molecules/TableColumnCell';
+import TableRowEditCell from '../../../molecules/TableRowEditCell';
 import TableRowTextCell from '../../../molecules/TableRowTextCell';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -24,24 +25,44 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface SummaryAccomodationTableProps {
+  accAmountPaid: string[];
+  accEXRate: string[];
   data: any[];
   columns: string[];
+  setAccAmountPaid: any;
+  setAccEXRate: any;
 }
 
 function SummaryAccomodationTable({
+  accAmountPaid,
+  accEXRate,
   data,
   columns,
+  setAccAmountPaid,
+  setAccEXRate,
 }: SummaryAccomodationTableProps) {
   const classes = useStyles();
+
+  const onAccAmountPaidChange = (val: string, i: number) => {
+    const temp = [...accAmountPaid];
+    temp[i] = val;
+    setAccAmountPaid(temp);
+  };
+
+  const onAccEXRateChange = (val: string, i: number) => {
+    const temp = [...accEXRate];
+    temp[i] = val;
+    setAccEXRate(temp);
+  };
 
   return (
     <TableContainer className={classes.paper} component={Paper}>
       <Table className={classes.table} aria-label="costing table">
         <TableHead>
           <TableRow>
-            {columns.map((column) => (
+            {columns.map((column, index) => (
               <TableColumnCell
-                key={uuid()}
+                key={index + 50}
                 align="center"
                 color="black"
                 column={column}
@@ -50,10 +71,9 @@ function SummaryAccomodationTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row) => (
-            <TableRow key={uuid()}>
+          {data.map((row, index) => (
+            <TableRow key={index + 100}>
               <TableRowTextCell
-                key={uuid()}
                 cell={{
                   align: 'center',
                   title: row.nights,
@@ -62,7 +82,6 @@ function SummaryAccomodationTable({
                 }}
               />
               <TableRowTextCell
-                key={uuid()}
                 cell={{
                   align: 'center',
                   title: row.name,
@@ -71,7 +90,6 @@ function SummaryAccomodationTable({
                 }}
               />
               <TableRowTextCell
-                key={uuid()}
                 cell={{
                   align: 'center',
                   title: row.roomType,
@@ -80,7 +98,14 @@ function SummaryAccomodationTable({
                 }}
               />
               <TableRowTextCell
-                key={uuid()}
+                cell={{
+                  align: 'center',
+                  title: 'Bed',
+                  colors: ['#464E5F'],
+                  weight: 400,
+                }}
+              />
+              <TableRowTextCell
                 cell={{
                   align: 'center',
                   title: row.roomRate,
@@ -89,7 +114,6 @@ function SummaryAccomodationTable({
                 }}
               />
               <TableRowTextCell
-                key={uuid()}
                 cell={{
                   align: 'center',
                   title: row.mealPlan,
@@ -98,7 +122,6 @@ function SummaryAccomodationTable({
                 }}
               />
               <TableRowTextCell
-                key={uuid()}
                 cell={{
                   align: 'center',
                   title: row.total,
@@ -106,23 +129,20 @@ function SummaryAccomodationTable({
                   weight: 400,
                 }}
               />
-              <TableRowTextCell
-                key={uuid()}
-                cell={{
-                  align: 'center',
-                  title: '',
-                  colors: ['#464E5F'],
-                  weight: 400,
-                }}
+              <TableRowEditCell
+                value={accAmountPaid[index]}
+                inputTextField
+                align="center"
+                select={false}
+                onChange={(val) => onAccAmountPaidChange(val, index)}
+                lkrAdornment
               />
-              <TableRowTextCell
-                key={uuid()}
-                cell={{
-                  align: 'center',
-                  title: '',
-                  colors: ['#464E5F'],
-                  weight: 400,
-                }}
+              <TableRowEditCell
+                value={accEXRate[index]}
+                inputTextField
+                align="center"
+                select={false}
+                onChange={(val) => onAccEXRateChange(val, index)}
               />
             </TableRow>
           ))}

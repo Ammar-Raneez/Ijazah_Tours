@@ -160,7 +160,7 @@ function Accomodation() {
         // eslint-disable-next-line max-len
         const totalSum = Number(roomPrice?.slice(1)) + Number(roomTypeCost.slice(1)) + (needAdditionalBed ? Number(acc.additionalBedPrice.slice(1)) : 0);
 
-        acc.roomRate = `$${String(totalSum * days)}`;
+        acc.roomRate = `$${roomPrice}`;
         acc.total = `$${String(totalSum * days)}`;
       });
 
