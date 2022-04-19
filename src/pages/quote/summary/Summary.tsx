@@ -43,8 +43,12 @@ function Summary() {
   const [usdAccTotal, setUsdAccTotal] = useState('$0');
 
   // Transportation
-  const [lkrTransportTotal, setLkrTransportTotal] = useState('LKR 0');
-  const [usdTransportTotal, setUsdTransportTotal] = useState('$0');
+  const [transportAmountPaid, setTransportAmountPaid] = useState('0');
+  const [transportEXRate, setTransportEXRate] = useState('0');
+
+  // Tour Expense
+  const [lkrTourExpenseTotal, setLkrTourExpenseTotal] = useState('LKR 0');
+  const [usdTourExpenseTotal, setUsdTourExpenseTotal] = useState('$0');
 
   // Other expenses
   const [otherExpenseData, setOtherExpenseData] = useState<any>();
@@ -106,8 +110,8 @@ function Summary() {
       setEarningsData(userSummary ? (userSummary as any).earningsData : []);
       setExtrasData(userSummary ? (userSummary as any).extrasData : []);
 
-      setAccAmountPaid(new Array(vcs[0].accomodationDetails).fill(''));
-      setAccEXRate(new Array(vcs[0].accomodationDetails).fill(''));
+      setAccAmountPaid(new Array(vcs[0].accomodationDetails).fill('0'));
+      setAccEXRate(new Array(vcs[0].accomodationDetails).fill('0'));
 
       let tempUsdAccTotal = 0;
       vcs[0].accomodationDetails.forEach((acc: any) => {
@@ -115,11 +119,13 @@ function Summary() {
       });
 
       setUsdAccTotal(`$${tempUsdAccTotal}`);
+      setUsdTourExpenseTotal(`$${Number(quote!.costings.transportTotal.slice(1)) + tempUsdAccTotal}`);
     };
 
     getInitialData();
   }, [id]);
 
+  // Table total updater
   useEffect(() => {
     let tempLrkAccTotal = 0;
     accAmountPaid.forEach((acc) => {
@@ -127,7 +133,8 @@ function Summary() {
     });
 
     setLkrAccTotal(`LKR ${tempLrkAccTotal}`);
-  }, [accAmountPaid, accEXRate]);
+    setLkrTourExpenseTotal(`lKR ${tempLrkAccTotal + Number(transportAmountPaid)}`);
+  }, [accAmountPaid, accEXRate, transportAmountPaid, transportEXRate]);
 
   const onCreateOtherExpense = () => {
     setOtherExpenseData([
@@ -283,6 +290,10 @@ function Summary() {
                   'EX RATE',
                 ]}
                 data={quotation.costings}
+                transportAmountPaid={transportAmountPaid}
+                setTransportAmountPaid={setTransportAmountPaid}
+                transportEXRate={transportEXRate}
+                setTransportEXRate={setTransportEXRate}
               />
               <p style={summaryStyles.tableOverallRates.detailContainer}>
                 <SpanAtom
@@ -290,11 +301,11 @@ function Summary() {
                   style={summaryStyles.tableOverallRates.label}
                 />
                 <SpanAtom
-                  text="$380"
+                  text={usdTourExpenseTotal}
                   style={summaryStyles.tableOverallRates.usdValue}
                 />
                 <SpanAtom
-                  text="LKR 106,400"
+                  text={lkrTourExpenseTotal}
                   style={summaryStyles.tableOverallRates.lkrValue}
                 />
               </p>

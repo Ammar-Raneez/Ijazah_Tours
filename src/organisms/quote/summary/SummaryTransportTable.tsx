@@ -8,9 +8,9 @@ import {
   TableRow,
   Theme,
 } from '@material-ui/core';
-import { v4 as uuid } from 'uuid';
 
 import TableColumnCell from '../../../molecules/TableColumnCell';
+import TableRowEditCell from '../../../molecules/TableRowEditCell';
 import TableRowTextCell from '../../../molecules/TableRowTextCell';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -24,13 +24,21 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface SummaryTransportTableProps {
-  data: any;
+  transportEXRate: string;
+  transportAmountPaid: string;
   columns: string[];
+  data: any;
+  setTransportEXRate: any;
+  setTransportAmountPaid: any;
 }
 
 function SummaryTransportTable({
-  data,
+  transportEXRate,
+  transportAmountPaid,
   columns,
+  data,
+  setTransportEXRate,
+  setTransportAmountPaid,
 }: SummaryTransportTableProps) {
   const classes = useStyles();
 
@@ -39,9 +47,9 @@ function SummaryTransportTable({
       <Table className={classes.table} aria-label="costing table">
         <TableHead>
           <TableRow>
-            {columns.map((column) => (
+            {columns.map((column, index) => (
               <TableColumnCell
-                key={uuid()}
+                key={index + 5}
                 align="center"
                 color="black"
                 column={column}
@@ -50,9 +58,8 @@ function SummaryTransportTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          <TableRow key={uuid()}>
+          <TableRow>
             <TableRowTextCell
-              key={uuid()}
               cell={{
                 align: 'center',
                 title: data.transportRate,
@@ -61,7 +68,6 @@ function SummaryTransportTable({
               }}
             />
             <TableRowTextCell
-              key={uuid()}
               cell={{
                 align: 'center',
                 title: data.transportDays,
@@ -70,13 +76,27 @@ function SummaryTransportTable({
               }}
             />
             <TableRowTextCell
-              key={uuid()}
               cell={{
                 align: 'center',
                 title: data.transportTotal,
                 colors: ['#464E5F'],
                 weight: 400,
               }}
+            />
+            <TableRowEditCell
+              value={transportAmountPaid}
+              inputTextField
+              align="center"
+              select={false}
+              onChange={(val) => setTransportAmountPaid(val)}
+              lkrAdornment
+            />
+            <TableRowEditCell
+              value={transportEXRate}
+              inputTextField
+              align="center"
+              select={false}
+              onChange={(val) => setTransportEXRate(val)}
             />
           </TableRow>
         </TableBody>
