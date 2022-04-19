@@ -266,6 +266,11 @@ export const summaryStyles = {
   ...mainContainerStyles,
   ...quoteCreateQuoteStyles,
   ...voucherStyles,
+  sectionTitle: {
+    color: '#0A65FF',
+    fontSize: '1.3rem',
+    fontWeight: 'bold',
+  },
   tableOverallRates: {
     detailContainer: {
       width: 'auto',

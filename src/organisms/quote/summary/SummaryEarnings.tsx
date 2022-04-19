@@ -59,7 +59,7 @@ function SummaryEarnings({
 }: SummaryEarningsProps) {
   return (
     <>
-      <ParagraphAtom text="Earnings" style={{ marginTop: '2rem' }} />
+      <ParagraphAtom text="Earnings" style={summaryStyles.sectionTitle} />
       <DivAtom
         style={{
           ...libraryAccomodationStyles.multiFieldContainer,

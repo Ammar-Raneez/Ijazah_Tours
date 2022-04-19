@@ -55,7 +55,7 @@ function SummaryOtherExpenses({
 }: SummaryOtherExpensesProps) {
   return (
     <>
-      <ParagraphAtom text="Other Expenses" style={{ marginTop: '2rem' }} />
+      <ParagraphAtom text="Other Expenses" style={summaryStyles.sectionTitle} />
       <DivAtom
         style={{
           ...libraryAccomodationStyles.multiFieldContainer,

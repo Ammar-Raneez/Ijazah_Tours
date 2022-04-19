@@ -292,7 +292,7 @@ function Summary() {
 
             {vouchers.length > 4 && (
               <DivAtom style={summaryStyles.tableContainer}>
-                <ParagraphAtom text="Accomodation" />
+                <ParagraphAtom style={summaryStyles.sectionTitle} text="Accomodation" />
                 <SummaryAccomodationTable
                   columns={[
                     'NIGHTS',
@@ -329,7 +329,7 @@ function Summary() {
             )}
 
             <DivAtom style={summaryStyles.tableContainer}>
-              <ParagraphAtom text="Transport" />
+              <ParagraphAtom style={summaryStyles.sectionTitle} text="Transport" />
               <SummaryTransportTable
                 columns={[
                   'RATE',
