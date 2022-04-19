@@ -278,12 +278,14 @@ export const summaryStyles = {
       textAlign: 'left' as const,
     },
     usdValue: {
-      width: '200px',
-      textAlign: 'center' as const,
+      width: 'auto',
+      minWidth: '100px',
+      textAlign: 'right' as const,
       fontWeight: 'bold',
     },
     lkrValue: {
       width: 'auto',
+      minWidth: '100px',
       textAlign: 'right' as const,
       fontWeight: 'bold',
     },

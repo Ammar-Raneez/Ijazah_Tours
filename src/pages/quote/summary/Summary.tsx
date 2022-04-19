@@ -20,7 +20,6 @@ import SpanAtom from '../../../atoms/SpanAtom';
 import { db } from '../../../firebase';
 import SummaryAccomodationTable from '../../../organisms/quote/summary/SummaryAccomodationTable';
 import SummaryEarnings from '../../../organisms/quote/summary/SummaryEarnings';
-import SummaryExtras from '../../../organisms/quote/summary/SummaryExtras';
 import SummaryGuestDetails from '../../../organisms/quote/summary/SummaryGuestDetails';
 import SummaryOtherExpenses from '../../../organisms/quote/summary/SummaryOtherExpenses';
 import SummaryTransportTable from '../../../organisms/quote/summary/SummaryTransportTable';
@@ -28,6 +27,7 @@ import { selectWithNavbarWidth, selectWithNavbarHeight } from '../../../redux/co
 import { fetchingDataIndicatorStyles, summaryStyles } from '../../../styles';
 import { widthHeightDynamicStyle } from '../../../utils/helpers';
 
+// TODO -> Update table amount paid/ex rate on refresh
 function Summary() {
   const height = useSelector(selectWithNavbarHeight);
   const width = useSelector(selectWithNavbarWidth);
@@ -72,13 +72,19 @@ function Summary() {
   const [newERLKRPrice, setNewERLKRPrice] = useState('');
   const [newEREXRate, setNewEREXRate] = useState('');
 
+  // Overall earnings
+  const [lkrEarningTotal, setLkrEarningTotal] = useState('LKR 0');
+  const [usdEarningTotal, setUsdEarningTotal] = useState('$0');
+  const [lkrEarningNetProfit, setLkrEarningNetProfit] = useState('LKR 0');
+  const [usdEarningNetProfit, setUsdEarningNetProfit] = useState('$0');
+
   // Extras
-  const [extrasData, setExtrasData] = useState<any>();
-  const [newEXTitle, setNewEXTitle] = useState('');
-  const [newEXRemark, setNewEXRemark] = useState('');
-  const [newEXUSDPrice, setNewEXUSDPrice] = useState('');
-  const [newEXLKRPrice, setNewEXLKRPrice] = useState('');
-  const [newEXEXRate, setNewEXEXRate] = useState('');
+  // const [extrasData, setExtrasData] = useState<any>();
+  // const [newEXTitle, setNewEXTitle] = useState('');
+  // const [newEXRemark, setNewEXRemark] = useState('');
+  // const [newEXUSDPrice, setNewEXUSDPrice] = useState('');
+  // const [newEXLKRPrice, setNewEXLKRPrice] = useState('');
+  // const [newEXEXRate, setNewEXEXRate] = useState('');
 
   const [savingSummary, setSavingSummary] = useState(false);
 
@@ -114,7 +120,7 @@ function Summary() {
       setVouchers(vcs);
       setOtherExpenseData(userSummary ? (userSummary as any).otherExpenseData : []);
       setEarningsData(userSummary ? (userSummary as any).earningsData : []);
-      setExtrasData(userSummary ? (userSummary as any).extrasData : []);
+      // setExtrasData(userSummary ? (userSummary as any).extrasData : []);
 
       setAccAmountPaid(new Array(vcs[0].accomodationDetails).fill('0'));
       setAccEXRate(new Array(vcs[0].accomodationDetails).fill('0'));
@@ -160,6 +166,25 @@ function Summary() {
   // eslint-disable-next-line max-len
   }, [otherExpenseData, usdTourExpenseTotal, accAmountPaid, accEXRate, transportAmountPaid, transportEXRate]);
 
+  useEffect(() => {
+    let tempUsdEarningTotal = 0;
+    let tempLkrEarningTotal = 0;
+
+    earningsData?.forEach((ot: any) => {
+      tempUsdEarningTotal += Number(ot.usdPrice.slice(1));
+      tempLkrEarningTotal += Number(ot.lkrPrice.slice(4));
+    });
+
+    tempUsdEarningTotal += Number(newOTUSDPrice);
+    tempLkrEarningTotal += Number(newOTLKRPrice);
+
+    setUsdEarningTotal(`$${tempUsdEarningTotal}`);
+    setLkrEarningTotal(`LKR ${tempLkrEarningTotal}`);
+
+    setUsdEarningNetProfit(`$${tempUsdEarningTotal - Number(usdTotalExpenseTotal.slice(1))}`);
+    setLkrEarningNetProfit(`LKR ${tempLkrEarningTotal - Number(lkrTotalExpenseTotal.slice(4))}`);
+  }, [earningsData, lkrTotalExpenseTotal, usdTotalExpenseTotal]);
+
   const onCreateOtherExpense = () => {
     setOtherExpenseData([
       ...otherExpenseData,
@@ -200,25 +225,25 @@ function Summary() {
     setNewEREXRate('');
   };
 
-  const onCreateExtra = () => {
-    setExtrasData([
-      ...extrasData,
-      {
-        id: uuid(),
-        title: newEXTitle,
-        remark: newEXRemark,
-        exRate: newEXEXRate,
-        usdPrice: `$${newEXUSDPrice}`,
-        lkrPrice: `LKR ${newEXLKRPrice}`,
-      },
-    ]);
+  // const onCreateExtra = () => {
+  //   setExtrasData([
+  //     ...extrasData,
+  //     {
+  //       id: uuid(),
+  //       title: newEXTitle,
+  //       remark: newEXRemark,
+  //       exRate: newEXEXRate,
+  //       usdPrice: `$${newEXUSDPrice}`,
+  //       lkrPrice: `LKR ${newEXLKRPrice}`,
+  //     },
+  //   ]);
 
-    setNewEXTitle('');
-    setNewEXRemark('');
-    setNewEXUSDPrice('');
-    setNewEXLKRPrice('');
-    setNewEXEXRate('');
-  };
+  //   setNewEXTitle('');
+  //   setNewEXRemark('');
+  //   setNewEXUSDPrice('');
+  //   setNewEXLKRPrice('');
+  //   setNewEXEXRate('');
+  // };
 
   const onDeleteOtherExpense = (i: string) => {
     const temp = [...otherExpenseData];
@@ -232,11 +257,11 @@ function Summary() {
     setEarningsData(temp);
   };
 
-  const onDeleteExtra = (i: string) => {
-    const temp = [...extrasData];
-    temp.splice(extrasData.findIndex((val: any) => val.id === i), 1);
-    setExtrasData(temp);
-  };
+  // const onDeleteExtra = (i: string) => {
+  //   const temp = [...extrasData];
+  //   temp.splice(extrasData.findIndex((val: any) => val.id === i), 1);
+  //   setExtrasData(temp);
+  // };
 
   const saveSummary = async () => {
     setSavingSummary(true);
@@ -244,7 +269,7 @@ function Summary() {
       userId: id,
       otherExpenseData,
       earningsData,
-      extrasData,
+      // extrasData,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
     });
@@ -261,7 +286,7 @@ function Summary() {
           height: `${height}px`,
         }}
       >
-        {quotation && vouchers && otherExpenseData && earningsData && extrasData ? (
+        {quotation && vouchers && otherExpenseData && earningsData ? (
           <>
             <SummaryGuestDetails vouchers={vouchers} quotation={quotation} />
 
@@ -370,6 +395,12 @@ function Summary() {
                 newERUSDPrice={newERUSDPrice}
                 newERLKRPrice={newERLKRPrice}
                 newEREXRate={newEREXRate}
+                lkrEarningTotal={lkrEarningTotal}
+                usdEarningTotal={usdEarningTotal}
+                lkrEarningNetProfit={lkrEarningNetProfit}
+                usdEarningNetProfit={usdEarningNetProfit}
+                lkrTotalExpenseTotal={lkrTotalExpenseTotal}
+                usdTotalExpenseTotal={usdTotalExpenseTotal}
                 setNewEREXRate={setNewEREXRate}
                 setNewERUSDPrice={setNewERUSDPrice}
                 setNewERLKRPrice={setNewERLKRPrice}
@@ -378,7 +409,7 @@ function Summary() {
               />
             </DivAtom>
 
-            <DivAtom style={summaryStyles.tableContainer}>
+            {/* <DivAtom style={summaryStyles.tableContainer}>
               <SummaryExtras
                 width={width}
                 extrasData={extrasData}
@@ -395,7 +426,7 @@ function Summary() {
                 onCreate={onCreateExtra}
                 onDelete={onDeleteExtra}
               />
-            </DivAtom>
+            </DivAtom> */}
 
             <DivAtom
               style={{

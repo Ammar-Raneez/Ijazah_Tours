@@ -19,6 +19,12 @@ interface SummaryEarningsProps {
   newERUSDPrice: string;
   newERLKRPrice: string;
   newEREXRate: string;
+  lkrEarningTotal: string;
+  usdEarningTotal: string;
+  lkrEarningNetProfit: string;
+  usdEarningNetProfit: string;
+  lkrTotalExpenseTotal: string;
+  usdTotalExpenseTotal: string;
   onCreate: MouseEventHandler<HTMLButtonElement>;
   onDelete: any;
   earningsData: any;
@@ -36,6 +42,12 @@ function SummaryEarnings({
   newERUSDPrice,
   newERLKRPrice,
   newEREXRate,
+  lkrEarningTotal,
+  usdEarningTotal,
+  lkrEarningNetProfit,
+  usdEarningNetProfit,
+  lkrTotalExpenseTotal,
+  usdTotalExpenseTotal,
   onCreate,
   onDelete,
   earningsData,
@@ -146,25 +158,25 @@ function SummaryEarnings({
                 style={summaryStyles.tableOverallRates.label}
               />
               <SpanAtom
-                text="$380"
+                text={usdEarningTotal}
                 style={summaryStyles.tableOverallRates.usdValue}
               />
               <SpanAtom
-                text="LKR 106,400"
+                text={lkrEarningTotal}
                 style={summaryStyles.tableOverallRates.lkrValue}
               />
             </p>
             <p style={summaryStyles.tableOverallRates.detailContainer}>
               <SpanAtom
-                text="Total Expenses"
+                text="Total Expense"
                 style={summaryStyles.tableOverallRates.label}
               />
               <SpanAtom
-                text="$380"
+                text={usdTotalExpenseTotal}
                 style={summaryStyles.tableOverallRates.usdValue}
               />
               <SpanAtom
-                text="LKR 106,400"
+                text={lkrTotalExpenseTotal}
                 style={summaryStyles.tableOverallRates.lkrValue}
               />
             </p>
@@ -174,11 +186,11 @@ function SummaryEarnings({
                 style={summaryStyles.tableOverallRates.label}
               />
               <SpanAtom
-                text="$380"
+                text={usdEarningNetProfit}
                 style={summaryStyles.tableOverallRates.usdValue}
               />
               <SpanAtom
-                text="LKR 106,400"
+                text={lkrEarningNetProfit}
                 style={summaryStyles.tableOverallRates.lkrValue}
               />
             </p>
