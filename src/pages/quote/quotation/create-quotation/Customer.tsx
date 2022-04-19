@@ -108,6 +108,11 @@ function Customer() {
 
       setRefData(refNums);
       setHolidayTypeData(holidays);
+
+      const storedCustomerData = localStorage.getItem('New Quote Customer');
+      if (storedCustomerData) {
+        setTitle(JSON.parse(storedCustomerData).data[0][0]);
+      }
     };
 
     getInitialData();
