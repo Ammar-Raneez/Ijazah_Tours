@@ -5,8 +5,9 @@ import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOut
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import DivAtom from '../../../atoms/DivAtom';
 import ParagraphAtom from '../../../atoms/ParagraphAtom';
+import SpanAtom from '../../../atoms/SpanAtom';
 import FormControlInput from '../../../molecules/FormControlInput';
-import { libraryAccomodationStyles, TableToolbarStyles } from '../../../styles';
+import { libraryAccomodationStyles, summaryStyles, TableToolbarStyles } from '../../../styles';
 import { widthHeightDynamicStyle } from '../../../utils/helpers';
 import { FlexDirection } from '../../../utils/types';
 import OtherExpensesTable from './OtherExpensesTable';
@@ -15,26 +16,34 @@ interface SummaryOtherExpensesProps {
   width: number;
   newOTTitle: string;
   newOTRemark: string
-  newOTPrice: string
+  newOTUSDPrice: string;
+  newOTLKRPrice: string;
+  newOTEXRate: string;
   onCreate: MouseEventHandler<HTMLButtonElement>;
   onDelete: any;
   otherExpenseData: any;
+  setNewOTEXRate: any;
   setNewOTTitle: any;
   setNewOTRemark: any;
-  setNewOTPrice: any;
+  setNewOTUSDPrice: any;
+  setNewOTLKRPrice: any;
 }
 
 function SummaryOtherExpenses({
   width,
-  otherExpenseData,
   newOTTitle,
   newOTRemark,
-  newOTPrice,
-  setNewOTTitle,
-  setNewOTRemark,
-  setNewOTPrice,
+  newOTUSDPrice,
+  newOTLKRPrice,
+  newOTEXRate,
   onCreate,
   onDelete,
+  otherExpenseData,
+  setNewOTEXRate,
+  setNewOTTitle,
+  setNewOTRemark,
+  setNewOTUSDPrice,
+  setNewOTLKRPrice,
 }: SummaryOtherExpensesProps) {
   return (
     <>
@@ -68,16 +77,39 @@ function SummaryOtherExpenses({
           placeholder="Enter Remark"
         />
         <FormControlInput
-          margin="0 0 1rem 0"
+          margin={widthHeightDynamicStyle(width, 1000, '0 0 1rem 0', '0 1rem 1rem 0') as string}
           flex={1}
           label="Price"
           fullWidth
           multiline={false}
           rows={1}
-          value={newOTPrice}
-          setValue={setNewOTPrice}
-          placeholder="Enter Price"
+          value={newOTUSDPrice}
+          setValue={setNewOTUSDPrice}
+          placeholder="Enter Price ($)"
           dollarAdornment
+        />
+        <FormControlInput
+          margin={widthHeightDynamicStyle(width, 1000, '0 0 1rem 0', '0 1rem 1rem 0') as string}
+          flex={1}
+          label="Price"
+          fullWidth
+          multiline={false}
+          rows={1}
+          value={newOTLKRPrice}
+          setValue={setNewOTLKRPrice}
+          placeholder="Enter Price (LKR)"
+          lkrAdornment
+        />
+        <FormControlInput
+          margin="0 0 1rem 0"
+          flex={1}
+          label="EX Rate"
+          fullWidth
+          multiline={false}
+          rows={1}
+          value={newOTEXRate}
+          setValue={setNewOTEXRate}
+          placeholder="Enter EX Rate"
         />
         <ButtonAtom
           startIcon={<AddCircleOutlineOutlinedIcon />}
@@ -85,7 +117,9 @@ function SummaryOtherExpenses({
           disabled={
             newOTTitle === ''
             || newOTRemark === ''
-            || newOTPrice === ''
+            || newOTUSDPrice === ''
+            || newOTLKRPrice === ''
+            || newOTEXRate === ''
           }
           onClick={(event) => onCreate(event)}
           style={{
@@ -100,11 +134,41 @@ function SummaryOtherExpenses({
       </DivAtom>
       <DivAtom>
         {otherExpenseData.length > 0 && (
-          <OtherExpensesTable
-            data={otherExpenseData}
-            columns={['TITLE', 'REMARK', 'PRICE', '']}
-            deleteExpense={onDelete}
-          />
+          <>
+            <OtherExpensesTable
+              data={otherExpenseData}
+              columns={['TITLE', 'REMARK', 'PRICE ($)', 'PRICE (LKR)', 'EX RATE', '']}
+              deleteExpense={onDelete}
+            />
+            <p style={summaryStyles.tableOverallRates.detailContainer}>
+              <SpanAtom
+                text="Other Expenses"
+                style={summaryStyles.tableOverallRates.label}
+              />
+              <SpanAtom
+                text="$380"
+                style={summaryStyles.tableOverallRates.usdValue}
+              />
+              <SpanAtom
+                text="LKR 106,400"
+                style={summaryStyles.tableOverallRates.lkrValue}
+              />
+            </p>
+            <p style={summaryStyles.tableOverallRates.detailContainer}>
+              <SpanAtom
+                text="Total Expenses"
+                style={summaryStyles.tableOverallRates.label}
+              />
+              <SpanAtom
+                text="$380"
+                style={summaryStyles.tableOverallRates.usdValue}
+              />
+              <SpanAtom
+                text="LKR 106,400"
+                style={summaryStyles.tableOverallRates.lkrValue}
+              />
+            </p>
+          </>
         )}
       </DivAtom>
     </>

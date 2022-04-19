@@ -9,32 +9,40 @@ import FormControlInput from '../../../molecules/FormControlInput';
 import { libraryAccomodationStyles, TableToolbarStyles } from '../../../styles';
 import { widthHeightDynamicStyle } from '../../../utils/helpers';
 import { FlexDirection } from '../../../utils/types';
-import EarningsTable from './EarningsTable';
+import ExtrasTable from './ExtrasTable';
 
 interface SummaryExtrasProps {
   width: number;
   newEXTitle: string;
   newEXRemark: string
-  newEXPrice: string
+  newEXUSDPrice: string;
+  newEXLKRPrice: string;
+  newEXEXRate: string;
   onCreate: MouseEventHandler<HTMLButtonElement>;
   onDelete: any;
   extrasData: any;
   setNewEXTitle: any;
+  setNewEXEXRate: any;
   setNewEXRemark: any;
-  setNewEXPrice: any;
+  setNewEXUSDPrice: any;
+  setNewEXLKRPrice: any;
 }
 
 function SummaryExtras({
   width,
-  extrasData,
   newEXTitle,
   newEXRemark,
-  newEXPrice,
-  setNewEXTitle,
-  setNewEXRemark,
-  setNewEXPrice,
+  newEXUSDPrice,
+  newEXLKRPrice,
+  newEXEXRate,
   onCreate,
   onDelete,
+  extrasData,
+  setNewEXTitle,
+  setNewEXEXRate,
+  setNewEXRemark,
+  setNewEXUSDPrice,
+  setNewEXLKRPrice,
 }: SummaryExtrasProps) {
   return (
     <>
@@ -68,16 +76,38 @@ function SummaryExtras({
           placeholder="Enter Remark"
         />
         <FormControlInput
-          margin="0 0 1rem 0"
+          margin={widthHeightDynamicStyle(width, 1000, '0 0 1rem 0', '0 1rem 1rem 0') as string}
           flex={1}
           label="Price"
           fullWidth
           multiline={false}
           rows={1}
-          value={newEXPrice}
-          setValue={setNewEXPrice}
-          placeholder="Enter Price"
+          value={newEXUSDPrice}
+          setValue={setNewEXUSDPrice}
+          placeholder="Enter Price ($)"
           dollarAdornment
+        />
+        <FormControlInput
+          margin={widthHeightDynamicStyle(width, 1000, '0 0 1rem 0', '0 1rem 1rem 0') as string}
+          flex={1}
+          label="Price"
+          fullWidth
+          multiline={false}
+          rows={1}
+          value={newEXLKRPrice}
+          setValue={setNewEXLKRPrice}
+          placeholder="Enter Price (LKR)"
+        />
+        <FormControlInput
+          margin="0 0 1rem 0"
+          flex={1}
+          label="EX Rate"
+          fullWidth
+          multiline={false}
+          rows={1}
+          value={newEXEXRate}
+          setValue={setNewEXEXRate}
+          placeholder="Enter EX Rate"
         />
         <ButtonAtom
           startIcon={<AddCircleOutlineOutlinedIcon />}
@@ -85,7 +115,8 @@ function SummaryExtras({
           disabled={
             newEXTitle === ''
             || newEXRemark === ''
-            || newEXPrice === ''
+            || newEXUSDPrice === ''
+            || newEXLKRPrice === ''
           }
           onClick={(event) => onCreate(event)}
           style={{
@@ -100,11 +131,13 @@ function SummaryExtras({
       </DivAtom>
       <DivAtom>
         {extrasData.length > 0 && (
-          <EarningsTable
-            data={extrasData}
-            columns={['TITLE', 'REMARK', 'PRICE', '']}
-            deleteEarnings={onDelete}
-          />
+          <>
+            <ExtrasTable
+              data={extrasData}
+              columns={['TITLE', 'REMARK', 'PRICE ($)', 'PRICE (LKR)', 'EX RATE', '']}
+              deleteExtras={onDelete}
+            />
+          </>
         )}
       </DivAtom>
     </>

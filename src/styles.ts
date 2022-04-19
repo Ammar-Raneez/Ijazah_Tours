@@ -266,6 +266,28 @@ export const summaryStyles = {
   ...mainContainerStyles,
   ...quoteCreateQuoteStyles,
   ...voucherStyles,
+  tableOverallRates: {
+    detailContainer: {
+      width: 'auto',
+      display: 'flex',
+      justifyContent: 'flex-end',
+    },
+    label: {
+      color: '#1C5BBA',
+      width: '150px',
+      textAlign: 'left' as const,
+    },
+    usdValue: {
+      width: '200px',
+      textAlign: 'center' as const,
+      fontWeight: 'bold',
+    },
+    lkrValue: {
+      width: 'auto',
+      textAlign: 'right' as const,
+      fontWeight: 'bold',
+    },
+  },
 };
 
 /// Quotations - Approval

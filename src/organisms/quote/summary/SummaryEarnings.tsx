@@ -5,8 +5,9 @@ import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOut
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import DivAtom from '../../../atoms/DivAtom';
 import ParagraphAtom from '../../../atoms/ParagraphAtom';
+import SpanAtom from '../../../atoms/SpanAtom';
 import FormControlInput from '../../../molecules/FormControlInput';
-import { libraryAccomodationStyles, TableToolbarStyles } from '../../../styles';
+import { libraryAccomodationStyles, summaryStyles, TableToolbarStyles } from '../../../styles';
 import { widthHeightDynamicStyle } from '../../../utils/helpers';
 import { FlexDirection } from '../../../utils/types';
 import EarningsTable from './EarningsTable';
@@ -15,26 +16,34 @@ interface SummaryEarningsProps {
   width: number;
   newERTitle: string;
   newERRemark: string
-  newERPrice: string
+  newERUSDPrice: string;
+  newERLKRPrice: string;
+  newEREXRate: string;
   onCreate: MouseEventHandler<HTMLButtonElement>;
   onDelete: any;
   earningsData: any;
   setNewERTitle: any;
+  setNewEREXRate: any;
   setNewERRemark: any;
-  setNewERPrice: any;
+  setNewERUSDPrice: any;
+  setNewERLKRPrice: any;
 }
 
 function SummaryEarnings({
   width,
-  earningsData,
   newERTitle,
   newERRemark,
-  newERPrice,
-  setNewERTitle,
-  setNewERRemark,
-  setNewERPrice,
+  newERUSDPrice,
+  newERLKRPrice,
+  newEREXRate,
   onCreate,
   onDelete,
+  earningsData,
+  setNewERTitle,
+  setNewEREXRate,
+  setNewERRemark,
+  setNewERUSDPrice,
+  setNewERLKRPrice,
 }: SummaryEarningsProps) {
   return (
     <>
@@ -68,16 +77,39 @@ function SummaryEarnings({
           placeholder="Enter Remark"
         />
         <FormControlInput
-          margin="0 0 1rem 0"
+          margin={widthHeightDynamicStyle(width, 1000, '0 0 1rem 0', '0 1rem 1rem 0') as string}
           flex={1}
           label="Price"
           fullWidth
           multiline={false}
           rows={1}
-          value={newERPrice}
-          setValue={setNewERPrice}
-          placeholder="Enter Price"
+          value={newERUSDPrice}
+          setValue={setNewERUSDPrice}
+          placeholder="Enter Price ($)"
           dollarAdornment
+        />
+        <FormControlInput
+          margin={widthHeightDynamicStyle(width, 1000, '0 0 1rem 0', '0 1rem 1rem 0') as string}
+          flex={1}
+          label="Price"
+          fullWidth
+          multiline={false}
+          rows={1}
+          value={newERLKRPrice}
+          setValue={setNewERLKRPrice}
+          placeholder="Enter Price (LKR)"
+          lkrAdornment
+        />
+        <FormControlInput
+          margin="0 0 1rem 0"
+          flex={1}
+          label="EX Rate"
+          fullWidth
+          multiline={false}
+          rows={1}
+          value={newEREXRate}
+          setValue={setNewEREXRate}
+          placeholder="Enter EX Rate"
         />
         <ButtonAtom
           startIcon={<AddCircleOutlineOutlinedIcon />}
@@ -85,7 +117,9 @@ function SummaryEarnings({
           disabled={
             newERTitle === ''
             || newERRemark === ''
-            || newERPrice === ''
+            || newERUSDPrice === ''
+            || newERLKRPrice === ''
+            || newEREXRate === ''
           }
           onClick={(event) => onCreate(event)}
           style={{
@@ -100,11 +134,55 @@ function SummaryEarnings({
       </DivAtom>
       <DivAtom>
         {earningsData.length > 0 && (
-          <EarningsTable
-            data={earningsData}
-            columns={['TITLE', 'REMARK', 'PRICE', '']}
-            deleteEarnings={onDelete}
-          />
+          <>
+            <EarningsTable
+              data={earningsData}
+              columns={['TITLE', 'REMARK', 'PRICE ($)', 'PRICE (LKR)', 'EX RATE', '']}
+              deleteEarnings={onDelete}
+            />
+            <p style={summaryStyles.tableOverallRates.detailContainer}>
+              <SpanAtom
+                text="Earnings"
+                style={summaryStyles.tableOverallRates.label}
+              />
+              <SpanAtom
+                text="$380"
+                style={summaryStyles.tableOverallRates.usdValue}
+              />
+              <SpanAtom
+                text="LKR 106,400"
+                style={summaryStyles.tableOverallRates.lkrValue}
+              />
+            </p>
+            <p style={summaryStyles.tableOverallRates.detailContainer}>
+              <SpanAtom
+                text="Total Expenses"
+                style={summaryStyles.tableOverallRates.label}
+              />
+              <SpanAtom
+                text="$380"
+                style={summaryStyles.tableOverallRates.usdValue}
+              />
+              <SpanAtom
+                text="LKR 106,400"
+                style={summaryStyles.tableOverallRates.lkrValue}
+              />
+            </p>
+            <p style={summaryStyles.tableOverallRates.detailContainer}>
+              <SpanAtom
+                text="Net Profit"
+                style={summaryStyles.tableOverallRates.label}
+              />
+              <SpanAtom
+                text="$380"
+                style={summaryStyles.tableOverallRates.usdValue}
+              />
+              <SpanAtom
+                text="LKR 106,400"
+                style={summaryStyles.tableOverallRates.lkrValue}
+              />
+            </p>
+          </>
         )}
       </DivAtom>
     </>

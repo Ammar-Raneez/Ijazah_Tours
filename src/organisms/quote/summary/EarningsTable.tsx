@@ -74,7 +74,25 @@ function EarningsTable({
                 key={uuid()}
                 cell={{
                   align: 'center',
-                  title: row.price,
+                  title: row.usdPrice,
+                  colors: ['#464E5F', '#B5B5C3'],
+                  weight: 400,
+                }}
+              />
+              <TableRowTextCell
+                key={uuid()}
+                cell={{
+                  align: 'center',
+                  title: row.lkrPrice,
+                  colors: ['#464E5F', '#B5B5C3'],
+                  weight: 400,
+                }}
+              />
+              <TableRowTextCell
+                key={uuid()}
+                cell={{
+                  align: 'center',
+                  title: row.exRate,
                   colors: ['#464E5F', '#B5B5C3'],
                   weight: 400,
                 }}

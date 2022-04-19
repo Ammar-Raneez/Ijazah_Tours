@@ -39,19 +39,25 @@ function Summary() {
   const [otherExpenseData, setOtherExpenseData] = useState<any>();
   const [newOTTitle, setNewOTTitle] = useState('');
   const [newOTRemark, setNewOTRemark] = useState('');
-  const [newOTPrice, setNewOTPrice] = useState('');
+  const [newOTUSDPrice, setNewOTUSDPrice] = useState('');
+  const [newOTLKRPrice, setNewOTLKRPrice] = useState('');
+  const [newOTEXRate, setNewOTEXRate] = useState('');
 
   // Earnings
   const [earningsData, setEarningsData] = useState<any>();
   const [newERTitle, setNewERTitle] = useState('');
   const [newERRemark, setNewERRemark] = useState('');
-  const [newERPrice, setNewERPrice] = useState('');
+  const [newERUSDPrice, setNewERUSDPrice] = useState('');
+  const [newERLKRPrice, setNewERLKRPrice] = useState('');
+  const [newEREXRate, setNewEREXRate] = useState('');
 
   // Extras
   const [extrasData, setExtrasData] = useState<any>();
   const [newEXTitle, setNewEXTitle] = useState('');
   const [newEXRemark, setNewEXRemark] = useState('');
-  const [newEXPrice, setNewEXPrice] = useState('');
+  const [newEXUSDPrice, setNewEXUSDPrice] = useState('');
+  const [newEXLKRPrice, setNewEXLKRPrice] = useState('');
+  const [newEXEXRate, setNewEXEXRate] = useState('');
 
   const [savingSummary, setSavingSummary] = useState(false);
 
@@ -100,13 +106,17 @@ function Summary() {
         id: uuid(),
         title: newOTTitle,
         remark: newOTRemark,
-        price: `$${newOTPrice}`,
+        exRate: newOTEXRate,
+        usdPrice: `$${newOTUSDPrice}`,
+        lkrPrice: `LKR ${newOTLKRPrice}`,
       },
     ]);
 
     setNewOTTitle('');
     setNewOTRemark('');
-    setNewOTPrice('');
+    setNewOTUSDPrice('');
+    setNewOTLKRPrice('');
+    setNewOTEXRate('');
   };
 
   const onCreateEarning = () => {
@@ -116,13 +126,17 @@ function Summary() {
         id: uuid(),
         title: newERTitle,
         remark: newERRemark,
-        price: `$${newERPrice}`,
+        exRate: newEREXRate,
+        usdPrice: `$${newERUSDPrice}`,
+        lkrPrice: `LKR ${newERLKRPrice}`,
       },
     ]);
 
     setNewERTitle('');
     setNewERRemark('');
-    setNewERPrice('');
+    setNewERUSDPrice('');
+    setNewERLKRPrice('');
+    setNewEREXRate('');
   };
 
   const onCreateExtra = () => {
@@ -132,13 +146,17 @@ function Summary() {
         id: uuid(),
         title: newEXTitle,
         remark: newEXRemark,
-        price: `$${newEXPrice}`,
+        exRate: newEXEXRate,
+        usdPrice: `$${newEXUSDPrice}`,
+        lkrPrice: `LKR ${newEXLKRPrice}`,
       },
     ]);
 
     setNewEXTitle('');
     setNewEXRemark('');
-    setNewEXPrice('');
+    setNewEXUSDPrice('');
+    setNewEXLKRPrice('');
+    setNewEXEXRate('');
   };
 
   const onDeleteOtherExpense = (i: string) => {
@@ -296,6 +314,20 @@ function Summary() {
                 ]}
                 data={vouchers[0].accomodationDetails}
               />
+              <p style={summaryStyles.tableOverallRates.detailContainer}>
+                <SpanAtom
+                  text="Accomodation"
+                  style={summaryStyles.tableOverallRates.label}
+                />
+                <SpanAtom
+                  text="$380"
+                  style={summaryStyles.tableOverallRates.usdValue}
+                />
+                <SpanAtom
+                  text="LKR 106,400"
+                  style={summaryStyles.tableOverallRates.lkrValue}
+                />
+              </p>
             </DivAtom>
 
             <DivAtom style={summaryStyles.tableContainer}>
@@ -310,6 +342,20 @@ function Summary() {
                 ]}
                 data={quotation.costings}
               />
+              <p style={summaryStyles.tableOverallRates.detailContainer}>
+                <SpanAtom
+                  text="Tour Expense"
+                  style={summaryStyles.tableOverallRates.label}
+                />
+                <SpanAtom
+                  text="$380"
+                  style={summaryStyles.tableOverallRates.usdValue}
+                />
+                <SpanAtom
+                  text="LKR 106,400"
+                  style={summaryStyles.tableOverallRates.lkrValue}
+                />
+              </p>
             </DivAtom>
 
             <DivAtom style={summaryStyles.tableContainer}>
@@ -320,8 +366,12 @@ function Summary() {
                 setNewOTTitle={setNewOTTitle}
                 newOTRemark={newOTRemark}
                 setNewOTRemark={setNewOTRemark}
-                newOTPrice={newOTPrice}
-                setNewOTPrice={setNewOTPrice}
+                newOTUSDPrice={newOTUSDPrice}
+                newOTLKRPrice={newOTLKRPrice}
+                newOTEXRate={newOTEXRate}
+                setNewOTEXRate={setNewOTEXRate}
+                setNewOTUSDPrice={setNewOTUSDPrice}
+                setNewOTLKRPrice={setNewOTLKRPrice}
                 onCreate={onCreateOtherExpense}
                 onDelete={onDeleteOtherExpense}
               />
@@ -335,8 +385,12 @@ function Summary() {
                 setNewERTitle={setNewERTitle}
                 newERRemark={newERRemark}
                 setNewERRemark={setNewERRemark}
-                newERPrice={newERPrice}
-                setNewERPrice={setNewERPrice}
+                newERUSDPrice={newERUSDPrice}
+                newERLKRPrice={newERLKRPrice}
+                newEREXRate={newEREXRate}
+                setNewEREXRate={setNewEREXRate}
+                setNewERUSDPrice={setNewERUSDPrice}
+                setNewERLKRPrice={setNewERLKRPrice}
                 onCreate={onCreateEarning}
                 onDelete={onDeleteEarning}
               />
@@ -350,8 +404,12 @@ function Summary() {
                 setNewEXTitle={setNewEXTitle}
                 newEXRemark={newEXRemark}
                 setNewEXRemark={setNewEXRemark}
-                newEXPrice={newEXPrice}
-                setNewEXPrice={setNewEXPrice}
+                newEXUSDPrice={newEXUSDPrice}
+                newEXLKRPrice={newEXLKRPrice}
+                newEXEXRate={newEXEXRate}
+                setNewEXEXRate={setNewEXEXRate}
+                setNewEXUSDPrice={setNewEXUSDPrice}
+                setNewEXLKRPrice={setNewEXLKRPrice}
                 onCreate={onCreateExtra}
                 onDelete={onDeleteExtra}
               />
