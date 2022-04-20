@@ -19,13 +19,19 @@ import InputAtom from '../../../../atoms/InputAtom';
 import ParagraphAtom from '../../../../atoms/ParagraphAtom';
 import { db } from '../../../../firebase';
 import AccomodationTable from '../../../../organisms/quote/quotation/create-quotation/accomodation/AccomodationTable';
+import Searchbar from '../../../../organisms/quote/quotation/create-quotation/accomodation/Searchbar';
 import { selectWith2NavbarHeight, selectWith2NavbarWidth } from '../../../../redux/containerSizeSlice';
 import {
   fetchingDataIndicatorStyles,
   quoteCreateQuoteStyles,
 } from '../../../../styles';
 import { getDaysDifference, widthHeightDynamicStyle } from '../../../../utils/helpers';
-import { FlexDirection, UserAccomodation } from '../../../../utils/types';
+import {
+  FlexDirection,
+  LibraryAccomodation,
+  SettingsSingleInput,
+  UserAccomodation,
+} from '../../../../utils/types';
 
 function Accomodation() {
   const height = useSelector(selectWith2NavbarHeight);
@@ -33,6 +39,11 @@ function Accomodation() {
 
   const [accomodationData, setAccomodationData] = useState<UserAccomodation[]>();
   const [selectedAccomodations, setSelectedAccomodations] = useState<UserAccomodation[]>([]);
+
+  const [accomodationTypesData, setAccomodationTypesData] = useState<SettingsSingleInput[]>();
+  const [roomTypesData, setRoomTypesData] = useState<SettingsSingleInput[]>();
+  const [roomViewsData, setRoomViewsData] = useState<SettingsSingleInput[]>();
+  const [roomGradingsData, setRoomGradingsData] = useState<SettingsSingleInput[]>();
 
   const [selectedAccomodationsNights, setSelectedAccomodationsNights] = useState<string[]>([]);
   const [
@@ -55,10 +66,37 @@ function Accomodation() {
   useEffect(() => {
     const getInitialData = async () => {
       const aData = (await getDocs(collection(db, 'Library Accomodation'))).docs;
-      const data = aData.map((dc) => dc.data());
-      const ids = aData.map((dc) => dc.id);
-      ids.forEach((id, i) => {
-        data[i].id = id;
+      const atData = (await getDocs(collection(db, 'Settings Accomodation Types'))).docs;
+      const rtData = (await getDocs(collection(db, 'Settings Room Types'))).docs;
+      const vData = (await getDocs(collection(db, 'Settings Room Views'))).docs;
+      const gData = (await getDocs(collection(db, 'Settings Room Gradings'))).docs;
+
+      const accData = aData.map((dc) => dc.data());
+      const accTypesData = atData.map((dc) => dc.data());
+      const rTypesData = rtData.map((dc) => dc.data());
+      const viewsData = vData.map((dc) => dc.data());
+      const gradingsData = gData.map((dc) => dc.data());
+
+      const accIds = aData.map((dc) => dc.id);
+      const accTypesIds = atData.map((dc) => dc.id);
+      const roomTypesIds = rtData.map((dc) => dc.id);
+      const viewsIds = vData.map((dc) => dc.id);
+      const gradingsIds = gData.map((dc) => dc.id);
+
+      accIds.forEach((id, i) => {
+        accData[i].id = id;
+      });
+      accTypesIds.forEach((id, i) => {
+        accTypesData[i].id = id;
+      });
+      roomTypesIds.forEach((id, i) => {
+        rTypesData[i].id = id;
+      });
+      viewsIds.forEach((id, i) => {
+        viewsData[i].id = id;
+      });
+      gradingsIds.forEach((id, i) => {
+        gradingsData[i].id = id;
       });
 
       if (localStorage.getItem('New Quote Accomodation')) {
@@ -69,7 +107,11 @@ function Accomodation() {
         setSelectedAccomodations(selectedAcc);
       }
 
-      setAccomodationData(data as UserAccomodation[]);
+      setAccomodationData(accData as UserAccomodation[]);
+      setAccomodationTypesData(accTypesData as SettingsSingleInput[]);
+      setRoomTypesData(rTypesData as SettingsSingleInput[]);
+      setRoomViewsData(viewsData as SettingsSingleInput[]);
+      setRoomGradingsData(gradingsData as SettingsSingleInput[]);
     };
 
     getInitialData();
@@ -181,129 +223,142 @@ function Accomodation() {
         <H2Atom style={quoteCreateQuoteStyles.title} text="Accomodation" />
       </DivAtom>
 
-      {accomodationData ? (
-        <>
-          <ParagraphAtom
-            style={{
-              ...quoteCreateQuoteStyles.title,
-              margin: '1rem 0 1rem 1rem',
-            }}
-            text="Preset Quotes"
-          />
-          <DivAtom style={quoteCreateQuoteStyles.tableContainer}>
+      {(accomodationData && accomodationTypesData
+        && roomTypesData && roomViewsData && roomGradingsData) ? (
+          <>
+            <ParagraphAtom
+              style={{
+                ...quoteCreateQuoteStyles.title,
+                margin: '1rem 0 1rem 1rem',
+              }}
+              text="Preset Quotes"
+            />
+            <DivAtom style={quoteCreateQuoteStyles.tableContainer}>
+              <DivAtom
+                style={{
+                  ...quoteCreateQuoteStyles.btnMainContainer,
+                  flexDirection: widthHeightDynamicStyle(width, 768, 'column', 'row') as FlexDirection,
+                }}
+              >
+                <ButtonAtom
+                  text="Luxury"
+                  style={{
+                    ...quoteCreateQuoteStyles.btn,
+                    marginRight: '16px',
+                    marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
+                    width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
+                  }}
+                  onClick={() => addAccomodation(accomodationData[0])}
+                  size="large"
+                />
+                <ButtonAtom
+                  text="3 Star"
+                  style={{
+                    ...quoteCreateQuoteStyles.btn,
+                    marginRight: '16px',
+                    marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
+                    width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
+                  }}
+                  onClick={() => addAccomodation(accomodationData[1])}
+                  size="large"
+                />
+                <ButtonAtom
+                  text="Boutique"
+                  style={{
+                    ...quoteCreateQuoteStyles.btn,
+                    marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
+                    width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
+                  }}
+                  onClick={() => null}
+                  size="large"
+                />
+              </DivAtom>
+              <DivAtom style={quoteCreateQuoteStyles.searchContainer}>
+                <InputAtom
+                  placeholder="Search"
+                  adornmentPosition="start"
+                  fullWidth={width < 768}
+                  value={search}
+                  plain="false"
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
+                  children={<SearchIcon />}
+                  style={{ padding: '0.2rem' }}
+                />
+              </DivAtom>
+              {search !== '' && (
+                <DivAtom>
+                  <Searchbar
+                    searchTerm={search}
+                    accomodationData={accomodationData as LibraryAccomodation[]}
+                    accomodationTypesData={accomodationTypesData}
+                    roomTypesData={roomTypesData}
+                    roomViewsData={roomViewsData}
+                    roomGradingsData={roomGradingsData}
+                  />
+                </DivAtom>
+              )}
+              {selectedAccomodations.length > 0 && (
+                <AccomodationTable
+                  columns={[
+                    'LOCATION',
+                    'NIGHTS',
+                    'CATEGORY',
+                    'ACCOMODATION',
+                    'PAX',
+                    'ROOM TYPE',
+                    'MEAL PLAN',
+                    'CITY',
+                    '',
+                  ]}
+                  selectedAccomodations={selectedAccomodations}
+                  selectedAccomodationsNights={selectedAccomodationsNights}
+                  selectedAccomodationsRoomTypes={selectedAccomodationsRoomTypes}
+                  selectedAccomodationsMealPlans={selectedAccomodationsMealPlans}
+                  setSelectedAccomodationsNights={setSelectedAccomodationsNights}
+                  setSelectedAccomodationsRoomTypes={setSelectedAccomodationsRoomTypes}
+                  setSelectedAccomodationsMealPlans={setSelectedAccomodationsMealPlans}
+                  deleteAccomodation={deleteAccomodation}
+                />
+              )}
+            </DivAtom>
+
+            {showValidationErrorMessage && (
+              <ParagraphAtom
+                text={`Please specify the same number of nights as your departure - check-in. (Nights required - ${validationNightsRequired})`}
+                style={quoteCreateQuoteStyles.errorMsg}
+              />
+            )}
+
             <DivAtom
               style={{
-                ...quoteCreateQuoteStyles.btnMainContainer,
-                flexDirection: widthHeightDynamicStyle(width, 768, 'column', 'row') as FlexDirection,
+                ...quoteCreateQuoteStyles.addBtnContainer,
+                padding: widthHeightDynamicStyle(width, 768, '1rem', 0),
+                margin: widthHeightDynamicStyle(
+                  width,
+                  768,
+                  0,
+                  quoteCreateQuoteStyles.addBtnContainer.margin,
+                ),
               }}
             >
               <ButtonAtom
-                text="Luxury"
-                style={{
-                  ...quoteCreateQuoteStyles.btn,
-                  marginRight: '16px',
-                  marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
-                  width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
-                }}
-                onClick={() => addAccomodation(accomodationData[0])}
                 size="large"
-              />
-              <ButtonAtom
-                text="3 Star"
+                text="Continue"
+                disabled={accomodationData.length === 0}
+                onClick={continueToCosting}
                 style={{
-                  ...quoteCreateQuoteStyles.btn,
-                  marginRight: '16px',
-                  marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
-                  width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
+                  ...quoteCreateQuoteStyles.addBtn,
+                  width: widthHeightDynamicStyle(width, 768, '100%', '18%'),
+                  margin: '0 0 1rem 0',
                 }}
-                onClick={() => addAccomodation(accomodationData[1])}
-                size="large"
-              />
-              <ButtonAtom
-                text="Boutique"
-                style={{
-                  ...quoteCreateQuoteStyles.btn,
-                  marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
-                  width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
-                }}
-                onClick={() => null}
-                size="large"
               />
             </DivAtom>
-            <DivAtom style={quoteCreateQuoteStyles.searchContainer}>
-              <InputAtom
-                placeholder="Search"
-                adornmentPosition="start"
-                fullWidth={width < 768}
-                value={search}
-                plain="false"
-                onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
-                children={<SearchIcon />}
-                style={{ padding: '0.2rem' }}
-              />
-            </DivAtom>
-            {selectedAccomodations.length > 0 && (
-              <AccomodationTable
-                columns={[
-                  'LOCATION',
-                  'NIGHTS',
-                  'CATEGORY',
-                  'ACCOMODATION',
-                  'PAX',
-                  'ROOM TYPE',
-                  'MEAL PLAN',
-                  'CITY',
-                  '',
-                ]}
-                selectedAccomodations={selectedAccomodations}
-                selectedAccomodationsNights={selectedAccomodationsNights}
-                selectedAccomodationsRoomTypes={selectedAccomodationsRoomTypes}
-                selectedAccomodationsMealPlans={selectedAccomodationsMealPlans}
-                setSelectedAccomodationsNights={setSelectedAccomodationsNights}
-                setSelectedAccomodationsRoomTypes={setSelectedAccomodationsRoomTypes}
-                setSelectedAccomodationsMealPlans={setSelectedAccomodationsMealPlans}
-                deleteAccomodation={deleteAccomodation}
-              />
-            )}
+          </>
+        ) : (
+          <DivAtom style={fetchingDataIndicatorStyles.container}>
+            <CircularProgress size={20} color="primary" />
           </DivAtom>
-
-          {showValidationErrorMessage && (
-            <ParagraphAtom
-              text={`Please specify the same number of nights as your departure - check-in. (Nights required - ${validationNightsRequired})`}
-              style={quoteCreateQuoteStyles.errorMsg}
-            />
-          )}
-
-          <DivAtom
-            style={{
-              ...quoteCreateQuoteStyles.addBtnContainer,
-              padding: widthHeightDynamicStyle(width, 768, '1rem', 0),
-              margin: widthHeightDynamicStyle(
-                width,
-                768,
-                0,
-                quoteCreateQuoteStyles.addBtnContainer.margin,
-              ),
-            }}
-          >
-            <ButtonAtom
-              size="large"
-              text="Continue"
-              disabled={accomodationData.length === 0}
-              onClick={continueToCosting}
-              style={{
-                ...quoteCreateQuoteStyles.addBtn,
-                width: widthHeightDynamicStyle(width, 768, '100%', '18%'),
-                margin: '0 0 1rem 0',
-              }}
-            />
-          </DivAtom>
-        </>
-      ) : (
-        <DivAtom style={fetchingDataIndicatorStyles.container}>
-          <CircularProgress size={20} color="primary" />
-        </DivAtom>
-      )}
+        )}
     </DivAtom>
   );
 }

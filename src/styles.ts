@@ -208,6 +208,18 @@ export const quotationsStyles = {
 export const quoteCreateQuoteStyles = {
   ...formCreateMemberStyles,
   ...quotationsStyles,
+  searchBar: {
+    mainContainer: {
+      display: 'flex',
+    },
+    checkboxSectionContainer: {
+      display: 'flex',
+      flexDirection: 'column' as const,
+    },
+    accomodationContainer: {
+      flex: 1,
+    },
+  },
 };
 
 // Voucher
