@@ -186,10 +186,8 @@ function Accomodation() {
           return;
         }
 
-        const singleGuestPrice = Number(rate?.newSinglePrice);
+        const singleGuestPrice = Number(rate?.newSinglePrice.slice(1));
         const adultsPrice = adults * singleGuestPrice;
-
-        console.log(singleGuestPrice, adultsPrice);
 
         let childrenPrice = 0;
         children.forEach((c: string) => {
@@ -208,14 +206,14 @@ function Accomodation() {
         ];
 
         // eslint-disable-next-line max-len
-        const totalSum = Number(roomPrice) + Number(roomTypeCost) + (needAdditionalBed ? Number(acc.additionalBedPrice) : 0);
+        const totalSum = Number(roomPrice) + Number(roomTypeCost.slice(1)) + (needAdditionalBed ? Number(acc.additionalBedPrice) : 0);
 
         acc.roomRate = `$${roomPrice}`;
         acc.total = `$${totalSum * days}`;
       });
 
       localStorage.setItem('New Quote Accomodation', JSON.stringify({ selectedAccomodations: tempAccomodation }));
-      // history.replace('/quote/quotations/create/costing');
+      history.replace('/quote/quotations/create/costing');
     }
   };
 
