@@ -129,7 +129,7 @@ function EditAccomodation({
       email,
       webLink,
       ijazahLink,
-      additionalBedPrice,
+      additionalBedPrice: `$${additionalBedPrice}`,
       views,
       gradings,
       country: location,
@@ -155,9 +155,9 @@ function EditAccomodation({
         newRateStart,
         newRateEnd,
         newMealPlan,
-        newSinglePrice,
-        newDoublePrice,
-        newTriplePrice,
+        newSinglePrice: `$${newSinglePrice}`,
+        newDoublePrice: `$${newDoublePrice}`,
+        newTriplePrice: `$${newTriplePrice}`,
       },
     ]);
 

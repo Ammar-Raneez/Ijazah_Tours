@@ -175,10 +175,9 @@ function Accomodation() {
         acc.nights = selectedAccomodationsNights[index];
         acc.roomType = selectedAccomodationsRoomTypes[index];
 
-        const children = customerDetails[10].length;
-        const adults = customerDetails[9];
+        const children = customerDetails[10];
+        const adults = Number(customerDetails[9]);
         const days = nightsRequired + 1;
-        const totalGuests = Number(children) + Number(adults);
         const needAdditionalBed = customerDetails[14];
 
         const rate = acc.rates.find((r) => r.newMealPlan === customerDetails[13]);
@@ -187,12 +186,21 @@ function Accomodation() {
           return;
         }
 
-        let roomPrice = rate?.newSinglePrice;
-        if (totalGuests >= 3) {
-          roomPrice = rate?.newTriplePrice;
-        } else if (totalGuests >= 2) {
-          roomPrice = rate?.newDoublePrice;
-        }
+        const singleGuestPrice = Number(rate?.newSinglePrice);
+        const adultsPrice = adults * singleGuestPrice;
+
+        console.log(singleGuestPrice, adultsPrice);
+
+        let childrenPrice = 0;
+        children.forEach((c: string) => {
+          if (Number(c) <= 5) {
+            childrenPrice += (singleGuestPrice / 2);
+          } else {
+            childrenPrice += singleGuestPrice;
+          }
+        });
+
+        const roomPrice = adultsPrice + childrenPrice;
 
         const roomTypeCost = acc.categoryValues[
           Object.keys(acc.categoryValues)
@@ -200,14 +208,14 @@ function Accomodation() {
         ];
 
         // eslint-disable-next-line max-len
-        const totalSum = Number(roomPrice?.slice(1)) + Number(roomTypeCost.slice(1)) + (needAdditionalBed ? Number(acc.additionalBedPrice.slice(1)) : 0);
+        const totalSum = Number(roomPrice) + Number(roomTypeCost) + (needAdditionalBed ? Number(acc.additionalBedPrice) : 0);
 
         acc.roomRate = `$${roomPrice}`;
-        acc.total = `$${String(totalSum * days)}`;
+        acc.total = `$${totalSum * days}`;
       });
 
       localStorage.setItem('New Quote Accomodation', JSON.stringify({ selectedAccomodations: tempAccomodation }));
-      history.replace('/quote/quotations/create/costing');
+      // history.replace('/quote/quotations/create/costing');
     }
   };
 
