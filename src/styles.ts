@@ -209,15 +209,52 @@ export const quoteCreateQuoteStyles = {
   ...formCreateMemberStyles,
   ...quotationsStyles,
   searchBar: {
+    wrapper: {
+      height: '350px',
+      overflowY: 'scroll' as const,
+      marginTop: '1rem',
+    },
     mainContainer: {
       display: 'flex',
     },
+    sidebarContainer: {
+      padding: '1rem',
+    },
     checkboxSectionContainer: {
-      display: 'flex',
-      flexDirection: 'column' as const,
+      container: {
+        display: 'flex',
+        flexDirection: 'column' as const,
+      },
+      title: {
+        color: '#0A65FF',
+        fontWeight: 'bold',
+      },
     },
     accomodationContainer: {
-      flex: 1,
+      container: {
+        flex: 1,
+        padding: '1rem',
+        display: 'flex',
+        flexDirection: 'column' as const,
+      },
+      card: {
+        titleContainer: {
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          margin: 0,
+        },
+        location: {
+          margin: 0,
+          fontStyle: 'italic',
+          fontWeight: '400',
+        },
+        label: {
+          color: '#0A65FF',
+          textAlign: 'left' as const,
+          fontWeight: 'bold',
+        },
+      },
     },
   },
 };

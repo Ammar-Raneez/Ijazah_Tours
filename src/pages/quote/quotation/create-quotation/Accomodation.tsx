@@ -19,7 +19,7 @@ import InputAtom from '../../../../atoms/InputAtom';
 import ParagraphAtom from '../../../../atoms/ParagraphAtom';
 import { db } from '../../../../firebase';
 import AccomodationTable from '../../../../organisms/quote/quotation/create-quotation/accomodation/AccomodationTable';
-import Searchbar from '../../../../organisms/quote/quotation/create-quotation/accomodation/Searchbar';
+import Searchbar from '../../../../organisms/quote/quotation/create-quotation/accomodation/search-bar/Searchbar';
 import { selectWith2NavbarHeight, selectWith2NavbarWidth } from '../../../../redux/containerSizeSlice';
 import {
   fetchingDataIndicatorStyles,
@@ -28,7 +28,6 @@ import {
 import { getDaysDifference, widthHeightDynamicStyle } from '../../../../utils/helpers';
 import {
   FlexDirection,
-  LibraryAccomodation,
   SettingsSingleInput,
   UserAccomodation,
 } from '../../../../utils/types';
@@ -254,7 +253,7 @@ function Accomodation() {
                     marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
                     width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
                   }}
-                  onClick={() => addAccomodation(accomodationData[0])}
+                  onClick={() => null}
                   size="large"
                 />
                 <ButtonAtom
@@ -265,7 +264,7 @@ function Accomodation() {
                     marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
                     width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
                   }}
-                  onClick={() => addAccomodation(accomodationData[1])}
+                  onClick={() => null}
                   size="large"
                 />
                 <ButtonAtom
@@ -292,14 +291,15 @@ function Accomodation() {
                 />
               </DivAtom>
               {search !== '' && (
-                <DivAtom>
+                <DivAtom style={quoteCreateQuoteStyles.searchBar.wrapper}>
                   <Searchbar
                     searchTerm={search}
-                    accomodationData={accomodationData as LibraryAccomodation[]}
+                    accomodationData={accomodationData}
                     accomodationTypesData={accomodationTypesData}
                     roomTypesData={roomTypesData}
                     roomViewsData={roomViewsData}
                     roomGradingsData={roomGradingsData}
+                    addAccomodation={addAccomodation}
                   />
                 </DivAtom>
               )}
