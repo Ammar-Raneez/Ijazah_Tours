@@ -119,6 +119,7 @@ function Tour() {
 
     setIsCreating(true);
     await setDoc(doc(db, `Settings ${type}`, uuid()), {
+      type,
       val: newSingleInput,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
@@ -138,6 +139,7 @@ function Tour() {
 
     setIsUpdating(true);
     await updateDoc(doc(db, `Settings ${type}`, editId), {
+      type,
       val: editSingleInput,
       updatedAt: serverTimestamp(),
     });

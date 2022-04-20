@@ -24,8 +24,8 @@ export interface User {
 // Settings
 export interface SettingsRoomProperties {
   val: string;
-  checked?: boolean;
   createdAt: string,
+  checked?: boolean;
 }
 
 export interface SettingsLocation {
@@ -54,6 +54,9 @@ export interface SettingsTeamMember {
 export interface SettingsSingleInput {
   id: string;
   val: string;
+  type?: string;
+  createdAt: Timestamp,
+  updatedAt: Timestamp;
 }
 
 // Quotations

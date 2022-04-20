@@ -122,6 +122,7 @@ function SettingsAccomodation() {
 
     setIsCreating(true);
     await setDoc(doc(db, `Settings ${type}`, uuid()), {
+      type,
       val: newSingleInput,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
@@ -141,6 +142,7 @@ function SettingsAccomodation() {
 
     setIsUpdating(true);
     await updateDoc(doc(db, `Settings ${type}`, editId), {
+      type,
       val: editSingleInput,
       updatedAt: serverTimestamp(),
     });
