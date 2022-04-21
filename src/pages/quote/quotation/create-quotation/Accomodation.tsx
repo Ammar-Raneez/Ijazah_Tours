@@ -126,6 +126,10 @@ function Accomodation() {
   }, []);
 
   const addAccomodation = (acc: UserAccomodation) => {
+    if (selectedAccomodations.find((a) => a.name === acc.name)) {
+      return;
+    }
+
     const roomTypes = Object.keys(acc.categoryValues)
       .map((cat) => ({ value: cat, label: cat }));
 
