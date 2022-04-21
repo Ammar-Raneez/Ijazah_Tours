@@ -51,6 +51,8 @@ function PresetAccomodation() {
   const [roomViewsData, setRoomViewsData] = useState<SettingsSingleInput[]>();
   const [roomGradingsData, setRoomGradingsData] = useState<SettingsSingleInput[]>();
 
+  const [presetQuotesData, setPresetQuotesData] = useState<any[]>();
+
   const [selectedAccomodationsNights, setSelectedAccomodationsNights] = useState<string[]>([]);
   const [
     selectedAccomodationsRoomTypes,
@@ -77,18 +79,21 @@ function PresetAccomodation() {
       const rtData = (await getDocs(collection(db, 'Settings Room Types'))).docs;
       const vData = (await getDocs(collection(db, 'Settings Room Views'))).docs;
       const gData = (await getDocs(collection(db, 'Settings Room Gradings'))).docs;
+      const pqData = (await getDocs(collection(db, 'Preset Quotes'))).docs;
 
       const accData = aData.map((dc) => dc.data());
       const accTypesData = atData.map((dc) => dc.data());
       const rTypesData = rtData.map((dc) => dc.data());
       const viewsData = vData.map((dc) => dc.data());
       const gradingsData = gData.map((dc) => dc.data());
+      const presetData = pqData.map((dc) => dc.data());
 
       const accIds = aData.map((dc) => dc.id);
       const accTypesIds = atData.map((dc) => dc.id);
       const roomTypesIds = rtData.map((dc) => dc.id);
       const viewsIds = vData.map((dc) => dc.id);
       const gradingsIds = gData.map((dc) => dc.id);
+      const presetIds = pqData.map((dc) => dc.id);
 
       accIds.forEach((id, i) => {
         accData[i].id = id;
@@ -105,6 +110,9 @@ function PresetAccomodation() {
       gradingsIds.forEach((id, i) => {
         gradingsData[i].id = id;
       });
+      presetIds.forEach((id, i) => {
+        presetData[i].id = id;
+      });
 
       if (localStorage.getItem('New Quote Accomodation')) {
         const selectedAcc = JSON.parse(
@@ -119,6 +127,7 @@ function PresetAccomodation() {
       setRoomTypesData(rTypesData as SettingsSingleInput[]);
       setRoomViewsData(viewsData as SettingsSingleInput[]);
       setRoomGradingsData(gradingsData as SettingsSingleInput[]);
+      setPresetQuotesData(presetData);
     };
 
     getInitialData();
@@ -234,7 +243,7 @@ function PresetAccomodation() {
       </DivAtom>
 
       {(accomodationData && accomodationTypesData
-        && roomTypesData && roomViewsData && roomGradingsData) ? (
+        && roomTypesData && roomViewsData && roomGradingsData && presetQuotesData) ? (
           <>
             <DivAtom style={quoteCreateQuoteStyles.tableContainer}>
               <DivAtom
@@ -243,38 +252,19 @@ function PresetAccomodation() {
                   flexDirection: widthHeightDynamicStyle(width, 768, 'column', 'row') as FlexDirection,
                 }}
               >
-                <ButtonAtom
-                  text="Luxury"
-                  style={{
-                    ...quoteCreateQuoteStyles.btn,
-                    marginRight: '16px',
-                    marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
-                    width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
-                  }}
-                  onClick={() => null}
-                  size="large"
-                />
-                <ButtonAtom
-                  text="3 Star"
-                  style={{
-                    ...quoteCreateQuoteStyles.btn,
-                    marginRight: '16px',
-                    marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
-                    width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
-                  }}
-                  onClick={() => null}
-                  size="large"
-                />
-                <ButtonAtom
-                  text="Boutique"
-                  style={{
-                    ...quoteCreateQuoteStyles.btn,
-                    marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
-                    width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
-                  }}
-                  onClick={() => null}
-                  size="large"
-                />
+                {presetQuotesData.map((quote) => (
+                  <ButtonAtom
+                    text={quote.holidayDetails[0]}
+                    style={{
+                      ...quoteCreateQuoteStyles.btn,
+                      marginRight: '16px',
+                      marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
+                      width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
+                    }}
+                    onClick={() => null}
+                    size="large"
+                  />
+                ))}
               </DivAtom>
               <DivAtom style={quoteCreateQuoteStyles.searchContainer}>
                 <InputAtom
