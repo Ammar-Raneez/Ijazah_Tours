@@ -256,9 +256,10 @@ function PresetAccomodation() {
                   flexDirection: widthHeightDynamicStyle(width, 768, 'column', 'row') as FlexDirection,
                 }}
               >
-                {presetQuotesData.map((quote) => (
+                {presetQuotesData.map((quote, index) => (
                   <ButtonAtom
                     text={quote.holidayDetails[0]}
+                    key={index}
                     style={{
                       ...quoteCreateQuoteStyles.btn,
                       marginRight: '16px',

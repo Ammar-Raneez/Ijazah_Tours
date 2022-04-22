@@ -4,26 +4,16 @@ import {
   MouseEvent,
 } from 'react';
 
-import { CircularProgress } from '@material-ui/core';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
-import {
-  collection,
-  getDocs,
-} from 'firebase/firestore';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import DivAtom from '../../../../atoms/DivAtom';
 import H2Atom from '../../../../atoms/H2Atom';
 import IconAtom from '../../../../atoms/IconAtom';
-import { db } from '../../../../firebase';
 import PresetForm from '../../../../organisms/quote/quotation/preset-quotes/PresetForm';
 import { selectWith2NavbarHeight, selectWith2NavbarWidth } from '../../../../redux/containerSizeSlice';
-import {
-  fetchingDataIndicatorStyles,
-  quoteCreateQuoteStyles,
-} from '../../../../styles';
-import { DropdownOption, SettingsLocation } from '../../../../utils/types';
+import { quoteCreateQuoteStyles } from '../../../../styles';
 
 function PresetQuote() {
   const height = useSelector(selectWith2NavbarHeight);

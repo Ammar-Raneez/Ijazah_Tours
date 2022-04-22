@@ -258,16 +258,17 @@ function Accomodation() {
                   flexDirection: widthHeightDynamicStyle(width, 768, 'column', 'row') as FlexDirection,
                 }}
               >
-                {presetQuotesData.map((quote) => (
+                {presetQuotesData.map((quote, index) => (
                   <ButtonAtom
                     text={quote.holidayDetails[0]}
+                    key={index}
                     style={{
                       ...quoteCreateQuoteStyles.btn,
                       marginRight: '16px',
                       marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
                       width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
                     }}
-                    onClick={() => null}
+                    onClick={() => setSelectedAccomodations(quote.selectedAccomodations)}
                     size="large"
                   />
                 ))}

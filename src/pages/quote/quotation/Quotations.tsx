@@ -22,7 +22,7 @@ import Approval from './create-quotation/Approval';
 import Costing from './create-quotation/Costing';
 import Customer from './create-quotation/Customer';
 import PresetAccomodation from './preset-qoutes/PresetAccomodation';
-import PresetHoliday from './preset-qoutes/PresetHoliday';
+import PresetQuote from './preset-qoutes/PresetQuote';
 
 function Quotations() {
   const height = useSelector(selectWithNavbarHeight);
@@ -102,7 +102,7 @@ function Quotations() {
               <Customer />
             </Route>
             <Route path="/quote/quotations/create/preset/holiday">
-              <PresetHoliday />
+              <PresetQuote />
             </Route>
             <Route path="/quote/quotations/create/accomodation">
               <Accomodation />
