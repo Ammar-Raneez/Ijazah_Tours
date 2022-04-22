@@ -14,6 +14,7 @@ import DataCard from '../../../molecules/DataCard';
 import CreateQuotationNavbar from '../../../organisms/quote/quotation/CreateQuotationNavbar';
 import QuotationsTable from '../../../organisms/quote/quotation/QuotationsTable';
 import { selectWithNavbarHeight, selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
+import { selectUser } from '../../../redux/userSlice';
 import { fetchingDataIndicatorStyles, quotationsStyles } from '../../../styles';
 import { searchData, widthHeightDynamicStyle } from '../../../utils/helpers';
 import { CustomerQuotation, FlexDirection, JustifyContent } from '../../../utils/types';
@@ -25,6 +26,7 @@ import PresetAccomodation from './preset-qoutes/PresetAccomodation';
 import PresetQuote from './preset-qoutes/PresetQuote';
 
 function Quotations() {
+  const user = useSelector(selectUser);
   const height = useSelector(selectWithNavbarHeight);
   const width = useSelector(selectWithNavbarWidth);
 
@@ -58,7 +60,14 @@ function Quotations() {
         quotations[i].id = id;
       });
 
-      setQuotationsData(quotations as CustomerQuotation[]);
+      if (user.role === 'Travel Agent') {
+        setQuotationsData((quotations as CustomerQuotation[]).filter(
+          (quote) => quote.creator.id === user.id,
+        ));
+      } else {
+        setQuotationsData(quotations as CustomerQuotation[]);
+      }
+
       setInitialQuotationCardData(quotations as CustomerQuotation[]);
       setInitialQuotationSearchData(quotations as CustomerQuotation[]);
       setInitialQuotationFilteredData(quotations as CustomerQuotation[]);
