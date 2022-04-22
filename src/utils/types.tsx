@@ -64,6 +64,8 @@ export interface CustomerQuotation {
   id: string;
   refNum: string;
   quoteTitle: string;
+  daysAndNights: string;
+  creator: User;
   name: string;
   profilePic: string;
   pdfURL: string;

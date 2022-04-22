@@ -25,7 +25,9 @@ const headCells = [
   { id: 'name', label: 'GUEST' },
   { id: 'refNum', label: 'REF NUM' },
   { id: 'quoteTitle', label: 'TITLE' },
+  { id: 'daysAndNights', label: 'DURATION (DAYS)' },
   { id: 'updatedAt', label: 'SHARED DATE' },
+  { id: 'creator', label: 'OWNED BY' },
   { id: 'netPrice', label: 'PRICE' },
   { id: '...', label: '' },
   { id: '...1', label: '' },
@@ -143,7 +145,23 @@ function QuotationsTable({ rowdata }: QuotationsTableProps) {
                     <TableRowTextCell
                       cell={{
                         align: 'left',
+                        title: row.daysAndNights.split('-')[0],
+                        colors: ['#464E5F', '#B5B5C3'],
+                        weight: 300,
+                      }}
+                    />
+                    <TableRowTextCell
+                      cell={{
+                        align: 'left',
                         title: new Date(row.createdAt.toDate()).toDateString(),
+                        colors: ['#464E5F', '#B5B5C3'],
+                        weight: 300,
+                      }}
+                    />
+                    <TableRowTextCell
+                      cell={{
+                        align: 'left',
+                        title: row.creator.firstName,
                         colors: ['#464E5F', '#B5B5C3'],
                         weight: 300,
                       }}

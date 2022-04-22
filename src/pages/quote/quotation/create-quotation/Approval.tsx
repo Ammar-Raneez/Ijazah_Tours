@@ -29,6 +29,7 @@ import GuestDetails from '../../../../organisms/quote/quotation/create-quotation
 import Offers from '../../../../organisms/quote/quotation/create-quotation/approval/Offers';
 import TourTypeDialog from '../../../../organisms/quote/quotation/create-quotation/approval/TourTypeDialog';
 import { selectWith2NavbarHeight, selectWith2NavbarWidth } from '../../../../redux/containerSizeSlice';
+import { selectUser } from '../../../../redux/userSlice';
 import { approvalStyles, fetchingDataIndicatorStyles, quoteCreateQuoteStyles } from '../../../../styles';
 import {
   getDaysDifference,
@@ -45,6 +46,7 @@ interface ApprovalProps {
 }
 
 function Approval({ setCreated }: ApprovalProps) {
+  const user = useSelector(selectUser);
   const height = useSelector(selectWith2NavbarHeight);
   const width = useSelector(selectWith2NavbarWidth);
 
@@ -196,6 +198,7 @@ function Approval({ setCreated }: ApprovalProps) {
       accomodations,
       costings,
       user: userId,
+      creator: user,
       name: `${firstName} ${lastName}`,
       status: 'IN PROGRESS',
     };
