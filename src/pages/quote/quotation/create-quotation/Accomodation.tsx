@@ -192,12 +192,7 @@ function Accomodation() {
         const days = nightsRequired + 1;
         const needAdditionalBed = customerDetails[14];
 
-        const rate = acc.rates.find((r) => r.newMealPlan === customerDetails[13]);
-        if (!rate) {
-          window.alert(`Rate for meal plan ${customerDetails[13]} does not exist`);
-          return;
-        }
-
+        const rate = acc.rates.find((r) => r.newMealPlan === acc.mealPlan);
         const singleGuestPrice = Number(rate?.newSinglePrice.slice(1));
         const adultsPrice = adults * singleGuestPrice;
 
@@ -298,29 +293,27 @@ function Accomodation() {
                   />
                 </DivAtom>
               )}
-              {selectedAccomodations.length > 0 && (
-                <AccomodationTable
-                  columns={[
-                    'LOCATION',
-                    'NIGHTS',
-                    'CATEGORY',
-                    'ACCOMODATION',
-                    'PAX',
-                    'ROOM TYPE',
-                    'MEAL PLAN',
-                    'CITY',
-                    '',
-                  ]}
-                  selectedAccomodations={selectedAccomodations}
-                  selectedAccomodationsNights={selectedAccomodationsNights}
-                  selectedAccomodationsRoomTypes={selectedAccomodationsRoomTypes}
-                  selectedAccomodationsMealPlans={selectedAccomodationsMealPlans}
-                  setSelectedAccomodationsNights={setSelectedAccomodationsNights}
-                  setSelectedAccomodationsRoomTypes={setSelectedAccomodationsRoomTypes}
-                  setSelectedAccomodationsMealPlans={setSelectedAccomodationsMealPlans}
-                  deleteAccomodation={deleteAccomodation}
-                />
-              )}
+              <AccomodationTable
+                columns={[
+                  'LOCATION',
+                  'NIGHTS',
+                  'CATEGORY',
+                  'ACCOMODATION',
+                  'PAX',
+                  'ROOM TYPE',
+                  'MEAL PLAN',
+                  'CITY',
+                  '',
+                ]}
+                selectedAccomodations={selectedAccomodations}
+                selectedAccomodationsNights={selectedAccomodationsNights}
+                selectedAccomodationsRoomTypes={selectedAccomodationsRoomTypes}
+                selectedAccomodationsMealPlans={selectedAccomodationsMealPlans}
+                setSelectedAccomodationsNights={setSelectedAccomodationsNights}
+                setSelectedAccomodationsRoomTypes={setSelectedAccomodationsRoomTypes}
+                setSelectedAccomodationsMealPlans={setSelectedAccomodationsMealPlans}
+                deleteAccomodation={deleteAccomodation}
+              />
             </DivAtom>
 
             {showValidationErrorMessage && (

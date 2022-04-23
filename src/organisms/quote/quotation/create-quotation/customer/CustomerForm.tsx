@@ -109,6 +109,8 @@ function CustomerForm({
 }: CustomerFormProps) {
   const changeDateType = (type: string) => {
     setDateType(type);
+    localStorage.removeItem('New Quote Accomodation');
+
     if (type === dateTypeOptions[1].value) {
       setCheckin('2022-01');
       setCheckout('2022-02');
