@@ -122,7 +122,6 @@ function CustomerForm({
 
   const handleDestinationsChange = (event: ChangeEvent<{ value: unknown }>) => {
     const val = event.target.value as string[];
-    console.log(val);
     setDestinations(val);
     setToStoreDestinations(
       accomodationLocationData.map((l) => l.cities)

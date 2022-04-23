@@ -109,9 +109,12 @@ function Accomodation() {
       if (localStorage.getItem('New Quote Accomodation')) {
         const selectedAcc = JSON.parse(
           localStorage.getItem('New Quote Accomodation')!,
-        ).selectedAccomodations as UserAccomodation[];
+        );
 
-        setSelectedAccomodations(selectedAcc);
+        setSelectedAccomodations(selectedAcc.selectedAccomodations as UserAccomodation[]);
+        setSelectedAccomodationsMealPlans(selectedAcc.selectedAccomodationsMealPlans);
+        setSelectedAccomodationsRoomTypes(selectedAcc.selectedAccomodationsRoomTypes);
+        setSelectedAccomodationsNights(selectedAcc.selectedAccomodationsNights);
       }
 
       setAccomodationData(accData as UserAccomodation[]);
@@ -213,13 +216,17 @@ function Accomodation() {
         ];
 
         // eslint-disable-next-line max-len
-        const totalSum = Number(roomPrice) + Number(roomTypeCost.slice(1)) + (needAdditionalBed ? Number(acc.additionalBedPrice) : 0);
-
+        const totalSum = Number(roomPrice) + Number(roomTypeCost.slice(1)) + (needAdditionalBed ? Number(acc.additionalBedPrice.slice(1)) : 0);
         acc.roomRate = `$${roomPrice}`;
         acc.total = `$${totalSum * days}`;
       });
 
-      localStorage.setItem('New Quote Accomodation', JSON.stringify({ selectedAccomodations: tempAccomodation }));
+      localStorage.setItem('New Quote Accomodation', JSON.stringify({
+        selectedAccomodationsRoomTypes,
+        selectedAccomodationsMealPlans,
+        selectedAccomodationsNights,
+        selectedAccomodations: tempAccomodation,
+      }));
       history.replace('/quote/quotations/create/costing');
     }
   };

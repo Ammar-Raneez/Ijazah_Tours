@@ -116,6 +116,8 @@ function Customer() {
         setDateType(cusData[16]);
         setAdditionalBed(cusData[14]);
         setMealPlan(cusData[13]);
+        setToStoreDestinations(cusData[15]);
+        setDestinations(cusData[15].map((d: string) => d.split(' | ')[1]));
 
         if (cusData[16] === dateTypeOptions[0].value) {
           setCheckin(cusData[7]);
