@@ -79,6 +79,11 @@ function App() {
         localStorage.removeItem('New Quote Customer');
         localStorage.removeItem('New Quote Accomodation');
       }
+
+      if (location.pathname !== '/quote/quotations/create/preset/holiday'
+      && location.pathname !== '/quote/quotations/create/preset/accomodation') {
+        localStorage.removeItem('New Preset Quote');
+      }
     });
   }, []);
 

@@ -192,7 +192,7 @@ function Accomodation() {
         const days = nightsRequired + 1;
         const needAdditionalBed = customerDetails[14];
 
-        const rate = acc.rates.find((r) => r.newMealPlan === acc.mealPlan);
+        const rate = acc.rates.find((r) => r.newMealPlan === selectedAccomodationsMealPlans[index]);
         const singleGuestPrice = Number(rate?.newSinglePrice.slice(1));
         const adultsPrice = adults * singleGuestPrice;
 
@@ -255,7 +255,7 @@ function Accomodation() {
               >
                 {presetQuotesData.map((quote, index) => (
                   <ButtonAtom
-                    text={quote.holidayDetails[0]}
+                    text={quote.title}
                     key={index}
                     style={{
                       ...quoteCreateQuoteStyles.btn,
@@ -263,7 +263,11 @@ function Accomodation() {
                       marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
                       width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
                     }}
-                    onClick={() => setSelectedAccomodations(quote.selectedAccomodations)}
+                    onClick={() => {
+                      setSelectedAccomodations(quote.selectedAccomodations);
+                      setSelectedAccomodationsMealPlans(quote.selectedAccomodationsMealPlans);
+                      setSelectedAccomodationsRoomTypes(quote.selectedAccomodationsRoomTypes);
+                    }}
                     size="large"
                   />
                 ))}

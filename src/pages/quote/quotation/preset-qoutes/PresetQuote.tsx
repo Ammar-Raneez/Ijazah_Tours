@@ -25,10 +25,10 @@ function PresetQuote() {
 
   useEffect(() => {
     const getInitialData = () => {
-      const storedHolidayData = localStorage.getItem('New Preset Quote Holiday');
-      if (storedHolidayData) {
-        const holData = JSON.parse(storedHolidayData).data[0];
-        setTitle(holData[0]);
+      const storedQuoteData = localStorage.getItem('New Preset Quote');
+      if (storedQuoteData) {
+        const data = JSON.parse(storedQuoteData);
+        setTitle(data.title);
       }
     };
 
@@ -41,12 +41,8 @@ function PresetQuote() {
     event.preventDefault();
 
     localStorage.setItem(
-      'New Preset Quote Holiday',
-      JSON.stringify({
-        data: [[
-          title,
-        ]],
-      }),
+      'New Preset Quote',
+      JSON.stringify({ title }),
     );
 
     history.replace('/quote/quotations/create/preset/accomodation');

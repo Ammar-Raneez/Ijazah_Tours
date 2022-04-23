@@ -23,7 +23,6 @@ import DivAtom from '../../../../atoms/DivAtom';
 import H2Atom from '../../../../atoms/H2Atom';
 import IconAtom from '../../../../atoms/IconAtom';
 import InputAtom from '../../../../atoms/InputAtom';
-import ParagraphAtom from '../../../../atoms/ParagraphAtom';
 import { db } from '../../../../firebase';
 import AccomodationTable from '../../../../organisms/quote/quotation/create-quotation/accomodation/AccomodationTable';
 import Searchbar from '../../../../organisms/quote/quotation/create-quotation/accomodation/search-bar/Searchbar';
@@ -32,7 +31,7 @@ import {
   fetchingDataIndicatorStyles,
   quoteCreateQuoteStyles,
 } from '../../../../styles';
-import { getDaysDifference, widthHeightDynamicStyle } from '../../../../utils/helpers';
+import { widthHeightDynamicStyle } from '../../../../utils/helpers';
 import {
   FlexDirection,
   SettingsSingleInput,
@@ -51,8 +50,6 @@ function PresetAccomodation() {
   const [roomViewsData, setRoomViewsData] = useState<SettingsSingleInput[]>();
   const [roomGradingsData, setRoomGradingsData] = useState<SettingsSingleInput[]>();
 
-  const [presetQuotesData, setPresetQuotesData] = useState<any[]>();
-
   const [selectedAccomodationsNights, setSelectedAccomodationsNights] = useState<string[]>([]);
   const [
     selectedAccomodationsRoomTypes,
@@ -67,8 +64,6 @@ function PresetAccomodation() {
   const [search, setSearch] = useState('');
 
   const [savingPresetQuote, setSavingPresetQuote] = useState(false);
-  const [showValidationErrorMessage, setShowValidationErrorMessage] = useState(false);
-  const [validationNightsRequired, setValidationNightsRequired] = useState(0);
 
   const history = useHistory();
 
@@ -79,21 +74,18 @@ function PresetAccomodation() {
       const rtData = (await getDocs(collection(db, 'Settings Room Types'))).docs;
       const vData = (await getDocs(collection(db, 'Settings Room Views'))).docs;
       const gData = (await getDocs(collection(db, 'Settings Room Gradings'))).docs;
-      const pqData = (await getDocs(collection(db, 'Preset Quotes'))).docs;
 
       const accData = aData.map((dc) => dc.data());
       const accTypesData = atData.map((dc) => dc.data());
       const rTypesData = rtData.map((dc) => dc.data());
       const viewsData = vData.map((dc) => dc.data());
       const gradingsData = gData.map((dc) => dc.data());
-      const presetData = pqData.map((dc) => dc.data());
 
       const accIds = aData.map((dc) => dc.id);
       const accTypesIds = atData.map((dc) => dc.id);
       const roomTypesIds = rtData.map((dc) => dc.id);
       const viewsIds = vData.map((dc) => dc.id);
       const gradingsIds = gData.map((dc) => dc.id);
-      const presetIds = pqData.map((dc) => dc.id);
 
       accIds.forEach((id, i) => {
         accData[i].id = id;
@@ -110,9 +102,6 @@ function PresetAccomodation() {
       gradingsIds.forEach((id, i) => {
         gradingsData[i].id = id;
       });
-      presetIds.forEach((id, i) => {
-        presetData[i].id = id;
-      });
 
       if (localStorage.getItem('New Quote Accomodation')) {
         const selectedAcc = JSON.parse(
@@ -127,7 +116,6 @@ function PresetAccomodation() {
       setRoomTypesData(rTypesData as SettingsSingleInput[]);
       setRoomViewsData(viewsData as SettingsSingleInput[]);
       setRoomGradingsData(gradingsData as SettingsSingleInput[]);
-      setPresetQuotesData(presetData);
     };
 
     getInitialData();
@@ -174,64 +162,30 @@ function PresetAccomodation() {
   };
 
   const savePresetQuote = async () => {
-    setShowValidationErrorMessage(false);
+    const { title } = JSON.parse(
+      localStorage.getItem('New Preset Quote')!,
+    );
 
-    const holidayDetails = JSON.parse(
-      localStorage.getItem('New Preset Quote Holiday')!,
-    ).data[0];
+    setSavingPresetQuote(true);
+    const tempAccomodation = [...selectedAccomodations];
+    tempAccomodation.forEach((acc, index) => {
+      acc.nights = selectedAccomodationsNights[index] || '0';
+      acc.roomType = selectedAccomodationsRoomTypes[index] || '';
+      acc.mealPlan = selectedAccomodationsMealPlans[index] || '';
+    });
 
-    // Subtract 1 to equal number of nights
-    const nightsRequired = getDaysDifference(holidayDetails[2], holidayDetails[1]) - 1;
-    setValidationNightsRequired(nightsRequired);
-    const totalUsedNights = selectedAccomodationsNights.reduce((prev, curr) => (
-      prev + Number(curr)
-    ), 0);
+    await setDoc(doc(db, 'Preset Quotes', uuid()), {
+      title,
+      selectedAccomodationsMealPlans,
+      selectedAccomodationsRoomTypes,
+      selectedAccomodations: tempAccomodation,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    });
 
-    if (nightsRequired !== totalUsedNights) {
-      setShowValidationErrorMessage(true);
-    } else {
-      setSavingPresetQuote(true);
-      const tempAccomodation = [...selectedAccomodations];
-      tempAccomodation.forEach((acc, index) => {
-        acc.nights = selectedAccomodationsNights[index];
-        acc.roomType = selectedAccomodationsRoomTypes[index];
-
-        const needAdditionalBed = holidayDetails[5];
-
-        const rate = acc.rates.find((r) => r.newMealPlan === holidayDetails[4]);
-        if (!rate) {
-          window.alert(`Rate for meal plan ${holidayDetails[4]} does not exist`);
-          return;
-        }
-
-        const roomTypeCost = acc.categoryValues[
-          Object.keys(acc.categoryValues)
-            .find((cat) => cat === selectedAccomodationsRoomTypes[index])!
-        ];
-
-        // eslint-disable-next-line max-len
-        const totalSingleSum = Number(rate?.newSinglePrice?.slice(1)) + Number(roomTypeCost.slice(1)) + (needAdditionalBed ? Number(acc.additionalBedPrice.slice(1)) : 0);
-        // eslint-disable-next-line max-len
-        const totalDoubleSum = Number(rate?.newDoublePrice?.slice(1)) + Number(roomTypeCost.slice(1)) + (needAdditionalBed ? Number(acc.additionalBedPrice.slice(1)) : 0);
-        // eslint-disable-next-line max-len
-        const totalTripleSum = Number(rate?.newTriplePrice?.slice(1)) + Number(roomTypeCost.slice(1)) + (needAdditionalBed ? Number(acc.additionalBedPrice.slice(1)) : 0);
-
-        acc.roomRate = `$${rate?.newSinglePrice} | $${rate?.newDoublePrice} | $${rate?.newTriplePrice}`;
-        acc.total = `$${String(totalSingleSum * nightsRequired + 1)} | $${String(totalDoubleSum * nightsRequired + 1)} | $${String(totalTripleSum * nightsRequired + 1)}`;
-      });
-
-      await setDoc(doc(db, 'Preset Quotes', uuid()), {
-        holidayDetails: holidayDetails.slice(0, -1),
-        holidayDestinations: holidayDetails[6],
-        selectedAccomodations: tempAccomodation,
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp(),
-      });
-
-      setSavingPresetQuote(false);
-      localStorage.removeItem('New Preset Quote Holiday');
-      history.replace('/quote/quotations');
-    }
+    setSavingPresetQuote(false);
+    localStorage.removeItem('New Preset Quote');
+    history.replace('/quote/quotations');
   };
 
   return (
@@ -247,30 +201,9 @@ function PresetAccomodation() {
       </DivAtom>
 
       {(accomodationData && accomodationTypesData
-        && roomTypesData && roomViewsData && roomGradingsData && presetQuotesData) ? (
+        && roomTypesData && roomViewsData && roomGradingsData) ? (
           <>
             <DivAtom style={quoteCreateQuoteStyles.tableContainer}>
-              <DivAtom
-                style={{
-                  ...quoteCreateQuoteStyles.btnMainContainer,
-                  flexDirection: widthHeightDynamicStyle(width, 768, 'column', 'row') as FlexDirection,
-                }}
-              >
-                {presetQuotesData.map((quote, index) => (
-                  <ButtonAtom
-                    text={quote.holidayDetails[0]}
-                    key={index}
-                    style={{
-                      ...quoteCreateQuoteStyles.btn,
-                      marginRight: '16px',
-                      marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
-                      width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
-                    }}
-                    onClick={() => null}
-                    size="large"
-                  />
-                ))}
-              </DivAtom>
               <DivAtom style={quoteCreateQuoteStyles.searchContainer}>
                 <InputAtom
                   placeholder="Search"
@@ -296,37 +229,28 @@ function PresetAccomodation() {
                   />
                 </DivAtom>
               )}
-              {selectedAccomodations.length > 0 && (
-                <AccomodationTable
-                  columns={[
-                    'LOCATION',
-                    'NIGHTS',
-                    'CATEGORY',
-                    'ACCOMODATION',
-                    'PAX',
-                    'ROOM TYPE',
-                    'MEAL PLAN',
-                    'CITY',
-                    '',
-                  ]}
-                  selectedAccomodations={selectedAccomodations}
-                  selectedAccomodationsNights={selectedAccomodationsNights}
-                  selectedAccomodationsRoomTypes={selectedAccomodationsRoomTypes}
-                  selectedAccomodationsMealPlans={selectedAccomodationsMealPlans}
-                  setSelectedAccomodationsNights={setSelectedAccomodationsNights}
-                  setSelectedAccomodationsRoomTypes={setSelectedAccomodationsRoomTypes}
-                  setSelectedAccomodationsMealPlans={setSelectedAccomodationsMealPlans}
-                  deleteAccomodation={deleteAccomodation}
-                />
-              )}
-            </DivAtom>
-
-            {showValidationErrorMessage && (
-              <ParagraphAtom
-                text={`Please specify the same number of nights as your departure - check-in. (Nights required - ${validationNightsRequired})`}
-                style={quoteCreateQuoteStyles.errorMsg}
+              <AccomodationTable
+                columns={[
+                  'LOCATION',
+                  'NIGHTS',
+                  'CATEGORY',
+                  'ACCOMODATION',
+                  'PAX',
+                  'ROOM TYPE',
+                  'MEAL PLAN',
+                  'CITY',
+                  '',
+                ]}
+                selectedAccomodations={selectedAccomodations}
+                selectedAccomodationsNights={selectedAccomodationsNights}
+                selectedAccomodationsRoomTypes={selectedAccomodationsRoomTypes}
+                selectedAccomodationsMealPlans={selectedAccomodationsMealPlans}
+                setSelectedAccomodationsNights={setSelectedAccomodationsNights}
+                setSelectedAccomodationsRoomTypes={setSelectedAccomodationsRoomTypes}
+                setSelectedAccomodationsMealPlans={setSelectedAccomodationsMealPlans}
+                deleteAccomodation={deleteAccomodation}
               />
-            )}
+            </DivAtom>
 
             <DivAtom
               style={{
