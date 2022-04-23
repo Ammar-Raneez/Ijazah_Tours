@@ -56,16 +56,17 @@ function CreateGuest({
 
   const onAddGuest = async () => {
     setShowValidationErrorMessage(false);
-    if (firstName.trim() === '' || lastName.trim() === '' || refNum.trim() === ''
-      || country.value.trim() === '' || contactNumber.trim() === '' || email.trim() === ''
-      || city.value.trim() === '' || occupation.trim() === '' || status.trim() === ''
-      || passport.length === 0 || !passport) {
+    if (refNum.trim() === '' || contactNumber.trim() === '') {
       setShowValidationErrorMessage(true);
       return;
     }
 
     setIsCreating(true);
-    const url = await uploadPassport();
+    let url = '';
+    if (passport[0]) {
+      url = await uploadPassport();
+    }
+
     await setDoc(doc(db, 'Library Guests', uuid()), {
       name: `${firstName} ${lastName}`,
       refNum,
