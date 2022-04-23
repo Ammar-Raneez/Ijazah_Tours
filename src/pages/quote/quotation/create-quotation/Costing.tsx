@@ -99,7 +99,7 @@ function Costing() {
           style={quoteCreateQuoteStyles.backBtn}
           onClick={() => history.replace('/quote/quotations/create/accomodation')}
         />
-        <H2Atom style={quoteCreateQuoteStyles.title} text="Accomodation" />
+        <H2Atom style={quoteCreateQuoteStyles.title} text="Costing" />
       </DivAtom>
 
       {accomodationData ? (
