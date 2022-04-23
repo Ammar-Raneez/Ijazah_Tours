@@ -111,7 +111,23 @@ function Customer() {
 
       const storedCustomerData = localStorage.getItem('New Quote Customer');
       if (storedCustomerData) {
-        setTitle(JSON.parse(storedCustomerData).data[0][0]);
+        const cusData = JSON.parse(storedCustomerData).data[0];
+        setTitle(cusData[0]);
+        setDateType(cusData[16]);
+        setAdditionalBed(cusData[14]);
+        setMealPlan(cusData[13]);
+
+        if (cusData[16] === dateTypeOptions[0].value) {
+          setCheckin(cusData[7]);
+          setCheckout(cusData[8]);
+        } else {
+          const storedCheckin = cusData[7].split('-');
+          const storedCheckout = cusData[8].split('-');
+          storedCheckin.pop();
+          storedCheckout.pop();
+          setCheckin(storedCheckin.join('-'));
+          setCheckout(storedCheckout.join('-'));
+        }
       }
     };
 
@@ -159,6 +175,7 @@ function Customer() {
           mealPlan,
           additionalBed,
           toStoreDestinations,
+          dateType,
         ]],
       }),
     );
