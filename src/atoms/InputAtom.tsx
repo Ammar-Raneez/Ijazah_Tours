@@ -3,6 +3,7 @@ import {
   CSSProperties,
   ChangeEvent,
   FocusEventHandler,
+  RefObject,
 } from 'react';
 
 import { Input, InputAdornment } from '@material-ui/core';
@@ -23,9 +24,11 @@ interface InputAtomProps {
   rows?: number;
   minValue?: number;
   adornmentPosition?: 'start' | 'end';
+  ref?: ((instance: unknown) => void) | RefObject<unknown>;
   children?: ReactNode;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   onBlur?: FocusEventHandler<HTMLTextAreaElement | HTMLInputElement>;
+  onFocus?: FocusEventHandler<HTMLTextAreaElement | HTMLInputElement>;
   style?: CSSProperties;
 }
 
@@ -46,6 +49,7 @@ function InputAtom({
   value,
   onChange,
   onBlur,
+  onFocus,
   style,
   ...props
 }: InputAtomProps) {
@@ -68,6 +72,7 @@ function InputAtom({
       value={value}
       onChange={onChange}
       onBlur={onBlur}
+      onFocus={onFocus}
       required={required}
       disabled={disabled}
       error={error}

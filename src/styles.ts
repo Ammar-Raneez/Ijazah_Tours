@@ -196,7 +196,7 @@ export const quotationsStyles = {
   },
   searchContainer: {
     display: 'flex',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
     flex: 1,
   },
   btn: {

@@ -6,6 +6,7 @@ import {
 
 import { CircularProgress } from '@material-ui/core';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
+import CloseIcon from '@material-ui/icons/Close';
 import SearchIcon from '@material-ui/icons/Search';
 import { collection, getDocs } from 'firebase/firestore';
 import { useSelector } from 'react-redux';
@@ -58,6 +59,7 @@ function Accomodation() {
   ] = useState<string[]>([]);
 
   const [search, setSearch] = useState('');
+  const [searchFocused, setSearchFocused] = useState(false);
 
   const [showValidationErrorMessage, setShowValidationErrorMessage] = useState(false);
   const [validationNightsRequired, setValidationNightsRequired] = useState(0);
@@ -289,9 +291,19 @@ function Accomodation() {
                   onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
                   children={<SearchIcon />}
                   style={{ padding: '0.2rem' }}
+                  onFocus={() => setSearchFocused(true)}
                 />
+                {searchFocused && (
+                  <IconAtom
+                    size="small"
+                    style={{ color: 'black' }}
+                    onClick={() => setSearchFocused(false)}
+                  >
+                    <CloseIcon />
+                  </IconAtom>
+                )}
               </DivAtom>
-              {search !== '' && (
+              {searchFocused && (
                 <DivAtom style={quoteCreateQuoteStyles.searchBar.wrapper}>
                   <Searchbar
                     searchTerm={search}

@@ -9,7 +9,6 @@ import {
   Theme,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import { v4 as uuid } from 'uuid';
 
 import TableColumnCell from '../../../../../molecules/TableColumnCell';
 import TableRowEditCell from '../../../../../molecules/TableRowEditCell';
