@@ -297,7 +297,10 @@ function Accomodation() {
                   <IconAtom
                     size="small"
                     style={{ color: 'black' }}
-                    onClick={() => setSearchFocused(false)}
+                    onClick={() => {
+                      setSearchFocused(false);
+                      setSearch('');
+                    }}
                   >
                     <CloseIcon />
                   </IconAtom>
