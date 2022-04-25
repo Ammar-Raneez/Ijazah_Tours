@@ -13,6 +13,7 @@ interface FormControlInputProps {
   rows: number;
   setValue: any;
   disabled?: boolean;
+  required?: boolean;
   dollarAdornment?: boolean;
   lkrAdornment?: boolean;
   flex?: number;
@@ -28,6 +29,7 @@ function FormControlInput({
   rows,
   value,
   placeholder,
+  required,
   margin,
   setValue,
   disabled,
@@ -52,6 +54,7 @@ function FormControlInput({
         type={type}
         onChange={(e: ChangeEvent<HTMLInputElement>) => setValue(e.target.value)}
         placeholder={placeholder}
+        required={required}
       />
     </FormControl>
   );

@@ -365,7 +365,7 @@ function CreateEditGuestForm({
 
       {showValidationErrorMessage && (
         <ParagraphAtom
-          text="Please fill in all the fields"
+          text="Please fill in all the required fields"
           style={libraryCreateGuestStyles.errorMsg}
         />
       )}

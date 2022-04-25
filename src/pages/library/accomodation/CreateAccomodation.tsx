@@ -128,10 +128,9 @@ function CreateAccomodation({
 
   const onAddAccomodation = async () => {
     setShowValidationErrorMessage(false);
-    if (name.trim() === '' || group.trim() === '' || location.trim() === ''
+    if (name.trim() === '' || location.trim() === ''
       || city.trim() === '' || contactNumber.trim() === '' || email.trim() === ''
-      || webLink.trim() === '' || ijazahLink.trim() === '' || additionalBedPrice.trim() === ''
-      || rateData.length === 0) {
+      || additionalBedPrice.trim() === '' || rateData.length === 0) {
       setShowValidationErrorMessage(true);
       return;
     }
