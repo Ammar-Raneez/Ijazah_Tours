@@ -6,6 +6,7 @@ import {
 
 import { CircularProgress } from '@material-ui/core';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
+import CloseIcon from '@material-ui/icons/Close';
 import SearchIcon from '@material-ui/icons/Search';
 import {
   collection,
@@ -33,7 +34,6 @@ import {
 } from '../../../../styles';
 import { widthHeightDynamicStyle } from '../../../../utils/helpers';
 import {
-  FlexDirection,
   SettingsSingleInput,
   UserAccomodation,
 } from '../../../../utils/types';
@@ -62,6 +62,7 @@ function PresetAccomodation() {
   ] = useState<string[]>([]);
 
   const [search, setSearch] = useState('');
+  const [searchFocused, setSearchFocused] = useState(false);
 
   const [savingPresetQuote, setSavingPresetQuote] = useState(false);
 
@@ -214,9 +215,22 @@ function PresetAccomodation() {
                   onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
                   children={<SearchIcon />}
                   style={{ padding: '0.2rem' }}
+                  onFocus={() => setSearchFocused(true)}
                 />
+                {searchFocused && (
+                  <IconAtom
+                    size="small"
+                    style={{ color: 'black' }}
+                    onClick={() => {
+                      setSearchFocused(false);
+                      setSearch('');
+                    }}
+                  >
+                    <CloseIcon />
+                  </IconAtom>
+                )}
               </DivAtom>
-              {search !== '' && (
+              {searchFocused && (
                 <DivAtom style={quoteCreateQuoteStyles.searchBar.wrapper}>
                   <Searchbar
                     searchTerm={search}
