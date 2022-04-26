@@ -42,6 +42,7 @@ function Sidebar({
         <DivAtom style={quoteCreateQuoteStyles.searchBar.checkboxSectionContainer.container}>
           {accomodationTypesData.map((type, index) => (
             <CheckboxAtom
+              key={index}
               checked={checked[index].checked}
               onChange={() => onCheckboxChange(index)}
               label={type.val}
@@ -57,6 +58,7 @@ function Sidebar({
         <DivAtom style={quoteCreateQuoteStyles.searchBar.checkboxSectionContainer.container}>
           {roomTypesData.map((type, index) => (
             <CheckboxAtom
+              key={index}
               checked={checked[index + accomodationTypesData.length].checked}
               onChange={() => onCheckboxChange(index + accomodationTypesData.length)}
               label={type.val}
@@ -72,6 +74,7 @@ function Sidebar({
         <DivAtom style={quoteCreateQuoteStyles.searchBar.checkboxSectionContainer.container}>
           {roomViewsData.map((type, index) => (
             <CheckboxAtom
+              key={index}
               checked={checked[index + accomodationTypesData.length + roomTypesData.length].checked}
               onChange={() => (
                 onCheckboxChange(index + accomodationTypesData.length + roomTypesData.length)
@@ -89,6 +92,7 @@ function Sidebar({
         <DivAtom style={quoteCreateQuoteStyles.searchBar.checkboxSectionContainer.container}>
           {roomGradingsData.map((type, index) => (
             <CheckboxAtom
+              key={index}
               checked={checked[
                 index
                 + accomodationTypesData.length

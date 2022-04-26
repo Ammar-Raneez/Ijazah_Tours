@@ -22,13 +22,13 @@ function AccomodationCard({
           text={accomodation.name}
           style={quoteCreateQuoteStyles.searchBar.accomodationContainer.card.label}
         />
-        <p style={{ margin: 0 }}>
+        <span style={{ margin: 0 }}>
           <SpanAtom
             text="Gradings: "
             style={quoteCreateQuoteStyles.searchBar.accomodationContainer.card.label}
           />
           <SpanAtom text={accomodation.gradings.filter((g) => g.checked).map((g) => g.val).join(', ')} />
-        </p>
+        </span>
       </p>
       <ParagraphAtom
         text={`${accomodation.country}, ${accomodation.city}`}
