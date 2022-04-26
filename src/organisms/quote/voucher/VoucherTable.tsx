@@ -17,7 +17,6 @@ import TableRow from '@material-ui/core/TableRow';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import { useHistory } from 'react-router-dom';
-import { v4 as uuid } from 'uuid';
 
 import TableColumnCell from '../../../molecules/TableColumnCell';
 import TableRowButtonCell from '../../../molecules/TableRowButtonCell';
@@ -147,7 +146,6 @@ function Row({
         />
         <TableCell>{row[0].quotationTitle}</TableCell>
         <TableRowButtonCell
-          key={uuid()}
           onClick={() => null}
           align="left"
           btnWidth="8rem"
@@ -174,9 +172,9 @@ function Row({
               <Table size="small" aria-label="vouchers">
                 <TableHead>
                   <TableRow>
-                    <TableColumnCell key={uuid()} color="black" column="Voucher ID" />
-                    <TableColumnCell key={uuid()} color="black" column="Voucher Title" />
-                    <TableColumnCell key={uuid()} color="black" column="Status" />
+                    <TableColumnCell color="black" column="Voucher ID" />
+                    <TableColumnCell color="black" column="Voucher Title" />
+                    <TableColumnCell color="black" column="Status" />
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -192,7 +190,6 @@ function Row({
                       />
                       <TableCell>{voucher.title}</TableCell>
                       <TableRowButtonCell
-                        key={uuid()}
                         onClick={() => (
                           getVoucherStatus(index) === 'SHARE'
                             ? history.replace(`/quote/voucher/${getVoucherLink(voucher.type)}/${voucher.id}+${voucher.quoteNo}`)
@@ -232,15 +229,15 @@ export default function VoucherTable({
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
-            {columns.map((column) => (
-              <TableColumnCell key={uuid()} color="black" column={column} />
+            {columns.map((column, index) => (
+              <TableColumnCell key={index} color="black" column={column} />
             ))}
           </TableRow>
         </TableHead>
         <TableBody>
-          {Object.keys(voucherData).map((row: any) => (
+          {Object.keys(voucherData).map((row: any, index) => (
             <Row
-              key={uuid()}
+              key={index}
               row={voucherData[row]}
               voucherData={voucherData}
               setVoucherData={setVoucherData}
