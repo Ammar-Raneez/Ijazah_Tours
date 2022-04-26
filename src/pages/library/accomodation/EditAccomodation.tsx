@@ -67,7 +67,9 @@ function EditAccomodation({
   const [ijazahLink, setIjazahLink] = useState(row.ijazahLink);
 
   const [roomCategories, setRoomCategories] = useState(
-    roomCategoriesData.map((category) => (!!row.categoryValues[category.val])),
+    roomCategoriesData.map((category) => (
+      !!row.categoryValues[category.val] || !!row.rates.find((r) => r.newRateType === category.val)
+    )),
   );
   const [roomViews, setRoomViews] = useState(
     row.views.map((val) => val.checked || false),
@@ -128,7 +130,7 @@ function EditAccomodation({
       email,
       webLink,
       ijazahLink,
-      additionalBedPrice: `$${additionalBedPrice}`,
+      additionalBedPrice,
       views,
       gradings,
       country: location,

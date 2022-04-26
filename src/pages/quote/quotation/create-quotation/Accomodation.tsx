@@ -218,7 +218,7 @@ function Accomodation() {
         ];
 
         // eslint-disable-next-line max-len
-        const totalSum = Number(roomPrice) + Number(roomTypeCost.slice(1)) + (needAdditionalBed ? Number(acc.additionalBedPrice.slice(1)) : 0);
+        const totalSum = Number(roomPrice) + Number(roomTypeCost) + (needAdditionalBed ? Number(acc.additionalBedPrice) : 0);
         acc.roomRate = `$${roomPrice}`;
         acc.total = `$${totalSum * days}`;
       });

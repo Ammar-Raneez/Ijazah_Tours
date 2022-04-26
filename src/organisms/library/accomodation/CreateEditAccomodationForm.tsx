@@ -186,8 +186,11 @@ function CreateEditAccomodationForm({
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
               setLocation(e.target.value);
               setCity('');
-              const locationId = accomodationLocations.find((l) => l.value === e.target.value)?.id;
-              const cities = accomodationCities.filter((c) => c.countryId === locationId);
+              const locationValue = accomodationLocations.find((l) => (
+                l.value === e.target.value
+              ))?.value;
+
+              const cities = accomodationCities.filter((c) => c.countryName === locationValue);
               setAccomodationFilteredCities(cities);
             }}
             options={accomodationLocations}
@@ -340,6 +343,7 @@ function CreateEditAccomodationForm({
         <AccomodationRatesContainer
           width={width}
           rateRoomTypes={rateRoomTypes}
+          selectedRoomTypes={roomCategories}
           deleteRate={deleteRate}
           newRateType={newRateType}
           newRateStart={newRateStart}
@@ -359,40 +363,38 @@ function CreateEditAccomodationForm({
           onCreateRate={onCreateRate}
         />
 
-        {(selectedTypes[0]
-          || selectedTypes[1]
-          || selectedTypes[2])
-          && selectedTypes.map((type) => (
-            <DivAtom
-              key={uuid()}
-              style={{
-                ...libraryAccomodationStyles.multiFieldContainer,
-                flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
-                justifyContent: 'flex-start',
-                marginTop: '0.8rem',
-              }}
-            >
-              <ParagraphAtom style={{ width: '150px' }} text={type} />
-              <FormControl style={{ margin: '0 0 1rem 1rem' }}>
-                <InputLabel>Price</InputLabel>
-                <InputAtom
-                  plain="true"
-                  fullWidth
-                  multiline={false}
-                  rows={1}
-                  value={selectedTypeValues[type]}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => (
-                    onSetSelectedTypeValue(type, e.target.value)
-                  )}
-                  placeholder="Enter Price"
-                  dollarAdornment
-                />
-              </FormControl>
-            </DivAtom>
-          ))}
+        {selectedTypes[0] && selectedTypes.map((type, index) => (
+          !(rateData.find((r) => r.newRateType === type))
+        ) && (
+          <DivAtom
+            key={index}
+            style={{
+              ...libraryAccomodationStyles.multiFieldContainer,
+              flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,
+              justifyContent: 'flex-start',
+              marginTop: '0.8rem',
+            }}
+          >
+            <ParagraphAtom style={{ width: '150px' }} text={type} />
+            <FormControl style={{ margin: '0 0 1rem 1rem' }}>
+              <InputLabel>Price</InputLabel>
+              <InputAtom
+                plain="true"
+                fullWidth
+                multiline={false}
+                rows={1}
+                value={selectedTypes.length > 0 ? selectedTypeValues[type] : ''}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => (
+                  onSetSelectedTypeValue(type, e.target.value)
+                )}
+                placeholder="Enter Price"
+                dollarAdornment
+              />
+            </FormControl>
+          </DivAtom>
+        ))}
 
         <DivAtom
-          key={uuid()}
           style={{
             ...libraryAccomodationStyles.multiFieldContainer,
             flexDirection: widthHeightDynamicStyle(width, 600, 'column', 'row') as FlexDirection,

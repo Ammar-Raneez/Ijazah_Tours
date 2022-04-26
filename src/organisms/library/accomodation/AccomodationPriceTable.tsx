@@ -8,7 +8,6 @@ import {
   TableRow,
 } from '@material-ui/core';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
-import { v4 as uuid } from 'uuid';
 
 import TableColumnCell from '../../../molecules/TableColumnCell';
 import TableRowIconCell from '../../../molecules/TableRowIconCell';
@@ -40,9 +39,9 @@ function AccomodationPriceTable({
       <Table className={classes.table} aria-label="accomodations price table">
         <TableHead>
           <TableRow>
-            {columns.map((column) => (
+            {columns.map((column, index) => (
               <TableColumnCell
-                key={uuid()}
+                key={index}
                 align="center"
                 color="b5b5c3"
                 column={column}
@@ -51,10 +50,9 @@ function AccomodationPriceTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row: AccomodationRate) => (
-            <TableRow key={uuid()}>
+          {data.map((row: AccomodationRate, index) => (
+            <TableRow key={index}>
               <TableRowTextCell
-                key={uuid()}
                 cell={{
                   align: 'center',
                   title: row.newRateType,
@@ -63,7 +61,6 @@ function AccomodationPriceTable({
                 }}
               />
               <TableRowTextCell
-                key={uuid()}
                 cell={{
                   align: 'center',
                   title: row.newRateStart,
@@ -72,7 +69,6 @@ function AccomodationPriceTable({
                 }}
               />
               <TableRowTextCell
-                key={uuid()}
                 cell={{
                   align: 'center',
                   title: row.newRateEnd,
@@ -81,7 +77,6 @@ function AccomodationPriceTable({
                 }}
               />
               <TableRowTextCell
-                key={uuid()}
                 cell={{
                   align: 'center',
                   title: row.newMealPlan,
@@ -90,7 +85,6 @@ function AccomodationPriceTable({
                 }}
               />
               <TableRowTextCell
-                key={uuid()}
                 cell={{
                   align: 'center',
                   title: row.newSinglePrice,
@@ -99,7 +93,6 @@ function AccomodationPriceTable({
                 }}
               />
               <TableRowTextCell
-                key={uuid()}
                 cell={{
                   align: 'center',
                   title: row.newDoublePrice,
@@ -108,7 +101,6 @@ function AccomodationPriceTable({
                 }}
               />
               <TableRowTextCell
-                key={uuid()}
                 cell={{
                   align: 'center',
                   title: row.newTriplePrice,

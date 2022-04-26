@@ -152,7 +152,7 @@ function CreateAccomodation({
       email,
       webLink,
       ijazahLink,
-      additionalBedPrice: `$${additionalBedPrice}`,
+      additionalBedPrice,
       views,
       gradings,
       accomodationType,
@@ -239,7 +239,7 @@ function CreateAccomodation({
   };
 
   const onSetSelectedTypeValue = (type: string, val: string) => {
-    const updatedSelectedTypeValues = { ...selectedTypeValues, [type]: `$${val}` };
+    const updatedSelectedTypeValues = { ...selectedTypeValues, [type]: val };
     setSelectedTypeValues(updatedSelectedTypeValues);
   };
 

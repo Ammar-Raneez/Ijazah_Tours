@@ -18,6 +18,7 @@ import AccomodationPriceTable from './AccomodationPriceTable';
 
 interface AccomodationRatesContainerProps {
   rateRoomTypes: DropdownOption[];
+  selectedRoomTypes: boolean[];
   width: number;
   newRateType: string;
   newRateStart: string;
@@ -41,6 +42,7 @@ interface AccomodationRatesContainerProps {
 function AccomodationRatesContainer({
   width,
   rateRoomTypes,
+  selectedRoomTypes,
   newRateType,
   newRateStart,
   newRateEnd,
@@ -66,10 +68,10 @@ function AccomodationRatesContainer({
         <TextFieldAtom
           variant="standard"
           size="medium"
-          label="Room Type"
-          value={newRateType}
+          label="Room Category"
+          value={rateRoomTypes.filter((_, index) => selectedRoomTypes[index] === true).length > 0 ? newRateType : ''}
           onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setNewRateType(e.target.value)}
-          options={rateRoomTypes}
+          options={rateRoomTypes.filter((_, index) => selectedRoomTypes[index] === true)}
           adornmentPosition="end"
           style={{
             ...libraryStyles.textField,
