@@ -1,22 +1,23 @@
-import { ChangeEvent, MouseEventHandler } from 'react';
+import { ChangeEvent, MouseEventHandler, useState } from 'react';
 
 import {
   CircularProgress,
   Dialog,
   DialogContent,
   DialogTitle,
+  FormControl,
   Input,
+  InputLabel,
   MenuItem,
   Select,
 } from '@material-ui/core';
-import { Country, City } from 'country-state-city';
+import { City } from 'country-state-city';
 import { v4 as uuid } from 'uuid';
 
 import ButtonAtom from '../../../atoms/ButtonAtom';
+import InputAtom from '../../../atoms/InputAtom';
 import ParagraphAtom from '../../../atoms/ParagraphAtom';
-import TextFieldAtom from '../../../atoms/TextFieldAtom';
 import {
-  libraryStyles,
   settingsStyles,
   TableToolbarStyles,
 } from '../../../styles';
@@ -48,30 +49,15 @@ function LocationInputDialog({
   setNewCities,
   onCreate,
 }: LocationInputDialogProps) {
-  const countries = Country.getAllCountries();
-
-  const updatedCountries = countries?.map((country) => ({
-    label: country.name,
-    value: country.name,
-    id: country.isoCode,
-  }));
-
-  const updatedStates = (id: string) => (
-    City.getCitiesOfCountry(id)
-      ?.map((state) => ({ label: state.name, value: state.name }))
+  const [states] = useState(
+    City.getCitiesOfCountry('LK')
+      ?.map((state) => ({ label: state.name, value: state.name })),
   );
-
-  const onCountryChange = (val: string) => {
-    const countryCode = countries.find((c) => c.name === val)?.isoCode;
-    setNewLocation({ id: countryCode, label: val, value: val });
-    setNewCities([]);
-  };
 
   const handleCitiesChange = (event: ChangeEvent<{ value: unknown }>) => {
     const val = event.target.value as string[];
     const toSet = val.map((v) => ({
-      countryId: newLocation.id,
-      countryName: newLocation.value,
+      location: newLocation,
       label: v,
       value: v,
     }));
@@ -79,28 +65,28 @@ function LocationInputDialog({
     setNewCities(toSet);
   };
 
+  const onCountryChange = (val: string) => {
+    const countryCode = 'LK';
+    setNewLocation({ id: countryCode, label: val, value: val });
+    setNewCities([]);
+  };
+
   return (
     <>
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
         <DialogTitle style={settingsStyles.title}>{title}</DialogTitle>
         <DialogContent style={settingsStyles.multiFieldDialogContainer}>
-          {updatedCountries && (
+          {states && (
             <>
-              <TextFieldAtom
-                variant="standard"
-                size="medium"
-                label="Location"
-                value={newLocation.value}
-                onChange={(e: ChangeEvent<HTMLTextAreaElement>) => onCountryChange(e.target.value)}
-                options={updatedCountries}
-                adornmentPosition="end"
-                style={{
-                  ...libraryStyles.textField,
-                  width: '100%',
-                }}
-                disableUnderline={false}
-                select
-              />
+              <FormControl>
+                <InputLabel>Location</InputLabel>
+                <InputAtom
+                  placeholder="Location"
+                  value={newLocation.value}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => onCountryChange(e.target.value)}
+                  fullWidth
+                />
+              </FormControl>
 
               <Select
                 labelId="cities-label"
@@ -112,7 +98,7 @@ function LocationInputDialog({
                 input={<Input />}
                 MenuProps={MenuProps}
               >
-                {updatedStates(newLocation.id)?.map((city) => (
+                {states.map((city) => (
                   <MenuItem key={uuid()} value={city.value}>
                     {city.label}
                   </MenuItem>
