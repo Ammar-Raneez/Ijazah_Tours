@@ -130,6 +130,7 @@ function Customer() {
           storedCheckout.pop();
           setCheckin(storedCheckin.join('-'));
           setCheckout(storedCheckout.join('-'));
+          setNotSpecificDays(cusData[17]);
         }
       }
     };
