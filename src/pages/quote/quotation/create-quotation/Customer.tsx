@@ -54,6 +54,7 @@ function Customer() {
   const [checkin, setCheckin] = useState('2022-01-01');
   const [checkout, setCheckout] = useState('2022-01-31');
   const [dateType, setDateType] = useState(dateTypeOptions[0].value);
+  const [notSpecificDays, setNotSpecificDays] = useState(0);
 
   const history = useHistory();
 
@@ -178,6 +179,7 @@ function Customer() {
           additionalBed,
           toStoreDestinations,
           dateType,
+          dateType === dateTypeOptions[1].value ? notSpecificDays : null,
         ]],
       }),
     );
@@ -204,6 +206,7 @@ function Customer() {
           accomodationLocationData={accomodationLocationData}
           holidayTypeData={holidayTypeData}
           width={width}
+          notSpecificDays={notSpecificDays}
           refNum={refNum}
           title={title}
           setTitle={setTitle}
@@ -222,6 +225,7 @@ function Customer() {
           additionalBed={additionalBed}
           onCreateCustomer={onCreateCustomer}
           onRefNumChange={onRefNumChange}
+          setNotSpecificDays={setNotSpecificDays}
           setFirstName={setFirstName}
           setLastName={setLastName}
           setContactNumber={setContactNumber}

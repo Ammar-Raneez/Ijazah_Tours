@@ -178,7 +178,13 @@ function Accomodation() {
     ).data[0];
 
     // Subtract 1 to equal number of nights
-    const nightsRequired = getDaysDifference(customerDetails[8], customerDetails[7]) - 1;
+    let nightsRequired = 0;
+    if (customerDetails[16] === 'Not Specific') {
+      nightsRequired = Number(customerDetails[17]) - 1;
+    } else {
+      nightsRequired = getDaysDifference(customerDetails[8], customerDetails[7]) - 1;
+    }
+
     setValidationNightsRequired(nightsRequired);
     const totalUsedNights = selectedAccomodationsNights.reduce((prev, curr) => (
       prev + Number(curr)

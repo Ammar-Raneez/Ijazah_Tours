@@ -35,6 +35,7 @@ interface CustomerFormProps {
   holidayTypeData: DropdownOption[];
   destinations: string[];
   width: number;
+  notSpecificDays: number;
   refNum: string;
   title: string;
   firstName: string;
@@ -52,6 +53,7 @@ interface CustomerFormProps {
   onCreateCustomer: (event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => void;
   onRefNumChange: (data: LibraryGuest[], rf: string) => void;
   setTitle: any;
+  setNotSpecificDays: any;
   setFirstName: any;
   setLastName: any;
   setContactNumber: any;
@@ -70,10 +72,10 @@ interface CustomerFormProps {
 
 function CustomerForm({
   customerData,
-  accomodationLocationData,
   refData,
   holidayTypeData,
   width,
+  notSpecificDays,
   title,
   refNum,
   firstName,
@@ -92,6 +94,7 @@ function CustomerForm({
   onCreateCustomer,
   onRefNumChange,
   setTitle,
+  setNotSpecificDays,
   setFirstName,
   setLastName,
   setContactNumber,
@@ -368,6 +371,21 @@ function CustomerForm({
             setCheckin={setCheckin}
             setCheckout={setCheckout}
           />
+          {dateType === dateTypeOptions[1].value && (
+            <FormControlInput
+              margin="1rem 0 0 0"
+              label="Days"
+              fullWidth={false}
+              flex={0}
+              multiline={false}
+              rows={1}
+              width="100px"
+              value={notSpecificDays}
+              setValue={setNotSpecificDays}
+              placeholder="No. of Days"
+              type="number"
+            />
+          )}
         </DivAtom>
       </DivAtom>
       <DivAtom
