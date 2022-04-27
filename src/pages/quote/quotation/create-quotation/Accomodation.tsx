@@ -226,7 +226,7 @@ function Accomodation() {
         // eslint-disable-next-line max-len
         const totalSum = Number(roomPrice) + Number(roomTypeCost) + (needAdditionalBed ? Number(acc.additionalBedPrice) : 0);
         acc.roomRate = `$${roomPrice}`;
-        acc.total = `$${totalSum * days}`;
+        acc.total = `$${roomPrice * nightsRequired}`;
       });
 
       localStorage.setItem('New Quote Accomodation', JSON.stringify({
