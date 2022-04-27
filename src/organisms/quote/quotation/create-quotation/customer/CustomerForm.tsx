@@ -2,8 +2,8 @@ import { ChangeEvent, MouseEvent } from 'react';
 
 import { Input, MenuItem, Select } from '@material-ui/core';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
+import { Country } from 'country-state-city';
 import { Link } from 'react-router-dom';
-import { v4 as uuid } from 'uuid';
 
 import ButtonAtom from '../../../../../atoms/ButtonAtom';
 import CheckboxAtom from '../../../../../atoms/CheckboxAtom';
@@ -107,6 +107,8 @@ function CustomerForm({
   setCheckin,
   setCheckout,
 }: CustomerFormProps) {
+  const countries = Country.getAllCountries();
+
   const changeDateType = (type: string) => {
     setDateType(type);
     localStorage.removeItem('New Quote Accomodation');
@@ -123,14 +125,7 @@ function CustomerForm({
   const handleDestinationsChange = (event: ChangeEvent<{ value: unknown }>) => {
     const val = event.target.value as string[];
     setDestinations(val);
-    setToStoreDestinations(
-      accomodationLocationData.map((l) => l.cities)
-        .flat()
-        .filter((c) => val.includes(c.value))
-        .map((c) => (
-          `${c.countryName} | ${c.value}`
-        )),
-    );
+    setToStoreDestinations(val);
   };
 
   return (
@@ -325,9 +320,9 @@ function CustomerForm({
               margin: widthHeightDynamicStyle(width, 600, '0 0 1rem 0', '0 1rem 1rem 0'),
             }}
           >
-            {accomodationLocationData.map((l) => l.cities).flat().map((c) => (
-              <MenuItem key={uuid()} value={c.value}>
-                {`${c.countryName} | ${c.value}`}
+            {countries.map((c, index) => (
+              <MenuItem key={index} value={c.name}>
+                {c.name}
               </MenuItem>
             ))}
           </Select>
