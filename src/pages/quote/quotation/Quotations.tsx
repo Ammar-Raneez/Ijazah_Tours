@@ -76,13 +76,13 @@ function Quotations() {
           (quote) => quote.creator.id === user.id,
         ));
       } else {
-        setQuotationsData(quotations as CustomerQuotation[]);
+        setQuotationsData((quotations as CustomerQuotation[]).filter(
+          (quote) => quote.creator.role === roleOptions[0].value,
+        ));
         setInitialQuotationCardData(quotations as CustomerQuotation[]);
         setInitialQuotationSearchData(quotations as CustomerQuotation[]);
         setInitialQuotationFilteredData(quotations as CustomerQuotation[]);
       }
-
-      filterAdmins(roleOptions[0].value);
     };
 
     getIntialQuotationsData();
