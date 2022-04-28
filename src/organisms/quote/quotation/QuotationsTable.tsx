@@ -32,6 +32,7 @@ const headCells = [
   { id: '...', label: '' },
   { id: '...1', label: '' },
   { id: '...2', label: '' },
+  { id: '...3', label: '' },
 ];
 
 interface QuotationsTableProps {
@@ -205,13 +206,22 @@ function QuotationsTable({ rowdata }: QuotationsTableProps) {
                     ) : (
                       <TableRowTextCell
                         cell={{
-                          align: 'left',
+                          align: 'right',
                           title: '',
                           colors: ['#464E5F', '#B5B5C3'],
                           weight: 600,
                         }}
                       />
                     )}
+                    <TableRowButtonCell
+                      onClick={() => window.open('mailto:')}
+                      align="left"
+                      btnWidth="8rem"
+                      btnSize="medium"
+                      btnBorderRadius="0.5rem"
+                      btnText="Share"
+                      btnColors={['#7879F1', '#ffffff']}
+                    />
                   </TableRow>
                 ))}
             </TableBody>
