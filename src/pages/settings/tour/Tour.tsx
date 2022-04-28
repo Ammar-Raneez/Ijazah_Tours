@@ -65,10 +65,10 @@ function Tour() {
   const [reminderData, setReminderData] = useState<DocumentData[]>([]);
   const [newReminderTitle, setNewReminderTitle] = useState('');
   const [newReminderDesc, setNewReminderDesc] = useState('');
-  const [newReminderTypes, setNewReminderTypes] = useState<boolean[]>(new Array(2).fill(false));
+  const [newReminderTypes, setNewReminderTypes] = useState<boolean[]>(new Array(3).fill(false));
   const [editReminderTitle, setEditReminderTitle] = useState('');
   const [editReminderDesc, setEditReminderDesc] = useState('');
-  const [editReminderTypes, setEditReminderTypes] = useState<boolean[]>(new Array(2).fill(false));
+  const [editReminderTypes, setEditReminderTypes] = useState<boolean[]>(new Array(3).fill(false));
 
   const [editId, setEditId] = useState('');
 
@@ -164,7 +164,8 @@ function Tour() {
     }
 
     setIsCreating(true);
-    const type = newReminderTypes[0] ? 'Creation of Customer' : 'Creation of Quotation';
+    // eslint-disable-next-line no-nested-ternary
+    const type = newReminderTypes[0] ? 'Creation of Customer' : newReminderTypes[2] ? 'Approval of Quote' : 'Creation of Quotation';
     await setDoc(doc(db, 'Settings Reminders', uuid()), {
       title: newReminderTitle,
       description: newReminderDesc,
@@ -191,7 +192,8 @@ function Tour() {
     }
 
     setIsUpdating(true);
-    const type = editReminderTypes[0] ? 'Creation of Customer' : 'Creation of Quotation';
+    // eslint-disable-next-line no-nested-ternary
+    const type = newReminderTypes[0] ? 'Creation of Customer' : newReminderTypes[2] ? 'Approval of Quote' : 'Creation of Quotation';
     await updateDoc(doc(db, 'Settings Reminders', editId), {
       title: editReminderTitle,
       description: editReminderDesc,

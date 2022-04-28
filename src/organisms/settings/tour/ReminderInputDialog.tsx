@@ -52,8 +52,8 @@ function ReminderInputDialog({
         <DialogContent style={settingsStyles.multiFieldDialogContainer}>
           <CheckboxGroup
             groupTitle="Reminder Type"
-            labels={['Creation of Customer', 'Creation of Quote']}
-            names={['customer', 'quote']}
+            labels={['Creation of Customer', 'Creation of Quote', 'Approval of Quote']}
+            names={['customer', 'quote', 'approval']}
             checked={reminderTypes}
             onChange={(_, i: number) => onChangeReminderType(i)}
             style={{ flexDirection: 'column', margin: '0' }}
