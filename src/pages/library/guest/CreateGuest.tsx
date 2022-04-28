@@ -114,9 +114,15 @@ function CreateGuest({
     setChildrenAges([]);
   };
 
-  const onAddReminder = () => {
-    // eslint-disable-next-line no-console
-    console.log('add reminder');
+  const onAddReminder = async () => {
+    await setDoc(doc(db, 'Dashboard Tasks', `${refNum}-create-guest`), {
+      title: '',
+      status: 'Creation of Customer',
+      stage: 'Q',
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+      completed: false,
+    });
   };
 
   return (

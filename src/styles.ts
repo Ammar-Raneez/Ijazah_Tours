@@ -497,6 +497,7 @@ export const libraryCreateGuestStyles = {
 // Dashboard
 export const dashboardStyles = {
   ...quotationsStyles,
+  ...formCreateMemberStyles,
   mainContainer: {
     overflow: 'scroll',
   },

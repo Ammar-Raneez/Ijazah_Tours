@@ -1,7 +1,5 @@
 import { ChangeEvent, Fragment, useState } from 'react';
 
-import Box from '@material-ui/core/Box';
-import Collapse from '@material-ui/core/Collapse';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -9,53 +7,46 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import { v4 as uuid } from 'uuid';
 
 import TableColumnCell from '../../molecules/TableColumnCell';
 import TableRowButtonCell from '../../molecules/TableRowButtonCell';
 import TableRowCheckboxCell from '../../molecules/TableRowCheckboxCell';
-import TableRowIconCell from '../../molecules/TableRowIconCell';
+import { DashboardTask } from '../../utils/types';
 
 interface TaskTableProps {
-  columns?: string[];
-  rows?: any[];
+  columns: string[];
+  dashboardData: DashboardTask[];
+  setDashboardData: any;
 }
 
-function Row({ row }: any) {
-  const [open, setOpen] = useState(false);
-  const [rowChecked, setRowChecked] = useState(row.status === 'A');
-  const [subTasksChecked, setSubTasksChecked] = useState(
-    row.subtasks
-      ? row.subtasks.map((subtask: any) => subtask.status === 'COMPLETE')
-      : [],
-  );
+interface RowProps {
+  index: number;
+  row: DashboardTask;
+  dashboardData: DashboardTask[];
+  setDashboardData: any;
+}
 
-  const keyboardIcon = open ? (
-    <KeyboardArrowDownIcon />
-  ) : (
-    <KeyboardArrowLeftIcon />
-  );
+function Row({
+  row,
+  index,
+  dashboardData,
+  setDashboardData,
+}: RowProps) {
+  const [rowChecked, setRowChecked] = useState(row.completed);
 
   const onChangeRowStatus = (e: ChangeEvent<HTMLInputElement>) => {
     setRowChecked(e.target.checked);
-  };
-
-  const onChangeSubTaskStatus = (
-    e: ChangeEvent<HTMLInputElement>,
-    index: number,
-  ) => {
-    const temp = [...subTasksChecked];
-    temp[index] = e.target.checked;
-    setSubTasksChecked(temp);
+    const temp = [...dashboardData];
+    temp.splice(index, 1, { ...row, completed: e.target.checked });
+    setDashboardData(temp);
   };
 
   return (
     <Fragment>
       <TableRow>
         <TableRowCheckboxCell
-          name={row.name}
+          name={row.status}
           checked={rowChecked}
           onChange={onChangeRowStatus}
           align="left"
@@ -68,83 +59,39 @@ function Row({ row }: any) {
           btnWidth="8rem"
           btnSize="medium"
           btnBorderRadius="0.5rem"
-          btnText={rowChecked ? 'A' : row.status}
+          btnText={row.stage}
           btnColors={['#29CC97', '#ffffff']}
           btnDisabled
         />
-        {row.subtasks ? (
-          <TableRowIconCell
-            align="left"
-            size="small"
-            onClick={() => setOpen(!open)}
-            textColor="#5344C2"
-            padding="0"
-          >
-            {keyboardIcon}
-          </TableRowIconCell>
-        ) : (
-          <TableCell>{''}</TableCell>
-        )}
       </TableRow>
-      {row.subtasks && (
-        <TableRow>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-              <Box margin={1}>
-                <Table size="small" aria-label="subtasks">
-                  <TableBody>
-                    {row.subtasks.map((subtask: any, index: number) => (
-                      <TableRow key={subtask.id}>
-                        <TableRowCheckboxCell
-                          name={subtask.title}
-                          checked={subTasksChecked[index]}
-                          onChange={(e: ChangeEvent<HTMLInputElement>) => (
-                            onChangeSubTaskStatus(e, index)
-                          )}
-                          align="left"
-                        />
-                        <TableRowButtonCell
-                          key={uuid()}
-                          onClick={() => null}
-                          align="left"
-                          btnWidth="8rem"
-                          btnSize="medium"
-                          btnBorderRadius="0.5rem"
-                          btnText={subTasksChecked[index] ? 'COMPLETE' : 'TODO'}
-                          btnColors={
-                            subTasksChecked[index]
-                              ? ['#29CC97', '#ffffff']
-                              : ['#7879F1', '#ffffff']
-                          }
-                          btnDisabled
-                        />
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </Box>
-            </Collapse>
-          </TableCell>
-        </TableRow>
-      )}
     </Fragment>
   );
 }
 
-export default function TaskTable({ columns, rows }: TaskTableProps) {
+export default function TaskTable({
+  columns,
+  dashboardData,
+  setDashboardData,
+}: TaskTableProps) {
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
-            {columns!.map((column) => (
+            {columns.map((column) => (
               <TableColumnCell key={uuid()} color="b5b5c3" column={column} />
             ))}
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows!.map((row) => (
-            <Row key={uuid()} row={row} />
+          {dashboardData.map((row, index) => (
+            <Row
+              key={index}
+              row={row}
+              index={index}
+              dashboardData={dashboardData}
+              setDashboardData={setDashboardData}
+            />
           ))}
         </TableBody>
       </Table>

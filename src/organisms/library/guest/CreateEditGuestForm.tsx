@@ -395,17 +395,21 @@ function CreateEditGuestForm({
           }}
           text={btnText}
         />
-        {onAddReminder && (
-          <ButtonAtom
-            size="large"
-            onClick={onAddReminder}
-            style={{
-              ...libraryCreateGuestStyles.addBtn,
-              width: widthHeightDynamicStyle(width, 768, '100%', '18%'),
-            }}
-            text="Add Reminder"
-          />
-        )}
+        {/* <a
+          href="https://calendar.google.com/calendar/u/0/r/eventedit?text=Creation+of+Customer"
+          style={{ width: widthHeightDynamicStyle(width, 768, '100%', '18%') }}
+          target="_blank"
+        > */}
+        <ButtonAtom
+          size="large"
+          onClick={onAddReminder}
+          style={{
+            ...libraryCreateGuestStyles.addBtn,
+            width: '100%',
+          }}
+          text="Add Reminder"
+        />
+        {/* </a> */}
       </DivAtom>
     </>
   );

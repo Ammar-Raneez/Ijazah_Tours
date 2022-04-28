@@ -11,8 +11,10 @@ import {
   TableRow,
   Theme,
 } from '@material-ui/core';
+import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { useHistory } from 'react-router-dom';
 
+import { db } from '../../../firebase';
 import GuestProfile from '../../../molecules/GuestProfile';
 import TablePaginationActions from '../../../molecules/TableBottomPagination';
 import TableHead from '../../../molecules/TableHead';
@@ -88,6 +90,19 @@ function QuotationsTable({ rowdata }: QuotationsTableProps) {
   const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+  };
+
+  const shareAndAddReminder = async (row: CustomerQuotation) => {
+    await setDoc(doc(db, 'Dashboard Tasks', String(`${row.quoteNo}-create-quote`)), {
+      status: 'Creation of Quote',
+      title: row.quoteTitle,
+      stage: 'C',
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+      completed: false,
+    });
+
+    window.open('mailto:');
   };
 
   return (
@@ -214,7 +229,7 @@ function QuotationsTable({ rowdata }: QuotationsTableProps) {
                       />
                     )}
                     <TableRowButtonCell
-                      onClick={() => window.open('mailto:')}
+                      onClick={() => shareAndAddReminder(row)}
                       align="left"
                       btnWidth="8rem"
                       btnSize="medium"

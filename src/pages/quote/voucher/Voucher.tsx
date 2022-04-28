@@ -69,6 +69,15 @@ function Voucher() {
       if (voucherData[quoteNo].every((voucher: { completed: boolean }) => (
         voucher.completed === true))
       ) {
+        await setDoc(doc(db, 'Dashboard Tasks', String(`${quoteNo}-approve-quote`)), {
+          status: 'Approval of Quote',
+          stage: 'A',
+          title: voucherData[quoteNo][0].quotationTitle,
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp(),
+          completed: false,
+        });
+
         quotationSnapshot.forEach(async (snap) => {
           await setDoc(doc(db, 'Approval Quotations', snap.id), {
             ...snap.data(),
