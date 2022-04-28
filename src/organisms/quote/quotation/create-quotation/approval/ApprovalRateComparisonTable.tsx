@@ -67,15 +67,6 @@ function ApprovalRateComparisonTable({
                 key={uuid()}
                 cell={{
                   align: 'center',
-                  title: row.date,
-                  colors: ['#464E5F'],
-                  weight: 400,
-                }}
-              />
-              <TableRowTextCell
-                key={uuid()}
-                cell={{
-                  align: 'center',
                   title: row.accomodation,
                   colors: ['#464E5F'],
                   weight: 400,
@@ -88,7 +79,6 @@ function ApprovalRateComparisonTable({
                   title: row.bookingEngine,
                   colors: ['#464E5F'],
                   weight: 400,
-                  isLink: true,
                 }}
               />
               <TableRowTextCell

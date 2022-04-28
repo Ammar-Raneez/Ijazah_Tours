@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { CircularProgress } from '@material-ui/core';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
+import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -10,14 +11,14 @@ import DivAtom from '../../../../atoms/DivAtom';
 import H2Atom from '../../../../atoms/H2Atom';
 import IconAtom from '../../../../atoms/IconAtom';
 import ParagraphAtom from '../../../../atoms/ParagraphAtom';
-import { QUOTATIONS_COSTING_RATE_DATA } from '../../../../data';
+import { Hotels } from '../../../../hotels';
 import CostingAccomodationTable from '../../../../organisms/quote/quotation/create-quotation/costing/CostingAccomodationTable';
 import CostingOverallCost from '../../../../organisms/quote/quotation/create-quotation/costing/CostingOverallCost';
 import CostingRateComparisonTable from '../../../../organisms/quote/quotation/create-quotation/costing/CostingRateComparisonTable';
 import CostingTransport from '../../../../organisms/quote/quotation/create-quotation/costing/CostingTransport';
 import { selectWith2NavbarHeight, selectWith2NavbarWidth } from '../../../../redux/containerSizeSlice';
 import { fetchingDataIndicatorStyles, quoteCreateQuoteStyles } from '../../../../styles';
-import { widthHeightDynamicStyle } from '../../../../utils/helpers';
+import { widthHeightDynamicStyle, XOTELO_BASE_URL } from '../../../../utils/helpers';
 import { UserAccomodation, QuotationCostingRate } from '../../../../utils/types';
 
 function Costing() {
@@ -41,7 +42,41 @@ function Costing() {
   const [accomodationTotal, setAccomodationTotal] = useState('0');
   const [accomodationData, setAccomodationData] = useState<UserAccomodation[]>();
 
+  // comparison
+  const [comparisonData, setComparisonData] = useState<QuotationCostingRate[]>();
+
   const history = useHistory();
+
+  useEffect(() => {
+    const customerDetails = JSON.parse(
+      localStorage.getItem('New Quote Customer')!,
+    ).data[0];
+    const accomodations: UserAccomodation[] = JSON.parse(
+      localStorage.getItem('New Quote Accomodation')!,
+    ).selectedAccomodations;
+
+    const getComparisonRates = async () => {
+      const rates: QuotationCostingRate[] = [];
+      await Promise.all(accomodations.map(async (acc) => {
+        const res = await axios.get(`${XOTELO_BASE_URL}rates?hotel_key=${Hotels[acc.name as keyof typeof Hotels]}&chk_in=${customerDetails[7]}&chk_out=${customerDetails[8]}&adults=${customerDetails[9]}&rooms=3`);
+
+        res.data.result?.rates?.forEach((r: any, index: number) => {
+          if (r.name.includes('Agoda') || r.name.includes('Booking') || r.name === 'Hotels.com') {
+            rates.push({
+              bookingEngine: r.name,
+              accomodation: acc.name,
+              id: String(index),
+              rate: `$${r.rate}`,
+            });
+          }
+        });
+      }));
+
+      setComparisonData(rates);
+    };
+
+    getComparisonRates();
+  }, []);
 
   useEffect(() => {
     const data: UserAccomodation[] = JSON.parse(
@@ -81,6 +116,7 @@ function Costing() {
         totalExpense,
         commission,
         totalPrice,
+        comparisonData,
         transportTotal: transport,
         transportRate: rate,
         transportDays: days,
@@ -102,7 +138,7 @@ function Costing() {
         <H2Atom style={quoteCreateQuoteStyles.title} text="Costing" />
       </DivAtom>
 
-      {accomodationData ? (
+      {accomodationData && comparisonData ? (
         <>
           <ParagraphAtom
             style={{
@@ -112,15 +148,14 @@ function Costing() {
             text="Rate Comparison"
           />
           <DivAtom style={quoteCreateQuoteStyles.tableContainer}>
-            {QUOTATIONS_COSTING_RATE_DATA.length > 0 && (
+            {comparisonData.length > 0 && (
               <CostingRateComparisonTable
                 columns={[
-                  'Dates',
                   'Accomodation',
                   'Booking Engine',
                   'Rate',
                 ]}
-                data={QUOTATIONS_COSTING_RATE_DATA as QuotationCostingRate[]}
+                data={comparisonData}
               />
             )}
           </DivAtom>

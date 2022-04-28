@@ -89,7 +89,6 @@ export interface CustomerQuotation {
 
 export interface QuotationCostingRate {
   id: string;
-  date: string;
   accomodation: string;
   bookingEngine: string;
   rate: string;

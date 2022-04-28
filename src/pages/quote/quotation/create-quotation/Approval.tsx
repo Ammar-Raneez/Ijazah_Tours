@@ -19,7 +19,6 @@ import ButtonAtom from '../../../../atoms/ButtonAtom';
 import DivAtom from '../../../../atoms/DivAtom';
 import IconAtom from '../../../../atoms/IconAtom';
 import ParagraphAtom from '../../../../atoms/ParagraphAtom';
-import { QUOTATIONS_COSTING_RATE_DATA } from '../../../../data';
 import { db } from '../../../../firebase';
 import ApprovalAccomodationTable from '../../../../organisms/quote/quotation/create-quotation/approval/ApprovalAccomodationTable';
 import ApprovalOverallCost from '../../../../organisms/quote/quotation/create-quotation/approval/ApprovalOverallCost';
@@ -135,10 +134,7 @@ function Approval({ setCreated }: ApprovalProps) {
     setSellingPrice(costDetails.sellingPrice);
     setDiscount(costDetails.discount);
     setNetPrice(costDetails.netPrice);
-  }, []);
-
-  useEffect(() => {
-    setRateData(QUOTATIONS_COSTING_RATE_DATA);
+    setRateData(costDetails.comparisonData || []);
   }, []);
 
   useEffect(() => {
@@ -324,11 +320,8 @@ function Approval({ setCreated }: ApprovalProps) {
         <li>Room and Breakfast in the hotel: {getSaveQuoteOffers(roomAndBreakfast)}</li>
         <li>Reception at Airport: {getSaveQuoteOffers(receptionAtAirport)}</li>
         <li>All Government Taxes: {getSaveQuoteOffers(allGovernmentTaxes)}</li>
-        <li>
-          Guide and the Car.
-          Transportation from Reception to Fairwell, (Throught the Trip):
-          {getSaveQuoteOffers(guideAndCar)}
-        </li>
+        { /* eslint-disable-next-line max-len */ }
+        <li>Guide and the Car. Transportation from Reception to Fairwell, (Throught the Trip): {getSaveQuoteOffers(guideAndCar)}</li>
       </ul>
     </DivAtom>
   ));
@@ -366,7 +359,6 @@ function Approval({ setCreated }: ApprovalProps) {
                         </DivAtom>
                         <ApprovalRateComparisonTable
                           columns={[
-                            'Dates',
                             'Accomodation',
                             'Booking Engine',
                             'Rate',

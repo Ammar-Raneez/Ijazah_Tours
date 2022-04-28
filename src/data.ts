@@ -1,27 +1,3 @@
-export const QUOTATIONS_COSTING_RATE_DATA = [
-  {
-    id: '1',
-    date: 'L1',
-    accomodation: 'The Kingsbury Colombo',
-    bookingEngine: 'https://booking.com',
-    rate: '$90',
-  },
-  {
-    id: '2',
-    date: 'L1',
-    accomodation: 'The Kingsbury Colombo',
-    bookingEngine: 'https://booking.com',
-    rate: '$90',
-  },
-  {
-    id: '3',
-    date: 'L1',
-    accomodation: 'The Kingsbury Colombo',
-    bookingEngine: 'https://booking.com',
-    rate: '$90',
-  },
-];
-
 export const TOUR_CONFIRM_STARTING_PROFORMA = `
   THIS PROFORMA REFERS TO THE BELOW TOUR ITINERARY.
 

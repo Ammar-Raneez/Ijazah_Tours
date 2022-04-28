@@ -176,6 +176,9 @@ export const MenuProps = {
   },
 };
 
+export const XOTELO_BASE_URL = 'https://data.xotelo.com/api/';
+
+// Google calendar related
 export const GOOGLE_CALENDAR_CLIENT_ID = '870677425628-honf8u48outj7as3a0lero6hfvsjsmo8.apps.googleusercontent.com';
 export const GOOGLE_CALENDAR_API_KEY = 'AIzaSyDTxBWYdtijZG_VVMPH1gsd_kmS5TF4Sn0';
 export const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'];

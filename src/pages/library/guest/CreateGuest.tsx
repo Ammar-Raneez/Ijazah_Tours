@@ -117,6 +117,12 @@ function CreateGuest({
   };
 
   const onAddReminder = async () => {
+    setShowValidationErrorMessage(false);
+    if (refNum.trim() === '' || contactNumber.trim() === '') {
+      setShowValidationErrorMessage(true);
+      return;
+    }
+
     setCreatingReminder(true);
     await setDoc(doc(db, 'Dashboard Tasks', `${refNum}-create-guest`), {
       title: '',
