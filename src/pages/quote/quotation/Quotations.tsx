@@ -9,14 +9,15 @@ import { Link, Route } from 'react-router-dom';
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import DivAtom from '../../../atoms/DivAtom';
 import InputAtom from '../../../atoms/InputAtom';
+import TextFieldAtom from '../../../atoms/TextFieldAtom';
 import { db } from '../../../firebase';
 import DataCard from '../../../molecules/DataCard';
 import CreateQuotationNavbar from '../../../organisms/quote/quotation/CreateQuotationNavbar';
 import QuotationsTable from '../../../organisms/quote/quotation/QuotationsTable';
 import { selectWithNavbarHeight, selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
 import { selectUser } from '../../../redux/userSlice';
-import { fetchingDataIndicatorStyles, quotationsStyles } from '../../../styles';
-import { searchData, widthHeightDynamicStyle } from '../../../utils/helpers';
+import { fetchingDataIndicatorStyles, libraryStyles, quotationsStyles } from '../../../styles';
+import { roleOptions, searchData, widthHeightDynamicStyle } from '../../../utils/helpers';
 import { CustomerQuotation, FlexDirection, JustifyContent } from '../../../utils/types';
 import Accomodation from './create-quotation/Accomodation';
 import Approval from './create-quotation/Approval';
@@ -43,6 +44,7 @@ function Quotations() {
     initialQuotationFilteredData,
     setInitialQuotationFilteredData,
   ] = useState<CustomerQuotation[]>([]);
+  const [adminFilter, setAdminFilter] = useState(roleOptions[0].value);
 
   const [search, setSearch] = useState('');
   const [created, setCreated] = useState(false);
@@ -64,13 +66,23 @@ function Quotations() {
         setQuotationsData((quotations as CustomerQuotation[]).filter(
           (quote) => quote.creator.id === user.id,
         ));
+        setInitialQuotationCardData((quotations as CustomerQuotation[]).filter(
+          (quote) => quote.creator.id === user.id,
+        ));
+        setInitialQuotationSearchData((quotations as CustomerQuotation[]).filter(
+          (quote) => quote.creator.id === user.id,
+        ));
+        setInitialQuotationFilteredData((quotations as CustomerQuotation[]).filter(
+          (quote) => quote.creator.id === user.id,
+        ));
       } else {
         setQuotationsData(quotations as CustomerQuotation[]);
+        setInitialQuotationCardData(quotations as CustomerQuotation[]);
+        setInitialQuotationSearchData(quotations as CustomerQuotation[]);
+        setInitialQuotationFilteredData(quotations as CustomerQuotation[]);
       }
 
-      setInitialQuotationCardData(quotations as CustomerQuotation[]);
-      setInitialQuotationSearchData(quotations as CustomerQuotation[]);
-      setInitialQuotationFilteredData(quotations as CustomerQuotation[]);
+      filterAdmins(roleOptions[0].value);
     };
 
     getIntialQuotationsData();
@@ -85,11 +97,27 @@ function Quotations() {
   };
 
   const filterCompleted = () => {
-    const approvedData = initialQuotationFilteredData.filter((quote) => (
+    const completedData = initialQuotationFilteredData.filter((quote) => (
       quote.status === 'COMPLETE'
     ));
 
-    setQuotationsData(approvedData);
+    setQuotationsData(completedData);
+  };
+
+  const filterAdmins = (val: string) => {
+    if (val === roleOptions[0].value) {
+      const adminData = initialQuotationFilteredData.filter((quote) => (
+        quote.creator.role === roleOptions[0].value
+      ));
+
+      setQuotationsData(adminData);
+    } else {
+      const travelAgentData = initialQuotationFilteredData.filter((quote) => (
+        quote.creator.role === roleOptions[1].value
+      ));
+
+      setQuotationsData(travelAgentData);
+    }
   };
 
   return (
@@ -211,20 +239,43 @@ function Quotations() {
                 <DivAtom
                   style={{
                     ...quotationsStyles.btnSubContainer,
-                    flexDirection: widthHeightDynamicStyle(width, 768, 'column', 'row') as FlexDirection,
+                    flexDirection: widthHeightDynamicStyle(width, 970, 'column', 'row') as FlexDirection,
                   }}
                 >
                   <DivAtom
                     style={{
                       ...quotationsStyles.btnSubInnerContainer,
-                      margin: widthHeightDynamicStyle(width, 768, '0 0 1rem 0', 0),
+                      margin: widthHeightDynamicStyle(width, 970, '0 0 1rem 0', 0),
+                      flexDirection: widthHeightDynamicStyle(width, 550, 'column', 'row') as FlexDirection,
                     }}
                   >
+                    {user.role === roleOptions[0].value && (
+                      <TextFieldAtom
+                        variant="standard"
+                        size="medium"
+                        label="Quotes of"
+                        value={adminFilter}
+                        onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
+                          setAdminFilter(e.target.value);
+                          filterAdmins(e.target.value);
+                        }}
+                        options={roleOptions}
+                        adornmentPosition="end"
+                        style={{
+                          ...libraryStyles.textField,
+                          flex: 1,
+                          width: widthHeightDynamicStyle(width, 550, '100%', 'auto'),
+                          margin: widthHeightDynamicStyle(width, 550, '0 0 1rem 0', '0 1rem 0 0'),
+                        }}
+                        disableUnderline={false}
+                        select
+                      />
+                    )}
                     <ButtonAtom
                       text="Approved"
                       style={{
                         ...quotationsStyles.btn,
-                        marginRight: '16px',
+                        margin: widthHeightDynamicStyle(width, 550, '0 0 1rem 0', '0 1rem 0 0'),
                       }}
                       onClick={filterApproved}
                       size="large"
