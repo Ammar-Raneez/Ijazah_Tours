@@ -78,6 +78,26 @@ function Voucher() {
           completed: false,
         });
 
+        const startDate = new Date();
+        const endDate = new Date();
+        const calendarEvent = {
+          summary: 'Approval of Quote',
+          description: `Reminder - Approval of Quote ${voucherData[quoteNo][0].quotationTitle}`,
+          start: {
+            dateTime: startDate.toISOString(),
+          },
+          end: {
+            dateTime: new Date(endDate.setDate(startDate.getDate() + 10)).toISOString(),
+          },
+        };
+
+        const request = (window as any).gapi.client.calendar.events.insert({
+          calendarId: 'primary',
+          resource: calendarEvent,
+        });
+
+        request.execute(() => {});
+
         quotationSnapshot.forEach(async (snap) => {
           await setDoc(doc(db, 'Approval Quotations', snap.id), {
             ...snap.data(),

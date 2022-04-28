@@ -52,6 +52,8 @@ function CreateGuest({
 
   const [showValidationErrorMessage, setShowValidationErrorMessage] = useState(false);
 
+  const [creatingReminder, setCreatingReminder] = useState(false);
+
   const history = useHistory();
 
   const onAddGuest = async () => {
@@ -115,6 +117,7 @@ function CreateGuest({
   };
 
   const onAddReminder = async () => {
+    setCreatingReminder(true);
     await setDoc(doc(db, 'Dashboard Tasks', `${refNum}-create-guest`), {
       title: '',
       status: 'Creation of Customer',
@@ -123,6 +126,26 @@ function CreateGuest({
       updatedAt: serverTimestamp(),
       completed: false,
     });
+
+    const startDate = new Date();
+    const endDate = new Date();
+    const calendarEvent = {
+      summary: 'Creation of Customer',
+      description: refNum ? `Reminder - Creation of Customer of Reference ${refNum}` : 'Reminder - Creation of Customer of Reference',
+      start: {
+        dateTime: startDate.toISOString(),
+      },
+      end: {
+        dateTime: new Date(endDate.setDate(startDate.getDate() + 10)).toISOString(),
+      },
+    };
+
+    const request = (window as any).gapi.client.calendar.events.insert({
+      calendarId: 'primary',
+      resource: calendarEvent,
+    });
+
+    request.execute(() => setCreatingReminder(false));
   };
 
   return (
@@ -172,6 +195,7 @@ function CreateGuest({
         setPassport={setPassport}
         onAddEditGuest={onAddGuest}
         onAddReminder={onAddReminder}
+        creatingReminder={creatingReminder}
       />
     </DivAtom>
   );

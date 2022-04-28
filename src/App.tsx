@@ -32,7 +32,7 @@ import UserManagement from './pages/settings/user-management/UserManagement';
 import { onSizeChange } from './redux/containerSizeSlice';
 import { login, logout } from './redux/userSlice';
 import { fetchingDataIndicatorStyles } from './styles';
-import { getUserOnLogin, widthHeightDynamicStyle } from './utils/helpers';
+import { getUserOnLogin, handleClientLoad, widthHeightDynamicStyle } from './utils/helpers';
 import ProtectedRoute from './utils/ProtectedRoute';
 
 const rememberMe = localStorage.getItem('Ijazah Remember Me') !== 'false';
@@ -43,6 +43,10 @@ function App() {
 
   const dispatch = useDispatch();
   const history = useHistory();
+
+  useEffect(() => {
+    handleClientLoad();
+  }, []);
 
   useEffect(() => {
     if (rememberMe) {

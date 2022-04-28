@@ -175,3 +175,30 @@ export const MenuProps = {
     },
   },
 };
+
+export const GOOGLE_CALENDAR_CLIENT_ID = '870677425628-honf8u48outj7as3a0lero6hfvsjsmo8.apps.googleusercontent.com';
+export const GOOGLE_CALENDAR_API_KEY = 'AIzaSyDTxBWYdtijZG_VVMPH1gsd_kmS5TF4Sn0';
+export const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'];
+export const SCOPES = 'https://www.googleapis.com/auth/calendar';
+
+export const handleClientLoad = () => {
+  (window as any).gapi.load('client:auth2', initCalendarClient);
+};
+
+const initCalendarClient = () => {
+  (window as any).gapi.client.init({
+    apiKey: GOOGLE_CALENDAR_API_KEY,
+    clientId: GOOGLE_CALENDAR_CLIENT_ID,
+    discoveryDocs: DISCOVERY_DOCS,
+    scope: SCOPES,
+  }).then(() => {
+    (window as any).gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+    updateSigninStatus((window as any).gapi.auth2.getAuthInstance().isSignedIn.get());
+  });
+};
+
+const updateSigninStatus = (isSignedIn: boolean) => {
+  if (!isSignedIn) {
+    (window as any).gapi.auth2.getAuthInstance().signIn();
+  }
+};

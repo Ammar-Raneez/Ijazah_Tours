@@ -102,6 +102,26 @@ function QuotationsTable({ rowdata }: QuotationsTableProps) {
       completed: false,
     });
 
+    const startDate = new Date();
+    const endDate = new Date();
+    const calendarEvent = {
+      summary: 'Creation of Quote',
+      description: `Reminder - Creation of Quote ${row.quoteTitle}`,
+      start: {
+        dateTime: startDate.toISOString(),
+      },
+      end: {
+        dateTime: new Date(endDate.setDate(startDate.getDate() + 10)).toISOString(),
+      },
+    };
+
+    const request = (window as any).gapi.client.calendar.events.insert({
+      calendarId: 'primary',
+      resource: calendarEvent,
+    });
+
+    request.execute(() => {});
+
     window.open('mailto:');
   };
 

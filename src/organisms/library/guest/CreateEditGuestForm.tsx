@@ -57,6 +57,7 @@ interface CreateEditGuestFormProps {
   setChildAge: any;
   setChildrenAges: any;
   setPassport: any;
+  creatingReminder?: boolean;
   onAddReminder?: () => void;
 }
 
@@ -94,6 +95,7 @@ function CreateEditGuestForm({
   setChildAge,
   setChildrenAges,
   setPassport,
+  creatingReminder,
   onAddReminder,
 }: CreateEditGuestFormProps) {
   const countries = Country.getAllCountries();
@@ -395,21 +397,19 @@ function CreateEditGuestForm({
           }}
           text={btnText}
         />
-        {/* <a
-          href="https://calendar.google.com/calendar/u/0/r/eventedit?text=Creation+of+Customer"
-          style={{ width: widthHeightDynamicStyle(width, 768, '100%', '18%') }}
-          target="_blank"
-        > */}
-        <ButtonAtom
-          size="large"
-          onClick={onAddReminder}
-          style={{
-            ...libraryCreateGuestStyles.addBtn,
-            width: '100%',
-          }}
-          text="Add Reminder"
-        />
-        {/* </a> */}
+        {onAddReminder && (
+          <ButtonAtom
+            size="large"
+            onClick={onAddReminder}
+            style={{
+              ...libraryCreateGuestStyles.addBtn,
+              width: widthHeightDynamicStyle(width, 768, '100%', '18%'),
+            }}
+            text="Add Reminder"
+            disabled={creatingReminder}
+            endIcon={creatingReminder && <CircularProgress size={20} color="inherit" />}
+          />
+        )}
       </DivAtom>
     </>
   );
