@@ -181,6 +181,7 @@ function Customer() {
           toStoreDestinations,
           dateType,
           dateType === dateTypeOptions[1].value ? notSpecificDays : null,
+          email,
         ]],
       }),
     );

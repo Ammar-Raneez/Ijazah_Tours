@@ -135,6 +135,25 @@ function Row({
     }
   };
 
+  const getMailTo = (voucher: any) => {
+    const { type } = voucher;
+    let mailTo = '';
+    switch (type) {
+    case 'Cash Receipt':
+      mailTo = voucher.guestDetails.email || '';
+      return mailTo;
+    case 'Tour Confirmation Voucher':
+    case 'Itinerary Voucher':
+      return mailTo;
+    case 'Driver Voucher':
+      mailTo = voucher.driverDetails.email;
+      return mailTo;
+    default:
+      mailTo = voucher.accomodationDetails.email;
+      return mailTo;
+    }
+  };
+
   return (
     <Fragment>
       <TableRow>
@@ -175,6 +194,7 @@ function Row({
                     <TableColumnCell color="black" column="Voucher ID" />
                     <TableColumnCell color="black" column="Voucher Title" />
                     <TableColumnCell color="black" column="Status" />
+                    <TableColumnCell color="black" column="" />
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -206,6 +226,15 @@ function Row({
                             : ['#7879F1', '#ffffff']
                         }
                         btnDisabled={vouchersChecked[index]}
+                      />
+                      <TableRowButtonCell
+                        onClick={() => window.open(`mailto:${getMailTo(voucher)}`)}
+                        align="left"
+                        btnWidth="8rem"
+                        btnSize="medium"
+                        btnBorderRadius="0.5rem"
+                        btnText="SEND EMAIL"
+                        btnColors={['#29CC97', '#ffffff']}
                       />
                     </TableRow>
                   ))}

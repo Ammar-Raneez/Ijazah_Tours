@@ -57,6 +57,7 @@ function Approval({ setCreated }: ApprovalProps) {
   const [refNum, setRefNum] = useState('');
   const [userId, setUserId] = useState('');
   const [firstName, setFirstName] = useState('');
+  const [email, setEmail] = useState('');
   const [lastName, setLastName] = useState('');
   const [nationality, setNationality] = useState('');
   const [arrival, setArrival] = useState('');
@@ -128,6 +129,7 @@ function Approval({ setCreated }: ApprovalProps) {
     setAdults(customerDetails[9]);
     setChildren(customerDetails[10]);
     setUserId(customerDetails[11]);
+    setEmail(customerDetails[18]);
 
     const costDetails = JSON.parse(localStorage.getItem('New Quote Costing')!);
     setSellingPrice(costDetails.sellingPrice);
@@ -197,6 +199,7 @@ function Approval({ setCreated }: ApprovalProps) {
       pdfURL,
       accomodations,
       costings,
+      email,
       user: userId,
       creator: user,
       name: `${firstName} ${lastName}`,
