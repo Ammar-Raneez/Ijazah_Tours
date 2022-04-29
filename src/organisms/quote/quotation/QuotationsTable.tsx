@@ -12,8 +12,8 @@ import {
   Theme,
 } from '@material-ui/core';
 import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { v4 as uuid } from 'uuid';
 
 import { db } from '../../../firebase';
 import GuestProfile from '../../../molecules/GuestProfile';
@@ -21,6 +21,7 @@ import TablePaginationActions from '../../../molecules/TableBottomPagination';
 import TableHead from '../../../molecules/TableHead';
 import TableRowButtonCell from '../../../molecules/TableRowButtonCell';
 import TableRowTextCell from '../../../molecules/TableRowTextCell';
+import { selectUser } from '../../../redux/userSlice';
 import { getComparator, stableSort } from '../../../utils/helpers';
 import { CustomerQuotation, Order } from '../../../utils/types';
 
@@ -67,6 +68,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 function QuotationsTable({ rowdata }: QuotationsTableProps) {
+  const user = useSelector(selectUser);
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('');
@@ -101,6 +103,7 @@ function QuotationsTable({ rowdata }: QuotationsTableProps) {
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
       completed: false,
+      creator: user,
       refNum: row.refNum,
     });
 

@@ -17,10 +17,12 @@ import DivAtom from '../../atoms/DivAtom';
 import { db } from '../../firebase';
 import TaskTable from '../../organisms/dashboard/TaskTable';
 import { selectWithoutNavbarHeight, selectWithoutNavbarWidth } from '../../redux/containerSizeSlice';
+import { selectUser } from '../../redux/userSlice';
 import { dashboardStyles, fetchingDataIndicatorStyles } from '../../styles';
 import { widthHeightDynamicStyle } from '../../utils/helpers';
 
 function Dashboard() {
+  const user = useSelector(selectUser);
   const height = useSelector(selectWithoutNavbarHeight);
   const width = useSelector(selectWithoutNavbarWidth);
 
@@ -36,8 +38,10 @@ function Dashboard() {
         tasks[i].id = id;
       });
 
+      const filteredTasks = tasks.filter((t) => t.creator.id === user.id);
+
       const groupedTaskhData = _.groupBy(
-        tasks,
+        filteredTasks,
         (task: { refNum: string }) => task.refNum,
       );
 

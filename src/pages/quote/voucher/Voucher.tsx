@@ -14,7 +14,6 @@ import {
 import _ from 'lodash';
 import { useSelector } from 'react-redux';
 import { Route } from 'react-router-dom';
-import { v4 as uuid } from 'uuid';
 
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import DivAtom from '../../../atoms/DivAtom';
@@ -26,10 +25,12 @@ import SupplierVoucher from '../../../organisms/quote/voucher/SupplierVoucher';
 import TourConfirmationVoucher from '../../../organisms/quote/voucher/TourConfirmationVoucher';
 import VoucherTable from '../../../organisms/quote/voucher/VoucherTable';
 import { selectWithNavbarHeight, selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
+import { selectUser } from '../../../redux/userSlice';
 import { fetchingDataIndicatorStyles, voucherStyles } from '../../../styles';
 import { widthHeightDynamicStyle } from '../../../utils/helpers';
 
 function Voucher() {
+  const user = useSelector(selectUser);
   const width = useSelector(selectWithNavbarWidth);
   const height = useSelector(selectWithNavbarHeight);
   const [voucherData, setVoucherData] = useState<any>();
@@ -77,6 +78,7 @@ function Voucher() {
           createdAt: serverTimestamp(),
           updatedAt: serverTimestamp(),
           completed: false,
+          creator: user,
           refNum: voucherData[quoteNo][0].guestDetails.refNum,
         });
 

@@ -13,6 +13,7 @@ import IconAtom from '../../../atoms/IconAtom';
 import { db } from '../../../firebase';
 import CreateEditGuestForm from '../../../organisms/library/guest/CreateEditGuestForm';
 import { selectWithNavbarWidth } from '../../../redux/containerSizeSlice';
+import { selectUser } from '../../../redux/userSlice';
 import { libraryCreateGuestStyles } from '../../../styles';
 import { statusOptions, uploadImage } from '../../../utils/helpers';
 import { CityDropdown, LocationDropdown } from '../../../utils/types';
@@ -28,6 +29,7 @@ function CreateGuest({
   isCreating,
   setIsCreating,
 }: CreateGuestProps) {
+  const user = useSelector(selectUser);
   const width = useSelector(selectWithNavbarWidth);
 
   const [refNum, setRefNum] = useState('');
@@ -132,6 +134,7 @@ function CreateGuest({
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
       completed: false,
+      creator: user,
       refNum,
     });
 
