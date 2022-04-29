@@ -132,6 +132,7 @@ function CreateGuest({
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
       completed: false,
+      refNum,
     });
 
     const startDate = new Date();

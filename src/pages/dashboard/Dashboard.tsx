@@ -8,6 +8,7 @@ import {
   serverTimestamp,
   setDoc,
 } from 'firebase/firestore';
+import _ from 'lodash';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -18,13 +19,12 @@ import TaskTable from '../../organisms/dashboard/TaskTable';
 import { selectWithoutNavbarHeight, selectWithoutNavbarWidth } from '../../redux/containerSizeSlice';
 import { dashboardStyles, fetchingDataIndicatorStyles } from '../../styles';
 import { widthHeightDynamicStyle } from '../../utils/helpers';
-import { DashboardTask } from '../../utils/types';
 
 function Dashboard() {
   const height = useSelector(selectWithoutNavbarHeight);
   const width = useSelector(selectWithoutNavbarWidth);
 
-  const [dashboardData, setDashboardData] = useState<DashboardTask[]>();
+  const [dashboardData, setDashboardData] = useState<any>();
   const [isUpdating, setIsUpdating] = useState(false);
 
   useEffect(() => {
@@ -36,7 +36,12 @@ function Dashboard() {
         tasks[i].id = id;
       });
 
-      setDashboardData(tasks as DashboardTask[]);
+      const groupedTaskhData = _.groupBy(
+        tasks,
+        (task: { refNum: string }) => task.refNum,
+      );
+
+      setDashboardData(groupedTaskhData);
     };
 
     getIntialDashboardData();
@@ -49,10 +54,13 @@ function Dashboard() {
   };
 
   const updateTaskStatus = async () => {
-    dashboardData?.forEach(async (task) => {
-      await setDoc(doc(db, 'Dashboard Tasks', task.id), {
-        ...task,
-        updatedAt: serverTimestamp(),
+    Object.keys(dashboardData).forEach(async (refNum) => {
+      await dashboardData[refNum].forEach(async (task: any) => {
+        const { id, ...t } = task;
+        await setDoc(doc(db, 'Dashboard Tasks', id), {
+          ...t,
+          updatedAt: serverTimestamp(),
+        });
       });
     });
   };

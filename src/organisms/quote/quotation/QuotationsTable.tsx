@@ -13,6 +13,7 @@ import {
 } from '@material-ui/core';
 import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { useHistory } from 'react-router-dom';
+import { v4 as uuid } from 'uuid';
 
 import { db } from '../../../firebase';
 import GuestProfile from '../../../molecules/GuestProfile';
@@ -100,6 +101,7 @@ function QuotationsTable({ rowdata }: QuotationsTableProps) {
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
       completed: false,
+      refNum: row.refNum,
     });
 
     const startDate = new Date();
@@ -120,7 +122,7 @@ function QuotationsTable({ rowdata }: QuotationsTableProps) {
       resource: calendarEvent,
     });
 
-    request.execute(() => {});
+    request.execute(() => { });
 
     window.open('mailto:');
   };

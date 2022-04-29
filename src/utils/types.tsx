@@ -59,17 +59,6 @@ export interface SettingsSingleInput {
   updatedAt: Timestamp;
 }
 
-// Dashboard
-export interface DashboardTask {
-  id: string;
-  title: string;
-  status: string;
-  stage: string;
-  createdAt: Timestamp,
-  updatedAt: Timestamp;
-  completed: boolean;
-}
-
 // Quotations
 export interface CustomerQuotation {
   id: string;

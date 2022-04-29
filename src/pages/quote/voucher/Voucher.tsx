@@ -14,6 +14,7 @@ import {
 import _ from 'lodash';
 import { useSelector } from 'react-redux';
 import { Route } from 'react-router-dom';
+import { v4 as uuid } from 'uuid';
 
 import ButtonAtom from '../../../atoms/ButtonAtom';
 import DivAtom from '../../../atoms/DivAtom';
@@ -76,6 +77,7 @@ function Voucher() {
           createdAt: serverTimestamp(),
           updatedAt: serverTimestamp(),
           completed: false,
+          refNum: voucherData[quoteNo][0].guestDetails.refNum,
         });
 
         const startDate = new Date();
