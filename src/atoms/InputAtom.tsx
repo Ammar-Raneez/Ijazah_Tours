@@ -22,7 +22,7 @@ interface InputAtomProps {
   lkrAdornment?: boolean;
   error?: boolean;
   rows?: number;
-  minValue?: number;
+  minValue?: number | string;
   adornmentPosition?: 'start' | 'end';
   ref?: ((instance: unknown) => void) | RefObject<unknown>;
   children?: ReactNode;

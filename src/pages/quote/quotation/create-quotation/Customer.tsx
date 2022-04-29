@@ -52,8 +52,9 @@ function Customer() {
   const [mealPlan, setMealPlan] = useState(mealPlanOptions[0].value);
 
   const [holidayType, setHolidayType] = useState('');
-  const [checkin, setCheckin] = useState('2022-01-01');
-  const [checkout, setCheckout] = useState('2022-01-31');
+  const [checkin, setCheckin] = useState(new Date().toISOString().split('T')[0]);
+  const [checkout, setCheckout] = useState(new Date().toISOString().split('T')[0]);
+  const [invalidDate, setInvalidDate] = useState(false);
   const [dateType, setDateType] = useState(dateTypeOptions[0].value);
   const [notSpecificDays, setNotSpecificDays] = useState(0);
 
@@ -160,8 +161,17 @@ function Customer() {
     event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
   ) => {
     event.preventDefault();
+    setInvalidDate(false);
     const saveCheckin = checkin.split('-').length === 2 ? `${checkin}-15` : checkin;
     const saveCheckout = checkout.split('-').length === 2 ? `${checkout}-15` : checkout;
+
+    const currentDate = new Date().valueOf();
+    if (new Date(saveCheckin).valueOf() < new Date(saveCheckout).valueOf()
+    || new Date(saveCheckin).valueOf() < currentDate
+    || new Date(saveCheckout).valueOf() < currentDate) {
+      setInvalidDate(true);
+      return;
+    }
 
     localStorage.setItem(
       'New Quote Customer',
@@ -230,6 +240,7 @@ function Customer() {
           checkin={checkin}
           checkout={checkout}
           additionalBed={additionalBed}
+          invalidDate={invalidDate}
           onCreateCustomer={onCreateCustomer}
           onRefNumChange={onRefNumChange}
           setNotSpecificDays={setNotSpecificDays}

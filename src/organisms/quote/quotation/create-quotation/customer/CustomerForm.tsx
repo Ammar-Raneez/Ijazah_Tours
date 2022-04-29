@@ -50,6 +50,7 @@ interface CustomerFormProps {
   checkin: string;
   checkout: string;
   additionalBed: boolean;
+  invalidDate: boolean;
   onCreateCustomer: (event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => void;
   onRefNumChange: (data: LibraryGuest[], rf: string) => void;
   setTitle: any;
@@ -91,6 +92,7 @@ function CustomerForm({
   checkin,
   checkout,
   additionalBed,
+  invalidDate,
   onCreateCustomer,
   onRefNumChange,
   setTitle,
@@ -388,6 +390,18 @@ function CustomerForm({
           )}
         </DivAtom>
       </DivAtom>
+
+      {invalidDate && (
+        <DivAtom style={{ paddingLeft: '1rem' }}>
+          <p
+            style={{ color: 'red', textAlign: 'center' }}
+          >
+            {/* eslint-disable-next-line max-len */}
+            Invalid Date - please make sure that the selected dates are in the future and the checkout date is ahead of the checkin date
+          </p>
+        </DivAtom>
+      )}
+
       <DivAtom
         style={{
           ...quoteCreateQuoteStyles.addBtnContainer,
