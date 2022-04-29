@@ -44,6 +44,7 @@ function Customer() {
   const [email, setEmail] = useState('');
   const [country, setCountry] = useState('');
   const [city, setCity] = useState('');
+  const [rooms, setRooms] = useState(0);
 
   const [destinations, setDestinations] = useState<string[]>([]);
   const [toStoreDestinations, setToStoreDestinations] = useState<string[]>([]);
@@ -119,6 +120,8 @@ function Customer() {
         setMealPlan(cusData[13]);
         setToStoreDestinations(cusData[15]);
         setDestinations(cusData[15]);
+        setEmail(cusData[18]);
+        setRooms(cusData[19]);
 
         if (cusData[16] === dateTypeOptions[0].value) {
           setCheckin(cusData[7]);
@@ -149,6 +152,7 @@ function Customer() {
       setEmail(customer.email);
       setCountry(customer.country.value);
       setCity(customer.city.value);
+      setRooms(customer.rooms || 3);
     }
   };
 
@@ -182,6 +186,7 @@ function Customer() {
           dateType,
           dateType === dateTypeOptions[1].value ? notSpecificDays : null,
           email,
+          rooms,
         ]],
       }),
     );

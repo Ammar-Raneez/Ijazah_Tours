@@ -58,17 +58,49 @@ function Costing() {
     const getComparisonRates = async () => {
       const rates: QuotationCostingRate[] = [];
       await Promise.all(accomodations.map(async (acc) => {
-        const res = await axios.get(`${XOTELO_BASE_URL}rates?hotel_key=${Hotels[acc.name as keyof typeof Hotels]}&chk_in=${customerDetails[7]}&chk_out=${customerDetails[8]}&adults=${customerDetails[9]}&rooms=3`);
-
-        res.data.result?.rates?.forEach((r: any, index: number) => {
-          if (r.name.includes('Agoda') || r.name.includes('Booking') || r.name === 'Hotels.com') {
-            rates.push({
-              bookingEngine: r.name,
-              accomodation: acc.name,
-              id: String(index),
-              rate: `$${r.rate}`,
-            });
+        // Create required age of children format
+        const ageOfChildren: number[] = customerDetails[10].map((n: string) => {
+          if (n.length > 1 && n.startsWith('0')) {
+            n = n.substring(1);
           }
+
+          return Number(n);
+        });
+
+        // Calculate for adults and children
+        const adultsRes = await axios.get(`${XOTELO_BASE_URL}rates`, {
+          params: {
+            hotel_key: Hotels[acc.name as keyof typeof Hotels],
+            chk_in: customerDetails[7],
+            chk_out: customerDetails[8],
+            adults: customerDetails[9],
+            rooms: 3,
+          },
+        });
+        const childrenRes = await axios.get(`${XOTELO_BASE_URL}rates`, {
+          params: {
+            hotel_key: Hotels[acc.name as keyof typeof Hotels],
+            chk_in: customerDetails[7],
+            chk_out: customerDetails[8],
+            age_of_children: `[${ageOfChildren.join(',')}]`,
+            rooms: 3,
+          },
+        });
+
+        const requiredAdultsRates = adultsRes.data.result?.rates?.filter((r: any) => (
+          r.name === 'Agoda.com' || r.name === 'Booking.com' || r.name === 'Hotels.com'
+        ));
+        const requiredChildrenRates = childrenRes.data.result?.rates?.filter((r: any) => (
+          r.name === 'Agoda.com' || r.name === 'Booking.com' || r.name === 'Hotels.com'
+        ));
+
+        requiredAdultsRates.forEach((r: any, i: number) => {
+          rates.push({
+            bookingEngine: r.name,
+            accomodation: acc.name,
+            id: String(i),
+            rate: `$${r.rate + requiredChildrenRates.find((rc: any) => rc.name === r.name).rate}`,
+          });
         });
       }));
 

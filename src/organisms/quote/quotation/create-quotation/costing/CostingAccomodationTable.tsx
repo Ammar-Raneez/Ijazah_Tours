@@ -145,7 +145,7 @@ function CostingAccomodationTable({
               key={uuid()}
               cell={{
                 align: 'center',
-                title: accTotal,
+                title: `$${accTotal}`,
                 colors: ['#464E5F'],
                 weight: 600,
               }}
