@@ -124,6 +124,7 @@ function CreateGuest({
     }
 
     setCreatingReminder(true);
+    await onAddGuest();
     await setDoc(doc(db, 'Dashboard Tasks', `${refNum}-create-guest`), {
       title: '',
       status: 'Creation of Customer',
