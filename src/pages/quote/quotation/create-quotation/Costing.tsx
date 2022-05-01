@@ -74,7 +74,7 @@ function Costing() {
             chk_in: customerDetails[7],
             chk_out: customerDetails[8],
             adults: customerDetails[9],
-            rooms: 3,
+            rooms: customerDetails[19] ? Number(customerDetails[19]) : 1,
           },
         });
         const childrenRes = await axios.get(`${XOTELO_BASE_URL}rates`, {
@@ -83,7 +83,7 @@ function Costing() {
             chk_in: customerDetails[7],
             chk_out: customerDetails[8],
             age_of_children: `[${ageOfChildren.join(',')}]`,
-            rooms: 3,
+            rooms: customerDetails[19] ? Number(customerDetails[19]) : 1,
           },
         });
 

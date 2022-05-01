@@ -77,6 +77,7 @@ function CompareRates() {
     if (search.trim() === '') {
       setCurrentSearchedAccomodation(undefined);
       setXoteloAccomodations(undefined);
+      setIsFetchingData(false);
       return;
     }
 

@@ -131,6 +131,10 @@ function Accomodation() {
   }, []);
 
   const addAccomodation = (acc: UserAccomodation) => {
+    const customerDetails = JSON.parse(
+      localStorage.getItem('New Quote Customer')!,
+    ).data[0];
+
     if (selectedAccomodations.find((a) => a.name === acc.name)) {
       return;
     }
@@ -145,7 +149,35 @@ function Accomodation() {
     acc.nights = '1';
     acc.roomRate = '';
     acc.total = '';
-    acc.pax = 'Single'; // do calculation
+
+    const adults = customerDetails[9];
+    const children = customerDetails[10];
+    let pax = Number(adults);
+    children.forEach((child: string) => {
+      if (Number(child) > 14) {
+        pax += 1;
+      }
+    });
+
+    if (pax > 3) {
+      const totalGuests = Number(adults) + children.length;
+      let initRooms = Number(customerDetails[19]);
+      initRooms = Math.floor(totalGuests / 3) + 1;
+
+      customerDetails[19] = initRooms;
+      localStorage.setItem(
+        'New Quote Customer',
+        JSON.stringify({
+          data: [customerDetails],
+        }),
+      );
+
+      acc.pax = 'Triple';
+    } else {
+      // eslint-disable-next-line no-nested-ternary
+      acc.pax = pax === 1 ? 'Single' : pax === 2 ? 'Double' : 'Triple';
+    }
+
     acc.roomType = roomTypes[0].value;
     acc.mealPlan = mealPlanOptions[0].value;
 
