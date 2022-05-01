@@ -33,7 +33,7 @@ const travelAgentCells = [
   { id: 'name', label: 'NAME' },
   { id: 'tel', label: 'TEL NUMBER' },
   { id: 'city', label: 'CITY' },
-  { id: 'country', label: 'COUNTRY' },
+  { id: 'country', label: 'LOCATION' },
   { id: 'group', label: 'GROUP' },
 ];
 

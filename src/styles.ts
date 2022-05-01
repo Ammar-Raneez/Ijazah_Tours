@@ -529,6 +529,10 @@ export const compareRatesStyles = {
     justifyContent: 'flex-start',
     alignItems: 'flex-end',
   },
+  detailsContainer: {
+    display: 'flex',
+    flexWrap: 'wrap' as const,
+  },
 };
 
 // Settings

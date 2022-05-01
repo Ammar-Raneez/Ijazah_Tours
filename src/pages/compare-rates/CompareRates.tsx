@@ -18,7 +18,14 @@ import FormControlInput from '../../molecules/FormControlInput';
 import AccomodationCard from '../../organisms/compare-rates/AccomodationCard';
 import { selectWithoutNavbarHeight, selectWithoutNavbarWidth } from '../../redux/containerSizeSlice';
 import { compareRatesStyles, fetchingDataIndicatorStyles, libraryStyles } from '../../styles';
-import { getDaysDifference, widthHeightDynamicStyle, XOTELO_BASE_URL } from '../../utils/helpers';
+import {
+  getDaysDifference,
+  RAPID_API_BASE_URL,
+  RAPID_API_HOST,
+  RAPID_API_KEY,
+  widthHeightDynamicStyle,
+  XOTELO_BASE_URL,
+} from '../../utils/helpers';
 import { FlexDirection, CompareRatesAccomdation } from '../../utils/types';
 
 function CompareRates() {
@@ -38,6 +45,8 @@ function CompareRates() {
     setCurrentSearchedAccomodation,
   ] = useState<CompareRatesAccomdation>();
   const [xoteloAccomodations, setXoteloAccomodations] = useState<any[]>();
+  const [rapidApiAccomodation, setRapidApiAccomodation] = useState<any>();
+  const [isFetchingData, setIsFetchingData] = useState(false);
 
   useEffect(() => {
     const getInitialData = async () => {
@@ -64,6 +73,7 @@ function CompareRates() {
 
   const searchAccomodation = async () => {
     setInvalidDate(false);
+    setIsFetchingData(true);
     if (search.trim() === '') {
       setCurrentSearchedAccomodation(undefined);
       setXoteloAccomodations(undefined);
@@ -84,6 +94,7 @@ function CompareRates() {
 
     if (selectedAccomodation) {
       await searchXoteloAPI(selectedAccomodation);
+      await searchRapidAPI(selectedAccomodation);
 
       const rate = selectedAccomodation.rates[0];
       const guestPrice = Number(rate.newSinglePrice.slice(1)) * guests;
@@ -91,6 +102,8 @@ function CompareRates() {
       temp.total = `$${guestPrice * nightsRequired}`;
       setCurrentSearchedAccomodation(temp);
     }
+
+    setIsFetchingData(false);
   };
 
   const searchXoteloAPI = async (selectedAccomodation: CompareRatesAccomdation) => {
@@ -120,18 +133,90 @@ function CompareRates() {
     setXoteloAccomodations(requiredRates || []);
   };
 
-  const RenderData = () => (
-    currentSearchedAccomodation && xoteloAccomodations ? (
-      <DivAtom>
+  const searchRapidAPI = async (selectedAccomodation: CompareRatesAccomdation) => {
+    const nightsRequired = getDaysDifference(checkout, checkin) || 0;
+
+    const locationRes = await axios.get(`${RAPID_API_BASE_URL}locations/v2/search`, {
+      params: {
+        query: 'sri lanka',
+        currency: 'USD',
+        locale: 'en_US',
+      },
+      headers: {
+        'X-RapidAPI-Host': RAPID_API_HOST,
+        'X-RapidAPI-Key': RAPID_API_KEY,
+      },
+    });
+
+    const locs = locationRes.data.suggestions?.find((s: { group: string }) => s.group === 'CITY_GROUP')?.entities;
+    const destinationId = locs?.find((l: { name: string }) => (
+      l.name?.toLowerCase().includes(selectedAccomodation.city.toLowerCase())
+    ))?.destinationId;
+
+    const propertiesRes = await axios.get(`${RAPID_API_BASE_URL}properties/list`, {
+      params: {
+        destinationId,
+        pageNumber: '1',
+        pageSize: '25',
+        checkIn: checkin,
+        checkOut: checkout,
+        adults1: '1',
+        sortOrder: 'STAR_RATING_HIGHEST_FIRST',
+        locale: 'en_US',
+        currency: 'USD',
+      },
+      headers: {
+        'X-RapidAPI-Host': RAPID_API_HOST,
+        'X-RapidAPI-Key': RAPID_API_KEY,
+      },
+    });
+
+    const props = propertiesRes.data.data?.body?.searchResults?.results;
+    const propId = props?.find((p: { name: string }) => (
+      p.name?.toLowerCase().includes(selectedAccomodation.name.toLowerCase())
+    ))?.id;
+
+    const propertiesDetailsRes = await axios.get(`${RAPID_API_BASE_URL}properties/get-details`, {
+      params: {
+        id: propId,
+        checkIn: checkin,
+        checkOut: checkout,
+        adults1: guests,
+        currency: 'USD',
+        locale: 'en_US',
+      },
+      headers: {
+        'X-RapidAPI-Host': RAPID_API_HOST,
+        'X-RapidAPI-Key': RAPID_API_KEY,
+      },
+    });
+
+    const propDetails = propertiesDetailsRes.data.data?.body?.propertyDescription;
+    propDetails.bookingEngine = 'Hotels.com';
+    propDetails.accGradings = [`${propDetails.starRating} Star`];
+    propDetails.city = selectedAccomodation.city;
+    propDetails.country = selectedAccomodation.country;
+    propDetails.total = `$${(propDetails.featuredPrice?.currentPrice?.plain || 0) * nightsRequired}`;
+    propDetails.roomTypes = propDetails.roomTypeNames;
+    setRapidApiAccomodation(propDetails || []);
+  };
+
+  const RenderDetails = () => (
+    // eslint-disable-next-line no-nested-ternary
+    currentSearchedAccomodation && xoteloAccomodations && rapidApiAccomodation ? (
+      <DivAtom style={compareRatesStyles.detailsContainer}>
         <AccomodationCard accomodation={currentSearchedAccomodation} />
         {xoteloAccomodations.map((acc, index) => (
           <AccomodationCard accomodation={acc} key={index} />
         ))}
+        <AccomodationCard accomodation={rapidApiAccomodation} />
       </DivAtom>
-    ) : (
+    ) : isFetchingData ? (
       <DivAtom style={fetchingDataIndicatorStyles.container}>
         <CircularProgress size={20} color="primary" />
       </DivAtom>
+    ) : (
+      <></>
     )
   );
 
@@ -224,6 +309,7 @@ function CompareRates() {
                 }}
                 onClick={searchAccomodation}
                 size="large"
+                disabled={isFetchingData}
               />
             </DivAtom>
             {invalidDate && (
@@ -234,7 +320,8 @@ function CompareRates() {
                 </p>
               </DivAtom>
             )}
-            <RenderData />
+
+            <RenderDetails />
           </>
         ) : (
           <DivAtom style={fetchingDataIndicatorStyles.container}>

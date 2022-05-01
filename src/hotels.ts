@@ -1,5 +1,5 @@
 export const Hotels = {
-  'Grand Kandian': 'g304138-d7322201',
+  'Grand Kandyan': 'g304138-d7322201',
   'Mahaweli Reach Hotel': 'g304138-d316941',
   'Athulya Villas': 'g1954879-d1953089',
   'Cinnamon Citadel': 'g304138-d797403',

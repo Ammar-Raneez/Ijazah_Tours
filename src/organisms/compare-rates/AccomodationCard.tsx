@@ -38,7 +38,7 @@ function AccomodationCard({ accomodation }: AccomodationCardProps) {
       />
       <p style={quoteCreateQuoteStyles.searchBar.accomodationContainer.card.costContainer}>
         {accomodation.roomTypes.length > 0 && (
-          <span style={{ margin: 0 }}>
+          <span style={{ margin: 0, width: '600px' }}>
             <SpanAtom
               text="Room Types: "
               style={quoteCreateQuoteStyles.searchBar.accomodationContainer.card.label}
@@ -62,5 +62,6 @@ export default AccomodationCard;
 
 const StyledPaper = styled(Paper)`
   padding: 1rem;
-  margin-bottom: 1rem;
+  margin: 1rem;
+  width:46%;
 `;
