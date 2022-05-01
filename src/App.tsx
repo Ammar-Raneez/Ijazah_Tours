@@ -16,6 +16,7 @@ import GlobalStyle from './globalStyle';
 import Header from './organisms/Header';
 import Navbar from './organisms/Navbar';
 import Sidebar from './organisms/Sidebar';
+import CompareRates from './pages/compare-rates/CompareRates';
 import Dashboard from './pages/dashboard/Dashboard';
 import Accomodation from './pages/library/accomodation/Accomodation';
 import Driver from './pages/library/driver/Driver';
@@ -77,15 +78,15 @@ function App() {
   useEffect(() => {
     history?.listen((location) => {
       if (location.pathname !== '/quote/quotations/create/customer'
-      && location.pathname !== '/quote/quotations/create/accomodation'
-      && location.pathname !== '/quote/quotations/create/costing'
-      && location.pathname !== '/quote/quotations/create/approval') {
+        && location.pathname !== '/quote/quotations/create/accomodation'
+        && location.pathname !== '/quote/quotations/create/costing'
+        && location.pathname !== '/quote/quotations/create/approval') {
         localStorage.removeItem('New Quote Customer');
         localStorage.removeItem('New Quote Accomodation');
       }
 
       if (location.pathname !== '/quote/quotations/create/preset/holiday'
-      && location.pathname !== '/quote/quotations/create/preset/accomodation') {
+        && location.pathname !== '/quote/quotations/create/preset/accomodation') {
         localStorage.removeItem('New Preset Quote');
       }
     });
@@ -219,6 +220,18 @@ function App() {
                 <ProtectedRoute exact path="/library">
                   <Redirect to="/library/accomodation" />
                 </ProtectedRoute>
+              </StyledDivAtom>
+            </Root>
+          </ProtectedRoute>
+          <ProtectedRoute path="/compare-rates">
+            <Header handleDrawerToggle={handleDrawerToggle} />
+            <Root>
+              <Sidebar
+                mobileOpen={mobileOpen}
+                handleDrawerToggle={handleDrawerToggle}
+              />
+              <StyledDivAtom>
+                <CompareRates />
               </StyledDivAtom>
             </Root>
           </ProtectedRoute>

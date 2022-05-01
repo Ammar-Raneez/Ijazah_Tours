@@ -180,9 +180,9 @@ function Accomodation() {
     // Subtract 1 to equal number of nights
     let nightsRequired = 0;
     if (customerDetails[16] === 'Not Specific') {
-      nightsRequired = Number(customerDetails[17]) - 1;
+      nightsRequired = Number(customerDetails[17]) || 0;
     } else {
-      nightsRequired = getDaysDifference(customerDetails[8], customerDetails[7]) - 1;
+      nightsRequired = getDaysDifference(customerDetails[8], customerDetails[7]) || 0;
     }
 
     setValidationNightsRequired(nightsRequired);

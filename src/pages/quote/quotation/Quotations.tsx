@@ -186,17 +186,19 @@ function Quotations() {
                       size="large"
                     />
                   </Link>
-                  <ButtonAtom
-                    text="Compare Rates"
-                    style={{
-                      ...quotationsStyles.btn,
-                      marginRight: '16px',
-                      marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
-                      width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
-                    }}
-                    onClick={() => null}
-                    size="large"
-                  />
+                  <Link to="/compare-rates">
+                    <ButtonAtom
+                      text="Compare Rates"
+                      style={{
+                        ...quotationsStyles.btn,
+                        marginRight: '16px',
+                        marginBottom: widthHeightDynamicStyle(width, 768, '1rem', 0),
+                        width: widthHeightDynamicStyle(width, 768, '100%', '11rem'),
+                      }}
+                      onClick={() => null}
+                      size="large"
+                    />
+                  </Link>
                   <Link to="/quote/quotations/create/preset/holiday">
                     <ButtonAtom
                       text="Preset Quotes"

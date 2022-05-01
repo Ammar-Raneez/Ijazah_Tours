@@ -176,3 +176,9 @@ export interface UserAccomodation extends LibraryAccomodation {
   roomRate: string;
   total: string;
 }
+
+export interface CompareRatesAccomdation extends UserAccomodation {
+  bookingEngine: string;
+  roomTypes: string[];
+  accGradings: string[];
+}

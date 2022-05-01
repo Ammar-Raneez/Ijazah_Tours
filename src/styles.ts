@@ -249,6 +249,16 @@ export const quoteCreateQuoteStyles = {
           fontStyle: 'italic',
           fontWeight: '400',
         },
+        bookingEngine: {
+          color: 'blue',
+          fontWeight: '400',
+          margin: 0,
+        },
+        costContainer: {
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        },
         label: {
           color: '#0A65FF',
           textAlign: 'left' as const,
@@ -500,6 +510,24 @@ export const dashboardStyles = {
   ...formCreateMemberStyles,
   mainContainer: {
     overflow: 'scroll',
+  },
+};
+
+// Compare Rates
+export const compareRatesStyles = {
+  ...quotationsStyles,
+  ...formCreateMemberStyles,
+  mainContainer: {
+    overflow: 'scroll',
+  },
+  searchContainer: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+  },
+  toolsContainer: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-end',
   },
 };
 

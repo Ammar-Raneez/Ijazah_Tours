@@ -99,7 +99,7 @@ function Costing() {
             bookingEngine: r.name,
             accomodation: acc.name,
             id: String(i),
-            rate: `$${r.rate + requiredChildrenRates.find((rc: any) => rc.name === r.name).rate}`,
+            rate: `$${r.rate + r.tax + requiredChildrenRates.find((rc: any) => rc.name === r.name).rate + requiredChildrenRates.find((rc: any) => rc.name === r.name).tax}`,
           });
         });
       }));

@@ -166,9 +166,8 @@ function Customer() {
     const saveCheckout = checkout.split('-').length === 2 ? `${checkout}-15` : checkout;
 
     const currentDate = new Date().valueOf();
-    if (new Date(saveCheckin).valueOf() < new Date(saveCheckout).valueOf()
-    || new Date(saveCheckin).valueOf() < currentDate
-    || new Date(saveCheckout).valueOf() < currentDate) {
+    if (new Date(saveCheckin).valueOf() > new Date(saveCheckout).valueOf()
+      || new Date(saveCheckin).valueOf() < currentDate) {
       setInvalidDate(true);
       return;
     }
