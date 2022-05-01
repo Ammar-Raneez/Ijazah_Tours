@@ -161,8 +161,7 @@ function Accomodation() {
 
     if (pax > 3) {
       const totalGuests = Number(adults) + children.length;
-      let initRooms = Number(customerDetails[19]);
-      initRooms = Math.floor(totalGuests / 3) + 1;
+      const initRooms = Number(customerDetails[19]) + (Math.floor(totalGuests / 3) + 1);
 
       customerDetails[19] = initRooms;
       localStorage.setItem(
