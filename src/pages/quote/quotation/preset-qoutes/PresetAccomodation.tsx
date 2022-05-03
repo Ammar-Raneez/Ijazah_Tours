@@ -123,16 +123,16 @@ function PresetAccomodation() {
   }, []);
 
   const addAccomodation = (acc: UserAccomodation) => {
-    const customerDetails = JSON.parse(
-      localStorage.getItem('New Quote Customer')!,
-    ).data[0];
-
     if (selectedAccomodations.find((a) => a.name === acc.name)) {
       return;
     }
 
     const roomTypes = Object.keys(acc.categoryValues)
       .map((cat) => ({ value: cat, label: cat }));
+
+    const roomTypeOptions = acc.rates
+      .map((rate) => rate.newRatePrice)
+      .map((rate) => ({ value: rate, label: rate }));
 
     const mealPlanOptions = acc.rates
       .map((rate) => rate.newMealPlan)
@@ -141,37 +141,9 @@ function PresetAccomodation() {
     acc.nights = '1';
     acc.roomRate = '';
     acc.total = '';
-
-    const adults = customerDetails[9];
-    const children = customerDetails[10];
-    let pax = Number(adults);
-    children.forEach((child: string) => {
-      if (Number(child) > 14) {
-        pax += 1;
-      }
-    });
-
-    if (pax > 3) {
-      const totalGuests = Number(adults) + children.length;
-      const initRooms = Number(customerDetails[19]) + (Math.floor(totalGuests / 3) + 1);
-
-      customerDetails[19] = initRooms;
-      localStorage.setItem(
-        'New Quote Customer',
-        JSON.stringify({
-          data: [customerDetails],
-        }),
-      );
-
-      acc.pax = 'Triple';
-    } else {
-      // eslint-disable-next-line no-nested-ternary
-      acc.pax = pax === 1 ? 'Single' : pax === 2 ? 'Double' : 'Triple';
-    }
-
-    acc.roomType = roomTypes[0].value;
+    acc.pax = 'Single';
+    acc.roomType = roomTypes[0]?.value || roomTypeOptions[0].value;
     acc.mealPlan = mealPlanOptions[0].value;
-
     const tempAccomodation = [...selectedAccomodations];
     tempAccomodation.push(acc);
     setSelectedAccomodations(tempAccomodation);

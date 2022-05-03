@@ -70,6 +70,10 @@ function AccomodationTable({
             const roomTypes = Object.keys(row.categoryValues).map((cat) => (
               { value: cat, label: cat }
             ));
+            const roomTypeOptions = row.rates
+              .map((rate) => rate.newRateType)
+              .map((rate) => ({ value: rate, label: rate }));
+
             const mealPlans = row.rates.map((rate) => (
               { value: rate.newMealPlan, label: rate.newMealPlan }
             ));
@@ -138,7 +142,7 @@ function AccomodationTable({
                   type="Room Type"
                   value={selectedAccomodationsRoomTypes[index] || ''}
                   onSelectChange={onRoomTypeChange}
-                  options={roomTypes}
+                  options={roomTypes[0]?.value ? roomTypes : roomTypeOptions}
                   align="center"
                 />
                 <TableRowEditCell

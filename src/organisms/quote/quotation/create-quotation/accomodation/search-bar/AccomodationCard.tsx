@@ -15,6 +15,12 @@ function AccomodationCard({
   accomodation,
   addAccomodation,
 }: AccomodationCardProps) {
+  const getRoomTypes = () => {
+    const fromValues = Object.keys(accomodation.categoryValues);
+    const fromRates = accomodation.rates.map((r) => r.newRateType);
+    return [...fromValues, ...fromRates].join(', ');
+  };
+
   return (
     <StyledPaper elevation={1} onClick={() => addAccomodation(accomodation)}>
       <p style={quoteCreateQuoteStyles.searchBar.accomodationContainer.card.titleContainer}>
@@ -39,7 +45,7 @@ function AccomodationCard({
           text="Room Types: "
           style={quoteCreateQuoteStyles.searchBar.accomodationContainer.card.label}
         />
-        <SpanAtom text={Object.keys(accomodation.categoryValues).join(', ')} />
+        <SpanAtom text={getRoomTypes()} />
       </p>
     </StyledPaper>
   );

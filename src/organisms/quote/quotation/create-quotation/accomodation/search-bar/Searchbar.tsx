@@ -57,6 +57,7 @@ function Searchbar({
         case 'Room Types': {
           const filtered = filteredAccomodations.filter((acc) => (
             Object.keys(acc.categoryValues).includes(c.value)
+            || acc.rates.find((r) => r.newRateType === c.value)
           ));
 
           filteredAccomodations = filtered;

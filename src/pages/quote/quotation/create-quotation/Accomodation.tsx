@@ -142,6 +142,10 @@ function Accomodation() {
     const roomTypes = Object.keys(acc.categoryValues)
       .map((cat) => ({ value: cat, label: cat }));
 
+    const roomTypeOptions = acc.rates
+      .map((rate) => rate.newRateType)
+      .map((rate) => ({ value: rate, label: rate }));
+
     const mealPlanOptions = acc.rates
       .map((rate) => rate.newMealPlan)
       .map((rate) => ({ value: rate, label: rate }));
@@ -177,7 +181,7 @@ function Accomodation() {
       acc.pax = pax === 1 ? 'Single' : pax === 2 ? 'Double' : 'Triple';
     }
 
-    acc.roomType = roomTypes[0].value;
+    acc.roomType = roomTypes[0]?.value || roomTypeOptions[0].value;
     acc.mealPlan = mealPlanOptions[0].value;
 
     const tempAccomodation = [...selectedAccomodations];
@@ -270,6 +274,43 @@ function Accomodation() {
     }
   };
 
+  const setPresetPax = (presetSelectedAccs: any) => {
+    const customerDetails = JSON.parse(
+      localStorage.getItem('New Quote Customer')!,
+    ).data[0];
+
+    const adults = customerDetails[9];
+    const children = customerDetails[10];
+    let pax = Number(adults);
+    children.forEach((child: string) => {
+      if (Number(child) > 14) {
+        pax += 1;
+      }
+    });
+
+    if (pax > 3) {
+      const totalGuests = Number(adults) + children.length;
+      const initRooms = Number(customerDetails[19]) + (Math.floor(totalGuests / 3) + 1);
+
+      customerDetails[19] = initRooms;
+      localStorage.setItem(
+        'New Quote Customer',
+        JSON.stringify({
+          data: [customerDetails],
+        }),
+      );
+
+      presetSelectedAccs.forEach((acc: any) => {
+        acc.pax = 'Triple';
+      });
+    } else {
+      presetSelectedAccs.forEach((acc: any) => {
+        // eslint-disable-next-line no-nested-ternary
+        acc.pax = pax === 1 ? 'Single' : pax === 2 ? 'Double' : 'Triple';
+      });
+    }
+  };
+
   return (
     <DivAtom style={{ height: `${height}px` }}>
       <DivAtom style={quoteCreateQuoteStyles.header}>
@@ -311,6 +352,7 @@ function Accomodation() {
                     }}
                     onClick={() => {
                       setSelectedAccomodations(quote.selectedAccomodations);
+                      setPresetPax(quote.selectedAccomodations);
                       setSelectedAccomodationsMealPlans(quote.selectedAccomodationsMealPlans);
                       setSelectedAccomodationsRoomTypes(quote.selectedAccomodationsRoomTypes);
                     }}

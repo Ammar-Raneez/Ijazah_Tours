@@ -154,10 +154,10 @@ function EditAccomodation({
       {
         id: uuid(),
         newRateType,
-        newRatePrice,
         newRateStart,
         newRateEnd,
         newMealPlan,
+        newRatePrice: `$${newSinglePrice}`,
         newSinglePrice: `$${newSinglePrice}`,
         newDoublePrice: `$${newDoublePrice}`,
         newTriplePrice: `$${newTriplePrice}`,

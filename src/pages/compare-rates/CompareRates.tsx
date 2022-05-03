@@ -59,7 +59,8 @@ function CompareRates() {
 
       accData.forEach((acc) => {
         acc.bookingEngine = 'Ijazah Tours';
-        acc.roomTypes = Object.keys(acc.categoryValues);
+        acc.roomTypes = Object.keys(acc.categoryValues)
+          || acc.rates.map((r: { newRateType: string }) => r.newRateType);
         acc.accGradings = acc.gradings
           .filter((g: { checked: boolean }) => g.checked)
           .map((g: { val: string }) => g.val);
