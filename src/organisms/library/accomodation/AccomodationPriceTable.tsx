@@ -79,6 +79,14 @@ function AccomodationPriceTable({
               <TableRowTextCell
                 cell={{
                   align: 'center',
+                  title: row.newRatePrice,
+                  colors: ['#464E5F', '#B5B5C3'],
+                  weight: 400,
+                }}
+              />
+              <TableRowTextCell
+                cell={{
+                  align: 'center',
                   title: row.newMealPlan,
                   colors: ['#464E5F', '#B5B5C3'],
                   weight: 400,
