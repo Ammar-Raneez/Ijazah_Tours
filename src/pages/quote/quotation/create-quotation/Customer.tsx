@@ -21,7 +21,7 @@ import {
   fetchingDataIndicatorStyles,
   quoteCreateQuoteStyles,
 } from '../../../../styles';
-import { dateTypeOptions, mealPlanOptions } from '../../../../utils/helpers';
+import { dateTypeOptions, getDaysDifference, mealPlanOptions } from '../../../../utils/helpers';
 import { DropdownOption, LibraryGuest, SettingsLocation } from '../../../../utils/types';
 
 function Customer() {
@@ -164,10 +164,12 @@ function Customer() {
     setInvalidDate(false);
     const saveCheckin = checkin.split('-').length === 2 ? `${checkin}-15` : checkin;
     const saveCheckout = checkout.split('-').length === 2 ? `${checkout}-15` : checkout;
+    const daysDiff = getDaysDifference(saveCheckout, saveCheckin);
 
     const currentDate = new Date().valueOf();
     if (new Date(saveCheckin).valueOf() > new Date(saveCheckout).valueOf()
-      || new Date(saveCheckin).valueOf() < currentDate) {
+      || new Date(saveCheckin).valueOf() < currentDate
+      || daysDiff >= 29) {
       setInvalidDate(true);
       return;
     }
