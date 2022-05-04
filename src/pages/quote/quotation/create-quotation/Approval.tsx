@@ -138,13 +138,13 @@ function Approval({ setCreated }: ApprovalProps) {
   }, []);
 
   useEffect(() => {
-    setSellingPrice('$1000');
-    setDiscount('$40');
-
-    const netTotal = Number(sellingPrice.slice(1, sellingPrice.length))
-      - Number(discount.slice(1, discount.length));
-    setNetPrice(`$${netTotal}`);
-  }, [sellingPrice, discount]);
+    const storedCosting = JSON.parse(localStorage.getItem('New Quote Costing')!);
+    if (storedCosting) {
+      setSellingPrice(`$${storedCosting.sellingPrice}`);
+      setDiscount(`$${storedCosting.discount}`);
+      setNetPrice(`$${storedCosting.netPrice}`);
+    }
+  }, []);
 
   const deleteRate = (acc: QuotationCostingRate) => {
     const removeIndex = rateData.findIndex((ac) => ac.id === acc.id);
