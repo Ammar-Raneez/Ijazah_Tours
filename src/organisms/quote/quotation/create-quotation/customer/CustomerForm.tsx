@@ -397,7 +397,7 @@ function CustomerForm({
             style={{ color: 'red', textAlign: 'center' }}
           >
             {/* eslint-disable-next-line max-len */}
-            Invalid Date - please make sure that the selected dates are in the future and the checkout date is ahead of the checkin date
+            Invalid Date - please make sure that the selected dates are in the future, the checkout date is ahead of the checkin date, and number of nights doesn't exceed 29
           </p>
         </DivAtom>
       )}
