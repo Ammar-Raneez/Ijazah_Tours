@@ -427,6 +427,7 @@ function Approval({ setCreated }: ApprovalProps) {
             setOpenDialog={setOpenTourTypeDialog}
             tourType={tourType}
             setTourType={setTourType}
+            driverChoice={driverChoice}
             setDriverChoice={setDriverChoice}
             onConfirm={onTourTypeConfirm}
             validationErrorMsg={showTourTypeValidationErrorMsg}

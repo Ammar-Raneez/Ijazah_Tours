@@ -21,6 +21,7 @@ interface TourTypeDialogProps {
   validationErrorMsg: boolean;
   openDialog: boolean;
   onConfirm: () => void;
+  driverChoice?: LibraryDriver;
   setOpenDialog: any;
   setTourType: any;
   setDriverChoice: any;
@@ -28,8 +29,9 @@ interface TourTypeDialogProps {
 
 function TourTypeDialog({
   driverData,
-  tourType,
   title,
+  tourType,
+  driverChoice,
   validationErrorMsg,
   openDialog,
   setOpenDialog,
@@ -63,6 +65,7 @@ function TourTypeDialog({
             <Autocomplete
               id="autocomplete-driver-field"
               freeSolo
+              value={driverChoice ? `${driverChoice?.name} | ${driverChoice?.tel} | ${driverChoice?.vehicleType}` : ''}
               onChange={(_, value) => getSelectedDriver(value)}
               options={driverData.map((driver) => `${driver.name} | ${driver.tel} | ${driver.vehicleType}`)}
               renderInput={(params) => <TextField {...params} label="Choose Driver" />}

@@ -122,8 +122,8 @@ function CustomerForm({
       setCheckin('2022-01');
       setCheckout('2022-02');
     } else {
-      setCheckin('2022-01-01');
-      setCheckout('2022-02-01');
+      setCheckin(new Date().toISOString().split('T')[0]);
+      setCheckout(new Date().toISOString().split('T')[0]);
     }
   };
 

@@ -105,16 +105,19 @@ function Customer() {
 
       setCustomerData(rfData as LibraryGuest[]);
       onRefNumChange(rfData as LibraryGuest[], localStorage.getItem('New Guest Ref Num') || refNums[0].value);
-
-      setRefNum(localStorage.getItem('New Guest Ref Num') || refNums[0].value);
+      setRefNum(
+        refNums.find((r) => r.value === localStorage.getItem('New Guest Ref Num'))
+          ? localStorage.getItem('New Guest Ref Num')
+          : refNums[0].value,
+      );
       setHolidayType(holidays[0].value);
-
       setRefData(refNums);
       setHolidayTypeData(holidays);
 
       const storedCustomerData = localStorage.getItem('New Quote Customer');
       if (storedCustomerData) {
         const cusData = JSON.parse(storedCustomerData).data[0];
+        setRefNum(cusData[2] || localStorage.getItem('New Guest Ref Num') || refNums[0].value);
         setTitle(cusData[0]);
         setDateType(cusData[16]);
         setAdditionalBed(cusData[14]);
