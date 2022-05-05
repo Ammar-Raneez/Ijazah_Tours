@@ -63,7 +63,7 @@ function Costing() {
     const getComparisonRates = async () => {
       const rates: QuotationCostingRate[] = [];
       await Promise.all(accomodations.map(async (acc) => {
-        const totalGuests = customerDetails[10].length + customerDetails[9];
+        const totalGuests = customerDetails[10].length + Number(customerDetails[9]);
         const results = await axios.post(`${XOTELO_BASE_URL}rates`, {
           hotelId: Hotels[acc.name as keyof typeof Hotels],
           checkIn: customerDetails[7],
@@ -77,12 +77,12 @@ function Costing() {
 
         const requiredRates = results.data.rates?.filter((r: any) => (
           r.host.toLowerCase().includes('agoda') || r.host.toLowerCase().includes('booking')
-          || r.host.toLowerCase().includes('tripadvisor')
+          || r.host.toLowerCase().includes('tripadvisor') || r.host.toLowerCase() === 'hotels.com'
         ));
 
         requiredRates.forEach((r: any, i: number) => {
           rates.push({
-            bookingEngine: r.name,
+            bookingEngine: r.host,
             accomodation: acc.name,
             id: String(i),
             rate: `$${(Number(r.rate) * totalGuests) + (Number(r.taxes) * totalGuests)}`,
