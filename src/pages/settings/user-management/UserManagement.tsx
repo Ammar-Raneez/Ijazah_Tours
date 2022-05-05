@@ -97,7 +97,7 @@ function UserManagement() {
       await createUserWithEmailAndPassword(auth, newEmail, newPassword);
       clearInputs();
     } catch (err) {
-      alert('Something went wrong');
+      console.log('');
     } finally {
       setIsCreating(false);
       setNewOpenDialog(false);
