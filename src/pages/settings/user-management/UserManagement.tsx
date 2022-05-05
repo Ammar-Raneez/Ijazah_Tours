@@ -93,10 +93,15 @@ function UserManagement() {
       title: '',
     });
 
-    await createUserWithEmailAndPassword(auth, newEmail, newPassword);
-    clearInputs();
-    setIsCreating(false);
-    setNewOpenDialog(false);
+    try {
+      await createUserWithEmailAndPassword(auth, newEmail, newPassword);
+      clearInputs();
+    } catch (err) {
+      alert('Something went wrong');
+    } finally {
+      setIsCreating(false);
+      setNewOpenDialog(false);
+    }
   };
 
   const deleteTeamMember = async (row: SettingsTeamMember) => {
