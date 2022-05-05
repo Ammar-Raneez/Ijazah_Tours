@@ -25,6 +25,7 @@ import {
   RAPID_API_KEY,
   widthHeightDynamicStyle,
   XOTELO_BASE_URL,
+  XOTELO_HOST,
 } from '../../utils/helpers';
 import { FlexDirection, CompareRatesAccomdation } from '../../utils/types';
 
@@ -109,25 +110,28 @@ function CompareRates() {
   };
 
   const searchXoteloAPI = async (selectedAccomodation: CompareRatesAccomdation) => {
-    const results = await axios.get(`${XOTELO_BASE_URL}rates`, {
-      params: {
-        hotel_key: Hotels[selectedAccomodation.name as keyof typeof Hotels],
-        chk_in: checkin,
-        chk_out: checkout,
-        adults: guests,
+    const results = await axios.post(`${XOTELO_BASE_URL}rates`, {
+      hotelId: Hotels[selectedAccomodation.name as keyof typeof Hotels],
+      checkIn: checkin,
+      checkOut: checkout,
+    }, {
+      headers: {
+        'X-RapidAPI-Host': XOTELO_HOST,
+        'X-RapidAPI-Key': RAPID_API_KEY,
       },
     });
 
-    const requiredRates = results.data.result?.rates?.filter((r: any) => (
-      r.name === 'Agoda.com' || r.name === 'Booking.com'
+    const requiredRates = results.data.rates?.filter((r: any) => (
+      r.host.toLowerCase().includes('agoda') || r.host.toLowerCase().includes('booking')
+      || r.host.toLowerCase().includes('tripadvisor')
     ));
 
     requiredRates.forEach((r: any) => {
-      r.bookingEngine = r.name;
+      r.bookingEngine = r.host;
       r.name = selectedAccomodation.name;
       r.country = selectedAccomodation.country;
       r.city = selectedAccomodation.city;
-      r.total = `$${r.rate + r.tax}`;
+      r.total = `$${(Number(r.rate) * guests) + (Number(r.taxes) * guests)}`;
       r.accGradings = [];
       r.roomTypes = [];
     });
@@ -199,7 +203,7 @@ function CompareRates() {
     propDetails.city = selectedAccomodation.city;
     propDetails.country = selectedAccomodation.country;
     propDetails.total = `$${(propDetails.featuredPrice?.currentPrice?.plain || 0) * nightsRequired}`;
-    propDetails.roomTypes = propDetails.roomTypeNames;
+    propDetails.roomTypes = propDetails.roomTypeNames.filter((r: string) => r !== '');
     setRapidApiAccomodation(propDetails || []);
   };
 

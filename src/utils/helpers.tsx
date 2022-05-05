@@ -177,7 +177,8 @@ export const MenuProps = {
 };
 
 // Hotel costing Api's
-export const XOTELO_BASE_URL = 'https://data.xotelo.com/api/';
+export const XOTELO_BASE_URL = 'https://hotel-price-aggregator.p.rapidapi.com/';
+export const XOTELO_HOST = 'hotel-price-aggregator.p.rapidapi.com';
 export const RAPID_API_BASE_URL = 'https://hotels4.p.rapidapi.com/';
 export const RAPID_API_HOST = 'hotels4.p.rapidapi.com';
 export const RAPID_API_KEY = '7effb9d8d0msh066f74e0e5b56cep164c86jsn72c35d18cd01';

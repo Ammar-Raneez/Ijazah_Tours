@@ -18,7 +18,12 @@ import CostingRateComparisonTable from '../../../../organisms/quote/quotation/cr
 import CostingTransport from '../../../../organisms/quote/quotation/create-quotation/costing/CostingTransport';
 import { selectWith2NavbarHeight, selectWith2NavbarWidth } from '../../../../redux/containerSizeSlice';
 import { fetchingDataIndicatorStyles, quoteCreateQuoteStyles } from '../../../../styles';
-import { widthHeightDynamicStyle, XOTELO_BASE_URL } from '../../../../utils/helpers';
+import {
+  RAPID_API_KEY,
+  widthHeightDynamicStyle,
+  XOTELO_BASE_URL,
+  XOTELO_HOST,
+} from '../../../../utils/helpers';
 import { UserAccomodation, QuotationCostingRate } from '../../../../utils/types';
 
 function Costing() {
@@ -58,48 +63,29 @@ function Costing() {
     const getComparisonRates = async () => {
       const rates: QuotationCostingRate[] = [];
       await Promise.all(accomodations.map(async (acc) => {
-        // Create required age of children format
-        const ageOfChildren: number[] = customerDetails[10].map((n: string) => {
-          if (n.length > 1 && n.startsWith('0')) {
-            n = n.substring(1);
-          }
-
-          return Number(n);
-        });
-
-        // Calculate for adults and children
-        const adultsRes = await axios.get(`${XOTELO_BASE_URL}rates`, {
-          params: {
-            hotel_key: Hotels[acc.name as keyof typeof Hotels],
-            chk_in: customerDetails[7],
-            chk_out: customerDetails[8],
-            adults: customerDetails[9],
-            rooms: customerDetails[19] ? Number(customerDetails[19]) : 1,
-          },
-        });
-        const childrenRes = await axios.get(`${XOTELO_BASE_URL}rates`, {
-          params: {
-            hotel_key: Hotels[acc.name as keyof typeof Hotels],
-            chk_in: customerDetails[7],
-            chk_out: customerDetails[8],
-            age_of_children: `[${ageOfChildren.join(',')}]`,
-            rooms: customerDetails[19] ? Number(customerDetails[19]) : 1,
+        const totalGuests = customerDetails[10].length + customerDetails[9];
+        const results = await axios.post(`${XOTELO_BASE_URL}rates`, {
+          hotelId: Hotels[acc.name as keyof typeof Hotels],
+          checkIn: customerDetails[7],
+          checkOut: customerDetails[8],
+        }, {
+          headers: {
+            'X-RapidAPI-Host': XOTELO_HOST,
+            'X-RapidAPI-Key': RAPID_API_KEY,
           },
         });
 
-        const requiredAdultsRates = adultsRes.data.result?.rates?.filter((r: any) => (
-          r.name === 'Agoda.com' || r.name === 'Booking.com' || r.name === 'Hotels.com'
-        ));
-        const requiredChildrenRates = childrenRes.data.result?.rates?.filter((r: any) => (
-          r.name === 'Agoda.com' || r.name === 'Booking.com' || r.name === 'Hotels.com'
+        const requiredRates = results.data.rates?.filter((r: any) => (
+          r.host.toLowerCase().includes('agoda') || r.host.toLowerCase().includes('booking')
+          || r.host.toLowerCase().includes('tripadvisor')
         ));
 
-        requiredAdultsRates.forEach((r: any, i: number) => {
+        requiredRates.forEach((r: any, i: number) => {
           rates.push({
             bookingEngine: r.name,
             accomodation: acc.name,
             id: String(i),
-            rate: `$${r.rate + r.tax + (requiredChildrenRates.find((rc: any) => rc.name === r.name)?.rate || 0) + (requiredChildrenRates.find((rc: any) => rc.name === r.name)?.tax || 0)}`,
+            rate: `$${(Number(r.rate) * totalGuests) + (Number(r.taxes) * totalGuests)}`,
           });
         });
       }));
