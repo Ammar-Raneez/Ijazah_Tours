@@ -87,7 +87,7 @@ function UMTeamMemberTable({
                 key={uuid()}
                 cell={{
                   align: 'center',
-                  title: row.createdAt.toDate().toLocaleDateString(),
+                  title: row.createdAt?.toDate()?.toLocaleDateString(),
                   colors: ['#464E5F', '#B5B5C3'],
                   weight: 400,
                 }}
