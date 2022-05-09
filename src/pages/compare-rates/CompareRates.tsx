@@ -20,12 +20,12 @@ import { selectWithoutNavbarHeight, selectWithoutNavbarWidth } from '../../redux
 import { compareRatesStyles, fetchingDataIndicatorStyles, libraryStyles } from '../../styles';
 import {
   getDaysDifference,
-  RAPID_API_BASE_URL,
-  RAPID_API_HOST,
+  HOTELS_API_BASE_URL,
+  HOTELS_API_HOST,
   RAPID_API_KEY,
   widthHeightDynamicStyle,
-  XOTELO_BASE_URL,
-  XOTELO_HOST,
+  AGGREGATOR_BASE_URL,
+  AGGREGATOR_HOST,
 } from '../../utils/helpers';
 import { FlexDirection, CompareRatesAccomdation } from '../../utils/types';
 
@@ -45,7 +45,7 @@ function CompareRates() {
     currentSearchedAccomodation,
     setCurrentSearchedAccomodation,
   ] = useState<CompareRatesAccomdation>();
-  const [xoteloAccomodations, setXoteloAccomodations] = useState<any[]>();
+  const [aggregatorAccomodations, setAggregatorAccomodations] = useState<any[]>();
   const [rapidApiAccomodation, setRapidApiAccomodation] = useState<any>();
   const [isFetchingData, setIsFetchingData] = useState(false);
 
@@ -78,7 +78,7 @@ function CompareRates() {
     setIsFetchingData(true);
     if (search.trim() === '') {
       setCurrentSearchedAccomodation(undefined);
-      setXoteloAccomodations(undefined);
+      setAggregatorAccomodations(undefined);
       setIsFetchingData(false);
       return;
     }
@@ -96,8 +96,8 @@ function CompareRates() {
     ));
 
     if (selectedAccomodation) {
-      await searchXoteloAPI(selectedAccomodation);
-      await searchRapidAPI(selectedAccomodation);
+      await searchAggregatorAPI(selectedAccomodation);
+      await searchHotelsAPI(selectedAccomodation);
 
       const rate = selectedAccomodation.rates[0];
       const guestPrice = Number(rate.newSinglePrice.slice(1)) * guests;
@@ -109,14 +109,14 @@ function CompareRates() {
     setIsFetchingData(false);
   };
 
-  const searchXoteloAPI = async (selectedAccomodation: CompareRatesAccomdation) => {
-    const results = await axios.post(`${XOTELO_BASE_URL}rates`, {
+  const searchAggregatorAPI = async (selectedAccomodation: CompareRatesAccomdation) => {
+    const results = await axios.post(`${AGGREGATOR_BASE_URL}rates`, {
       hotelId: Hotels[selectedAccomodation.name as keyof typeof Hotels],
       checkIn: checkin,
       checkOut: checkout,
     }, {
       headers: {
-        'X-RapidAPI-Host': XOTELO_HOST,
+        'X-RapidAPI-Host': AGGREGATOR_HOST,
         'X-RapidAPI-Key': RAPID_API_KEY,
       },
     });
@@ -136,20 +136,20 @@ function CompareRates() {
       r.roomTypes = [];
     });
 
-    setXoteloAccomodations(requiredRates || []);
+    setAggregatorAccomodations(requiredRates || []);
   };
 
-  const searchRapidAPI = async (selectedAccomodation: CompareRatesAccomdation) => {
+  const searchHotelsAPI = async (selectedAccomodation: CompareRatesAccomdation) => {
     const nightsRequired = getDaysDifference(checkout, checkin) || 0;
 
-    const locationRes = await axios.get(`${RAPID_API_BASE_URL}locations/v2/search`, {
+    const locationRes = await axios.get(`${HOTELS_API_BASE_URL}locations/v2/search`, {
       params: {
         query: 'sri lanka',
         currency: 'USD',
         locale: 'en_US',
       },
       headers: {
-        'X-RapidAPI-Host': RAPID_API_HOST,
+        'X-RapidAPI-Host': HOTELS_API_HOST,
         'X-RapidAPI-Key': RAPID_API_KEY,
       },
     });
@@ -159,7 +159,7 @@ function CompareRates() {
       l.name?.toLowerCase().includes(selectedAccomodation.city.toLowerCase())
     ))?.destinationId;
 
-    const propertiesRes = await axios.get(`${RAPID_API_BASE_URL}properties/list`, {
+    const propertiesRes = await axios.get(`${HOTELS_API_BASE_URL}properties/list`, {
       params: {
         destinationId,
         pageNumber: '1',
@@ -172,7 +172,7 @@ function CompareRates() {
         currency: 'USD',
       },
       headers: {
-        'X-RapidAPI-Host': RAPID_API_HOST,
+        'X-RapidAPI-Host': HOTELS_API_HOST,
         'X-RapidAPI-Key': RAPID_API_KEY,
       },
     });
@@ -182,7 +182,7 @@ function CompareRates() {
       p.name?.toLowerCase().includes(selectedAccomodation.name.toLowerCase())
     ))?.id;
 
-    const propertiesDetailsRes = await axios.get(`${RAPID_API_BASE_URL}properties/get-details`, {
+    const propertiesDetailsRes = await axios.get(`${HOTELS_API_BASE_URL}properties/get-details`, {
       params: {
         id: propId,
         checkIn: checkin,
@@ -192,7 +192,7 @@ function CompareRates() {
         locale: 'en_US',
       },
       headers: {
-        'X-RapidAPI-Host': RAPID_API_HOST,
+        'X-RapidAPI-Host': HOTELS_API_HOST,
         'X-RapidAPI-Key': RAPID_API_KEY,
       },
     });
@@ -209,10 +209,10 @@ function CompareRates() {
 
   const RenderDetails = () => (
     // eslint-disable-next-line no-nested-ternary
-    currentSearchedAccomodation && xoteloAccomodations && rapidApiAccomodation ? (
+    currentSearchedAccomodation && aggregatorAccomodations && rapidApiAccomodation ? (
       <DivAtom style={compareRatesStyles.detailsContainer}>
         <AccomodationCard accomodation={currentSearchedAccomodation} />
-        {xoteloAccomodations.map((acc, index) => (
+        {aggregatorAccomodations.map((acc, index) => (
           <AccomodationCard accomodation={acc} key={index} />
         ))}
         <AccomodationCard accomodation={rapidApiAccomodation} />

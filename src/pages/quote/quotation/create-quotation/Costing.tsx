@@ -21,8 +21,8 @@ import { fetchingDataIndicatorStyles, quoteCreateQuoteStyles } from '../../../..
 import {
   RAPID_API_KEY,
   widthHeightDynamicStyle,
-  XOTELO_BASE_URL,
-  XOTELO_HOST,
+  AGGREGATOR_BASE_URL,
+  AGGREGATOR_HOST,
 } from '../../../../utils/helpers';
 import { UserAccomodation, QuotationCostingRate } from '../../../../utils/types';
 
@@ -64,13 +64,13 @@ function Costing() {
       const rates: QuotationCostingRate[] = [];
       await Promise.all(accomodations.map(async (acc) => {
         const totalGuests = customerDetails[10].length + Number(customerDetails[9]);
-        const results = await axios.post(`${XOTELO_BASE_URL}rates`, {
+        const results = await axios.post(`${AGGREGATOR_BASE_URL}rates`, {
           hotelId: Hotels[acc.name as keyof typeof Hotels],
           checkIn: customerDetails[7],
           checkOut: customerDetails[8],
         }, {
           headers: {
-            'X-RapidAPI-Host': XOTELO_HOST,
+            'X-RapidAPI-Host': AGGREGATOR_HOST,
             'X-RapidAPI-Key': RAPID_API_KEY,
           },
         });
